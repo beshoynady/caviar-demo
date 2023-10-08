@@ -24,12 +24,12 @@ const ManagerDash = () => {
   const [pending_payment, setpending_payment] = useState([])
   const [allorders, setallorders] = useState([])
 
-  const PendingOrder = async () =https://caviar-api.vercel.app
-    const res = await axios.get('https://restaurant-api-blush.vercel.app/api/order')
+  const PendingOrder = async () => {
+    const res = await axios.get('https://caviar-api.vercel.app/api/order')
     setallorders(res.data)
     const recent_status = await res.data.filter((order) => order.status == 'انتظار')
     const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
-    setpending_order(recent_statuhttps://caviar-api.vercel.app
+    setpending_order(recent_status)
     setpending_payment(recent_payment_status)
   }
 
@@ -40,12 +40,12 @@ const ManagerDash = () => {
   const changeorderstauts = async (e, id) => {
     try {
       const status = await e.target.value
-      const order = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+      const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         status
       })
 
       setupdate(!update)
-    } catch (error) {https://caviar-api.vercel.app
+    } catch (error) {
       console.log(error)
     }
 
@@ -54,25 +54,25 @@ const ManagerDash = () => {
   const changePaymentorderstauts = async (e, id) => {
     try {
       const payment_status = e.target.value
-      const order = axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+      const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status
       })
       setupdate(!update)
     } catch (error) {
-      console.log(error)https://caviar-api.vercel.app
+      console.log(error)
     }
   }
 
   // ارسال ويتر 
   const [waiters, setwaiters] = useState([])
   const getAllWaiter = async () => {
-    const alluser = await axios.get('https://restaurant-api-blush.vercel.app/api/user')
+    const alluser = await axios.get('https://caviar-api.vercel.app/api/user')
     console.log(alluser)
     const allwaiter = await alluser.data.filter((user) => user.role == 'waiter')
     console.log(allwaiter)
     const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
     console.log(waiterActive)
-    const listId = []https://caviar-api.vercel.app
+    const listId = []
     if(waiterActive){
     waiterActive.forEach((waiter) => {
       listId.push(waiter._id)
@@ -83,7 +83,7 @@ const ManagerDash = () => {
     }
   }
 
-  // const [waiter, setwaiter] = useShttps://caviar-api.vercel.app
+  // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
     const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
     console.log(ordertakewaiter)
@@ -109,7 +109,7 @@ const ManagerDash = () => {
   const sendwaiter = async (id) => {
     const help = 'ارسال ويتر';
     const waiter = specifiedWaiter()
-    const order = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+    const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       waiter, help
     })
     PendingOrder()
@@ -145,7 +145,7 @@ const ManagerDash = () => {
                   <span className="info">
                     <p>اوردرات اليوم</p>
                     <h3>
-                      {list_day_ordhttps://caviar-api.vercel.app
+                      {list_day_order.length}
                     </h3>
                   </span>
                   <i className='bx bx-calendar-check'></i>

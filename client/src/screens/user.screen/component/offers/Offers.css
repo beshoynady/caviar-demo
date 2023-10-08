@@ -10,21 +10,13 @@
   padding-bottom: 15px;
 }
 .offers-section .swiper {
-<<<<<<< HEAD
-  width: 100%;
-=======
   width: 95%;
->>>>>>> 67ec91c (f)
   height: 90%;
   padding-top: 50px;
   padding-bottom: 50px;
 }
 .offers-section .swiper .swiper-slide {
-<<<<<<< HEAD
-  width: 280px;
-=======
   width: 250px;
->>>>>>> 67ec91c (f)
   height: 350px;
   border-radius: 20px;
 }

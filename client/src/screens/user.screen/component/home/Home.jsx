@@ -10,15 +10,6 @@ const Home = () => {
       {
         ({askingForHelp ,userlogininfo, usertitle}) => {
           return (
-<<<<<<< HEAD
-            <main className='main-home'>
-              <div className="container">
-                <div className="content">
-                  {userlogininfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.id)} في</p>
-                  :id?<p className='main-title'>مرحبا ضيوف {usertitle(id)} في</p>:<p className='main-title'>مرحبا بكم في</p>
-                  }
-                  <p className='main-text'>كافيار للمأكولات البحرية <br />Caviar Seafood</p>
-=======
             <main className='main-home'> 
               <div className="container">
                 <div className="content">
@@ -28,7 +19,6 @@ const Home = () => {
                   :<p className='main-title'>مرحبا بكم  <br/> في</p>
                   }
                   <p className='main-text'>كافيار للمأكولات البحرية <br /> Caviar Seafood</p>
->>>>>>> 67ec91c (f)
                   <ul className="main-btn">
 
                     {id?<>

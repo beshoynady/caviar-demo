@@ -22,16 +22,11 @@ const ManagerDash = () => {
 
   const [pending_order, setpending_order] = useState([])
   const [pending_payment, setpending_payment] = useState([])
-<<<<<<< HEAD
-  const PendingOrder = async () => {
-    const res = await axios.get('https://restaurant-api-blush.vercel.app/api/order')
-=======
   const [allorders, setallorders] = useState([])
 
   const PendingOrder = async () => {
     const res = await axios.get('https://restaurant-api-blush.vercel.app/api/order')
     setallorders(res.data)
->>>>>>> 67ec91c (f)
     const recent_status = await res.data.filter((order) => order.status == 'انتظار')
     const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
     setpending_order(recent_status)
@@ -70,18 +65,6 @@ const ManagerDash = () => {
 
   // ارسال ويتر 
   const [waiters, setwaiters] = useState([])
-<<<<<<< HEAD
-  const getAllWaiter = async()=>{
-    const alluser = await axios.get('https://restaurant-api-blush.vercel.app/api/user')
-    const allwaiter =await alluser.data.filter((user)=>user.role === 'waiter')
-    // console.log(allwaiter)
-    const listId = []
-    allwaiter.forEach((waiter)=>{
-      listId.push(waiter._id)
-    })
-    // console.log(listId)
-    if(listId.length>0){
-=======
   const getAllWaiter = async () => {
     const alluser = await axios.get('https://restaurant-api-blush.vercel.app/api/user')
     console.log(alluser)
@@ -96,29 +79,11 @@ const ManagerDash = () => {
     })}
     console.log(listId)
     if (listId.length > 0) {
->>>>>>> 67ec91c (f)
       setwaiters(listId)
     }
   }
 
   // const [waiter, setwaiter] = useState()
-<<<<<<< HEAD
-  const specifiedWaiter =()=>{
-    const lastwaiter = pending_order? pending_order[pending_order.length-1].waiter:''
-    console.log(lastwaiter)
-    const indexoflastwaiter = waiters.indexOf(lastwaiter)
-
-    console.log(indexoflastwaiter)
-    console.log(indexoflastwaiter+1)
-    console.log(waiters.length)
-    console.log(waiters)
-    // setwaiter(waiters[indexofwaiter+1])
-    if(waiters.length < indexoflastwaiter+1){
-      const waiter = waiters[0]
-      return waiter     
-    }else{
-      const waiter = waiters[indexoflastwaiter+1]
-=======
   const specifiedWaiter = () => {
     const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
     console.log(ordertakewaiter)
@@ -137,7 +102,6 @@ const ManagerDash = () => {
       return waiter
     } else {
       const waiter = waiters[indexoflastwaiter + 1]
->>>>>>> 67ec91c (f)
       return waiter
     }
   }
@@ -146,11 +110,7 @@ const ManagerDash = () => {
     const help = 'ارسال ويتر';
     const waiter = specifiedWaiter()
     const order = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
-<<<<<<< HEAD
-      waiter , help
-=======
       waiter, help
->>>>>>> 67ec91c (f)
     })
     PendingOrder()
     setupdate(!update)
@@ -299,17 +259,6 @@ const ManagerDash = () => {
                     <i className='bx bx-plus'></i>
                   </div>
                   <ul className="task-list">
-<<<<<<< HEAD
-                    {pending_payment.filter((order) => order.payment_status == 'انتظار' && order.isActive == false || order.help !=='لم يطلب').map((order, i) => {
-                      return (
-                        <li className="completed" key={i}>
-                          <div className="task-title">
-                            <p><i className='bx bx-check-circle'></i> {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                            <p>{order.help?'يحتاج المساعدة': order.isActive == false? 'يحتاج الفاتورة': ''}</p>
-                            {order.help =='يطلب مساعدة'?<button type="button" className="btn btn-primary" onClick={()=>sendwaiter(order._id)}>ارسال ويتر</button>:
-                            <p>تم ارسال {usertitle(order.waiter)}</p>}
-                            <p>{order.table != null ? order.help : order.isActive == false? 'يحتاج الفاتورة': ''}</p>
-=======
                     {pending_payment.filter((order) => order.payment_status == 'انتظار' && order.order_type == 'داخلي' && order.isActive == false || order.help !== 'لم يطلب').map((order, i) => {
                       return (
                         <li className="completed" key={i}>
@@ -319,7 +268,6 @@ const ManagerDash = () => {
                             {order.help == 'يطلب مساعدة' || order.help == 'يطلب الفاتورة' ? <button type="button" className="btn btn-primary" onClick={() => sendwaiter(order._id)}>ارسال ويتر</button> :
                               <p>تم ارسال {usertitle(order.waiter)}</p>}
                             {/* <p>{order.table != null ? order.help : order.isActive == false? 'يحتاج الفاتورة': ''}</p> */}
->>>>>>> 67ec91c (f)
                           </div>
                           <i className='bx bx-dots-vertical-rounded'></i>
                         </li>

@@ -34,12 +34,8 @@ const Employees = () => {
   const [address, setaddress] = useState("")
   const [phone, setphone] = useState("")
   const [email, setemail] = useState("")
-<<<<<<< HEAD
-  const [isAdmin, setisAdmin] = useState("")
-=======
   const [isAdmin, setisAdmin] = useState(true)
   const [isActive, setisActive] = useState(true)
->>>>>>> 67ec91c (f)
   const [role, setrole] = useState("")
   const [salary, setsalary] = useState()
 
@@ -75,29 +71,18 @@ const Employees = () => {
     console.log(phone)
     console.log(email)
     console.log(isAdmin)
-<<<<<<< HEAD
-=======
     console.log(isActive)
->>>>>>> 67ec91c (f)
     console.log(role)
     console.log(salary)
     try {
       if(password){
-<<<<<<< HEAD
-      const update = await axios.put('https://restaurant-api-blush.vercel.app/api/user/' + userid, { username, password, address, phone, email, isAdmin, role, salary })
-=======
       const update = await axios.put(`https://restaurant-api-blush.vercel.app/api/user/${userid}`, { username, password, address, phone, email, isAdmin,isActive, role, salary })
->>>>>>> 67ec91c (f)
       console.log(update)
       if(update){
         getemployees()
       }
   }else{
-<<<<<<< HEAD
-      const update = await axios.put('https://restaurant-api-blush.vercel.app/api/user/' + userid, { username, address, phone, email, isAdmin, role, salary })
-=======
       const update = await axios.put(`https://restaurant-api-blush.vercel.app/api/user/${userid}`, { username, address, phone, email, isAdmin,isActive, role, salary })
->>>>>>> 67ec91c (f)
       console.log(update)
       if(update){
         getemployees()
@@ -112,15 +97,8 @@ const Employees = () => {
     try {
       console.log(userid)
       const deleted = await axios.delete(`https://restaurant-api-blush.vercel.app/api/user/${userid}`)
-<<<<<<< HEAD
-      if(deleted){
       console.log(deleted)
       getemployees()
-    }
-=======
-      console.log(deleted)
-      getemployees()
->>>>>>> 67ec91c (f)
     } catch (error) {
       console.log(error)
     }
@@ -159,14 +137,9 @@ const Employees = () => {
                 <th>الاسم</th>
                 <th>العنوان</th>
                 <th>الموبايل</th>
-<<<<<<< HEAD
-                <th>الوظيفه</th>
-                <th>الراتب</th>
-=======
                 <th>الراتب</th>
                 <th>الوظيفه</th>
                 <th>الحالة</th>
->>>>>>> 67ec91c (f)
                 <th>اجراءات</th>
               </tr>
             </thead>
@@ -185,20 +158,12 @@ const Employees = () => {
                       <td>{e.username}</td>
                       <td>{e.address}</td>
                       <td>{e.phone}</td>
-<<<<<<< HEAD
-                      <td>{e.role}</td>
-                      <td>{e.salary}</td>
-                      <td>
-                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={()=>{
-                          setuserid(e._id);setusername(e.username);setaddress(e.address);setemail(e.email); setisAdmin(e.isAdmin); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-=======
                       <td>{e.salary}</td>
                       <td>{e.role}</td>
                       <td>{e.isActive?'متاح':"غير متاح"}</td>
                       <td>
                         <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={()=>{
                           setuserid(e._id);setusername(e.username);setaddress(e.address);setemail(e.email); setisAdmin(e.isAdmin);setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
->>>>>>> 67ec91c (f)
                         }}>&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={()=> setuserid(e._id)}>&#xE872;</i></a>
                       </td>
@@ -319,8 +284,6 @@ const Employees = () => {
                   </select>
                 </div>
                 <div className="form-group">
-<<<<<<< HEAD
-=======
                   <label>الحالة</label>
                   <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(e.target.value)}>
                     <option value={true}>متاح</option>
@@ -328,7 +291,6 @@ const Employees = () => {
                   </select>
                 </div>
                 <div className="form-group">
->>>>>>> 67ec91c (f)
                   <label>الوظيفه</label>
                   <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
                     <option>اختار وظيفة</option>

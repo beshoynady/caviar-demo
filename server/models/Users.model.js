@@ -33,10 +33,7 @@ const userschema = new mongoose.Schema({
     },
     phone:{
         type : String,
-<<<<<<< HEAD
-=======
         require : [true , 'phone required'],
->>>>>>> 67ec91c (f)
         trim : true,
         length: 11,
     },
@@ -58,14 +55,11 @@ const userschema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-<<<<<<< HEAD
-=======
     isActive :{
         type: Boolean,
         default : true,
         require : [true , 'isActive required'],
     }
->>>>>>> 67ec91c (f)
     
 },
 {timestamp: true}

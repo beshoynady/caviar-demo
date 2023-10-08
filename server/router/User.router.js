@@ -7,6 +7,7 @@ const router = express.Router();
 
 // router.use(verifyJWT)
 
+
 router.route('/').post(createuser).get(getallusers);
 router.route('/:userid').get(getoneuser).put(updateuser).delete(deleteuser);
 module.exports = router;

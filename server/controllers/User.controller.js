@@ -35,10 +35,7 @@ const createuser = async (req, res, next) => {
             userinfo: {
                 id: newUser._id,
                 isAdmin: newUser.isAdmin,
-<<<<<<< HEAD
-=======
                 isActive: newUser.isActive,
->>>>>>> 67ec91c (f)
                 role: newUser.role
             }
         }, process.env.jwt_secret_key,
@@ -78,10 +75,7 @@ const updateuser = async (req, res) => {
         const phone = await req.body.phone;
         const role = await req.body.role;
         const isAdmin = await req.body.isAdmin;
-<<<<<<< HEAD
-=======
         const isActive = await req.body.isActive;
->>>>>>> 67ec91c (f)
 
         const pass = await req.body.password;
         
@@ -95,24 +89,6 @@ const updateuser = async (req, res) => {
         }
         if(pass){
             const password = await bcrypt.hash(pass, 10);
-<<<<<<< HEAD
-            const updateuser = await Usermodel.findByIdAndUpdate(id, { username, email, phone, salary, address, password, isAdmin, role }, { new: true });
-            res.status(200).json(updateuser)
-        }else{
-            const updateuser = await Usermodel.findByIdAndUpdate(id, { username, email, phone, salary, address, isAdmin, role }, { new: true });
-            res.status(200).json(updateuser)
-        }
-        // const accessToken = jwt.sign({
-        //     userinfo: {
-        //         id: newUser._id,
-        //         isAdmin: newUser.isAdmin,
-        //         role: newUser.role
-        //     }
-        // }, process.env.jwt_secret_key,
-        //     { expiresIn: process.env.jwt_expire }
-        // )
-        // res.status(200).json({ accessToken, updateuser })
-=======
             const updateuser = await Usermodel.findByIdAndUpdate(id, { username, email, phone, salary, address, password, isAdmin,isActive, role }, { new: true });
             res.status(200).json(updateuser)
         }else{
@@ -130,7 +106,6 @@ const updateuser = async (req, res) => {
             { expiresIn: process.env.jwt_expire }
         )
         res.status(200).json({ accessToken, updateuser })
->>>>>>> 67ec91c (f)
     } catch (err) { res.status(400).json(err) }
 }
 

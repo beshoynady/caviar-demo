@@ -20,11 +20,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-<<<<<<< HEAD
-  origin : 'https://restaurant-demo-jet.vercel.app',
-=======
   origin : 'https://restaurant-demo-amber.vercel.app',
->>>>>>> 67ec91c (f)
   methods : ['GET', 'POST', 'PUT' , ' UPDATE', 'DELETE'],
   credentials: true 
 }));

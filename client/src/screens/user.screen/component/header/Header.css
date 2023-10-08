@@ -1,0 +1,253 @@
+.header-client {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(90deg, rgb(66, 66, 236) 5%, rgb(0, 212, 255) 100%);
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+.header-client .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+.header-client .container .logo {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-client .container .logo .mob-menu {
+  display: none;
+}
+.header-client .container .logo .res-name {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--sacand-color);
+  margin: 0 auto;
+  text-decoration: none;
+}
+.header-client .container > nav {
+  width: 50% !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-client .container > nav .navigator {
+  width: 100%;
+  height: 70%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+.header-client .container > nav .navigator li {
+  list-style: none;
+  width: -moz-max-content;
+  width: max-content;
+  height: -moz-min-content;
+  height: min-content;
+}
+.header-client .container > nav .navigator li a {
+  font-size: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  margin-right: 10px;
+  letter-spacing: 1px;
+}
+.header-client .container .right-nav {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-client .container .right-nav .nav-logout {
+  width: 60%;
+  height: 60px;
+  background-color: rgb(243, 0, 0);
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.header-client .container .right-nav .nav-logout > span {
+  color: white;
+  font-size: 25px;
+}
+.header-client .container .right-nav .nav-login {
+  width: 60%;
+  height: 60px;
+  background-color: var(--white);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--blue);
+  border: 1px solid var(--yellow-color);
+  border-radius: 10px;
+  padding: 5pt 10px;
+  margin: auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.header-client .container .right-nav .nav-login:hover {
+  color: var(--sacand-color);
+  background-color: var(--yallow-color);
+}
+.header-client .container .right-nav .nav-login > span {
+  font-size: 25px;
+  font-weight: 500;
+}
+.header-client .container .right-nav .cart-icon {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+.header-client .container .right-nav .cart-icon > span {
+  font-size: 60px;
+  color: white;
+}
+
+.show {
+  display: flex !important;
+}
+
+@media (max-width: 768px) {
+  .header-client {
+    width: 100%;
+  }
+  .header-client .container {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 0 10px;
+  }
+  .header-client .container .logo {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-client .container .logo .mob-menu {
+    max-width: 20%;
+    min-width: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .header-client .container .logo .mob-menu span {
+    width: 100%;
+    height: 3px;
+    display: block;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+  }
+  .header-client .container .logo .res-name {
+    width: 75%;
+    font-size: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: gold;
+  }
+  .header-client .container > nav {
+    width: 100% !important;
+    height: calc(100vh - 80px) !important;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background-color: var(--sacand-color);
+  }
+  .header-client .container > nav .navigator {
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .header-client .container > nav .navigator li {
+    list-style: none;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+  }
+  .header-client .container > nav .navigator li a {
+    font-size: 35px;
+    color: var(--blue);
+    font-weight: bold;
+    margin-right: 15px;
+    letter-spacing: 1px;
+  }
+  .header-client .container .right-nav {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .header-client .container .right-nav .nav-logout {
+    width: 47%;
+    height: 60%;
+    background-color: rgb(243, 0, 0);
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .header-client .container .right-nav .nav-logout > span {
+    display: none;
+  }
+  .header-client .container .right-nav .nav-login {
+    width: 47%;
+    height: 60%;
+    background-color: rgb(29, 255, 168);
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .header-client .container .right-nav .nav-login:hover {
+    color: var(--sacand-color);
+    background-color: var(--yallow-color);
+  }
+  .header-client .container .right-nav .nav-login > span {
+    display: none;
+  }
+  .header-client .container .right-nav .cart-icon {
+    width: 50%;
+    height: 65%;
+    text-align: center;
+  }
+  .header-client .container .right-nav .cart-icon > span {
+    font-size: 50px;
+    color: white;
+  }
+}/*# sourceMappingURL=Header.css.map */

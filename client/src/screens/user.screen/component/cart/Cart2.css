@@ -1,0 +1,233 @@
+.auth-section {
+  width: 350px;
+  height: calc(100vh - 80px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  top: 90px;
+  left: 0;
+  z-index: 2000;
+  overflow-y: scroll;
+}
+.auth-section .auth-section {
+  justify-content: center;
+  align-items: center;
+  max-width: 390px;
+  height: 100vh;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  z-index: 2000;
+  overflow-y: scroll;
+}
+.auth-section .wrapper {
+  overflow: hidden;
+  max-width: 390px;
+  height: 100%;
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+}
+.auth-section .wrapper .title-text {
+  display: flex;
+  width: 200%;
+}
+.auth-section .wrapper .title {
+  width: 50%;
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.auth-section .wrapper .slide-controls {
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  margin: 10px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+.auth-section .wrapper .form-container {
+  width: 100%;
+  overflow: hidden;
+}
+.auth-section .slide-controls .slide {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+.auth-section .slide-controls label.signup {
+  color: #000;
+}
+.auth-section .slide-controls .slider-tab {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 5px;
+  background: -webkit-linear-gradient(left, #a445b2, #fa4299);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.auth-section input[type=radio] {
+  display: none;
+}
+.auth-section #signup:checked ~ .slider-tab {
+  left: 50%;
+}
+.auth-section #signup:checked ~ label.signup {
+  color: #fff;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.auth-section #signup:checked ~ label.login {
+  color: #000;
+}
+.auth-section #login:checked ~ label.signup {
+  color: #000;
+}
+.auth-section #login:checked ~ label.login {
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.auth-section .form-container .form-inner {
+  display: flex;
+  width: 200%;
+}
+.auth-section .form-container .form-inner form {
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.auth-section .form-inner form .field {
+  height: 50px;
+  width: 100%;
+  margin-top: 5px;
+}
+.auth-section .form-inner form .field input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .field input:focus {
+  border-color: #fc83bb;
+}
+.auth-section .form-inner form .field input::-moz-placeholder {
+  color: #999;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .field input::placeholder {
+  color: #999;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .field textarea {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .field textarea:focus {
+  border-color: #fc83bb;
+}
+.auth-section .form-inner form .field textarea::-moz-placeholder {
+  color: #999;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .field textarea::placeholder {
+  color: #999;
+  transition: all 0.3s ease;
+}
+.auth-section .form-inner form .pass-link {
+  margin-top: 5px;
+}
+.auth-section .form-inner form .pass-link a {
+  color: #fa4299;
+  text-decoration: none;
+}
+.auth-section .form-inner form .pass-link a:hover {
+  text-decoration: underline;
+}
+.auth-section .form-inner form .signup-link {
+  text-align: center;
+  margin-top: 30px;
+}
+.auth-section .form-inner form .signup-link a {
+  color: #fa4299;
+  text-decoration: none;
+}
+.auth-section .form-inner form .signup-link a:hover {
+  text-decoration: underline;
+}
+.auth-section form .field input:focus::-moz-placeholder {
+  color: #b3b3b3;
+}
+.auth-section form .field input:focus::placeholder {
+  color: #b3b3b3;
+}
+.auth-section form .field textarea:focus::-moz-placeholder {
+  color: #b3b3b3;
+}
+.auth-section form .field textarea:focus::placeholder {
+  color: #b3b3b3;
+}
+.auth-section form .btn {
+  height: 150px;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+.auth-section form .btn .btn-layer {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  background: -webkit-linear-gradient(right, #a445b2, #fa4299, #a445b2, #fa4299);
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+.auth-section form .btn:hover .btn-layer {
+  left: 0;
+}
+.auth-section form .btn input[type=submit] {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  color: #fff;
+  padding-left: 0;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}/*# sourceMappingURL=Cart2.css.map */

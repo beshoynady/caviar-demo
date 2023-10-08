@@ -1,0 +1,33 @@
+.kitcard{
+    width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid gray;
+    border-radius: 10px;
+    .kit-card-info{
+        width: 100%;
+        height: 150px;
+        background-color: red;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-radius: 10px 10px 0 0; 
+        margin: 0;
+        >p{
+            width: 100%;
+            height: 100%;
+            text-align: right;
+            background-color: rgb(153, 255, 105);
+            font-size: 20px;
+            >span{
+                text-align: right;
+                font-size: 20px;
+            }
+        }
+    }
+}

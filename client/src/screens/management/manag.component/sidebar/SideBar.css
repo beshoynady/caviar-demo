@@ -1,0 +1,86 @@
+.sidebar {
+  width: 170px;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  transition-duration: 0.2s;
+  position: relative;
+}
+.sidebar.toggle-width {
+  width: 70px !important;
+}
+.sidebar .menu {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.sidebar .menu .logo {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar .menu .logo > h2 {
+  font-size: 40px;
+  text-align: center;
+  color: var(--main-color);
+}
+.sidebar .menu .logo .menu-icon {
+  width: 70px;
+  height: 60px;
+  font-size: 60px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  z-index: 20000;
+  left: 0;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  cursor: pointer;
+  transition: 3s linear 100;
+  transform: rotateZ(180deg);
+}
+.sidebar .menu .logo .menu-icon.rotate {
+  transform: rotateZ(0deg);
+}
+.sidebar .menu .sid-list {
+  width: 100%;
+  height: calc(100% - 60px);
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+}
+.sidebar .menu .sid-list .item {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 0 9px;
+  cursor: pointer;
+  color: black;
+}
+.sidebar .menu .sid-list .item .icon-manag {
+  display: block;
+  font-size: 50px;
+  height: 50px;
+  margin: auto 0px;
+  text-align: center;
+  width: 55px;
+  margin-left: 15px;
+}
+.sidebar .menu .sid-list .item .menu-title {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: left;
+  text-transform: capitalize;
+  width: 85px;
+}/*# sourceMappingURL=SideBar.css.map */

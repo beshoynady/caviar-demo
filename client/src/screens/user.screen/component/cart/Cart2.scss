@@ -1,0 +1,254 @@
+$color_1: #fff;
+$color_2: #000;
+$color_3: #999;
+$color_4: #b3b3b3;
+$color_5: #fa4299;
+$border-color_1: #fc83bb;
+
+.auth-section{
+    width: 350px;
+    height: calc(100vh - 80px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position:absolute ;
+    top: 90px;
+    left: 0;
+    z-index: 2000;
+    overflow-y: scroll;
+.auth-section {
+	justify-content: center;
+	align-items: center;
+	max-width: 390px;
+	height: 100vh;
+	position: absolute;
+	top: 80px;
+	right: 0;
+	z-index: 2000;
+	overflow-y: scroll;
+}
+.wrapper {
+	overflow: hidden;
+	max-width: 390px;
+	height: 100%;
+	background: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+	.title-text {
+		display: flex;
+		width: 200%;
+	}
+	.title {
+		width: 50%;
+		font-size: 30px;
+		font-weight: 500;
+		text-align: center;
+		transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+	}
+	.slide-controls {
+		position: relative;
+		display: flex;
+		height: 50px;
+		width: 100%;
+		overflow: hidden;
+		margin: 10px 0 10px 0;
+		justify-content: space-between;
+		border: 1px solid lightgrey;
+		border-radius: 5px;
+	}
+	.form-container {
+		width: 100%;
+		overflow: hidden;
+	}
+}
+.slide-controls {
+	.slide {
+		height: 100%;
+		width: 100%;
+		color: $color_1;
+		font-size: 18px;
+		font-weight: 500;
+		text-align: center;
+		line-height: 40px;
+		cursor: pointer;
+		z-index: 1;
+		transition: all 0.6s ease;
+	}
+	label.signup {
+		color: $color_2;
+	}
+	.slider-tab {
+		position: absolute;
+		height: 100%;
+		width: 50%;
+		left: 0;
+		z-index: 0;
+		border-radius: 5px;
+		background: -webkit-linear-gradient(left, #a445b2, #fa4299);
+		transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+	}
+}
+input[type="radio"] {
+	display: none;
+}
+#signup {
+	&:checked {
+		~ {
+			.slider-tab {
+				left: 50%;
+			}
+			label.signup {
+				color: $color_1;
+				cursor: default;
+				user-select: none;
+			}
+			label.login {
+				color: $color_2;
+			}
+		}
+	}
+}
+#login {
+	&:checked {
+		~ {
+			label.signup {
+				color: $color_2;
+			}
+			label.login {
+				cursor: default;
+				user-select: none;
+			}
+		}
+	}
+}
+.form-container {
+	.form-inner {
+		display: flex;
+		width: 200%;
+		form {
+			width: 50%;
+			transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+		}
+	}
+}
+.form-inner {
+	form {
+		.field {
+			height: 50px;
+			width: 100%;
+			margin-top: 5px;
+			input {
+				height: 100%;
+				width: 100%;
+				outline: none;
+				padding-left: 15px;
+				border-radius: 5px;
+				border: 1px solid lightgrey;
+				border-bottom-width: 2px;
+				font-size: 17px;
+				transition: all 0.3s ease;
+				&:focus {
+					border-color: $border-color_1;
+				}
+				&::placeholder {
+					color: $color_3;
+					transition: all 0.3s ease;
+				}
+			}
+			textarea {
+				height: 100%;
+				width: 100%;
+				outline: none;
+				padding-left: 15px;
+				border-radius: 5px;
+				border: 1px solid lightgrey;
+				border-bottom-width: 2px;
+				font-size: 17px;
+				transition: all 0.3s ease;
+				&:focus {
+					border-color: $border-color_1;
+				}
+				&::placeholder {
+					color: $color_3;
+					transition: all 0.3s ease;
+				}
+			}
+		}
+		.pass-link {
+			margin-top: 5px;
+			a {
+				color: $color_5;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+		.signup-link {
+			text-align: center;
+			margin-top: 30px;
+			a {
+				color: $color_5;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+form {
+	.field {
+		input {
+			&:focus {
+				&::placeholder {
+					color: $color_4;
+				}
+			}
+		}
+		textarea {
+			&:focus {
+				&::placeholder {
+					color: $color_4;
+				}
+			}
+		}
+	}
+	.btn {
+		height: 150px;
+		width: 100%;
+		border-radius: 5px;
+		position: relative;
+		overflow: hidden;
+		.btn-layer {
+			height: 100%;
+			width: 300%;
+			position: absolute;
+			left: -100%;
+			background: -webkit-linear-gradient(right, #a445b2, #fa4299, #a445b2, #fa4299);
+			border-radius: 5px;
+			transition: all 0.4s ease;
+		}
+		&:hover {
+			.btn-layer {
+				left: 0;
+			}
+		}
+		input[type="submit"] {
+			height: 100%;
+			width: 100%;
+			z-index: 1;
+			position: relative;
+			background: none;
+			border: none;
+			color: $color_1;
+			padding-left: 0;
+			border-radius: 5px;
+			font-size: 20px;
+			font-weight: 500;
+			cursor: pointer;
+		}
+	}
+}
+}

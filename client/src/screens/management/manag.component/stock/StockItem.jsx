@@ -17,7 +17,7 @@ const StockItem = () => {
     e.preventDefault();
     try {
       const createBy = userid;
-      const response = await axios.post('https://restaurant-api-blush.vercel.app/api/stockitem/', { itemName, unit, Balance, price,cost,createBy, createAt });
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName, unit, Balance, price,cost,createBy, createAt });
       console.log(response.data);
       getallStockItem()
     } catch (error) {
@@ -31,7 +31,7 @@ const StockItem = () => {
     e.preventDefault()
     const createBy = userid
       try {
-        const response = await axios.put(`https://restaurant-api-blush.vercel.app/api/stockitem/${StockItemid}`, {itemName, unit, Balance, price,cost, createBy
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName, unit, Balance, price,cost, createBy
         });
         console.log(response.data);
         if (response) {
@@ -49,7 +49,7 @@ const StockItem = () => {
 
   const getallStockItem = async () => {
     try {
-      const response = await axios.get('https://restaurant-api-blush.vercel.app/api/stockitem/');
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
       const StockItems = await response.data;
       console.log(response.data)
       setAllStockItems(StockItems)
@@ -63,7 +63,7 @@ const StockItem = () => {
   const deleteStockItem = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`https://restaurant-api-blush.vercel.app/api/stockitem/${StockItemid}`);
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`);
       if (response.status == 200) {
         console.log(response);
         getallStockItem();

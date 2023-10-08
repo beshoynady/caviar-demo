@@ -9,7 +9,7 @@ const StockManag = () => {
 
   const getaStockItems = async () => {
     try {
-      const response = await axios.get('https://restaurant-api-blush.vercel.app/api/stockitem/');
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
       console.log(response.data)
       setStockItems(response.data)
 
@@ -53,11 +53,11 @@ const StockManag = () => {
       const actionBy = userid;
 
       console.log(actionBy)
-      const changeItem = await axios.put(`https://restaurant-api-blush.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
       console.log(changeItem)
 
       if(changeItem.status == 200){
-      const response = await axios.post('https://restaurant-api-blush.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost ,unit,newBalance, oldBalance, price, actionBy, actionAt });
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost ,unit,newBalance, oldBalance, price, actionBy, actionAt });
       console.log(response.data);
       getallStockaction()
       getaStockItems()
@@ -84,11 +84,11 @@ const StockManag = () => {
       const actionBy = userid;
 
       console.log(actionBy)
-      const changeItem = await axios.put(`https://restaurant-api-blush.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
       console.log(changeItem)
 
       if(changeItem.status == 200){
-      const response = await axios.put(`https://restaurant-api-blush.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit,newBalance, oldBalance, price, actionBy });
+      const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit,newBalance, oldBalance, price, actionBy });
       console.log(response.data);
       getallStockaction()
       getaStockItems()
@@ -102,7 +102,7 @@ const StockManag = () => {
 
   const getallStockaction = async () => {
     try {
-      const response = await axios.get('https://restaurant-api-blush.vercel.app/api/stockmanag/');
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockmanag/');
       console.log(response.data)
       setAllStockactions(response.data)
 
@@ -115,7 +115,7 @@ const StockManag = () => {
   const deleteStockaction = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`https://restaurant-api-blush.vercel.app/api/stockmanag/${actionId}`);
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`);
       console.log(response);
       if (response) {
         getallStockaction();

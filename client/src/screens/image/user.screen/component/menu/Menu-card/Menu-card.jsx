@@ -12,7 +12,7 @@ const MenuCard = () => {
                      {allProducts.filter(pro=>pro.category==categoryid).map((product, index) =>{
                         return(
                            <div className="menu-card" key={index}>
-                              <img className='img-card' src={`https://restaurant-api-blush.vercel.app/${product.image}`} alt="" />
+                              <img className='img-card' src={`https://caviar-api.vercel.app/${product.image}`} alt="" />
                               <div className="detalis">
                                  <div className='product-det'>
                                     <h2>{product.name}</h2>

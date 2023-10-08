@@ -24,12 +24,12 @@ const ManagerDash = () => {
   const [pending_payment, setpending_payment] = useState([])
   const [allorders, setallorders] = useState([])
 
-  const PendingOrder = async () => {
+  const PendingOrder = async () =https://caviar-api.vercel.app
     const res = await axios.get('https://restaurant-api-blush.vercel.app/api/order')
     setallorders(res.data)
     const recent_status = await res.data.filter((order) => order.status == 'انتظار')
     const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
-    setpending_order(recent_status)
+    setpending_order(recent_statuhttps://caviar-api.vercel.app
     setpending_payment(recent_payment_status)
   }
 
@@ -45,7 +45,7 @@ const ManagerDash = () => {
       })
 
       setupdate(!update)
-    } catch (error) {
+    } catch (error) {https://caviar-api.vercel.app
       console.log(error)
     }
 
@@ -59,7 +59,7 @@ const ManagerDash = () => {
       })
       setupdate(!update)
     } catch (error) {
-      console.log(error)
+      console.log(error)https://caviar-api.vercel.app
     }
   }
 
@@ -72,7 +72,7 @@ const ManagerDash = () => {
     console.log(allwaiter)
     const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
     console.log(waiterActive)
-    const listId = []
+    const listId = []https://caviar-api.vercel.app
     if(waiterActive){
     waiterActive.forEach((waiter) => {
       listId.push(waiter._id)
@@ -83,7 +83,7 @@ const ManagerDash = () => {
     }
   }
 
-  // const [waiter, setwaiter] = useState()
+  // const [waiter, setwaiter] = useShttps://caviar-api.vercel.app
   const specifiedWaiter = () => {
     const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
     console.log(ordertakewaiter)
@@ -145,7 +145,7 @@ const ManagerDash = () => {
                   <span className="info">
                     <p>اوردرات اليوم</p>
                     <h3>
-                      {list_day_order.length}
+                      {list_day_ordhttps://caviar-api.vercel.app
                     </h3>
                   </span>
                   <i className='bx bx-calendar-check'></i>

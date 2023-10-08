@@ -14,7 +14,7 @@ const Kitchen = () => {
   const [allorders, setallorders] = useState([])
   const GetPrductstoKit = async () => {
     try {
-      const orders = await axios.get('https://restaurant-api-blush.vercel.app/api/order');
+      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders.data)
       setallorders(orders.data)
 
@@ -29,7 +29,7 @@ const Kitchen = () => {
   const [waiters, setwaiters] = useState([])
   const getAllWaiter = async () => {
     const alluser = await axios.get('https://restaurant-api-blush.vercel.app/api/user')
-    console.log(alluser)
+    console.log(alluser)https://caviar-api.vercel.app
     const allwaiter = await alluser.data.filter((user) => user.role === 'waiter')
     console.log(allwaiter)
     const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
@@ -40,7 +40,7 @@ const Kitchen = () => {
       listId.push(waiter._id)
     })}
     console.log(listId)
-    if (listId.length > 0) {
+    if (listId.length > 0) {https://caviar-api.vercel.app
       setwaiters(listId)
     }
   }
@@ -103,7 +103,7 @@ const Kitchen = () => {
         ({ usertitle, updatecountofsales }) => {
           return (
             <div className='Kitchen'>
-              {orderactive && orderactive.map((order, i) => {
+              {orderactive && orderhttps://caviar-api.vercel.app
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
                     <div className="kit-card" key={i}>
@@ -114,7 +114,7 @@ const Kitchen = () => {
                         <p className="info-p">الويتر {usertitle(order.waiter)}</p>
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         <p className="info-p">وقت التنفيذ {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
-                      </div>
+                      </div>https://caviar-api.vercel.app
                       <div className="card-product">
                         <ul className='card-ul'>
                           {order.products.filter((pr) => pr.isDone == false) && order.products.filter((pr) => pr.isDone == false).map((product, i) => {

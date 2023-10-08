@@ -25,7 +25,7 @@ const Tables = () => {
   const createQR = async (e) => {
     e.preventDefault();
     const URL = `https://${window.location.hostname}/${tableid}`;
-    const qr = await axios.post('https://restaurant-api-blush.vercel.app/api/table/qr', { URL });
+    const qr = await axios.post('https://caviar-api.vercel.app/api/table/qr', { URL });
     // console.log(qr.data);
     setqrimage(qr.data);
   }
@@ -33,7 +33,7 @@ const Tables = () => {
   const [listoftable, setlistoftable] = useState([])
   const getallTable = async () => {
     try {
-      const response = await axios.get('https://restaurant-api-blush.vercel.app/api/table');
+      const response = await axios.get('https://caviar-api.vercel.app/api/table');
       setlistoftable(response.data)
       // console.log(response.data)
       // console.log(listoftable)
@@ -52,7 +52,7 @@ const Tables = () => {
     // console.log(tablenum);
     // console.log(chairs)
     try {
-      const response = await axios.post('https://restaurant-api-blush.vercel.app/api/table/', { "description": tabledesc, tablenum, chairs });
+      const response = await axios.post('https://caviar-api.vercel.app/api/table/', { "description": tabledesc, tablenum, chairs });
       console.log(response.data);
       getallTable();
     } catch (error) {
@@ -66,7 +66,7 @@ const Tables = () => {
     // console.log(tablenum);
     // console.log(chairs)
     try {
-      const response = await axios.put(`https://restaurant-api-blush.vercel.app/api/table/${tableid}`, { "description": tabledesc, tablenum, chairs });
+      const response = await axios.put(`https://caviar-api.vercel.app/api/table/${tableid}`, { "description": tabledesc, tablenum, chairs });
       console.log(response.data);
       getallTable();
     } catch (error) {
@@ -78,7 +78,7 @@ const Tables = () => {
     e.preventDefault()
     // console.log(tableid)
     try {
-      const response = await axios.delete(`https://restaurant-api-blush.vercel.app/api/table/${tableid}`);
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/table/${tableid}`);
       console.log(response.data);
       settableid(null);
       getallTable();

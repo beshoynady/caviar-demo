@@ -11,7 +11,7 @@ const Waiter = () => {
   const [pending_order, setpending_order] = useState([])
   const [pending_payment, setpending_payment] = useState([])
   const PendingOrder = async () => {
-    const res = await axios.get('https://restaurant-api-blush.vercel.app/api/order')
+    const res = await axios.get('https://caviar-api.vercel.app/api/order')
     const recent_status = await res.data.filter((order) => order.status == 'انتظار')
     const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
     setpending_order(recent_status)
@@ -22,7 +22,7 @@ const Waiter = () => {
   const [orderactive, setorderactive] = useState([])
   const GetPrductstowaiter = async () => {
     try {
-      const orders = await axios.get('https://restaurant-api-blush.vercel.app/api/order');
+      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders)
       const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'تم التحضير' || order.status == 'في الطريق')
       console.log(orderisctive)
@@ -36,7 +36,7 @@ const Waiter = () => {
   const orderOnWay = async (id) => {
     // const waiter = waiterid;
     const status = 'في الطريق'
-    const done = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       status
     })
     GetPrductstowaiter()
@@ -44,7 +44,7 @@ const Waiter = () => {
   }
   const helpOnWay = async (id) => {
     const help = 'في الطريق'
-    const done = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       help
     })
     GetPrductstowaiter()
@@ -53,7 +53,7 @@ const Waiter = () => {
 
   const helpDone = async (id) => {
     const help = 'تمت المساعدة'
-    const done = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       help
     })
     GetPrductstowaiter()
@@ -61,7 +61,7 @@ const Waiter = () => {
 
 
   const orderDelivered = async (id) => {
-    const order = await axios.get('https://restaurant-api-blush.vercel.app/api/order/' + id)
+    const order = await axios.get('https://caviar-api.vercel.app/api/order/' + id)
     // console.log(order)
     const cloneproduct = await order.data.products
     // console.log(cloneproduct)
@@ -72,7 +72,7 @@ const Waiter = () => {
     }
     console.log(products)
     const status = 'تم التوصيل'
-    const done = await axios.put('https://restaurant-api-blush.vercel.app/api/order/' + id, {
+    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       products,
       status
     })

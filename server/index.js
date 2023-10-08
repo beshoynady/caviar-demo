@@ -20,7 +20,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin : 'https://restaurant-demo-amber.vercel.app',
+  origin : 'https://caviar-demo.vercel.app',
   methods : ['GET', 'POST', 'PUT' , ' UPDATE', 'DELETE'],
   credentials: true 
 }));

@@ -151,7 +151,8 @@ function App() {
   const deleteitems = (id) => {
     const withotdeleted = itemsincart.filter(item => item._id !== id)
     const product = allProducts.find((pro, i) => pro._id = id)
-    product.quantity = 0
+    console.log(product)
+    product[0].quantity = 0
     setitemsincart(withotdeleted);
   }
 

@@ -139,10 +139,13 @@ function App() {
 
     if (itemsincart.length > 0) {
       const repeateditem = itemsincart.filter(item => item._id === id)
+      console.log(repeateditem)
       if (repeateditem.length == 0) {
+        console.log([...itemsincart, ...cartitem])
         setitemsincart([...itemsincart, ...cartitem])
       }
     } else {
+      console.log([...cartitem])
       setitemsincart([...cartitem])
     }
   }
@@ -153,8 +156,8 @@ function App() {
     console.log(product)
     product.quantity = 0
     const withotdeleted = itemsincart.filter(item => item._id != id)
-    console.log(withotdeleted)
-    setitemsincart(withotdeleted);
+    console.log([...withotdeleted])
+    setitemsincart([...withotdeleted]);
   }
 
 
@@ -545,7 +548,7 @@ function App() {
     if (tokenStorage) {
       const decodetoken = jwt_decode(tokenStorage)
       setuserlogininfo(decodetoken.userinfo)
-      console.log(decodetoken)
+      // console.log(decodetoken)
     }
   }
 

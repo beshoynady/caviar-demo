@@ -110,7 +110,7 @@ function App() {
     setcount(count + 1)
     const product = allProducts.find(product => product._id == id)
     product.quantity += 1;
-    // console.log(product.quantity)
+    console.log(product)
   };
 
   const descrement = (id) => {
@@ -155,6 +155,7 @@ function App() {
     const product = allProducts.find((pro, i) => pro._id = id)
     console.log(product)
     product.quantity = 0
+    console.log(product.quantity)
     const withotdeleted = itemsincart.filter(item => item._id != id)
     console.log([...withotdeleted])
     setitemsincart([...withotdeleted]);

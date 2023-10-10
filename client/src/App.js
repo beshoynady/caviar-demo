@@ -158,7 +158,7 @@ function App() {
     console.log(product.quantity)
     const withotdeleted = itemsincart.filter(item => item._id != id)
     console.log([...withotdeleted])
-    setitemsincart([...withotdeleted]);
+    setitemsincart([...withotdeleted]); 
   }
 
 

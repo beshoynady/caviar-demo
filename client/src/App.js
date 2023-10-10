@@ -138,27 +138,21 @@ function App() {
     console.log(cartitem)
 
     if (itemsincart.length > 0) {
-      // const repeateditem = itemsincart.filter(item => item._id === id)
-      // console.log(repeateditem)
-      // if (repeateditem.length == 0) {
-        console.log([...itemsincart, ...cartitem])
+      const repeateditem = itemsincart.filter(item => item._id === id)
+      if (repeateditem.length == 0) {
         setitemsincart([...itemsincart, ...cartitem])
-      // }
+      }
     } else {
-      console.log([...cartitem])
       setitemsincart([...cartitem])
     }
   }
 
   // delete item from cart by id
   const deleteitems = (id) => {
+    const withotdeleted = itemsincart.filter(item => item._id !== id)
     const product = allProducts.find((pro, i) => pro._id = id)
-    console.log(product)
     product.quantity = 0
-    console.log(product.quantity)
-    const withotdeleted = itemsincart.filter(item => item._id != id)
-    console.log([...withotdeleted])
-    setitemsincart([...withotdeleted]); 
+    setitemsincart(withotdeleted);
   }
 
 

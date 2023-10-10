@@ -148,10 +148,11 @@ function App() {
   }
 
   // delete item from cart by id
+  
   const deleteitems = (id) => {
     const withotdeleted = itemsincart.filter(item => item._id !== id)
-    const product = allProducts.find((pro, i) => pro._id = id)
-    product.quantity = 0
+    // const product = allProducts.find((pro, i) => pro._id = id)
+    // product.quantity = 0
     setitemsincart(withotdeleted);
   }
 

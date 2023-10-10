@@ -4,21 +4,6 @@ import { detacontext } from '../../../../App'
 import axios from 'axios'
 
 const ManagerDash = () => {
-  const [pagination, setpagination] = useState(5)
-  const EditPagination = (e) => {
-    if (e.target.innerHTML == 'Next') {
-      setpagination(pagination + 5)
-    } else if (e.target.innerHTML == 'Previous') {
-      if (pagination <= 5) {
-        setpagination(5)
-      } else {
-        setpagination(pagination - 5)
-      }
-    } else {
-      setpagination(e.target.innerHTML * 5)
-    }
-  }
-
 
   const [pending_order, setpending_order] = useState([])
   const [pending_payment, setpending_payment] = useState([])
@@ -127,7 +112,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle, list_day_order, total_day_salse }) => {
+        ({ usertitle, list_day_order, total_day_salse,pagination,EditPagination }) => {
           return (
             <section className='dashboard'>
               <div className="header">

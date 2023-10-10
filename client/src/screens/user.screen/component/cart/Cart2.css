@@ -67,6 +67,7 @@
   cursor: pointer;
   z-index: 1;
   transition: all 0.6s ease;
+  color: black;
 }
 .auth-section .slide-controls label.signup {
   color: #000;

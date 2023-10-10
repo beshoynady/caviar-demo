@@ -27,43 +27,36 @@ const Kitchen = () => {
   }
 
   const [waiters, setwaiters] = useState([])
-  const getAllWaiter = async () => {
+  const getAllWaiter = async()=>{
     const alluser = await axios.get('https://caviar-api.vercel.app/api/user')
-    console.log(alluser)
-    const allwaiter = await alluser.data.filter((user) => user.role === 'waiter')
-    console.log(allwaiter)
-    const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
-    console.log(waiterActive)
+    const allwaiter =await alluser.data.filter((user)=>user.role === 'waiter')
+    // console.log(allwaiter)
     const listId = []
-    if(waiterActive){
-    waiterActive.forEach((waiter) => {
+    allwaiter.forEach((waiter)=>{
       listId.push(waiter._id)
-    })}
-    console.log(listId)
-    if (listId.length > 0) {
+    })
+    // console.log(listId)
+    if(listId.length>0){
       setwaiters(listId)
     }
   }
 
   // const [waiter, setwaiter] = useState()
-  const specifiedWaiter = () => {
-    const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
-    console.log(ordertakewaiter)
-    const lastwaiter = ordertakewaiter.length>0? ordertakewaiter[allorders.length - 1].waiter : ''
+  const specifiedWaiter =()=>{
+    const lastwaiter = allorders? allorders[allorders.length-1].waiter:''
     console.log(lastwaiter)
-
-    const indexoflastwaiter = lastwaiter!=''? waiters.indexOf(lastwaiter): 0
+    const indexoflastwaiter = waiters.indexOf(lastwaiter)
 
     console.log(indexoflastwaiter)
-    console.log(indexoflastwaiter + 1)
+    console.log(indexoflastwaiter+1)
     console.log(waiters.length)
     console.log(waiters)
     // setwaiter(waiters[indexofwaiter+1])
-    if (waiters.length == indexoflastwaiter + 1) {
+    if(waiters.length < indexoflastwaiter+1){
       const waiter = waiters[0]
-      return waiter
-    } else {
-      const waiter = waiters[indexoflastwaiter + 1]
+      return waiter     
+    }else{
+      const waiter = waiters[indexoflastwaiter+1]
       return waiter
     }
   }

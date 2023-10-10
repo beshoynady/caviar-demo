@@ -138,12 +138,12 @@ function App() {
     console.log(cartitem)
 
     if (itemsincart.length > 0) {
-      const repeateditem = itemsincart.filter(item => item._id === id)
-      console.log(repeateditem)
-      if (repeateditem.length == 0) {
+      // const repeateditem = itemsincart.filter(item => item._id === id)
+      // console.log(repeateditem)
+      // if (repeateditem.length == 0) {
         console.log([...itemsincart, ...cartitem])
         setitemsincart([...itemsincart, ...cartitem])
-      }
+      // }
     } else {
       console.log([...cartitem])
       setitemsincart([...cartitem])

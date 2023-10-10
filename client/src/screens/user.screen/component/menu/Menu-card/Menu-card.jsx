@@ -41,9 +41,10 @@ const MenuCard = () => {
                                     </div>
                                  </div>
                                  <div className='card-btn'>
-                                 {itemid.filter((i)=>i == product._id).length>0 && product.quantity>0?
+                                 <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button>
+                                 {/* {itemid.filter((i)=>i == product._id).length>0 && product.quantity>0?
                               <button className='delfromcart' onClick={() => { deleteitems(product._id);setitemid(itemid.filter((i)=> i !== product._id)) }}>احذف من الطلبات</button>
-                              : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button>}
+                              : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button>} */}
                                  </div>
                               </div>
                            </div>

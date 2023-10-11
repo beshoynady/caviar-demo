@@ -15,7 +15,6 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: nowrap;
-
         .logo {
             .mob-menu {
                 display: none;
@@ -78,7 +77,7 @@
             justify-content: space-between;
 
             .nav-logout {
-                width: 60%;
+                width: 50%;
                 height: 60px;
                 background-color: rgb(243, 0, 0);
                 font-size: 18px;
@@ -88,7 +87,6 @@
                 justify-content: space-evenly;
                 border-radius: 10px;
                 cursor: pointer;
-
                 >span {
                     color: white;
                     font-size: 25px;

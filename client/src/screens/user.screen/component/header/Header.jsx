@@ -27,7 +27,7 @@ const Header = () => {
         ({ usertitle, userlogininfo, logout }) => {
           return (
             <header className='header-client'>
-              <div className="container container-lg">
+              <div className="container-lg">
 
                 <div className='logo'>
                   <div className="mob-menu" onClick={() => { openmobmenu() }}>

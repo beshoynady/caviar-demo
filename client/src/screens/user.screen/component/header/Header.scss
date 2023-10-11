@@ -143,15 +143,7 @@
 @media (max-width: 768px) {
     .header-client {
         width: 100%;
-
-        .container {
-            width: 100% !important;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: nowrap;
-            padding: 0 10px;
-
+        .container-lg {
             .logo {
                 width: 60%;
                 height: 100%;

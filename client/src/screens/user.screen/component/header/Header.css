@@ -72,9 +72,9 @@
   justify-content: space-between;
 }
 .header-client .container-lg .right-nav .nav-logout {
-  width: 50%;
-  height: 60px;
-  background-color: rgb(243, 0, 0);
+  width: 70px;
+  height: 50px;
+  background-color: rgb(194, 0, 0);
   font-size: 18px;
   color: white;
   display: flex;
@@ -114,10 +114,25 @@
   width: 60px;
   height: 60px;
   text-align: center;
+  position: relative;
 }
-.header-client .container-lg .right-nav .cart-icon > span {
+.header-client .container-lg .right-nav .cart-icon .material-symbols-rounded {
   font-size: 60px;
   color: white;
+}
+.header-client .container-lg .right-nav .cart-icon .itemcount {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .show {

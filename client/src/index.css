@@ -33,15 +33,14 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  overflow-x: hidden;
 }
 
-/* .container {
+.container {
   width: 95% !important;
   height: 100% !important;
   margin: 0 auto;
   padding: 0;
-} */
+}
 
 .section-title{
   width: 200px;

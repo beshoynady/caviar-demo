@@ -28,7 +28,8 @@
 }
 .header-client .container-lg .logo .res-name {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: bold;
+  letter-spacing: 2px;
   color: var(--sacand-color);
   margin: 0 auto;
   text-decoration: none;
@@ -57,22 +58,23 @@
   height: min-content;
 }
 .header-client .container-lg > nav .navigator li a {
-  font-size: 20px;
+  font-size: 1.2rem;
   color: rgb(255, 255, 255);
-  font-weight: 900;
+  font-weight: bold;
   margin-right: 10px;
+  letter-spacing: 1px;
 }
 .header-client .container-lg .right-nav {
-  width: 150px;
+  width: 20%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .header-client .container-lg .right-nav .nav-logout {
-  width: 70px;
-  height: 50px;
-  background-color: rgb(194, 0, 0);
+  width: 50%;
+  height: 60px;
+  background-color: rgb(243, 0, 0);
   font-size: 18px;
   color: white;
   display: flex;
@@ -86,7 +88,7 @@
   font-size: 25px;
 }
 .header-client .container-lg .right-nav .nav-login {
-  width: 70px;
+  width: 60%;
   height: 60px;
   background-color: var(--white);
   font-size: 20px;
@@ -112,26 +114,10 @@
   width: 60px;
   height: 60px;
   text-align: center;
-  position: relative;
 }
-.header-client .container-lg .right-nav .cart-icon .material-symbols-rounded {
+.header-client .container-lg .right-nav .cart-icon > span {
   font-size: 60px;
   color: white;
-  cursor: pointer;
-}
-.header-client .container-lg .right-nav .cart-icon .itemcount {
-  height: 25px;
-  width: 25px;
-  position: absolute;
-  top: -2%;
-  right: -10%;
-  background-color: red;
-  color: white;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
 }
 
 .show {

@@ -33,7 +33,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  overflow-x: h;
+  overflow-x: hidden;
 }
 
 /* .container {

@@ -1,5 +1,5 @@
 .header-client {
-  width: 100%;
+  max-width: 100%;
   height: 80px;
   display: flex;
   align-items: center;
@@ -9,6 +9,7 @@
   position: sticky;
   top: 0;
   left: 0;
+  overflow: hidden;
 }
 .header-client .container-lg {
   display: flex;

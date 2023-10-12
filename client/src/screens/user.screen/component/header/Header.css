@@ -122,14 +122,14 @@
   cursor: pointer;
 }
 .header-client .container-lg .right-nav .cart-icon .itemcount {
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
   position: absolute;
-  top: 10%;
-  right: 10%;
+  top: -10%;
+  right: -3%;
   background-color: red;
   color: white;
-  font-size: 10px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;

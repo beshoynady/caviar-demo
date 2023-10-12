@@ -10,12 +10,12 @@
   justify-content: center;
   scroll-margin-top: 90px;
 }
-.main-home .container {
+.main-home .container-lg {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.main-home .container .content {
+.main-home .container-lg .content {
   width: 50%;
   height: 70%;
   display: flex;
@@ -25,7 +25,7 @@
   position: absolute;
   left: 50px;
 }
-.main-home .container .content .main-title {
+.main-home .container-lg .content .main-title {
   width: 90%;
   height: 300px;
   text-align: center;
@@ -33,14 +33,14 @@
   font-weight: bold;
   color: var(--yallow-color);
 }
-.main-home .container .content .main-text {
+.main-home .container-lg .content .main-text {
   font-size: 50px;
   text-align: center;
   font-weight: bolder;
   color: var(--white);
   margin-top: 30px;
 }
-.main-home .container .content .main-btn {
+.main-home .container-lg .content .main-btn {
   width: 350px;
   height: 20%;
   display: flex;
@@ -48,7 +48,7 @@
   justify-content: space-between;
   list-style: none;
 }
-.main-home .container .content .main-btn .main-li {
+.main-home .container-lg .content .main-btn .main-li {
   width: 150px;
   height: 60px;
   border: 2px solid transparent;
@@ -59,12 +59,12 @@
   justify-content: center;
   cursor: pointer;
 }
-.main-home .container .content .main-btn .main-li.mrl-auto {
+.main-home .container-lg .content .main-btn .main-li.mrl-auto {
   margin-left: auto !important;
   margin-right: auto !important;
   width: 50% !important;
 }
-.main-home .container .content .main-btn .main-li a {
+.main-home .container-lg .content .main-btn .main-li a {
   display: inline-block;
   text-decoration: none;
   font-size: 25px;

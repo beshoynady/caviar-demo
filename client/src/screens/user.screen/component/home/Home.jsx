@@ -11,7 +11,7 @@ const Home = () => {
         ({askingForHelp ,userlogininfo, usertitle}) => {
           return (
             <main className='main-home'> 
-              <div className="container">
+              <div className="container-lg">
                 <div className="content">
                   {userlogininfo==true & id == true ?<p className='main-title'>مرحبا {usertitle(userlogininfo.id)} علي طاولة {usertitle(id)}  <br/> في</p>
                   : userlogininfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.id)} <br/> في</p>

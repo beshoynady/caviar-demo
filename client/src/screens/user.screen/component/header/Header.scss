@@ -124,25 +124,24 @@
                 height: 60px;
                 text-align: center;
                 position: relative;
+                cursor: pointer;
                 .material-symbols-rounded {
                     font-size: 60px;
                     color: white;
                 }
                 .itemcount{
-                    height: 20px;
-                    width: 20px;
-                    position: absolute;
-                    top: 10%;
-                    right: 10%;
-                    background-color: red;
-                    color: white;
-                    font-size: 10px;
-                    display: flex;
+                    width: 25px;                                }
+                    height: 25px;
+                    font-size: 14px;
                     align-items: center;
-                    justify-content: center;
+                    background-color: red;
                     border-radius: 50%;
-                }
-
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    position: absolute;
+                    right: 25%;
+                    top: -10%;
             }
 
         }

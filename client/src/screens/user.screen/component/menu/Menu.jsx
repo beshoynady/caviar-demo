@@ -11,7 +11,7 @@ const Menu = () => {
         {
           ({ allcategories,setcategoryid, filterByCategoryId, categoryid }) => {
             return (
-              <div className="container-lg">
+              <div className="container-xl">
                 <div className='section-title'>
                   <h2>menu</h2>
                 </div>

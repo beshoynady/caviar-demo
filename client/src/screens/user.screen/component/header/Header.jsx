@@ -47,6 +47,10 @@ const Header = () => {
                   </ul>
                 </nav>
                 <div className='right-nav'>
+                  <div className='cart-icon' onClick={(e) => { e.preventDefault(); setopencart(!opencart) }}>
+                    <span className="material-symbols-rounded">shopping_cart</span>
+                    <span className='itemcount'>{itemsincart.length}</span>
+                  </div>
                   {id ? ''
                     : userlogininfo ? <div className="nav-logout" onClick={logout}> خروج
                       <span className="material-symbols-outlined">logout</span>
@@ -55,10 +59,6 @@ const Header = () => {
                         login
                       </span></div>
                   }
-                  <div className='cart-icon' onClick={(e) => { e.preventDefault(); setopencart(!opencart) }}>
-                    <span className="material-symbols-rounded">shopping_cart</span>
-                    <span className='itemcount'>{itemsincart.length}</span>
-                  </div>
                   <LoginRegistr openlogin={openlogin} />
                   <Cart opencart={opencart} />
 

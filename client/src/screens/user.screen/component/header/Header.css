@@ -28,8 +28,7 @@
 }
 .header-client .container-lg .logo .res-name {
   font-size: 2rem;
-  font-weight: bold;
-  letter-spacing: 2px;
+  font-weight: 600;
   color: var(--sacand-color);
   margin: 0 auto;
   text-decoration: none;
@@ -58,14 +57,13 @@
   height: min-content;
 }
 .header-client .container-lg > nav .navigator li a {
-  font-size: 1.2rem;
+  font-size: 20px;
   color: rgb(255, 255, 255);
-  font-weight: bold;
+  font-weight: 900;
   margin-right: 10px;
-  letter-spacing: 1px;
 }
 .header-client .container-lg .right-nav {
-  width: 20%;
+  width: 150px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -88,7 +86,7 @@
   font-size: 25px;
 }
 .header-client .container-lg .right-nav .nav-login {
-  width: 60%;
+  width: 70px;
   height: 60px;
   background-color: var(--white);
   font-size: 20px;

@@ -72,7 +72,7 @@
   justify-content: space-between;
 }
 .header-client .container-lg .right-nav .nav-logout {
-  width: 50%;
+  width: 70px;
   height: 60px;
   background-color: rgb(243, 0, 0);
   font-size: 18px;
@@ -88,7 +88,7 @@
   font-size: 25px;
 }
 .header-client .container-lg .right-nav .nav-login {
-  width: 60%;
+  width: 70px;
   height: 60px;
   background-color: var(--white);
   font-size: 20px;
@@ -114,10 +114,22 @@
   width: 60px;
   height: 60px;
   text-align: center;
+  position: relative;
 }
-.header-client .container-lg .right-nav .cart-icon > span {
+.header-client .container-lg .right-nav .cart-icon .shopping_cart {
   font-size: 60px;
   color: white;
+}
+.header-client .container-lg .right-nav .cart-icon .cartcounter {
+  width: 25px;
+  height: 25px;
+  background-color: red;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  position: absolute;
+  top: -2%;
+  right: -10%;
 }
 
 .show {

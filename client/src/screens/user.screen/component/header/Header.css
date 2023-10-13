@@ -113,6 +113,7 @@
   height: 60px;
   text-align: center;
   position: relative;
+  cursor: pointer;
 }
 .header-client .container-lg .right-nav .cart-icon .shopping_cart {
   font-size: 60px;

@@ -80,6 +80,9 @@
   width: 70%;
   height: 100%;
   text-align: right;
+  color: black;
+  font-size: 20px;
+  font-weight: 900;
 }
 .Kitchen .kit-card .card-product .card-ul .card-li .product-card-det .product-quantity {
   display: inline-block;

@@ -7,13 +7,11 @@
     justify-content: center;
     // scroll-margin-top: 80px;
     padding-bottom: 15px;
-
     .container-lg {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-
         .section-content {
             width: 100%;
             height: calc(100% - 100px);
@@ -80,7 +78,7 @@
         padding-bottom: 15px;
         // background-color: red;
     
-        .container-xl {
+        .container-lg {
             height: 100%;
             display: flex;
             flex-direction: column;

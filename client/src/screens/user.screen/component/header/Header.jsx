@@ -37,7 +37,7 @@ const Header = () => {
                   </div>
                   <a href="#" className='res-name'>كافيار</a>
                 </div>
-                <nav ref={navref}>
+                <nav ref={navref} className='nav'>
                   <ul className='navigator'>
                     <li onClick={() => { openmobmenu() }}><a href="#">الرئيسيه </a></li>
                     <li onClick={() => { openmobmenu() }}><a href="#menu">قائمة الطعام</a></li>

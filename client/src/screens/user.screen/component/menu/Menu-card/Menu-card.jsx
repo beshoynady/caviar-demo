@@ -33,12 +33,12 @@ const MenuCard = () => {
                                     <p>{product.description}</p>
                                  </div>
                                  <div className="price">
-                                    <p>{product.price}ج</p>
                                     <div className="counter">
                                        <button className='symb' onClick={() => descrement(product._id)}>-</button>
                                        <span className='num'>{product.quantity}</span>
                                        <button className='symb' onClick={() => increment(product._id)}>+</button>
                                     </div>
+                                    <p>{product.price}ج</p>
                                  </div>
                                  <div className='card-btn'>
                                  {/* <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button> */}

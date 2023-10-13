@@ -22,21 +22,19 @@
             margin-top: 15px;
 
             .menu-nav {
-                width: 80%;
+                width: 100%;
                 height: 70px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin: 10px auto;
-
-                // background-color: greenyellow;
                 >ul {
                     width: 100%;
                     height: 100%;
                     display: flex;
+                    flex-wrap: wrap;
                     align-items: center;
                     justify-content: center;
-                    // background-color: hotpink;
                     padding: 0;
                     margin: 0;
 

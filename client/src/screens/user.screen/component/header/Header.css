@@ -123,8 +123,11 @@
   height: 25px;
   background-color: red;
   color: white;
-  font-size: 14px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: -2%;
   right: -10%;
@@ -246,12 +249,28 @@
     display: none;
   }
   .header-client .container-lg .right-nav .cart-icon {
-    width: 50%;
-    height: 65%;
+    height: 50px;
     text-align: center;
+    width: 65px;
+    position: relative;
   }
-  .header-client .container-lg .right-nav .cart-icon > span {
+  .header-client .container-lg .right-nav .cart-icon .shopping_cart {
     font-size: 50px;
     color: white;
+  }
+  .header-client .container-lg .right-nav .cart-icon .cartcounter {
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    border-radius: 50%;
   }
 }/*# sourceMappingURL=Header.css.map */

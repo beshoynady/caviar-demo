@@ -130,8 +130,11 @@
                     height: 25px;
                     background-color: red;
                     color: white;
-                    font-size: 14px;
-                    font-weight: 900;
+                    font-size: 15px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     position: absolute;
                     top: -2%;
                     right: -10%;
@@ -267,14 +270,30 @@
             }
 
             .cart-icon {
-                width: 50%;
-                height: 65%;
+                height: 50px;
                 text-align: center;
-
-                >span {
+                width: 65px;
+               position: relative;
+                .shopping_cart {
                     font-size: 50px;
                     color: white;
                 }
+                .cartcounter{
+                    width: 25px;
+                    height: 25px;
+                    background-color: red;
+                    color: white;
+                    font-size: 15px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: -10%;
+                    right: -10%;
+                    border-radius: 50%;
+                }
+
 
             }
         }

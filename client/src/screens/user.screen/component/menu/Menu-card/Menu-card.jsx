@@ -1,34 +1,33 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import './Menu-card.css';
 import { detacontext } from '../../../../../App';
 
 const MenuCard = () => {
-   const [itemid, setitemid] = useState([])
    const [noteArea, setnoteArea] = useState(false)
    const [productid, setproductid] = useState('')
    return (
       <detacontext.Consumer>
          {
-            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement,setproductnote,addnotrstoproduct, }) => {
+            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid, setitemid}) => {
                return (
                   <div className="card-group">
                      {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                         return (
                            <div className="menu-card" key={index}>
                               <img className='img-card' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
-                              {product._id==productid&noteArea==true?<form onSubmit={(e)=>{addnotrstoproduct(e,product._id);;setnoteArea(!noteArea)}}>
-                                    <textarea placeholder='اضف تعليماتك الخاصة بهذا الطبق' name="note" cols="100" rows="3" onChange={(e)=>{setproductnote(e.target.value)}}></textarea>
-                                    <div className='note-btn'>
+                              {product._id == productid & noteArea == true ? <form onSubmit={(e) => { addnotrstoproduct(e, product._id);; setnoteArea(!noteArea) }}>
+                                 <textarea placeholder='اضف تعليماتك الخاصة بهذا الطبق' name="note" cols="100" rows="3" onChange={(e) => { setproductnote(e.target.value) }}></textarea>
+                                 <div className='note-btn'>
                                     <button>تاكيد</button>
-                                    <button onClick={()=>setnoteArea(!noteArea)}>الغاء</button>
-                                    </div>
-                                 </form>:''}
+                                    <button onClick={() => setnoteArea(!noteArea)}>الغاء</button>
+                                 </div>
+                              </form> : ''}
 
                               <div className="detalis">
                                  <div className='product-det'>
                                     <div className='product-name'>
                                        <h2>{product.name}</h2>
-                                       <span className="material-symbols-outlined" onClick={()=>{setnoteArea(!noteArea);setproductid(product._id)}}>note_alt</span>
+                                       <span className="material-symbols-outlined" onClick={() => { setnoteArea(!noteArea); setproductid(product._id) }}>note_alt</span>
                                     </div>
                                     <p>{product.description}</p>
                                  </div>
@@ -41,10 +40,9 @@ const MenuCard = () => {
                                     <p>{product.price}ج</p>
                                  </div>
                                  <div className='card-btn'>
-                                 {/* <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button> */}
-                                 {itemid.filter((i)=>i == product._id).length>0 && product.quantity>0?
-                              <button className='delfromcart' onClick={() => { deleteitems(product._id);setitemid(itemid.filter((i)=> i !== product._id)) }}>احذف من الطلبات</button>
-                              : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button>}
+                                    {itemid.filter((i) => i == product._id).length > 0 && product.quantity > 0 ?
+                                       <button className='delfromcart' onClick={() => { deleteitems(product._id) }}>احذف من الطلبات</button>
+                                       : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) } }}>اضف الي طلباتي</button>}
                                  </div>
                               </div>
                            </div>

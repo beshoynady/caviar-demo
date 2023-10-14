@@ -104,6 +104,9 @@ function App() {
     setcategoryid(e.target.value)
   }
 
+  const [itemid, setitemid] = useState([])
+
+
   const [count, setcount] = useState(0)
 
   const increment = (id) => {
@@ -141,15 +144,19 @@ function App() {
       const repeateditem = itemsincart.filter(item => item._id === id)
       if (repeateditem.length == 0) {
         setitemsincart([...itemsincart, ...cartitem])
+        setitemid([...itemid, id])
       }
     } else {
       setitemsincart([...cartitem])
+      setitemid([id])
+
     }
   }
 
   // delete item from cart by id
   const quantityzero=(id)=>{
     const product = allProducts.find((pro, i) => pro._id == id)
+    setitemid(itemid.filter((i) => i !== id))
     product.quantity = 0
   }
   
@@ -158,6 +165,7 @@ function App() {
     setitemsincart(withotdeleted);
     quantityzero(id)
   }
+
 
   // Calculate costOrder of cart item
   const [costOrder, setcostOrder] = useState(0)
@@ -627,7 +635,7 @@ function App() {
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,
       CreateWaiterOrder, CreateCasherOrder ,POSinvoice,
-      EditPagination,pagination
+      EditPagination,pagination ,itemid, setitemid
     }}>
       <BrowserRouter>
         <Routes>

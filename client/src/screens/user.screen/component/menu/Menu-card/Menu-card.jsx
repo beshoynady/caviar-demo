@@ -8,7 +8,7 @@ const MenuCard = () => {
    return (
       <detacontext.Consumer>
          {
-            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid, setitemid}) => {
+            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid}) => {
                return (
                   <div className="card-group">
                      {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {

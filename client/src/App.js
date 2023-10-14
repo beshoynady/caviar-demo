@@ -104,9 +104,8 @@ function App() {
     setcategoryid(e.target.value)
   }
 
-  const [itemid, setitemid] = useState([])
-
-
+  
+  
   const [count, setcount] = useState(0)
 
   const increment = (id) => {
@@ -132,6 +131,9 @@ function App() {
     const product = allProducts.find(product => product._id == id)
     product.notes = productnote
   }
+
+  //list of items id to add & delete btn
+  const [itemid, setitemid] = useState([])
   // add items to cart
   const [itemsincart, setitemsincart] = useState([])
 

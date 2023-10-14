@@ -15,13 +15,12 @@ import './Offers.css';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 export default function Offers() {
-  const [itemid, setitemid] = useState([])
   const [noteArea, setnoteArea] = useState(false)
   const [productid, setproductid] = useState('')
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, itemsincart, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, }) => {
+        ({ allProducts, itemid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, }) => {
           return (
             <section id='offer'  className='offers-section'>
               <div className='section-title'>
@@ -79,8 +78,8 @@ export default function Offers() {
                           </div>
                           <div className='offer-card-btn'>
                             {itemid.filter((i)=>i == product._id).length>0 && product.quantity>0?
-                              <button className='delcart' onClick={() => { deleteitems(product._id);setitemid(itemid.filter((i)=> i !== product._id)) }}>احذف من الطلبات</button>
-                              : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id, product.quantity) };setitemid([...itemid , product._id]) }}>اضف الي طلباتي</button>}
+                              <button className='delcart' onClick={() => { deleteitems(product._id) }}>احذف من الطلبات</button>
+                              : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id, product.quantity)} }}>اضف الي طلباتي</button>}
                           </div>
                         </div>
                       </div>

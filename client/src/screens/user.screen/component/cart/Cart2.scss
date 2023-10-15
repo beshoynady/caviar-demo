@@ -254,3 +254,12 @@ form {
 	}
 }
 }
+
+
+@media print {
+	.invoice-box {
+	  max-width: unset;
+	  box-shadow: none;
+	  border: 0px;
+	}
+  }

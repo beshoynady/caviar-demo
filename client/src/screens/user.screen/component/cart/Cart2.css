@@ -232,4 +232,12 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+@media print {
+  .invoice-box {
+    max-width: unset;
+    box-shadow: none;
+    border: 0px;
+  }
 }/*# sourceMappingURL=Cart2.css.map */

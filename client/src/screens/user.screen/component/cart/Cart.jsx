@@ -62,28 +62,28 @@ const Cart = (props) => {
                       <div className='side-content'>
                         {itemsincart.map((i, index) => {
                           return (
-                            i.quantity>0?
-                            <div className="cart-item" key={index}>
-                              <div className="cart-img">
-                                <img src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${i.image}`} />
-                              </div>
-                              <div className='cart-det'>
-                                <div className="item-head">
-                                  <p>{i.name}</p>
-                                  <button onClick={() => deleteitems(i._id)}>حذف</button>
+                            i.quantity > 0 ?
+                              <div className="cart-item" key={index}>
+                                <div className="cart-img">
+                                  <img src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${i.image}`} />
                                 </div>
-                                <div className="del-cost">
-                                  <div className='cart-price'>
-                                    <p>{i.price} ج</p>
-                                    <p>×{i.quantity}</p>
+                                <div className='cart-det'>
+                                  <div className="item-head">
+                                    <p>{i.name}</p>
+                                    <button onClick={() => deleteitems(i._id)}>حذف</button>
                                   </div>
-                                  <p>{i.price * i.quantity}</p>
+                                  <div className="del-cost">
+                                    <div className='cart-price'>
+                                      <p>{i.price} ج</p>
+                                      <p>×{i.quantity}</p>
+                                    </div>
+                                    <p>{i.price * i.quantity}</p>
+                                  </div>
+                                  {i.notes ? <div className='cart-note'>{i.notes}</div> : ''}
                                 </div>
-                                {i.notes ? <div className='cart-note'>{i.notes}</div> : ''}
-                              </div>
 
-                            </div>
-                            :''
+                              </div>
+                              : ''
                           )
                         })
                         }
@@ -104,19 +104,20 @@ const Cart = (props) => {
                         <table className="invoice-info-container">
                           <tbody>
                             <tr>
-                              <td rowSpan="2" className="client-name">
-                                عميل:{userlogininfo ? usertitle(userlogininfo.id) : ''}
-                              </td>
-                              <td rowSpan="2">
-                                كافيار
+
+                              {userlogininfo ? <td className="client-name">عميل : usertitle(userlogininfo.id)</td>
+                                : <td className="client-name">طاولة : usertitle(id)</td>
+                              }
+                              <td>
+                                <p>كافيار</p>
                               </td>
                             </tr>
                             <tr>
                               <td>
-                                Invoice Date: <strong>{orderupdate_date}</strong>
+                                التاريخ: <strong>{orderupdate_date}</strong>
                               </td>
                               <td>
-                                Invoice No: <strong>{myorder.serial}</strong>
+                                رقم الفاتورة: <strong>{myorder.serial}</strong>
                               </td>
                             </tr>
                           </tbody>
@@ -175,8 +176,8 @@ const Cart = (props) => {
                         </div>
                       </div>
                       <div className="total-order">
-                        {id?<button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button>:""}
-                        
+                        {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}
+
                         <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                         <div className='total-order-details'>
                           <h2>الاجمالي</h2>

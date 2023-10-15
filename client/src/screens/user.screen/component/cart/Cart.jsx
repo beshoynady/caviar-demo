@@ -104,9 +104,8 @@ const Cart = (props) => {
                         <table className="invoice-info-container">
                           <tbody>
                             <tr>
-
-                              {userlogininfo ? <td className="client-name">عميل : usertitle(userlogininfo.id)</td>
-                                : <td className="client-name">طاولة : usertitle(id)</td>
+                              {userlogininfo ? <td className="client-name">عميل :<br/> {usertitle(userlogininfo.id)}</td>
+                                : <td className="client-name">طاولة : <br/>{usertitle(id)}</td>
                               }
                               <td>
                                 <p>كافيار</p>
@@ -114,10 +113,10 @@ const Cart = (props) => {
                             </tr>
                             <tr>
                               <td>
-                                التاريخ: <strong>{orderupdate_date}</strong>
+                                التاريخ:<br/> <strong>{orderupdate_date}</strong>
                               </td>
                               <td>
-                                رقم الفاتورة: <strong>{myorder.serial}</strong>
+                                رقم الفاتورة:<br/> <strong>{myorder.serial}</strong>
                               </td>
                             </tr>
                           </tbody>

@@ -11,6 +11,7 @@
     .wai-card {
         width: 280px;
         height: auto;
+
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -31,9 +32,9 @@
             .info-p {
                 width: max-content;
                 height: 30px;
-                font-size: 15px;
-                font-weight: 800;
-                color: white;
+                font-size: 14px;
+                font-weight: 900;
+                color: rgb(0, 0, 0);
                 text-align: right;
                 padding: 5px;
                 margin: 5px;
@@ -71,6 +72,7 @@
                     .product-name {
                         width: 70%;
                         height: 100%;
+                        color: black;
                         text-align: right;
                         // float: right;
                     }
@@ -79,6 +81,7 @@
                         display: inline-block;
                         width: 25%;
                         height: 100%;
+                        color: white;
                         background-color: red;
                         text-align: center;
                         // float: left;

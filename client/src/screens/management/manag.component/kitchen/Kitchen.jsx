@@ -50,14 +50,14 @@ const Kitchen = () => {
     const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
     console.log(ordertakewaiter)
     const lastwaiter = ordertakewaiter.length>0 ? ordertakewaiter[ordertakewaiter.length - 1].waiter : ''
-    console.log(lastwaiter)
+    // console.log(lastwaiter)
 
     const indexoflastwaiter = lastwaiter!=''? waiters.indexOf(lastwaiter): 0
 
-    console.log(indexoflastwaiter)
-    console.log(indexoflastwaiter + 1)
-    console.log(waiters.length)
-    console.log(waiters)
+    // console.log(indexoflastwaiter)
+    // console.log(indexoflastwaiter + 1)
+    // console.log(waiters.length)
+    // console.log(waiters)
     // setwaiter(waiters[indexofwaiter+1])
     if (waiters.length == indexoflastwaiter + 1) {
       const waiter = waiters[0]

@@ -32,9 +32,9 @@
   width: -moz-max-content;
   width: max-content;
   height: 30px;
-  font-size: 15px;
-  font-weight: 800;
-  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  color: rgb(0, 0, 0);
   text-align: right;
   padding: 5px;
   margin: 5px;
@@ -70,12 +70,14 @@
 .Waiter .wai-card .card-product .card-ul .card-li .product-name {
   width: 70%;
   height: 100%;
+  color: black;
   text-align: right;
 }
 .Waiter .wai-card .card-product .card-ul .card-li .product-quantity {
   display: inline-block;
   width: 25%;
   height: 100%;
+  color: white;
   background-color: red;
   text-align: center;
 }

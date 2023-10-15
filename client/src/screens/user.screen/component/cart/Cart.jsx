@@ -101,7 +101,7 @@ const Cart = (props) => {
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
-                        <div class="invoice">
+                        {/* <div class="invoice"> */}
 
                         {/* <table className="invoice-info-container">
                           <tbody>

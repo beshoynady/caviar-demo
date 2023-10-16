@@ -13,7 +13,7 @@ const createproduct = async (req, res) => {
         newproduct.save();
         res.status(200).json(newproduct);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({image})
     }
 }
 

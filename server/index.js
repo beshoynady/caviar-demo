@@ -27,6 +27,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use('/',express.static("public"));
+app.use('/',express.static("images"));
 
 app.get('/',(req, res) => {
     res.send('beshoy')

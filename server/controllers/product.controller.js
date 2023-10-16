@@ -6,7 +6,7 @@ const createproduct = async (req, res) => {
         const productname = await req.body.productname;
         const productprice = await req.body.productprice;
         const productdescription = await req.body.productdescription;
-        const image = await req.file.filename;
+        const image = await req.file.path;
         const categoryid = await req.body.productcategoryid;
 
         const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image: image, category: categoryid });

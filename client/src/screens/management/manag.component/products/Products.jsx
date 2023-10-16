@@ -23,7 +23,7 @@ const Products = () => {
   const [productname, setproductname] = useState("");
   const [productprice, setproductprice] = useState(0);
   const [productdescription, setproductdescription] = useState("");
-  const [productcategoryid, setproductcategoryid] = useState(null);
+  const [productcategoryid, setproductcategoryid] = useState("");
   const [productimg, setproductimg] = useState("");
 
   const createProduct = async (e) => {

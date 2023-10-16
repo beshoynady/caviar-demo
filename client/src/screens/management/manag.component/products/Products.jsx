@@ -23,20 +23,21 @@ const Products = () => {
   const [productname, setproductname] = useState("");
   const [productprice, setproductprice] = useState(0);
   const [productdescription, setproductdescription] = useState("");
-  const [productcategoryid, setproductcategoryid] = useState("");
+  const [productcategoryid, setproductcategoryid] = useState(null);
   const [productimg, setproductimg] = useState("");
 
   const createProduct = async (e) => {
     e.preventDefault();
     try {
-      console.log(productname)
-      console.log(productdescription)
-      console.log(productcategoryid)
-      console.log(productprice)
-      console.log(productimg)
-
-      const response = await axios.post('https://caviar-api.vercel.app/api/product/', {productname, productprice, productdescription, productcategoryid, image: productimg.name});
-      console.log(response);
+      const formdata = new FormData();
+      formdata.append('productname', productname);
+      formdata.append('productprice', productprice);
+      formdata.append('productdescription', productdescription);
+      formdata.append('productcategoryid', productcategoryid);
+      formdata.append('image', productimg);
+      console.log(...formdata)
+      const response = await axios.post('https://caviar-api.vercel.app/api/product/', formdata);
+      console.log(response.data);
     } catch (error) {
       console.log(error)
     }
@@ -226,7 +227,7 @@ const Products = () => {
                 </div>
                 <div className="form-group">
                   <label>السعر</label>
-                  <input type='Number' className="form-control" required onChange={(e) => setproductprice(Number(e.target.value))} />
+                  <input type='Number' className="form-control" required onChange={(e) => setproductprice(e.target.value)} />
                 </div>
                 <div className="form-group">
                   <label>التصنيف</label>

@@ -287,6 +287,10 @@
     margin: 10px 0;
     font-size: 0.875em;
   }
+  .line-items-container .tbody-info{
+    width: 100%;
+    height: max-content;
+  }
   
   .line-items-container th {
     text-align: right;

@@ -51,7 +51,7 @@ const Products = () => {
     if (productimg) {
       try {
         const response = await axios.put('https://caviar-api.vercel.app/api/product/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount, image: productimg
+          productname, productprice, productdescription, productcategoryid, productdiscount, "image": productimg
         });
         console.log(response.data);
         if (response) {

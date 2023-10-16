@@ -102,11 +102,10 @@ const Cart = (props) => {
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
                         <table className="invoice-info-container">
-                          <tbody>
+                          <tbody className='tbody-info'>
                             <tr>
-                              <td rowSpan="2" className="client-name">
-                                عميل:{userlogininfo ? usertitle(userlogininfo.id) : ''}
-                              </td>
+                              {userlogininfo ?<td rowSpan="2" className="client-name">عميل: {usertitle(userlogininfo.id)}</td> :<td rowSpan="2" className="client-name">طاولة: {usertitle(id)}</td>}
+                              
                               <td rowSpan="2">
                                 كافيار
                               </td>
@@ -149,7 +148,6 @@ const Cart = (props) => {
                         <table className="line-items-container has-bottom-border">
                           <thead>
                             <tr>
-                              {/* <th>Payment Info</th> */}
                               <th>Due By</th>
                               <th>Total Due</th>
                             </tr>

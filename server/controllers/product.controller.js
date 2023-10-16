@@ -9,7 +9,7 @@ const createproduct = async (req, res) => {
         const image = await req.file.filename;
         const categoryid = await req.body.productcategoryid;
 
-        const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image: image, category: categoryid });
+        const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image, category: categoryid });
         newproduct.save();
         res.status(200).json(newproduct);
     } catch (err) {

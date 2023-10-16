@@ -35,7 +35,7 @@ const Products = () => {
       console.log(productprice)
       console.log(productimg)
 
-      const response = await axios.post('https://caviar-api.vercel.app/api/product/', {productname, productprice, productdescription, productcategoryid, image: productimg});
+      const response = await axios.post('https://caviar-api.vercel.app/api/product/', {productname, productprice, productdescription, productcategoryid, "image": productimg});
       console.log(response);
     } catch (error) {
       console.log(error)

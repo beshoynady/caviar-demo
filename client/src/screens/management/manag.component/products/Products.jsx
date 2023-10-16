@@ -287,7 +287,7 @@ const Products = () => {
                 </div>
                 <div className="form-group">
                   <label>الصورة</label>
-                  <input type="file" className="form-control" onChange={(e) => setproductimg(e.target.files[0])} />
+                  <input type="file" className="form-control" onChange={(e) =>  setproductimg(e.target.files[0].name)} />
                 </div>
               </div>
               <div className="modal-footer">

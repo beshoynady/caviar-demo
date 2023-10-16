@@ -16,7 +16,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./images");
+    cb(null, "images/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = new Date().toISOString().replace(/:/g, "-");
@@ -24,14 +24,14 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
 // router.use(verifyJWT)
 
-router.route('/').post(upload.single("productimg"), createproduct).get(getAllproducts);
-router.route('/:productid').get(getoneproduct).put(upload.single("productimg"), updateproduct).delete(deleteproduct);
+router.route('/').post(upload.single("image"), createproduct).get(getAllproducts);
+router.route('/:productid').get(getoneproduct).put(upload.single("image"), updateproduct).delete(deleteproduct);
 router.route('/withoutimage/:productid').put(updateproductwithoutimage)
 // router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
 

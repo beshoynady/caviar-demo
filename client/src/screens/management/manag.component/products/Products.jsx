@@ -29,15 +29,19 @@ const Products = () => {
   const createProduct = async (e) => {
     e.preventDefault();
     try {
-      const formdata = new FormData();
-      formdata.append('productname', productname);
-      formdata.append('productprice', productprice);
-      formdata.append('productdescription', productdescription);
-      formdata.append('productcategoryid', productcategoryid);
-      formdata.append('image', productimg);
-      console.log(...formdata)
-      const response = await axios.post('https://caviar-api.vercel.app/api/product/', formdata);
-      console.log(response.data);
+      // const formdata = new FormData();
+      // formdata.append('productname', productname);
+      // formdata.append('productprice', productprice);
+      // formdata.append('productdescription', productdescription);
+      // formdata.append('productcategoryid', productcategoryid);
+      // formdata.append('image', productimg);
+      // console.log(...formdata)
+      const response = await axios.post('https://caviar-api.vercel.app/api/product', {productname, productprice, productdescription, productcategoryid, productimg});
+      console.log(response);
+      if (response) {
+        getallCategories()
+        getallproducts()
+      }
     } catch (error) {
       console.log(error)
     }
@@ -51,7 +55,7 @@ const Products = () => {
     if (productimg) {
       try {
         const response = await axios.put('https://caviar-api.vercel.app/api/product/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount, image: productimg
+          productname, productprice, productdescription, productcategoryid, productdiscount, productimg
         });
         console.log(response.data);
         if (response) {

@@ -30,8 +30,8 @@ const router = express.Router();
 
 // router.use(verifyJWT)
 
-router.route('/').post(upload.single("image"), createproduct).get(getAllproducts);
-router.route('/:productid').get(getoneproduct).put(upload.single("image"), updateproduct).delete(deleteproduct);
+router.route('/').post(upload.single("productimg"), createproduct).get(getAllproducts);
+router.route('/:productid').get(getoneproduct).put(upload.single("productimg"), updateproduct).delete(deleteproduct);
 router.route('/withoutimage/:productid').put(updateproductwithoutimage)
 // router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
 

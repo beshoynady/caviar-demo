@@ -51,7 +51,7 @@ const Products = () => {
     if (productimg) {
       try {
         const response = await axios.put('https://caviar-api.vercel.app/api/product/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount, "image": productimg
+          productname, productprice, productdescription, productcategoryid, productdiscount, image: productimg
         });
         console.log(response.data);
         if (response) {
@@ -240,7 +240,7 @@ const Products = () => {
                 </div>
                 <div className="form-group">
                   <label>الصورة</label>
-                  <input type="file" className="form-control" required onChange={(e) => setproductimg(e.target.files[0].name)} />
+                  <input type="file" className="form-control" required onChange={(e) => setproductimg(e.target.files[0])} />
                 </div>
               </div>
               <div className="modal-footer">
@@ -287,7 +287,7 @@ const Products = () => {
                 </div>
                 <div className="form-group">
                   <label>الصورة</label>
-                  <input type="file" className="form-control" onChange={(e) =>  setproductimg(e.target.files[0].name)} />
+                  <input type="file" className="form-control" onChange={(e) => setproductimg(e.target.files[0])} />
                 </div>
               </div>
               <div className="modal-footer">

@@ -3,13 +3,13 @@ const Productmodel = require('../models/Product.model.js')
 
 const createproduct = async (req, res) => {
     try {
-        const productname = await req.body.productname;
-        const productprice = await req.body.productprice;
-        const productdescription = await req.body.productdescription;
-        const image = await req.file.filename;
-        const categoryid = await req.body.productcategoryid;
+        const name = await req.body.productname;
+        const price = await req.body.productprice;
+        const description = await req.body.productdescription;
+        const image = await req.file;
+        const category = await req.body.productcategoryid;
 
-        const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image, category: categoryid });
+        const newproduct = await Productmodel.create({ name, description, price, image, category });
         newproduct.save();
         res.status(200).json(newproduct);
     } catch (err) {

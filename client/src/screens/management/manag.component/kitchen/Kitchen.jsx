@@ -107,7 +107,6 @@ const [waittime, setwaittime] = useState('')
   useEffect(() => {
     GetPrductstoKit()
     getAllWaiter()
-    Waitingtime()
     // specifiedWaiter()
     // console.log(waiters)
   }, [])
@@ -131,7 +130,7 @@ const [waittime, setwaittime] = useState('')
                         {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الانتظار {waittime}</p>
+                        <p className="info-p">الانتظار {Waitingtime(order.createdAt)}</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

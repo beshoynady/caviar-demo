@@ -101,6 +101,7 @@ const [waittime, setwaittime] = useState('')
     const s = new Date(Waiting_time).getSeconds()
     const Waiting_time_m_s = `${m}:${s}`
     console.log(Waiting_time_m_s)
+    setTimeout(Waitingtime, 1000)
     return Waiting_time_m_s
   }
 
@@ -130,7 +131,7 @@ const [waittime, setwaittime] = useState('')
                         {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الانتظار {setTimeout(Waitingtime(order.createdAt), 5000)}</p>
+                        <p className="info-p">الانتظار {Waitingtime(order.createdAt)}</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

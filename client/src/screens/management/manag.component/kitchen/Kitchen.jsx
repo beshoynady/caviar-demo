@@ -104,16 +104,16 @@ const [waittime, setwaittime] = useState('')
   }
 
 
-  useEffect(() => {
-    GetPrductstoKit()
-  }, [waittime])
+  // useEffect(() => {
+  //   GetPrductstoKit()
+  // }, [waittime])
 
   useEffect(() => {
     GetPrductstoKit()
     getAllWaiter()
     // specifiedWaiter()
     // console.log(waiters)
-  }, [waittime])
+  }, [])
 
   return (
     <detacontext.Consumer>

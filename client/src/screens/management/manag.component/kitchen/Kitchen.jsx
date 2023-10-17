@@ -91,11 +91,17 @@ const Kitchen = () => {
 const [waittime, setwaittime] = useState('')
   const Waitingtime=(t)=>{
     const t1= new Date(t)
+    console.log(t1)
     const t2 = new Date()
+    console.log(t2)
     const Waiting_time = t2 - t1
-    const Waiting_time_m_s = `${new Date(Waiting_time).getMinutes()}:${new Date(Waiting_time).getSeconds()}`
+    console.log(Waiting_time)
+    const m = new Date(Waiting_time).getMinutes()
+    const s = new Date(Waiting_time).getSeconds()
+    const Waiting_time_m_s = `${m}:${s}`
+    console.log(Waiting_time_m_s)
     setwaittime(Waiting_time_m_s)
-    setTimeout(Waiting_time, 1000)
+    setTimeout(Waitingtime, 1000)
   }
 
   useEffect(() => {

@@ -88,18 +88,20 @@ const Kitchen = () => {
     GetPrductstoKit()
   }
 
-
+const [waittime, setwaittime] = useState('')
   const Waitingtime=(t)=>{
     const t1= new Date(t)
     const t2 = new Date()
     const Waiting_time = t2 - t1
     const Waiting_time_m_s = `${new Date(Waiting_time).getMinutes()}:${new Date(Waiting_time).getSeconds()}`
-    return Waiting_time_m_s
+    setwaittime(Waiting_time_m_s)
+    setTimeout(Waiting_time, 1000)
   }
 
   useEffect(() => {
     GetPrductstoKit()
     getAllWaiter()
+    Waitingtime()
     // specifiedWaiter()
     // console.log(waiters)
   }, [])
@@ -123,7 +125,7 @@ const Kitchen = () => {
                         {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الانتظار {setTimeout(Waitingtime(order.createdAt),1000)}</p>
+                        <p className="info-p">الانتظار {waittime}</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

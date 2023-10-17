@@ -101,6 +101,7 @@ const [waittime, setwaittime] = useState('')
     const s = new Date(Waiting_time).getSeconds()
     const Waiting_time_m_s = `${m}:${s}`
     console.log(Waiting_time_m_s)
+    setwaittime(Waiting_time_m_s)
     setTimeout(Waitingtime, 1000)
     return Waiting_time_m_s
   }
@@ -110,7 +111,7 @@ const [waittime, setwaittime] = useState('')
     getAllWaiter()
     // specifiedWaiter()
     // console.log(waiters)
-  }, [])
+  }, [waittime])
 
   return (
     <detacontext.Consumer>

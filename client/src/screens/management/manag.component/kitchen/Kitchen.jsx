@@ -95,12 +95,14 @@ const [waittime, setwaittime] = useState('')
     const Waiting_time = t2 - t1
     console.log(Waiting_time)
     const m = new Date(Waiting_time).getMinutes()
-    const s = new Date(Waiting_time).getSeconds()
-    const Waiting_time_m_s = `${m}:${s}`
-    console.log(Waiting_time_m_s)
-    setwaittime(Waiting_time_m_s)
-    setTimeout(Waitingtime, 30000)
-    return Waiting_time_m_s
+    // const s = new Date(Waiting_time).getSeconds()
+    // const Waiting_time_m_s = `${m}:${s}`
+    // console.log(Waiting_time_m_s)
+    // setwaittime(Waiting_time_m_s)
+    setwaittime(m)
+    setTimeout(Waitingtime, 60000)
+    // return Waiting_time_m_s
+    return m
   }
 
 
@@ -134,7 +136,7 @@ const [waittime, setwaittime] = useState('')
                         {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الانتظار {Waitingtime(order.createdAt)}</p>
+                        <p className="info-p">الانتظار {Waitingtime(order.createdAt)} دقيقه</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

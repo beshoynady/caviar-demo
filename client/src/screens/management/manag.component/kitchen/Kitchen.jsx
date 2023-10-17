@@ -106,6 +106,7 @@ const [waittime, setwaittime] = useState('')
     return Waiting_time_m_s
   }
 
+  
   useEffect(() => {
     GetPrductstoKit()
     getAllWaiter()

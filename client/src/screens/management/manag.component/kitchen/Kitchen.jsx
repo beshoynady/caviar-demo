@@ -91,9 +91,9 @@ const Kitchen = () => {
 const [waittime, setwaittime] = useState('')
   const Waitingtime=(t)=>{
     console.log(t)
-    const t1= new Date(t)
+    const t1= new Date(t).getTime()
     console.log(t1)
-    const t2 = new Date()
+    const t2 = new Date().getTime()
     console.log(t2)
     const Waiting_time = t2 - t1
     console.log(Waiting_time)

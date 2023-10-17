@@ -102,7 +102,7 @@ const [waittime, setwaittime] = useState('')
     const Waiting_time_m_s = `${m}:${s}`
     console.log(Waiting_time_m_s)
     setwaittime(Waiting_time_m_s)
-    setTimeout(Waitingtime, 1000)
+    setTimeout(Waitingtime, 10000)
     return Waiting_time_m_s
   }
 

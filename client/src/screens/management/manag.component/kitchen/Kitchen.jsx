@@ -89,6 +89,14 @@ const Kitchen = () => {
   }
 
 
+  const Waitingtime=(t)=>{
+    const t1= new Date(t)
+    const t2 = new Date()
+    const Waiting_time = t2 - t1
+    const Waiting_time_m_s = `${new Date(Waiting_time).getMinutes()}:${new Date(Waiting_time).getSeconds()}`
+    return Waiting_time_m_s
+  }
+
   useEffect(() => {
     GetPrductstoKit()
     getAllWaiter()
@@ -107,12 +115,15 @@ const Kitchen = () => {
                   return (
                     <div className="kit-card" key={i}>
                       <div className="card-info">
-                        <p className="info-p">العميل:{order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
+                        {order.table != null ? <p className="info-p">طاولة:{ usertitle(order.table)}</p>
+                        :order.user?<p className="info-p">العميل:{usertitle(order.user)}</p>
+                        :''}
                         <p className="info-p">رقم الطلب {order.serial}</p>
                         <p className="info-p">نوع الطلب {order.order_type}</p>
-                        <p className="info-p">الويتر {usertitle(order.waiter)}</p>
+                        {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
-                        <p className="info-p">وقت التنفيذ {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
+                        {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
+                        <p className="info-p">الانتظار {setTimeout(Waitingtime(order.createdAt),1000)}</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

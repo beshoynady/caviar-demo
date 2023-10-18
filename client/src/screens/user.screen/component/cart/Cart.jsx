@@ -22,7 +22,8 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
+        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice,list_products_order
+          , orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
               <div className="cart-wrapper">
@@ -104,7 +105,9 @@ const Cart = (props) => {
                         <table className="invoice-info-container">
                           <tbody className='tbody-info'>
                             <tr>
-                              {userlogininfo ?<td rowSpan="2" className="client-name">عميل: {usertitle(userlogininfo.id)}</td> :<td rowSpan="2" className="client-name">طاولة: {usertitle(id)}</td>}
+                              {id ?<td rowSpan="2" className="client-name">طاولة: {usertitle(id)}</td>
+                              :userlogininfo?<td rowSpan="2" className="client-name">عميل: {usertitle(userlogininfo.id)}</td> 
+                              :""}
                               
                               <td rowSpan="2">
                                 كافيار

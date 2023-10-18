@@ -32,13 +32,14 @@ const Kitchen = () => {
     console.log(alluser)
     const allwaiter = await alluser.data.filter((user) => user.role == 'waiter')
     console.log(allwaiter)
-    const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
+    const waiterActive = await allwaiter.filter((waiter) => waiter.isActive == true)
     console.log(waiterActive)
     const listId = []
-    if(waiterActive){
-    waiterActive.forEach((waiter) => {
-      listId.push(waiter._id)
-    })}
+    if (waiterActive) {
+      waiterActive.forEach((waiter) => {
+        listId.push(waiter._id)
+      })
+    }
     console.log(listId)
     if (listId.length > 0) {
       setwaiters(listId)
@@ -47,12 +48,12 @@ const Kitchen = () => {
 
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
-    const ordertakewaiter = allorders.filter((order)=> order.waiter != null)
+    const ordertakewaiter = allorders.filter((order) => order.waiter != null)
     console.log(ordertakewaiter)
-    const lastwaiter = ordertakewaiter.length>0 ? ordertakewaiter[ordertakewaiter.length - 1].waiter : ''
+    const lastwaiter = ordertakewaiter.length > 0 ? ordertakewaiter[ordertakewaiter.length - 1].waiter : ''
     // console.log(lastwaiter)
 
-    const indexoflastwaiter = lastwaiter!=''? waiters.indexOf(lastwaiter): 0
+    const indexoflastwaiter = lastwaiter != '' ? waiters.indexOf(lastwaiter) : 0
 
     // console.log(indexoflastwaiter)
     // console.log(indexoflastwaiter + 1)
@@ -69,10 +70,10 @@ const Kitchen = () => {
   }
   const orderInprogress = async (id) => {
     // await specifiedWaiter();
-    const waiter =await specifiedWaiter()
+    const waiter = await specifiedWaiter()
     const status = 'جاري التحضير'
     const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      status,waiter
+      status, waiter
     })
     console.log(order.data)
     GetPrductstoKit()
@@ -88,9 +89,9 @@ const Kitchen = () => {
     GetPrductstoKit()
   }
 
-const [waittime, setwaittime] = useState('')
-  const Waitingtime=(t)=>{
-    const t1= new Date(t).getTime()
+  const [waittime, setwaittime] = useState('')
+  const Waitingtime = (t) => {
+    const t1 = new Date(t).getTime()
     const t2 = new Date().getTime()
     const Waiting_time = t2 - t1
     console.log(Waiting_time)
@@ -128,12 +129,12 @@ const [waittime, setwaittime] = useState('')
                   return (
                     <div className="kit-card" key={i}>
                       <div className="card-info">
-                        {order.table != null ? <p className="info-p">طاولة:{ usertitle(order.table)}</p>
-                        :order.user?<p className="info-p">العميل:{usertitle(order.user)}</p>
-                        :''}
+                        {order.table != null ? <p className="info-p">طاولة:{usertitle(order.table)}</p>
+                          : order.user ? <p className="info-p">العميل:{usertitle(order.user)}</p>
+                            : ''}
                         <p className="info-p">رقم الطلب {order.serial}</p>
                         <p className="info-p">نوع الطلب {order.order_type}</p>
-                        {order.waiter?<p className="info-p">الويتر {usertitle(order.waiter)}</p>:""}
+                        {order.waiter ? <p className="info-p">الويتر {usertitle(order.waiter)}</p> : ""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
                         <p className="info-p">الانتظار {Waitingtime(order.createdAt)} دقيقه</p>
@@ -142,10 +143,10 @@ const [waittime, setwaittime] = useState('')
                         <ul className='card-ul'>
                           {order.products.filter((pr) => pr.isDone == false) && order.products.filter((pr) => pr.isDone == false).map((product, i) => {
                             return (
-                              <li className='card-li' key={i}>
+                              <li className='card-li' key={i} style={product.isAdd?{backgroundColor:'red'}:''}>
                                 <div className='product-card-det'>
-                                <p className='product-name'>{i + 1}- {product.name}</p>
-                                <span className='product-quantity'> × {product.quantity}</span>
+                                  <p className='product-name'>{i + 1}- {product.name}</p>
+                                  <span className='product-quantity'> × {product.quantity}</span>
                                 </div>
                                 <div className='product-note'>{product.notes}</div>
                               </li>

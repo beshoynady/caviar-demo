@@ -395,19 +395,21 @@ function App() {
   const [myorderid, setmyorderid] = useState()
 
   const invoice = async (clientid) => {
+    console.log(clientid)
     // console.log(allorders)
     const tableorder = allorders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
-    const lasttableorderactive =await lasttableorder.isActive
+    const lasttableorderactive = lasttableorder.isActive
     const userorder = allorders.filter((o, i) => o.user == clientid);
     const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
-    const lastuserorderactive =await lastuserorder.isActive
+    const lastuserorderactive = lastuserorder.isActive
 
     if (clientid) {
       if (lasttableorderactive) {
         const id = await lasttableorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
         const data = myorder.data
+        console.log(data)
         console.log(data._id)
         setmyorder(data)
         settotalinvoice(data.total)

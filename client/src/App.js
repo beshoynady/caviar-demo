@@ -407,13 +407,15 @@ function App() {
       if (lasttableorderactive) {
         const id = await lasttableorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-        const data =await myorder.data
+        const data = myorder.data
+        console.log(data._id)
         setmyorder(data)
         settotalinvoice(data.total)
         setmyorderid(data._id)
         setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
         setitemsincart([])
+
       } else if (lastuserorderactive) {
         const id = await lastuserorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
@@ -431,6 +433,22 @@ function App() {
     }
 
   }
+
+  const checkout = async () => {
+    console.log(myorderid)
+    const id = myorderid
+    // console.log(id)
+    const isActive = false;
+    const help = 'يطلب الفاتورة';
+    const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+      isActive,help
+    })
+    console.log(neworder)
+    setTimeout(() => {
+      window.location.href = `https://${window.location.hostname}`;
+    }, 60000*10);
+  }
+
 
   const POSinvoice = async (checkid) => {
     // console.log(allorders)
@@ -511,20 +529,7 @@ function App() {
     }
   }
 
-  const checkout = async () => {
-    console.log(myorderid)
-    const id = myorderid
-    // console.log(id)
-    const isActive = false;
-    const help = 'يطلب الفاتورة';
-    const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      isActive,help
-    })
-    console.log(neworder)
-    setTimeout(() => {
-      window.location.href = `https://${window.location.hostname}`;
-    }, 60000*10);
-  }
+
 
 
 

@@ -217,6 +217,8 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, status
           })
+          setitemsincart([])
+          getProducts()
         } else {
           const products = [...itemsincart, ...oldproducts]
           console.log(products)
@@ -233,8 +235,6 @@ function App() {
         const oldtotal = await allorders.find((order) => order._id == id).total
         // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal;
-
-
         if (lastuserorder.status == 'جاري التحضير') {
           const additem = []
           for (let i = 0; i < itemsincart.length; i++) {
@@ -249,6 +249,8 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, status, order_type
           })
+          setitemsincart([])
+          getProducts()
         } else {
           const products = [...itemsincart, ...oldproducts]
           console.log(products)
@@ -258,12 +260,7 @@ function App() {
             products, total, status, order_type
           })
         }
-        // const status = 'انتظار'
-        // const order_type = 'ديلفري'
-        // const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        //   products, total, status, order_type
-        // })
-        // console.log(neworder.data);
+
         setitemsincart([])
         getProducts()
 
@@ -284,6 +281,7 @@ function App() {
               total,
               order_type
             })
+            setitemsincart([])
             getProducts()
           } else {
             const order_type = 'داخلي'

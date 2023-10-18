@@ -26,7 +26,7 @@ import StockManag from './screens/management/manag.component/stock/StockManag';
 export const detacontext = createContext({})
 
 function App() {
-//++++++++++++++++++++ pagination ++++++++++
+  //++++++++++++++++++++ pagination ++++++++++
 
   const [pagination, setpagination] = useState(5)
   const EditPagination = (e) => {
@@ -104,8 +104,8 @@ function App() {
     setcategoryid(e.target.value)
   }
 
-  
-  
+
+
   const [count, setcount] = useState(0)
 
   const increment = (id) => {
@@ -156,12 +156,12 @@ function App() {
   }
 
   // delete item from cart by id
-  const quantityzero=(id)=>{
+  const quantityzero = (id) => {
     const product = allProducts.find((pro, i) => pro._id == id)
     setitemid(itemid.filter((i) => i !== id))
     product.quantity = 0
   }
-  
+
   const deleteitems = (id) => {
     const withotdeleted = itemsincart.filter(item => item._id !== id)
     setitemsincart(withotdeleted);
@@ -200,12 +200,21 @@ function App() {
         const id = await lasttableorder._id
         const oldproducts = await allorders.find((order) => order._id == id).products;
         const oldtotal = await allorders.find((order) => order._id == id).total
-        const products = [...itemsincart, ...oldproducts]
+        // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal
+        console.log(itemsincart)
+        if (lastuserorder.status == 'جاري التحضير') {
+          for (let i = 0; i < itemsincart.length; i++) {
+            itemsincart[i].isAdd = true;
+          }
+        }
+        console.log(itemsincart)
+        const products = [...itemsincart, ...oldproducts]
         const status = 'انتظار'
         const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
           products, total, status
         })
+        console.log(neworder)
         setitemsincart([])
         getProducts()
       } else if (lastuserorderactive) {
@@ -315,7 +324,7 @@ function App() {
 
   const CreateCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype) => {
     try {
-      const dayorders =allorders.length > 0 ? allorders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()):''
+      const dayorders = allorders.length > 0 ? allorders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()) : ''
       // const ordernum =  new Date().getHours() == 0 && new Date().getMinutes() >= 0 ?
       //  allorders.find(order => order.createdAt.
       const ordernum = dayorders.length > 0 ? dayorders[dayorders.length - 1].ordernum + 1 : 1
@@ -415,28 +424,28 @@ function App() {
     const lastemployeeorder = employeeorder.length > 0 ? employeeorder[employeeorder.length - 1] : [];
     const lastemployeeorderactive = lastemployeeorder.isActive
 
-      if (lasttableorderactive) {
-        const id = await lasttableorder._id
-        const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-        const data = myorder.data
-        setmyorder(data)
-        settotalinvoice(data.total)
-        setmyorderid(data._id)
-        setlist_produccts_order(data.products)
-        setorderupdate_date(data.updatedAt)
-        setitemsincart([])
-      } else if (lastemployeeorderactive) {
-        const id = await lastemployeeorder._id
-        const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-        const data = myorder.data
-        console.log(data)
-        setmyorder(data)
-        setmyorderid(data._id)
-        settotalinvoice(data.total)
-        setlist_produccts_order(data.products)
-        setorderupdate_date(data.updatedAt)
-        setitemsincart([])
-      }
+    if (lasttableorderactive) {
+      const id = await lasttableorder._id
+      const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
+      const data = myorder.data
+      setmyorder(data)
+      settotalinvoice(data.total)
+      setmyorderid(data._id)
+      setlist_produccts_order(data.products)
+      setorderupdate_date(data.updatedAt)
+      setitemsincart([])
+    } else if (lastemployeeorderactive) {
+      const id = await lastemployeeorder._id
+      const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
+      const data = myorder.data
+      console.log(data)
+      setmyorder(data)
+      setmyorderid(data._id)
+      settotalinvoice(data.total)
+      setlist_produccts_order(data.products)
+      setorderupdate_date(data.updatedAt)
+      setitemsincart([])
+    }
   }
 
   const updatecountofsales = async (id) => {
@@ -636,8 +645,8 @@ function App() {
       list_day_order, total_day_salse,
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,
-      CreateWaiterOrder, CreateCasherOrder ,POSinvoice,
-      EditPagination,pagination ,itemid, setitemid
+      CreateWaiterOrder, CreateCasherOrder, POSinvoice,
+      EditPagination, pagination, itemid, setitemid
     }}>
       <BrowserRouter>
         <Routes>
@@ -655,8 +664,8 @@ function App() {
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
             <Route path='pos' element={<POS />} />
-            <Route path='stockitem' element={<StockItem/>} />
-            <Route path='stockmang' element={<StockManag/>} />
+            <Route path='stockitem' element={<StockItem />} />
+            <Route path='stockmang' element={<StockManag />} />
           </Route>
 
         </Routes>

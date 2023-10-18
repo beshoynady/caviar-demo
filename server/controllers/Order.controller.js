@@ -69,6 +69,7 @@ const updateorder = async (req, res) => {
     const status = await req.body.status;
     const payment_status = await req.body.payment_status;
     const isActive = await req.body.isActive;
+    const isAdd = await req.body.isAdd;
     const order_type = await req.body.order_type
     const notes = await req.body.notes
     const waiter = await req.body.waiter
@@ -84,6 +85,7 @@ const updateorder = async (req, res) => {
             payment_status,
             help,
             isActive,
+            isAdd,
             employee,
             order_type,
             notes,

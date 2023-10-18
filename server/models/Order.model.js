@@ -16,10 +16,10 @@ const OrderSchema = new mongoose.Schema({
             message: '{VALUE} is not a valid sirial number'
         }
     },
-    ordernum:{
-        type : Number,
+    ordernum: {
+        type: Number,
         min: 1,
-        trim: true, 
+        trim: true,
     },
 
     products: [
@@ -33,7 +33,6 @@ const OrderSchema = new mongoose.Schema({
                 required: true,
                 trim: true,
             },
-
             quantity: {
                 type: Number,
                 required: true,
@@ -47,7 +46,7 @@ const OrderSchema = new mongoose.Schema({
                     message: '{VALUE} is not a valid quantity'
                 }
             },
-            notes:{
+            notes: {
                 type: String,
                 default: ""
             },
@@ -70,15 +69,15 @@ const OrderSchema = new mongoose.Schema({
                 max: 1000000,
                 trim: true,
             },
-            isDone:{
+            isDone: {
                 type: Boolean,
                 default: false,
                 required: true,
             },
-            isAdd:{
+            isAdd: {
                 type: Boolean,
                 default: false,
-                required: true, 
+                required: true,
             }
         }
     ],
@@ -112,39 +111,39 @@ const OrderSchema = new mongoose.Schema({
     phone: {
         type: String,
         default: null,
-        },
+    },
     createdAt: {
         type: Date,
         default: Date.now,
         required: true,
     },
 
-    waiter:{
+    waiter: {
         type: ObjectId,
         ref: 'User',
         default: null
     },
-    deliveryMan:{
+    deliveryMan: {
         type: ObjectId,
         ref: 'User',
         default: null
     },
-    help:{
+    help: {
         type: String,
         default: 'لم يطلب',
         required: true,
-        enum: ['لم يطلب', 'يطلب مساعدة','يطلب الفاتورة','ارسال ويتر','في الطريق','تمت المساعدة'],
+        enum: ['لم يطلب', 'يطلب مساعدة', 'يطلب الفاتورة', 'ارسال ويتر', 'في الطريق', 'تمت المساعدة'],
     },
     status: {
         type: String,
         default: 'انتظار',
         required: true,
-        enum: ['انتظار', 'موافق','جاري التحضير','تم التحضير','في الطريق','تم التوصيل', 'ملغي'],
+        enum: ['انتظار', 'موافق', 'جاري التحضير', 'تم التحضير', 'في الطريق', 'تم التوصيل', 'ملغي'],
     },
     order_type: {
         type: String,
-        enum: ['داخلي', 'ديلفري','تيك اوي'],
-        default : 'داخلي',
+        enum: ['داخلي', 'ديلفري', 'تيك اوي'],
+        default: 'داخلي',
         required: true
     },
     isActive: {
@@ -152,7 +151,7 @@ const OrderSchema = new mongoose.Schema({
         default: true,
         required: true,
     },
-    
+
     payment_status: {
         type: String,
         default: 'انتظار',

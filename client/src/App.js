@@ -540,7 +540,7 @@ function App() {
     console.log(neworder)
     setTimeout(() => {
       window.location.href = `https://${window.location.hostname}`;
-    }, 2000);
+    }, 60000*10);
   }
 
 

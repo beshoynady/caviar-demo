@@ -143,7 +143,7 @@ const Kitchen = () => {
                         <ul className='card-ul'>
                           {order.products.filter((pr) => pr.isDone == false) && order.products.filter((pr) => pr.isDone == false).map((product, i) => {
                             return (
-                              <li className='card-li' key={i} style={product.isAdd?{backgroundColor:'red'}:''}>
+                              <li className='card-li' key={i} style={product.isAdd?{backgroundColor:'red'}:{}}>
                                 <div className='product-card-det'>
                                   <p className='product-name'>{i + 1}- {product.name}</p>
                                   <span className='product-quantity'> × {product.quantity}</span>

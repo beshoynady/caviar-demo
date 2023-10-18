@@ -392,7 +392,7 @@ function App() {
 
   const [myorder, setmyorder] = useState({})
   const [totalinvoice, settotalinvoice] = useState(0)
-  const [list_produccts_order, setlist_produccts_order] = useState([])
+  const [list_products_order, setlist_products_order] = useState([])
   const [orderupdate_date, setorderupdate_date] = useState('')
   const [myorderid, setmyorderid] = useState()
 
@@ -413,7 +413,7 @@ function App() {
         setmyorder(data)
         settotalinvoice(data.total)
         setmyorderid(data._id)
-        setlist_produccts_order(data.products)
+        setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
         setitemsincart([])
       } else if (lastuserorderactive) {
@@ -424,25 +424,9 @@ function App() {
         setmyorder(data)
         setmyorderid(data._id)
         settotalinvoice(data.total)
-        setlist_produccts_order(data.products)
+        setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
         setitemsincart([])
-        // for (var i = 0; i < data.products.length; i++){
-        //   const productid =await data.products[i]._id
-        //   const productquantity =await  data.products[i].quantity
-        //   const findprduct = await axios.get('https://caviar-api.vercel.app/api/product/' + productid)
-        //   const sales = await findprduct.data.sales + productquantity
-
-        //   console.log(productid)
-        //   console.log(findprduct)
-        //   console.log(sales)
-        //   console.log(productquantity)
-        //   const updatprduct = await axios.put('https://caviar-api.vercel.app/api/product/withoutimage/' + productid,{
-        //     sales
-        //   })
-        //   console.log(updatprduct)
-
-        // }
       }
     } else {
       window.alert("Please login or scan qr")
@@ -466,7 +450,7 @@ function App() {
       setmyorder(data)
       settotalinvoice(data.total)
       setmyorderid(data._id)
-      setlist_produccts_order(data.products)
+      setlist_products_order(data.products)
       setorderupdate_date(data.updatedAt)
       setitemsincart([])
     } else if (lastemployeeorderactive) {
@@ -477,7 +461,7 @@ function App() {
       setmyorder(data)
       setmyorderid(data._id)
       settotalinvoice(data.total)
-      setlist_produccts_order(data.products)
+      setlist_products_order(data.products)
       setorderupdate_date(data.updatedAt)
       setitemsincart([])
     }
@@ -676,7 +660,7 @@ function App() {
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
       allusers, alltable, usertitle, allorders, askingForHelp,
       setproductnote, addnotrstoproduct,
-      invoice, totalinvoice, list_produccts_order, orderupdate_date, myorder,
+      invoice, totalinvoice, list_products_order, orderupdate_date, myorder,
       list_day_order, total_day_salse,
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,

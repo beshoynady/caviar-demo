@@ -22,7 +22,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice, list_produccts_order, orderupdate_date, myorder, checkout }) => {
+        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
               <div className="cart-wrapper">
@@ -130,7 +130,7 @@ const Cart = (props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {list_produccts_order.map((item, i) => {
+                            {list_products_order.map((item, i) => {
                               return (
                                 <tr key={i}>
                                   <td className="bold heading-name">{item.name}</td>

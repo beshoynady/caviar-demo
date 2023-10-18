@@ -230,8 +230,8 @@ function App() {
 
         if (lastuserorder.status == 'جاري التحضير') {
           const additem = itemsincart.map((i)=>{i.isAdd = true})
+          console.log(additem)
           const products = [...additem, ...oldproducts]
-          console.log(products)
           const status = 'انتظار'
           const order_type = 'ديلفري'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {

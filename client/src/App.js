@@ -229,10 +229,12 @@ function App() {
         const products =[]
         if (lastuserorder.status == 'جاري التحضير') {
           const additem = itemsincart.map((i)=>{i.isAdd = true})
-          products = [...additem, ...oldproducts]
+          const allitem = [...additem, ...oldproducts]
+          products = allitem
           console.log(products)
         }else{
-          products = [...itemsincart, ...oldproducts]
+          const allitem =[...itemsincart, ...oldproducts]
+          products = allitem
           console.log(products)
       }
         const status = 'انتظار'

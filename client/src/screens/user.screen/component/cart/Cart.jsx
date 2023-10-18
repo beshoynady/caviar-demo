@@ -134,6 +134,7 @@ const Cart = (props) => {
                           </thead>
                           <tbody>
                             {list_products_order.map((item, i) => {
+                              console.log(`list_products_order ${list_products_order}`)
                               return (
                                 <tr key={i}>
                                   <td className="bold heading-name">{item.name}</td>

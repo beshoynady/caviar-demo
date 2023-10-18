@@ -91,7 +91,7 @@ const updateorder = async (req, res) => {
             notes,
             waiter
         })
-        updatedorder.save();
+        await updatedorder.save();
         res.status(200).json(updatedorder)
     } catch (err) {
         res.status(400).json(err)

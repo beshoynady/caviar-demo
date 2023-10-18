@@ -203,13 +203,16 @@ function App() {
         // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal
         console.log(itemsincart)
+
+        const products =[]
         if (lastuserorder.status == 'جاري التحضير') {
-          for (let i = 0; i < itemsincart.length; i++) {
-            itemsincart[i].isAdd = true;
-          }
-        }
-        console.log(itemsincart)
-        const products = [...itemsincart, ...oldproducts]
+          const additem = itemsincart.map((i)=>{i.isAdd = true})
+          products = [...additem, ...oldproducts]
+          console.log(products)
+        }else{
+          products = [...itemsincart, ...oldproducts]
+          console.log(products)
+      }
         const status = 'انتظار'
         const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
           products, total, status
@@ -221,8 +224,17 @@ function App() {
         const id = await lastuserorder._id
         const oldproducts = await allorders.find((order) => order._id == id).products
         const oldtotal = await allorders.find((order) => order._id == id).total
-        const products = [...itemsincart, ...oldproducts]
+        // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal;
+        const products =[]
+        if (lastuserorder.status == 'جاري التحضير') {
+          const additem = itemsincart.map((i)=>{i.isAdd = true})
+          products = [...additem, ...oldproducts]
+          console.log(products)
+        }else{
+          products = [...itemsincart, ...oldproducts]
+          console.log(products)
+      }
         const status = 'انتظار'
         const order_type = 'ديلفري'
         const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {

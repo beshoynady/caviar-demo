@@ -43,17 +43,17 @@ const Cart = (props) => {
                       orderside.current.style.marginRight = "0%";
                       ordersText.current.style.marginRight = "0%";
                     }}>طلباتك الحالية</label>
-                    {userlogininfo ?
-                      <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                        invoice(userlogininfo.id);
-                        orderside.current.style.marginRight = "-50%";
-                        ordersText.current.style.marginRight = "-50%";
-                      }}>الفاتورة</label> :
-                      <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                    {id ?<label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
                         invoice(id);
                         orderside.current.style.marginRight = "-50%";
                         ordersText.current.style.marginRight = "-50%";
-                      }}>الفاتورة</label>}
+                      }}>الفاتورة</label>
+                      :userlogininfo?<label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                        invoice(userlogininfo.id);
+                        orderside.current.style.marginRight = "-50%";
+                        ordersText.current.style.marginRight = "-50%";
+                      }}>الفاتورة</label> : alert('رجاء تسجيل الدخول او مسح رمزqr')
+                      }
                     <div className="slider-tab">
 
                     </div>

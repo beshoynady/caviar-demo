@@ -516,8 +516,9 @@ function App() {
     const id = myorderid
     // console.log(id)
     const isActive = false;
+    const help = 'يطلب الفاتورة';
     const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      isActive
+      isActive,help
     })
     console.log(neworder)
     setTimeout(() => {

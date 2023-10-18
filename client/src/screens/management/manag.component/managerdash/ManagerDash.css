@@ -70,29 +70,17 @@
   align-items: center;
   justify-content: center;
 }
-.dashboard .insights li:nth-child(1) {
-  background-color: 45deg, #4099ff, #73b4ff;
-}
 .dashboard .insights li:nth-child(1) .bx {
   background: var(--light-primary);
   color: var(--primary);
-}
-.dashboard .insights li:nth-child(2) {
-  background-color: linear-gradient(45deg, #2ed8b6, #59e0c5);
 }
 .dashboard .insights li:nth-child(2) .bx {
   background: var(--light-warning);
   color: var(--warning);
 }
-.dashboard .insights li:nth-child(3) {
-  background-color: linear-gradient(45deg, #FFB64D, #ffcb80);
-}
 .dashboard .insights li:nth-child(3) .bx {
   background: var(--light-success);
   color: var(--success);
-}
-.dashboard .insights li:nth-child(4) {
-  background-color: linear-gradient(45deg, #FF5370, #ff869a);
 }
 .dashboard .insights li:nth-child(4) .bx {
   background: var(--light-danger);

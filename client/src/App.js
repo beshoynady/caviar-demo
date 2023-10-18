@@ -204,20 +204,27 @@ function App() {
         const total = costOrder + oldtotal
         console.log(itemsincart)
 
-        const products = []
-        if (lastuserorder.status == 'جاري التحضير') {
-          const additem = itemsincart.map((i) => { i.isAdd = true })
-          products = [...additem, ...oldproducts]
+        if (lasttableorder.status == 'جاري التحضير') {
+          const additem = []
+          for (let i = 0; i < itemsincart.length; i++) {
+            itemsincart[i].isAdd = true;
+            additem.push(itemsincart[i])
+          }
+          console.log(additem)
+          const products = [...additem, ...oldproducts]
           console.log(products)
+          const status = 'انتظار'
+          const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+            products, total, status
+          })
         } else {
-          products = [...itemsincart, ...oldproducts]
+          const products = [...itemsincart, ...oldproducts]
           console.log(products)
+          const status = 'انتظار'
+          const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+            products, total, status
+          })
         }
-        const status = 'انتظار'
-        const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-          products, total, status
-        })
-        console.log(neworder)
         setitemsincart([])
         getProducts()
       } else if (lastuserorderactive) {

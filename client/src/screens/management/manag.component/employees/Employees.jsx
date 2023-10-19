@@ -131,9 +131,9 @@ const Employees = () => {
       for(let employee of listofemployee){
         if(employee.isActive == Status){
           filteredEmployees.push(employee)
+          console.log(filteredEmployees)
         }
       }
-      console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }
   }

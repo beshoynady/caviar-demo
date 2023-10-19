@@ -244,13 +244,13 @@ const Tables = () => {
                 <h4 className="modal-title">استخراج QR</h4>
               </div>
               <div className="modal-body">
-                <div ref={printtableqr} style={{width: "100%", height: "100%",display: 'flex', alignItems: 'center', justifyContent: 'center'  }} className="form-group">
+                <div ref={printtableqr} style={{width: "100%",maxWidth:'400px', height: "100%",display: 'flex', alignItems: 'center', justifyContent: 'center'  }} className="form-group">
 
                   <div style={{width: "100%", height: "100%",display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',alignContent:'center', marginTop:'10px'}}>
 
                     <p style={{width:'100%',height:'40px', textAlign: 'center', fontSize: '26px',fontFamily: 'Noto Nastaliq Urdu , serif' }}>طاولة رقم {tablenum}</p>
                     {qrimage && <a href={qrimage} download>
-                      <img src={qrimage} style={{ width: "350px", height: "350px"}} className='qrprint'/>
+                      <img src={qrimage} style={{ width: "350px", height: "350px"}} className='qrprint'download/>
                     </a>}
 
                   </div>

@@ -32,12 +32,12 @@ const Employees = () => {
         setendpagination(endpagination - 5)
       }
     } else {
-      setstartpagination((e.target.innerHTML* 5) -5)
-      setendpagination(e.target.innerHTML* 5)
+      setstartpagination((e.target.innerHTML * 5) - 5)
+      setendpagination(e.target.innerHTML * 5)
 
     }
   }
-  
+
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
@@ -116,11 +116,17 @@ const Employees = () => {
   }
 
   const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob=(role)=>{
-    if(listofemployee.length>0){
-    const FilterEmployees = listofemployee.filter(employee=> employee.role == role)
-    setfilterEmp(FilterEmployees)
+  const getemployeesByJob = (role) => {
+    if (listofemployee.length > 0) {
+      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+      setfilterEmp(FilterEmployees)
+    }
   }
+  const getemployeesByٍStatus = (Status) => {
+    if (listofemployee.length > 0) {
+      const FilterEmployees = listofemployee.filter(employee => employee.isActive == true)
+      setfilterEmp(FilterEmployees)
+    }
   }
   const deleteEmployee = async (e) => {
     e.preventDefault()
@@ -159,7 +165,7 @@ const Employees = () => {
               <div class="col-sm-3">
                 <div class="show-entries">
                   <span>عرض</span>
-                  <select class="form-control" onChange={(e) =>{setstartpagination(0) ;setendpagination(e.target.value)}}>
+                  <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>
@@ -178,8 +184,8 @@ const Employees = () => {
                 </div>
                 <div class="filter-group">
                   <label>الوظيفة</label>
-                  <select class="form-control" onChange={(e)=>getemployeesByJob(e.target.value)} >
-                    <option>اختار وظيفة</option>
+                  <select class="form-control" onChange={(e) => getemployeesByJob(e.target.value)} >
+                    <option>الكل</option>
                     <option value="manager">مدير</option>
                     <option value="casher">كاشير</option>
                     <option value="waiter">ويتر</option>
@@ -187,13 +193,10 @@ const Employees = () => {
                   </select>
                 </div>
                 <div class="filter-group">
-                  <label>Status</label>
-                  <select class="form-control">
-                    <option>Any</option>
-                    <option>Delivered</option>
-                    <option>Shipped</option>
-                    <option>Pending</option>
-                    <option>Cancelled</option>
+                  <label>الحالة</label>
+                  <select class="form-control" onChange={(e)=>getemployeesByٍStatus(e.target.value)} >
+                    <option value={true}>متاح</option>
+                    <option value={false}>ليس متاح</option>
                   </select>
                 </div>
                 <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -220,7 +223,7 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {filterEmp.length>0?filterEmp.map((e, i) => {
+              {filterEmp.length > 0 ? filterEmp.map((e, i) => {
                 if (i >= startpagination & i < endpagination) {
                   return (
                     <tr key={i}>
@@ -247,34 +250,34 @@ const Employees = () => {
                   )
                 }
               })
-              :listofemployee.map((e, i) => {
-                // if (i < pagination & i >= pagination - 5) {
-                if (i >= startpagination & i < endpagination) {
-                  return (
-                    <tr key={i}>
-                      <td>
-                        <span className="custom-checkbox">
-                          <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                          <label htmlFor="checkbox1"></label>
-                        </span>
-                      </td>
-                      <td>{i + 1}</td>
-                      <td>{e.username}</td>
-                      <td>{e.address}</td>
-                      <td>{e.phone}</td>
-                      <td>{e.salary}</td>
-                      <td>{e.role}</td>
-                      <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
-                      <td>
-                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                          setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                        }}>&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
-                      </td>
-                    </tr>
-                  )
-                }
-              })
+                : listofemployee.map((e, i) => {
+                  // if (i < pagination & i >= pagination - 5) {
+                  if (i >= startpagination & i < endpagination) {
+                    return (
+                      <tr key={i}>
+                        <td>
+                          <span className="custom-checkbox">
+                            <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                            <label htmlFor="checkbox1"></label>
+                          </span>
+                        </td>
+                        <td>{i + 1}</td>
+                        <td>{e.username}</td>
+                        <td>{e.address}</td>
+                        <td>{e.phone}</td>
+                        <td>{e.salary}</td>
+                        <td>{e.role}</td>
+                        <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
+                        <td>
+                          <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
+                            setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                          }}>&#xE254;</i></a>
+                          <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
+                        </td>
+                      </tr>
+                    )
+                  }
+                })
               }
             </tbody>
           </table>

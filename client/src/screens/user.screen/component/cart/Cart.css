@@ -336,7 +336,6 @@
   }
   #invoice-POS .item {
     width: 33mm;
-    text-align: right;
   }
   table tr td:last-child {
     text-align: center;

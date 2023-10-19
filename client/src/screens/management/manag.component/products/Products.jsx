@@ -3,6 +3,8 @@ import axios from 'axios'
 
 const Products = () => {
 
+  const [startpagination, setstartpagination] = useState(0)
+  const [endpagination, setendpagination] = useState(5)
 
   const [pagination, setpagination] = useState(5)
   const EditPagination = (e) => {
@@ -145,6 +147,52 @@ const Products = () => {
               </div>
             </div>
           </div>
+          <div class="table-filter">
+            <div class="row text-dark">
+              <div class="col-sm-3">
+                <div class="show-entries">
+                  <span>عرض</span>
+                  <select class="form-control" onChange={(e) =>{setstartpagination(0) ;setendpagination(e.target.value)}}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={25}>25</option>
+                    <option value={30}>30</option>
+                  </select>
+                  <span>صفوف</span>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <div class="filter-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" />
+                </div>
+                <div class="filter-group">
+                  <label>الوظيفة</label>
+                  <select class="form-control" onChange={(e)=>getemployeesByJob(e.target.value)} >
+                    <option>اختار وظيفة</option>
+                    <option value="manager">مدير</option>
+                    <option value="casher">كاشير</option>
+                    <option value="waiter">ويتر</option>
+                    <option value="Chef">شيف</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label>Status</label>
+                  <select class="form-control">
+                    <option>Any</option>
+                    <option>Delivered</option>
+                    <option>Shipped</option>
+                    <option>Pending</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+              </div>
+            </div>
+          </div>
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -167,7 +215,7 @@ const Products = () => {
             </thead>
             <tbody>
               {listofProducts && listofProducts.map((p, i) => {
-                if (i < pagination & i >= pagination - 5) {
+                if (i > startpagination & i <= endpagination) {
                   return (
                     <tr key={i}>
                       <td>

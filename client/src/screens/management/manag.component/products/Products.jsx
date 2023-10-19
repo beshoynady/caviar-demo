@@ -169,7 +169,7 @@ const Products = () => {
                   <label>Name</label>
                   <input type="text" class="form-control" />
                 </div>
-                <div class="filter-group">
+                {/* <div class="filter-group">
                   <label>الوظيفة</label>
                   <select class="form-control" onChange={(e)=>getemployeesByJob(e.target.value)} >
                     <option>اختار وظيفة</option>
@@ -178,7 +178,7 @@ const Products = () => {
                     <option value="waiter">ويتر</option>
                     <option value="Chef">شيف</option>
                   </select>
-                </div>
+                </div> */}
                 <div class="filter-group">
                   <label>Status</label>
                   <select class="form-control">

@@ -145,18 +145,15 @@ const Cart = (props) => {
 
 
                                 <tr className="tabletitle">
-                                  <td></td>
                                   <td className="Rate" colspan="3"><h2>المجموع</h2></td>
                                   <td className="payment"><h2>{totalinvoice}</h2></td>
                                 </tr>
                                 <tr className="tabletitle">
-                                  <td></td>
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
                                   <td className="payment"><h2>{totalinvoice * 14}</h2></td>
                                 </tr>
 
                                 <tr className="tabletitle">
-                                  <td></td>
                                   <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>
                                   <td className="payment"><h2>{totalinvoice + totalinvoice * .14}</h2></td>
                                 </tr>

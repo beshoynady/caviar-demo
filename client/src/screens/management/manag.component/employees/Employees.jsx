@@ -246,7 +246,7 @@ const Employees = () => {
               }
             </tbody>
           </table>
-          <div className="clearfix">
+          {/* <div className="clearfix">
             <div className="hint-text">Showing <b>{listofemployee.filter((em) => em.isAdmin == true).length > pagination ? pagination : listofemployee.filter((em) => em.isAdmin == true).length}</b> out of <b>{listofemployee.filter((em) => em.isAdmin == true).length}</b> entries</div>
             <ul className="pagination">
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
@@ -257,7 +257,7 @@ const Employees = () => {
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
       <div id="addEmployeeModal" className="modal fade">

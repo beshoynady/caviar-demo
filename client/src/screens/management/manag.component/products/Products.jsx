@@ -248,12 +248,12 @@ const Products = () => {
             </tbody>
           </table>
           <div className="clearfix">
-            <div className="hint-text">المعروض <b>{listofProducts.length > pagination ? pagination : listofProducts.length}</b> من <b>{listofProducts.length}</b> الكل</div>
+            <div className="hint-text">المعروض <b>{listofProducts.length > endpagination ? endpagination : listofProducts.length}</b> من <b>{listofProducts.length}</b> الكل</div>
             <ul className="pagination">
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
-              <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
+              <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">3</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>

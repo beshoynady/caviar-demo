@@ -122,13 +122,13 @@ const Employees = () => {
       setfilterEmp(FilterEmployees)
     }
   }
-  const getemployeesByٍStatus = (Active) => {
-    console.log(Active)
+  const getemployeesByٍStatus = (Status) => {
+    console.log(Status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const FilterEmployees = listofemployee.filter(employee => employee.isActive == Active)
-      console.log(FilterEmployees)
-      setfilterEmp(FilterEmployees)
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == Status)
+      console.log(filteredEmployees)
+      setfilterEmp(filteredEmployees)
     }
   }
   const deleteEmployee = async (e) => {

@@ -19,22 +19,22 @@ const Employees = () => {
   // }
   const [startpagination, setstartpagination] = useState(0)
   const [endpagination, setendpagination] = useState(5)
-  const EditPagination = (e) => {
-    if (e.target.innerHTML == 'Next') {
-      setstartpagination(startpagination + 5)
-      setendpagination(endpagination + 5)
-    } else if (e.target.innerHTML == 'Previous') {
-      if (endpagination <= 5) {
-        setstartpagination(0)
-        setendpagination(5)
-      } else {
-        setstartpagination(startpagination - 5)
-        setendpagination(endpagination - 5)
-      }
-    } else {
-      setpagination(e.target.innerHTML * 5)
-    }
-  }
+  // const EditPagination = (e) => {
+  //   if (e.target.innerHTML == 'Next') {
+  //     setstartpagination(startpagination + 5)
+  //     setendpagination(endpagination + 5)
+  //   } else if (e.target.innerHTML == 'Previous') {
+  //     if (endpagination <= 5) {
+  //       setstartpagination(0)
+  //       setendpagination(5)
+  //     } else {
+  //       setstartpagination(startpagination - 5)
+  //       setendpagination(endpagination - 5)
+  //     }
+  //   } else {
+  //     setpagination(e.target.innerHTML * 5)
+  //   }
+  // }
   
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {

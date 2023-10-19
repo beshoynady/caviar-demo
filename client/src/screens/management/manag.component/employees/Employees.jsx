@@ -115,11 +115,11 @@ const Employees = () => {
     }
   }
 
+  const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob=(role)=>{
-    getemployees()
     if(listofemployee.length>0){
     const FilterEmployees = listofemployee.filter(employee=> employee.role == role)
-    setlistofemployee(FilterEmployees)
+    setfilterEmp(FilterEmployees)
   }
   }
   const deleteEmployee = async (e) => {
@@ -220,7 +220,34 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {listofemployee.map((e, i) => {
+              {filterEmp.length>0?filterEmp.map((e, i) => {
+                if (i >= startpagination & i < endpagination) {
+                  return (
+                    <tr key={i}>
+                      <td>
+                        <span className="custom-checkbox">
+                          <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                          <label htmlFor="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>{i + 1}</td>
+                      <td>{e.username}</td>
+                      <td>{e.address}</td>
+                      <td>{e.phone}</td>
+                      <td>{e.salary}</td>
+                      <td>{e.role}</td>
+                      <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
+                      <td>
+                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
+                          setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                        }}>&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
+                      </td>
+                    </tr>
+                  )
+                }
+              })
+              :listofemployee.map((e, i) => {
                 // if (i < pagination & i >= pagination - 5) {
                 if (i >= startpagination & i < endpagination) {
                   return (

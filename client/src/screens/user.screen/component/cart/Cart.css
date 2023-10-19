@@ -453,9 +453,11 @@
   #invoice-POS .tabletitle {
     font-size: 1.2em;
     background: #eee;
+    text-align: center;
   }
   #invoice-POS .service {
     border-bottom: 1px solid #eee;
+    text-align: center;
   }
   #invoice-POS .item {
     width: 24mm;
@@ -464,6 +466,7 @@
     font-size: 1em;
     font-weight: 600;
     color: black;  
+    text-align: center;
   }
   #invoice-POS #legalcopy {
     margin-top: 5mm;

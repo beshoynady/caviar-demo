@@ -43,7 +43,7 @@ const Orders = () => {
               <div className="col-sm-6">
                 <h2>ادارة <b>الاوردرات</b></h2>
               </div>
-              <div className="col-sm-6  justify-content-end">
+              <div className="col-sm-6 d-flex justify-content-end">
                 <a href="#addOrderModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة اوردر جديد</span></a>
                 <a href="#deleteOrderModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
               </div>

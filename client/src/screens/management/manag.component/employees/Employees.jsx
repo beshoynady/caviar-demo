@@ -124,7 +124,7 @@ const Employees = () => {
   }
   const getemployeesByٍStatus = (Status) => {
     if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.isActive == true)
+      const FilterEmployees = listofemployee.filter(employee => employee.isActive == Status)
       setfilterEmp(FilterEmployees)
     }
   }

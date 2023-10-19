@@ -126,11 +126,12 @@ const Employees = () => {
     console.log(Status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter((employee)=>{employee.isActive == Status})
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == Status)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }
   }
+  
   const deleteEmployee = async (e) => {
     e.preventDefault()
     try {
@@ -197,13 +198,13 @@ const Employees = () => {
                 </div>
                 <div class="filter-group">
                   <label>الحالة</label>
-                  <select class="form-control" onChange={(e)=> getemployeesByٍStatus(e.target.value)} >
+                  <select class="form-control" onChange={(e) => getemployeesByٍStatus(e.target.value)} >
                     <option >الكل</option>
                     <option value="true">متاح</option>
                     <option value="false">غير متاح</option>
                   </select>
                 </div>
-                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
               </div>
             </div>
           </div>

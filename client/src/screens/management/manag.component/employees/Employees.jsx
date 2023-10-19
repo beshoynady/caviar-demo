@@ -126,14 +126,8 @@ const Employees = () => {
     console.log(Status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const filteredEmployees = []
-      // const filteredEmployees = listofemployee.filter((emp)=>{emp.isActive == Status})
-      for(let employee of listofemployee){
-        if(employee.isActive == Status){
-          filteredEmployees.push(employee)
-          console.log(filteredEmployees)
-        }
-      }
+      const filteredEmployees = listofemployee.filter((employee)=>{employee.isActive == Status})
+      console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }
   }

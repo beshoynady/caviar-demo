@@ -52,8 +52,8 @@ const Cart = (props) => {
                         invoice(userlogininfo.id);
                         orderside.current.style.marginRight = "-50%";
                         ordersText.current.style.marginRight = "-50%";
-                      }}>الفاتورة</label> : alert('رجاء تسجيل الدخول او مسح رمزqr')
-                    }
+                      }}>الفاتورة</label>
+                        : ""}
                     <div className="slider-tab">
 
                     </div>
@@ -104,14 +104,14 @@ const Cart = (props) => {
                       <div ref={printContainer} className="side-content">
                         <div id="invoice-POS">
                           <center id="top">
-                            <div class="logo"></div>
-                            <div class="info">
+                            <div className="logo"></div>
+                            <div className="info">
                               <h2>SBISTechs Inc</h2>
                             </div>
                           </center>
 
                           <div id="mid">
-                            <div class="info">
+                            <div className="info">
                               <h2>Contact Info</h2>
                               <p>
                                 Address : street city, state 0000
@@ -125,60 +125,47 @@ const Cart = (props) => {
 
                             <div id="table">
                               <table>
-                                <tr class="tabletitle">
-                                  <td class="item"><h2>Item</h2></td>
-                                  <td class="Hours"><h2>Qty</h2></td>
-                                  <td class="Rate"><h2>Sub Total</h2></td>
+                                <tr className="tabletitle">
+                                  <td className="item"><h2>المنتج</h2></td>
+                                  <td className="Hours"><h2>الكمية</h2></td>
+                                  <td className="Hours"><h2>السعر</h2></td>
+                                  <td className="Rate"><h2>التكلفه</h2></td>
                                 </tr>
-
-                                <tr class="service">
-                                  <td class="tableitem"><p class="itemtext">Communication</p></td>
-                                  <td class="tableitem"><p class="itemtext">5</p></td>
-                                  <td class="tableitem"><p class="itemtext">$375.00</p></td>
-                                </tr>
-
-                                <tr class="service">
-                                  <td class="tableitem"><p class="itemtext">Asset Gathering</p></td>
-                                  <td class="tableitem"><p class="itemtext">3</p></td>
-                                  <td class="tableitem"><p class="itemtext">$225.00</p></td>
-                                </tr>
-
-                                <tr class="service">
-                                  <td class="tableitem"><p class="itemtext">Design Development</p></td>
-                                  <td class="tableitem"><p class="itemtext">5</p></td>
-                                  <td class="tableitem"><p class="itemtext">$375.00</p></td>
-                                </tr>
-
-                                <tr class="service">
-                                  <td class="tableitem"><p class="itemtext">Animation</p></td>
-                                  <td class="tableitem"><p class="itemtext">20</p></td>
-                                  <td class="tableitem"><p class="itemtext">$1500.00</p></td>
-                                </tr>
-
-                                <tr class="service">
-                                  <td class="tableitem"><p class="itemtext">Animation Revisions</p></td>
-                                  <td class="tableitem"><p class="itemtext">10</p></td>
-                                  <td class="tableitem"><p class="itemtext">$750.00</p></td>
-                                </tr>
+                                {list_products_order.map((item, i) => {
+                                  console.log(`list_products_order ${list_products_order}`)
+                                  return (
+                                    <tr className="service">
+                                      <td className="tableitem"><p className="itemtext">{item.name}</p></td>
+                                      <td className="tableitem"><p className="itemtext">{item.quantity}</p></td>
+                                      <td className="tableitem"><p className="itemtext">{item.price}</p></td>
+                                      <td className="tableitem"><p className="itemtext">{item.totalprice}</p></td>
+                                    </tr>)
+                                }
+                                )}
 
 
-                                <tr class="tabletitle">
+                                <tr className="tabletitle">
                                   <td></td>
-                                  <td class="Rate"><h2>tax</h2></td>
-                                  <td class="payment"><h2>$419.25</h2></td>
+                                  <td className="Rate" colspan="3"><h2>المجموع</h2></td>
+                                  <td className="payment"><h2>{totalinvoice}</h2></td>
+                                </tr>
+                                <tr className="tabletitle">
+                                  <td></td>
+                                  <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
+                                  <td className="payment"><h2>{totalinvoice * 14}</h2></td>
                                 </tr>
 
-                                <tr class="tabletitle">
+                                <tr className="tabletitle">
                                   <td></td>
-                                  <td class="Rate"><h2>Total</h2></td>
-                                  <td class="payment"><h2>$3,644.25</h2></td>
+                                  <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>
+                                  <td className="payment"><h2>{totalinvoice + totalinvoice * .14}</h2></td>
                                 </tr>
 
                               </table>
                             </div>
 
                             <div id="legalcopy">
-                              <p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
+                              <p className="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
                               </p>
                             </div>
 

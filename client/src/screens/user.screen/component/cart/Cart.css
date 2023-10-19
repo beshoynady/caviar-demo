@@ -380,7 +380,7 @@
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding: 2mm;
     margin: 0 auto;
-    width: 44mm;
+    width: 100%;
     background: #fff;
   }
   #invoice-POS ::selection {
@@ -450,7 +450,7 @@
     border-collapse: collapse;
   }
   #invoice-POS .tabletitle {
-    font-size: 0.5em;
+    font-size: 1.2em;
     background: #eee;
   }
   #invoice-POS .service {
@@ -460,7 +460,9 @@
     width: 24mm;
   }
   #invoice-POS .itemtext {
-    font-size: 0.5em;
+    font-size: 1em;
+    font-weight: 600;
+    color: black;  
   }
   #invoice-POS #legalcopy {
     margin-top: 5mm;

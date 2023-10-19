@@ -26,7 +26,7 @@ const POS = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, alltable, userlogininfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, itemsincart, costOrder, CreateWaiterOrder, CreateCasherOrder, POSinvoice, totalinvoice, list_produccts_order, orderupdate_date, myorder, checkout }) => {
+        ({ allProducts, allcategories, alltable, userlogininfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, itemsincart, costOrder, CreateWaiterOrder, CreateCasherOrder, POSinvoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
           if (userlogininfo) {
             return (
               <section className='pos-section'>

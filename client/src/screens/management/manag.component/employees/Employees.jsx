@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 const Employees = () => {
-  const [pagination, setpagination] = useState(5)
+  const [pagination, setpagination] = useState(0)
   const EditPagination = (e) => {
     if (e.target.innerHTML == 'Next') {
       setpagination(pagination + 5)
@@ -198,7 +198,8 @@ const Employees = () => {
             </thead>
             <tbody>
               {listofemployee.filter((em) => em.isAdmin == true).map((e, i) => {
-                if (i < pagination & i >= pagination - 5) {
+                // if (i < pagination & i >= pagination - 5) {
+                if (i > pagination & i <= pagination + 5) {
                   return (
                     <tr key={i}>
                       <td>

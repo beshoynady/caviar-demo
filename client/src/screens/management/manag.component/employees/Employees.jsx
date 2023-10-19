@@ -3,21 +3,39 @@ import axios from 'axios'
 
 
 const Employees = () => {
-  const [pagination, setpagination] = useState(0)
+  // const [pagination, setpagination] = useState(0)
+  // const EditPagination = (e) => {
+  //   if (e.target.innerHTML == 'Next') {
+  //     setpagination(pagination + 5)
+  //   } else if (e.target.innerHTML == 'Previous') {
+  //     if (pagination <= 5) {
+  //       setpagination(5)
+  //     } else {
+  //       setpagination(pagination - 5)
+  //     }
+  //   } else {
+  //     setpagination(e.target.innerHTML * 5)
+  //   }
+  // }
+  const [startpagination, setstartpagination] = useState(0)
+  const [endpagination, setendpagination] = useState(5)
   const EditPagination = (e) => {
     if (e.target.innerHTML == 'Next') {
-      setpagination(pagination + 5)
+      setstartpagination(startpagination + 5)
+      setendpagination(endpagination + 5)
     } else if (e.target.innerHTML == 'Previous') {
-      if (pagination <= 5) {
-        setpagination(5)
+      if (endpagination <= 5) {
+        setstartpagination(0)
+        setendpagination(5)
       } else {
-        setpagination(pagination - 5)
+        setstartpagination(startpagination - 5)
+        setendpagination(endpagination - 5)
       }
     } else {
       setpagination(e.target.innerHTML * 5)
     }
   }
-
+  
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
@@ -132,11 +150,11 @@ const Employees = () => {
             </div>
           </div>
           <div class="table-filter">
-            <div class="row">
+            <div class="row text-dark">
               <div class="col-sm-3">
                 <div class="show-entries">
                   <span>عرض</span>
-                  <select class="form-control" onChange={(e) => setpagination(e.target.value)}>
+                  <select class="form-control" onChange={(e) =>{setstartpagination(0) ;setendpagination(e.target.value)}}>
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>
@@ -199,7 +217,7 @@ const Employees = () => {
             <tbody>
               {listofemployee.filter((em) => em.isAdmin == true).map((e, i) => {
                 // if (i < pagination & i >= pagination - 5) {
-                if (i > pagination & i <= pagination + 5) {
+                if (i > startpagination & i <= endpagination) {
                   return (
                     <tr key={i}>
                       <td>
@@ -234,7 +252,7 @@ const Employees = () => {
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
-              <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
+              <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">3</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>

@@ -375,142 +375,94 @@
     display: none;
   }
 
-/* 
-.side {
-  width: 350px;
-  height: calc(100vh - 80px);
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: gold;
-  position: absolute;
-  top: 90px;
-  right: 0;
-  z-index: 2000;
-  overflow-y: scroll;
-}
-.side .cart-item {
-  width: 95%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px;
-  background-color: white;
-  border-radius: 15px;
-}
-.side .cart-item .cart-img {
-  width: 30%;
-  height: 100%;
-}
-.side .cart-item .cart-img img {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px 0 0 15px;
-}
-.side .cart-item .item-head {
-  width: 45%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-right: 2px solid black;
-}
-.side .cart-item .item-head p {
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-}
-.side .cart-item .del-cost {
-  width: 25%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.side .cart-item .del-cost > button {
-  width: 70%;
-  height: 30%;
-  font-size: 18px;
-  color: white;
-  background-color: red;
-  border-radius: 10px;
-}
-.side .cart-item .del-cost p {
-  font-size: 20px;
-  font-weight: 900;
-}
-.side .total-order {
-  width: 100%;
-  height: 70px;
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: greenyellow;
-  padding: 15px;
-}
-.side .total-order .total-order-btn {
-  width: 40%;
-  height: 95%;
-  margin: auto 20px;
-  font-size: 20px;
-  text-align: center;
-  border-radius: 10px;
-}
-.side .total-order .total-order-details {
-  width: 40%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: tan;
-}
-.side .total-order .total-order-details > h2 {
-  width: 100%;
-  font-size: 20px;
-  font-weight: 900;
-  text-align: center;
-}
-.side .total-order .total-order-details > p {
-  width: 100%;
-  font-size: 20px;
-  font-weight: 700;
-  background-color: red;
-  text-align: center;
-}
-.side .checkout {
-  width: 100%;
-  height: 80px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgb(32, 136, 255);
-}
-.side .checkout .checkout-btn {
-  width: 40%;
-  height: 95%;
-}
-.side .checkout .checkout-details {
-  width: 40%;
-  height: 100%;
-}
-.side .checkout .checkout-details h2 {
-  font-size: 20px;
-  font-weight: 900;
-  text-align: center;
-}
-.side .checkout .checkout-details p {
-  font-size: 20px;
-  font-weight: 700;
-  background-color: red;
-  text-align: center;
-} */
+
+  #invoice-POS {
+    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+    padding: 2mm;
+    margin: 0 auto;
+    width: 44mm;
+    background: #fff;
+  }
+  #invoice-POS ::selection {
+    background: #f31544;
+    color: #fff;
+  }
+  #invoice-POS ::moz-selection {
+    background: #f31544;
+    color: #fff;
+  }
+  #invoice-POS h1 {
+    font-size: 1.5em;
+    color: #222;
+  }
+  #invoice-POS h2 {
+    font-size: 0.9em;
+  }
+  #invoice-POS h3 {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 2em;
+  }
+  #invoice-POS p {
+    font-size: 0.7em;
+    color: #666;
+    line-height: 1.2em;
+  }
+  #invoice-POS #top, #invoice-POS #mid, #invoice-POS #bot {
+    /* Targets all id with 'col-' */
+    border-bottom: 1px solid #eee;
+  }
+  #invoice-POS #top {
+    min-height: 100px;
+  }
+  #invoice-POS #mid {
+    min-height: 80px;
+  }
+  #invoice-POS #bot {
+    min-height: 50px;
+  }
+  #invoice-POS #top .logo {
+    height: 60px;
+    width: 60px;
+    background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
+    background-size: 60px 60px;
+  }
+  #invoice-POS .clientlogo {
+    float: left;
+    height: 60px;
+    width: 60px;
+    background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+    background-size: 60px 60px;
+    border-radius: 50px;
+  }
+  #invoice-POS .info {
+    display: block;
+    margin-left: 0;
+  }
+  #invoice-POS .title {
+    float: right;
+  }
+  #invoice-POS .title p {
+    text-align: right;
+  }
+  #invoice-POS table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  #invoice-POS .tabletitle {
+    font-size: 0.5em;
+    background: #eee;
+  }
+  #invoice-POS .service {
+    border-bottom: 1px solid #eee;
+  }
+  #invoice-POS .item {
+    width: 24mm;
+  }
+  #invoice-POS .itemtext {
+    font-size: 0.5em;
+  }
+  #invoice-POS #legalcopy {
+    margin-top: 5mm;
+  }
+  

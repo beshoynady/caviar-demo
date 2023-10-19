@@ -22,7 +22,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice,list_products_order
+        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice, list_products_order
           , orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -43,17 +43,17 @@ const Cart = (props) => {
                       orderside.current.style.marginRight = "0%";
                       ordersText.current.style.marginRight = "0%";
                     }}>طلباتك الحالية</label>
-                    {id ?<label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                        invoice(id);
-                        orderside.current.style.marginRight = "-50%";
-                        ordersText.current.style.marginRight = "-50%";
-                      }}>الفاتورة</label>
-                      :userlogininfo?<label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                    {id ? <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                      invoice(id);
+                      orderside.current.style.marginRight = "-50%";
+                      ordersText.current.style.marginRight = "-50%";
+                    }}>الفاتورة</label>
+                      : userlogininfo ? <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
                         invoice(userlogininfo.id);
                         orderside.current.style.marginRight = "-50%";
                         ordersText.current.style.marginRight = "-50%";
                       }}>الفاتورة</label> : alert('رجاء تسجيل الدخول او مسح رمزqr')
-                      }
+                    }
                     <div className="slider-tab">
 
                     </div>
@@ -63,28 +63,28 @@ const Cart = (props) => {
                       <div className='side-content'>
                         {itemsincart.map((i, index) => {
                           return (
-                            i.quantity>0?
-                            <div className="cart-item" key={index}>
-                              <div className="cart-img">
-                                <img src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${i.image}`} />
-                              </div>
-                              <div className='cart-det'>
-                                <div className="item-head">
-                                  <p>{i.name}</p>
-                                  <button onClick={() => deleteitems(i._id)}>حذف</button>
+                            i.quantity > 0 ?
+                              <div className="cart-item" key={index}>
+                                <div className="cart-img">
+                                  <img src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${i.image}`} />
                                 </div>
-                                <div className="del-cost">
-                                  <div className='cart-price'>
-                                    <p>{i.price} ج</p>
-                                    <p>×{i.quantity}</p>
+                                <div className='cart-det'>
+                                  <div className="item-head">
+                                    <p>{i.name}</p>
+                                    <button onClick={() => deleteitems(i._id)}>حذف</button>
                                   </div>
-                                  <p>{i.price * i.quantity}</p>
+                                  <div className="del-cost">
+                                    <div className='cart-price'>
+                                      <p>{i.price} ج</p>
+                                      <p>×{i.quantity}</p>
+                                    </div>
+                                    <p>{i.price * i.quantity}</p>
+                                  </div>
+                                  {i.notes ? <div className='cart-note'>{i.notes}</div> : ''}
                                 </div>
-                                {i.notes ? <div className='cart-note'>{i.notes}</div> : ''}
-                              </div>
 
-                            </div>
-                            :''
+                              </div>
+                              : ''
                           )
                         })
                         }
@@ -102,7 +102,89 @@ const Cart = (props) => {
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
-                        <table className="invoice-info-container">
+                        <div id="invoice-POS">
+                          <center id="top">
+                            <div class="logo"></div>
+                            <div class="info">
+                              <h2>SBISTechs Inc</h2>
+                            </div>
+                          </center>
+
+                          <div id="mid">
+                            <div class="info">
+                              <h2>Contact Info</h2>
+                              <p>
+                                Address : street city, state 0000
+                                Email   : JohnDoe@gmail.com
+                                Phone   : 555-555-5555
+                              </p>
+                            </div>
+                          </div>
+
+                          <div id="bot">
+
+                            <div id="table">
+                              <table>
+                                <tr class="tabletitle">
+                                  <td class="item"><h2>Item</h2></td>
+                                  <td class="Hours"><h2>Qty</h2></td>
+                                  <td class="Rate"><h2>Sub Total</h2></td>
+                                </tr>
+
+                                <tr class="service">
+                                  <td class="tableitem"><p class="itemtext">Communication</p></td>
+                                  <td class="tableitem"><p class="itemtext">5</p></td>
+                                  <td class="tableitem"><p class="itemtext">$375.00</p></td>
+                                </tr>
+
+                                <tr class="service">
+                                  <td class="tableitem"><p class="itemtext">Asset Gathering</p></td>
+                                  <td class="tableitem"><p class="itemtext">3</p></td>
+                                  <td class="tableitem"><p class="itemtext">$225.00</p></td>
+                                </tr>
+
+                                <tr class="service">
+                                  <td class="tableitem"><p class="itemtext">Design Development</p></td>
+                                  <td class="tableitem"><p class="itemtext">5</p></td>
+                                  <td class="tableitem"><p class="itemtext">$375.00</p></td>
+                                </tr>
+
+                                <tr class="service">
+                                  <td class="tableitem"><p class="itemtext">Animation</p></td>
+                                  <td class="tableitem"><p class="itemtext">20</p></td>
+                                  <td class="tableitem"><p class="itemtext">$1500.00</p></td>
+                                </tr>
+
+                                <tr class="service">
+                                  <td class="tableitem"><p class="itemtext">Animation Revisions</p></td>
+                                  <td class="tableitem"><p class="itemtext">10</p></td>
+                                  <td class="tableitem"><p class="itemtext">$750.00</p></td>
+                                </tr>
+
+
+                                <tr class="tabletitle">
+                                  <td></td>
+                                  <td class="Rate"><h2>tax</h2></td>
+                                  <td class="payment"><h2>$419.25</h2></td>
+                                </tr>
+
+                                <tr class="tabletitle">
+                                  <td></td>
+                                  <td class="Rate"><h2>Total</h2></td>
+                                  <td class="payment"><h2>$3,644.25</h2></td>
+                                </tr>
+
+                              </table>
+                            </div>
+
+                            <div id="legalcopy">
+                              <p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
+                              </p>
+                            </div>
+
+                          </div>
+                        </div>
+                        {/* <table className="invoice-info-container">
                           <tbody className='tbody-info'>
                             <tr>
                               {id ?<td rowSpan="2" className="client-name">طاولة: {usertitle(id)}</td>
@@ -174,11 +256,11 @@ const Cart = (props) => {
                             <img src="https://github.com/anvilco/html-pdf-invoice-template/raw/main/img/heart.png" alt="heart" />
                             <span>Thank you!</span>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="total-order">
-                        {id?<button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button>:""}
-                        
+                        {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}
+
                         <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                         <div className='total-order-details'>
                           <h2>الاجمالي</h2>
@@ -189,12 +271,12 @@ const Cart = (props) => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div >
+            </div >
           )
         }
       }
-    </detacontext.Consumer>
+    </detacontext.Consumer >
   )
 }
 

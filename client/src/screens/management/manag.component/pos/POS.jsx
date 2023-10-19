@@ -152,10 +152,12 @@ const POS = () => {
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
                                   <td className="payment"><h2>{totalinvoice * 0.14}</h2></td>
                                 </tr>
+
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>
                                   <td className="payment"><h2>{totalinvoice + totalinvoice * 0.14}</h2></td>
                                 </tr>
+
                               </table>
                             </div>
 
@@ -166,6 +168,77 @@ const POS = () => {
 
                           </div>
                         </div>
+                            {/* <table className="invoice-info-container">
+                              <tbody>
+                                <tr>
+                                  <td rowSpan="2" className="client-name">
+                                    عميل:{userlogininfo ? usertitle(userlogininfo.id) : ''}
+                                  </td>
+                                  <td rowSpan="2">
+                                    كافيار
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Invoice Date: <strong>{orderupdate_date}</strong>
+                                  </td>
+                                  <td>
+                                    Invoice No: <strong>{myorder.serial}</strong>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <table className="line-items-container">
+                              <thead>
+                                <tr>
+                                  <th className="bold heading-name">المنتج</th>
+                                  <th className="bold heading-quantity">الكمية</th>
+                                  <th className="bold heading-price">السعر</th>
+                                  <th className="bold heading-subtotal">التكلفه</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {list_produccts_order.map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td className="bold heading-name">{item.name}</td>
+                                      <td className="bold heading-quantity">{item.quantity}</td>
+                                      <td className="bold heading-price">{item.price}</td>
+                                      <td className="bold heading-subtotal">{item.totalprice}</td>
+                                    </tr>
+                                  )
+                                })}
+
+
+                              </tbody>
+                            </table>
+
+                            <table className="line-items-container has-bottom-border">
+                              <thead>
+                                <tr>
+                                  <th>Due By</th>
+                                  <th>Total Due</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td className="large">{orderupdate_date}</td>
+                                  <td className="large total">{totalinvoice}</td>
+                                </tr>
+                              </tbody>
+
+                            </table>
+                            <div className="footer">
+                              <div className="footer-info">
+                                <span>hello@useanvil.com</span> |
+                                <span>555 444 6666</span> |
+                                <span>useanvil.com</span>
+                              </div>
+                              <div className="footer-thanks">
+                                <img src="https://github.com/anvilco/html-pdf-invoice-template/raw/main/img/heart.png" alt="heart" />
+                                <span>Thank you!</span>
+                              </div>
+                            </div> */}
                           </div>
                           <div className="total-order">
                             <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button>

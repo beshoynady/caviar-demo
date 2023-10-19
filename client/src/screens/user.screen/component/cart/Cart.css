@@ -249,14 +249,12 @@
   .page-container {
     display: none;
   }
-
-
   #invoice-POS {
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding: 5px;
     margin: 0 auto;
     width: 100%;
-    max-width: 400px;
+    /* max-width: 400px; */
     background: #fff;
   }
   #invoice-POS ::selection {

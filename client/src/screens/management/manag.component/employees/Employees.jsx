@@ -19,28 +19,32 @@ const Employees = () => {
   // }
   const [startpagination, setstartpagination] = useState(0)
   const [endpagination, setendpagination] = useState(5)
-  // const EditPagination = (e) => {
-  //   if (e.target.innerHTML == 'Next') {
-  //     setstartpagination(startpagination + 5)
-  //     setendpagination(endpagination + 5)
-  //   } else if (e.target.innerHTML == 'Previous') {
-  //     if (endpagination <= 5) {
-  //       setstartpagination(0)
-  //       setendpagination(5)
-  //     } else {
-  //       setstartpagination(startpagination - 5)
-  //       setendpagination(endpagination - 5)
-  //     }
-  //   } else {
-  //     setpagination(e.target.innerHTML * 5)
-  //   }
-  // }
+  const EditPagination = (e) => {
+    if (e.target.innerHTML == 'Next') {
+      setstartpagination(startpagination + 5)
+      setendpagination(endpagination + 5)
+    } else if (e.target.innerHTML == 'Previous') {
+      if (endpagination <= 5) {
+        setstartpagination(0)
+        setendpagination(5)
+      } else {
+        setstartpagination(startpagination - 5)
+        setendpagination(endpagination - 5)
+      }
+    } else {
+      setstartpagination((e.target.innerHTML* 5) -5)
+      setendpagination(e.target.innerHTML* 5)
+
+    }
+  }
   
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/user')
-      setlistofemployee(response.data)
+      const data = await response.data
+      const employee = data.filter((em) => em.isAdmin == true)
+      setlistofemployee(employee)
     } catch (error) {
       console.log(error)
     }
@@ -113,8 +117,8 @@ const Employees = () => {
 
   const getemployeesByJob=(role)=>{
     if(listofemployee.length>0){
-    const Employees = listofemployee.filter(employee=> employee.role == role)
-    setlistofemployee(Employees)
+    const FilterEmployees = listofemployee.filter(employee=> employee.role == role)
+    setlistofemployee(FilterEmployees)
   }
   }
   const deleteEmployee = async (e) => {
@@ -215,7 +219,7 @@ const Employees = () => {
               </tr>
             </thead>
             <tbody>
-              {listofemployee.filter((em) => em.isAdmin == true).map((e, i) => {
+              {listofemployee.map((e, i) => {
                 // if (i < pagination & i >= pagination - 5) {
                 if (i > startpagination & i <= endpagination) {
                   return (
@@ -246,8 +250,8 @@ const Employees = () => {
               }
             </tbody>
           </table>
-          {/* <div className="clearfix">
-            <div className="hint-text">Showing <b>{listofemployee.filter((em) => em.isAdmin == true).length > pagination ? pagination : listofemployee.filter((em) => em.isAdmin == true).length}</b> out of <b>{listofemployee.filter((em) => em.isAdmin == true).length}</b> entries</div>
+          <div className="clearfix">
+            <div className="hint-text">Showing <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> out of <b>{listofemployee.length}</b> entries</div>
             <ul className="pagination">
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
@@ -257,7 +261,7 @@ const Employees = () => {
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>
             </ul>
-          </div> */}
+          </div>
         </div>
       </div>
       <div id="addEmployeeModal" className="modal fade">

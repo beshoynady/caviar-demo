@@ -122,11 +122,11 @@ const Employees = () => {
       setfilterEmp(FilterEmployees)
     }
   }
-  const getemployeesByٍStatus = (Status) => {
-    console.log(Status)
+  const getemployeesByٍStatus = (status) => {
+    console.log(status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.salary >4000)
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == status)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }

@@ -11,20 +11,6 @@ const Orders = () => {
     let form_dt = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     return form_dt;
   }
-  const [pagination, setpagination] = useState(5)
-  const EditPagination = (e) => {
-    if (e.target.innerHTML == 'Next') {
-      setpagination(pagination + 5)
-    } else if (e.target.innerHTML == 'Previous') {
-      if (pagination <= 5) {
-        setpagination(5)
-      } else {
-        setpagination(pagination - 5)
-      }
-    } else {
-      setpagination(e.target.innerHTML * 5)
-    }
-  }
 
   const [listofoeders, setlistofoeders] = useState([])
   const getorders = async () => {
@@ -47,7 +33,7 @@ const Orders = () => {
   return (
     <detacontext.Consumer>
       {
-        ({askingForHelp ,userlogininfo, usertitle}) => {
+        ({askingForHelp ,userlogininfo, usertitle,EditPagination, pagination}) => {
   return (
     <div className="container-xl mlr-auto">
       <div className="table-responsive">
@@ -57,7 +43,7 @@ const Orders = () => {
               <div className="col-sm-6">
                 <h2>ادارة <b>الاوردرات</b></h2>
               </div>
-              <div className="col-sm-6 ">
+              <div className="col-sm-6  justify-content-end">
                 <a href="#addOrderModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة اوردر جديد</span></a>
                 <a href="#deleteOrderModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
               </div>

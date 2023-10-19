@@ -118,7 +118,7 @@ const Employees = () => {
               <div className="col-sm-6">
                 <h2>ادارة <b>الموظفين</b></h2>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 d-flex justify-content-end">
                 <a href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة موظف جديد</span></a>
                 <a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
               </div>

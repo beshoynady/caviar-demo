@@ -71,7 +71,7 @@ const Category = () => {
                       <div className="col-sm-6 text-right">
                         <h2>Manage <b>Categorys</b></h2>
                       </div>
-                      <div className="col-sm-6 text-left">
+                      <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addCategoryModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه تصنيف</span></a>
                         <a href="#deleteCategoryModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>

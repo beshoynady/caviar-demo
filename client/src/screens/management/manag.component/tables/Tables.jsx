@@ -107,7 +107,7 @@ const Tables = () => {
               <div className="col-sm-6">
                 <h2>ادارة <b>الطاولات</b></h2>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 d-flex justify-content-end">
                 <a href="#addTableModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه طاولة جديدة</span></a>
                 <a href="#deleteTableModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
               </div>

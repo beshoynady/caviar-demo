@@ -138,7 +138,7 @@ const Products = () => {
               <div className="col-sm-6">
                 <h2>ادارة <b>المنتجات</b></h2>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 d-flex justify-content-end">
                 <a href="#addProductModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
                 <a href="#deleteProductModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>

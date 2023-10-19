@@ -61,7 +61,7 @@ const Category = () => {
   return (
     <detacontext.Consumer>
       {
-        ({allProducts,calcTotalSalesOfCategory}) => {
+        ({ allProducts, calcTotalSalesOfCategory }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -78,51 +78,51 @@ const Category = () => {
                     </div>
                   </div>
                   <div class="table-filter">
-                <div class="row">
-                    <div class="col-sm-3">
+                    <div class="row">
+                      <div class="col-sm-3">
                         <div class="show-entries">
-                            <span>Show</span>
-                            <select class="form-control">
-                                <option>5</option>
-                                <option>10</option>
-                                <option>15</option>
-                                <option>20</option>
-                            </select>
-                            <span>entries</span>
+                          <span>Show</span>
+                          <select class="form-control">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>20</option>
+                          </select>
+                          <span>entries</span>
                         </div>
-                    </div>
-                    <div class="col-sm-9">
+                      </div>
+                      <div class="col-sm-9">
                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control"/>
+                          <label>Name</label>
+                          <input type="text" class="form-control" />
                         </div>
                         <div class="filter-group">
-                            <label>Location</label>
-                            <select class="form-control">
-                                <option>All</option>
-                                <option>Berlin</option>
-                                <option>London</option>
-                                <option>Madrid</option>
-                                <option>New York</option>
-                                <option>Paris</option>								
-                            </select>
+                          <label>Location</label>
+                          <select class="form-control">
+                            <option>All</option>
+                            <option>Berlin</option>
+                            <option>London</option>
+                            <option>Madrid</option>
+                            <option>New York</option>
+                            <option>Paris</option>
+                          </select>
                         </div>
                         <div class="filter-group">
-                            <label>Status</label>
-                            <select class="form-control">
-                                <option>Any</option>
-                                <option>Delivered</option>
-                                <option>Shipped</option>
-                                <option>Pending</option>
-                                <option>Cancelled</option>
-                            </select>
+                          <label>Status</label>
+                          <select class="form-control">
+                            <option>Any</option>
+                            <option>Delivered</option>
+                            <option>Shipped</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
+                          </select>
                         </div>
                         <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                      </div>
                     </div>
-                </div>
-            </div>
-  
+                  </div>
+
                   <table className="table table-striped table-hover">
                     <thead>
                       <tr>
@@ -152,7 +152,7 @@ const Category = () => {
                               </td>
                               <td>{index + 1}</td>
                               <td>{category.name}</td>
-                              <td>{allProducts?allProducts.filter((pro)=>pro.category == category._id).length:0}</td>
+                              <td>{allProducts ? allProducts.filter((pro) => pro.category == category._id).length : 0}</td>
                               <td>{calcTotalSalesOfCategory(category._id)}</td>
                               <td>
                                 <a href="#editCategoryModal" className="edit" data-toggle="modal" onClick={() => setcategoryId(category._id)}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

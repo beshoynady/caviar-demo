@@ -54,7 +54,7 @@ const Employees = () => {
     try {
       const newemployee = await axios.post('https://caviar-api.vercel.app/api/user', { username, password, address, phone, email, isAdmin, role, salary })
       console.log(newemployee)
-      if(newemployee){
+      if (newemployee) {
         getemployees()
       }
     } catch (error) {
@@ -75,23 +75,30 @@ const Employees = () => {
     console.log(role)
     console.log(salary)
     try {
-      if(password){
-      const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, password, address, phone, email, isAdmin,isActive, role, salary })
-      console.log(update)
-      if(update){
-        getemployees()
+      if (password) {
+        const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, password, address, phone, email, isAdmin, isActive, role, salary })
+        console.log(update)
+        if (update) {
+          getemployees()
+        }
+      } else {
+        const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, address, phone, email, isAdmin, isActive, role, salary })
+        console.log(update)
+        if (update) {
+          getemployees()
+        }
       }
-  }else{
-      const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, address, phone, email, isAdmin,isActive, role, salary })
-      console.log(update)
-      if(update){
-        getemployees()
-    } 
-  }}catch (error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
+  const getemployeesByJob=(role)=>{
+    if(listofemployee.length>0){
+    const Employees = listofemployee.filter(employee=> employee.role == role)
+    setlistofemployee(Employees)
+  }
+  }
   const deleteEmployee = async (e) => {
     e.preventDefault()
     try {
@@ -121,6 +128,52 @@ const Employees = () => {
               <div className="col-sm-6 d-flex justify-content-end">
                 <a href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة موظف جديد</span></a>
                 <a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="table-filter">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="show-entries">
+                  <span>عرض</span>
+                  <select class="form-control" onChange={(e) => setpagination(e.target.value)}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={25}>25</option>
+                    <option value={30}>30</option>
+                  </select>
+                  <span>صفوف</span>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <div class="filter-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" />
+                </div>
+                <div class="filter-group">
+                  <label>الوظيفة</label>
+                  <select class="form-control" onChange={(e)=>getemployeesByJob(e.target.value)} >
+                    <option>اختار وظيفة</option>
+                    <option value="manager">مدير</option>
+                    <option value="casher">كاشير</option>
+                    <option value="waiter">ويتر</option>
+                    <option value="Chef">شيف</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label>Status</label>
+                  <select class="form-control">
+                    <option>Any</option>
+                    <option>Delivered</option>
+                    <option>Shipped</option>
+                    <option>Pending</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+                <span class="filter-icon"><i class="fa fa-filter"></i></span>
               </div>
             </div>
           </div>
@@ -160,12 +213,12 @@ const Employees = () => {
                       <td>{e.phone}</td>
                       <td>{e.salary}</td>
                       <td>{e.role}</td>
-                      <td>{e.isActive?'متاح':"غير متاح"}</td>
+                      <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
                       <td>
-                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={()=>{
-                          setuserid(e._id);setusername(e.username);setaddress(e.address);setemail(e.email); setisAdmin(e.isAdmin);setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
+                          setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
                         }}>&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={()=> setuserid(e._id)}>&#xE872;</i></a>
+                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
                       </td>
                     </tr>
                   )

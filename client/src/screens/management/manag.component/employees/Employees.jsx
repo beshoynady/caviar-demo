@@ -116,9 +116,9 @@ const Employees = () => {
   }
 
   const getemployeesByJob=(role)=>{
+    getemployees()
     if(listofemployee.length>0){
     const FilterEmployees = listofemployee.filter(employee=> employee.role == role)
-    console.log(FilterEmployees)
     setlistofemployee(FilterEmployees)
   }
   }

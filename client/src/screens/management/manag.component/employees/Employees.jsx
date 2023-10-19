@@ -123,7 +123,7 @@ const Employees = () => {
     }
   }
   const getemployeesByٍStatus = (Active) => {
-    console.log(Status)
+    console.log(Active)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
       const FilterEmployees = listofemployee.filter(employee => employee.isActive == Active)

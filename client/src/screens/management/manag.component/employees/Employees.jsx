@@ -126,12 +126,12 @@ const Employees = () => {
     console.log(Status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == Status)
+      const filteredEmployees = listofemployee.filter(employee => employee.salary >4000)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }
   }
-  
+
   const deleteEmployee = async (e) => {
     e.preventDefault()
     try {

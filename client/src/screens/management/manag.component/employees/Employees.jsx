@@ -222,7 +222,7 @@ const Employees = () => {
             <tbody>
               {listofemployee.map((e, i) => {
                 // if (i < pagination & i >= pagination - 5) {
-                if (i > startpagination & i <= endpagination) {
+                if (i >= startpagination & i < endpagination) {
                   return (
                     <tr key={i}>
                       <td>

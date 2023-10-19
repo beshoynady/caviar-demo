@@ -220,7 +220,7 @@ const Products = () => {
             </thead>
             <tbody>
               {listofProducts && listofProducts.map((p, i) => {
-                if (i > startpagination & i <= endpagination) {
+                if (i >= startpagination & i < endpagination) {
                   return (
                     <tr key={i}>
                       <td>

@@ -126,7 +126,7 @@ const Employees = () => {
     console.log(status)
     if (listofemployee.length > 0) {
       console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == status)
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     }
@@ -200,8 +200,8 @@ const Employees = () => {
                   <label>الحالة</label>
                   <select class="form-control" onChange={(e)=>filterEmpByStatus(e.target.value)} >
                     <option >الكل</option>
-                    <option value="true">متاح</option>
-                    <option value="false">غير متاح</option>
+                    <option value={true}>متاح</option>
+                    <option value={false}>غير متاح</option>
                   </select>
                 </div>
                 {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}

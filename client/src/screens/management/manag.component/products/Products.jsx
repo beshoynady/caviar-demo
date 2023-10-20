@@ -108,6 +108,11 @@ const Products = () => {
     setproductFilterd(products)
   }
 
+  const searchByName =(name) => {
+    const products = listofProducts.filter((pro)=>pro.name.startsWith(name) == true)
+    setproductFilterd(products)
+  }
+
   const deleteProduct = async (e) => {
     e.preventDefault();
     try {
@@ -134,6 +139,8 @@ const Products = () => {
       console.log(error)
     }
   }
+
+
 
 
   useEffect(() => {
@@ -176,13 +183,13 @@ const Products = () => {
               <div class="col-sm-9">
                 <div class="filter-group">
                   <label>Name</label>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" onChange={(e)=>searchByName(e.target.value)}/>
                 <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
                 <div class="filter-group">
                   <label>التصنيف</label>
                   <select class="form-control" onChange={(e)=>getemployeesByCategory(e.target.value)} >
-                    <option>اختار التصنيف</option>
+                    <option>الكل</option>
                     {listofcategories.map((category, i) => {
                       return <option value={category._id} key={i} >{category.name}</option>
                     })

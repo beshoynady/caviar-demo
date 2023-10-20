@@ -151,7 +151,7 @@ const Employees = () => {
                             <option value={25}>25</option>
                             <option value={30}>30</option>
                           </select>
-                          <span>صفوف</span>
+                          <span>عنصر</span>
                         </div>
                       </div>
                       <div class="col-sm-9">

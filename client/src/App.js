@@ -28,18 +28,26 @@ export const detacontext = createContext({})
 function App() {
   //++++++++++++++++++++ pagination ++++++++++
 
-  const [pagination, setpagination] = useState(5)
+  const [startpagination, setstartpagination] = useState(0)
+  const [endpagination, setendpagination] = useState(5)
+
+  // const [pagination, setpagination] = useState(5)
   const EditPagination = (e) => {
-    if (e.target.innerHTML == 'Next') {
-      setpagination(pagination + 5)
-    } else if (e.target.innerHTML == 'Previous') {
-      if (pagination <= 5) {
-        setpagination(5)
+    if (e.target.innerHTML == 'التالي') {
+      setstartpagination(startpagination + 5)
+      setendpagination(endpagination + 5)
+    } else if (e.target.innerHTML == 'السابق') {
+      if (endpagination <= 5) {
+        setstartpagination(0)
+        setendpagination(5)
       } else {
-        setpagination(pagination - 5)
+        setstartpagination(startpagination - 5)
+        setendpagination(endpagination - 5)
       }
     } else {
-      setpagination(e.target.innerHTML * 5)
+      setstartpagination((e.target.innerHTML * 5) - 5)
+      setendpagination(e.target.innerHTML * 5)
+
     }
   }
 
@@ -671,7 +679,7 @@ function App() {
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
-      EditPagination, pagination, itemid, setitemid
+      EditPagination, startpagination,endpagination,setstartpagination,setendpagination, itemid, setitemid
     }}>
       <BrowserRouter>
         <Routes>

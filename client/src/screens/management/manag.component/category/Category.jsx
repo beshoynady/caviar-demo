@@ -39,21 +39,6 @@ const Category = () => {
   }
 
 
-
-  const [pagination, setpagination] = useState(5)
-  const EditPagination = (e) => {
-    if (e.target.innerHTML == 'Next') {
-      setpagination(pagination + 5)
-    } else if (e.target.innerHTML == 'Previous') {
-      if (pagination <= 5) {
-        setpagination(5)
-      } else {
-        setpagination(pagination - 5)
-      }
-    } else {
-      setpagination(e.target.innerHTML * 5)
-    }
-  }
   useEffect(() => {
     getallCategory()
   }, [])
@@ -61,7 +46,7 @@ const Category = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, calcTotalSalesOfCategory }) => {
+        ({ allProducts, calcTotalSalesOfCategory ,EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -140,9 +125,9 @@ const Category = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allCategory && allCategory.map((category, index) => {
-                        if (index < pagination & index >= pagination - 5) {
-                          return (
+                      {allCategory && allCategory.map((category, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
                             <tr key={index}>
                               <td>
                                 <span className="custom-checkbox">
@@ -167,15 +152,15 @@ const Category = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text">Showing <b>{allCategory.length > pagination ? pagination : allCategory.length}</b> out of <b>{allCategory.length}</b> entries</div>
+                    <div className="hint-text text-dark">عرض <b>{allCategory.length > endpagination ? endpagination : allCategory.length}</b> من <b>{allCategory.length}</b> عنصر</div>
                     <ul className="pagination">
-                      <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
+                      <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
                       <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
-                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>
+                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
                     </ul>
                   </div>
                 </div>

@@ -79,7 +79,7 @@ const StockItem = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, pagination, EditPagination }) => {
+        ({ userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive mt-1">
@@ -118,8 +118,8 @@ const StockItem = () => {
                     </thead>
                     <tbody>
                       {AllStockItems && AllStockItems.map((item, i) => {
-                        if (i < pagination & i >= pagination - 5) {
-                          return (
+                          if (i >= startpagination & i < endpagination) {
+                            return (
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
@@ -146,15 +146,15 @@ const StockItem = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text">المعروض <b>{AllStockItems.length > pagination ? pagination : AllStockItems.length}</b> من <b>{AllStockItems.length}</b> الكل</div>
+                    <div className="hint-text text-dark">عرض <b>{AllStockItems.length > endpagination ? endpagination : AllStockItems.length}</b> من <b>{AllStockItems.length}</b> عنصر</div>
                     <ul className="pagination">
-                      <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
+                      <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
                       <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
-                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>
+                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
                     </ul>
                   </div>
                 </div>

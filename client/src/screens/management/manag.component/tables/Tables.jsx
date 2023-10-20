@@ -61,6 +61,13 @@ const Tables = () => {
     }
   }
 
+const [tableFiltered, settableFiltered] = useState([])
+  const searchByNum = (num) => {
+    const tables = listoftable.filter((table) => table.tablenum.toString().startsWith(num) == true)
+    settableFiltered(tables)
+  }
+
+
   const deleteTable = async (e) => {
     e.preventDefault()
     // console.log(tableid)
@@ -87,7 +94,7 @@ const Tables = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
 
           return (
             <div className="container-xl mlr-auto">
@@ -101,6 +108,42 @@ const Tables = () => {
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addTableModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه طاولة جديدة</span></a>
                         <a href="#deleteTableModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-filter">
+                    <div class="row text-dark">
+                      <div class="col-sm-3">
+                        <div class="show-entries">
+                          <span>عرض</span>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
+                          </select>
+                          <span>صفوف</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="filter-group">
+                          <label>Name</label>
+                          <input type="text" class="form-control" onChange={(e) => searchByNum(e.target.value)} />
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="filter-group">
+                          <label>السكشن</label>
+                          <select class="form-control">
+                            <option>Any</option>
+                            <option>Delivered</option>
+                            <option>Shipped</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
+                          </select>
+                        </div>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span>
                       </div>
                     </div>
                   </div>
@@ -123,9 +166,10 @@ const Tables = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {listoftable.map((t, i) => {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
+                      {
+                      tableFiltered.length>0?tableFiltered.map((t, i) => {
+                        if (i >= startpagination & i < endpagination) {
+                          return (
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
@@ -149,7 +193,35 @@ const Tables = () => {
                             </tr>
                           )
                         }
-                      })}
+                      })
+                      :listoftable.map((t, i) => {
+                        if (i >= startpagination & i < endpagination) {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{t.tablenum}</td>
+                              <td>{t.description}</td>
+                              <td>{t.chairs}</td>
+                              {/* <td>{t.reservation ? "Reserved" : "Unreserved"}</td> */}
+                              <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum) }}>
+                                <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
+                              </a></td>
+                              <td>
+                                <a href="#editTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum); setchairs(t.chairs); settabledesc(t.description) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+                                <a href="#deleteTableModal" className="delete" data-toggle="modal" onClick={() => settableid(t._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          )
+                        }
+                      })
+                      }
                     </tbody>
                   </table>
                   <div className="clearfix">

@@ -83,7 +83,13 @@ const OrderSchema = new mongoose.Schema({
     ],
     total: {
         type: Number,
-        default: 0
+        default: 0,
+        required: true,
+    },
+    totalAfterTax: {
+        type: Number,
+        default: 0,
+        required: true
     },
     table: {
         type: ObjectId,

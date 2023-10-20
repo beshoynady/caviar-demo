@@ -8,6 +8,7 @@ const createorder = async (req, res) => {
     const table = await req.body.table;
     const user = await req.body.user;
     const total = await req.body.total;
+    const totalAfterTax = await req.body.totalAfterTax;
     const order_type = await req.body.order_type;
     const notes = await req.body.notes;
     const help = await req.body.help;
@@ -24,6 +25,7 @@ const createorder = async (req, res) => {
             table,
             user,
             total,
+            totalAfterTax,
             order_type,
             notes,
             help,
@@ -66,6 +68,7 @@ const updateorder = async (req, res) => {
     const table = await req.body.tableid;
     const user = await req.body.userid;
     const total = await req.body.total;
+    const totalAfterTax = await req.body.totalAfterTax;
     const status = await req.body.status;
     const payment_status = await req.body.payment_status;
     const isActive = await req.body.isActive;
@@ -81,6 +84,7 @@ const updateorder = async (req, res) => {
             table,
             user,
             total,
+            totalAfterTax,
             status,
             payment_status,
             help,

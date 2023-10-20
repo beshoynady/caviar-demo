@@ -210,6 +210,7 @@ function App() {
         const oldtotal = await allorders.find((order) => order._id == id).total
         // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal
+        const totalAfterTax = total * 0.14
         console.log(itemsincart)
 
         if (lasttableorder.status == 'جاري التحضير') {
@@ -223,7 +224,7 @@ function App() {
           console.log(products)
           const status = 'انتظار'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total, status
+            products, total,totalAfterTax, status
           })
           setitemsincart([])
           getProducts()
@@ -243,6 +244,7 @@ function App() {
         const oldtotal = await allorders.find((order) => order._id == id).total
         // const products = [...itemsincart, ...oldproducts]
         const total = costOrder + oldtotal;
+        const totalAfterTax= total * 0.14
         if (lastuserorder.status == 'جاري التحضير') {
           const additem = []
           for (let i = 0; i < itemsincart.length; i++) {
@@ -255,7 +257,7 @@ function App() {
           const status = 'انتظار'
           const order_type = 'ديلفري'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total, status, order_type
+            products, total,totalAfterTax, status, order_type
           })
           setitemsincart([])
           getProducts()
@@ -279,6 +281,7 @@ function App() {
           const user = allusers.find((u, i) => u._id == clientid) ? clientid : null;
           const products = [...itemsincart]
           const total = costOrder;
+          const totalAfterTax = total * 0.14
           if (user) {
             const order_type = 'ديلفري'
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
@@ -287,6 +290,7 @@ function App() {
               user,
               products,
               total,
+              totalAfterTax,
               order_type
             })
             setitemsincart([])
@@ -299,6 +303,7 @@ function App() {
               user,
               products,
               total,
+              totalAfterTax,
               order_type
             })
           }
@@ -328,10 +333,11 @@ function App() {
       const oldtotal = await allorders.find((order) => order._id == id).total
       const products = [...itemsincart, ...oldproducts]
       const total = costOrder + oldtotal
+      const totalAfterTax = total *0.14
       const status = 'انتظار'
       const employee = waiterid
       const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        products, total, status, employee
+        products, total,totalAfterTax, status, employee
       })
       console.log(employee)
       console.log(neworder)
@@ -341,6 +347,7 @@ function App() {
         const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
         const products = [...itemsincart]
         const total = costOrder;
+        const totalAfterTax = total *0.14
         const table = await tableid
         const employee = await waiterid;
         const order_type = 'داخلي';
@@ -351,6 +358,7 @@ function App() {
           table,
           products,
           total,
+          totalAfterTax,
           order_type,
           employee
         })
@@ -372,6 +380,7 @@ function App() {
       const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
       const products = [...itemsincart]
       const total = costOrder;
+      const totalAfterTax = total * 0.14
       const name = await clientname;
       const phone = await clientphone;
       const address = await clientaddress;
@@ -382,6 +391,7 @@ function App() {
         ordernum,
         products,
         total,
+        totalAfterTax,
         order_type,
         employee,
         name,

@@ -122,14 +122,14 @@ const Employees = () => {
       setfilterEmp(FilterEmployees)
     }
   }
-  const filterEmpByStatus= (status) => {
+  const filterEmpByStatus = (status) => {
     console.log(status)
     if (status == true) {
       console.log(listofemployee)
       const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
-    }else if (status == false) {
+    } else if (status == false) {
       const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
@@ -185,10 +185,10 @@ const Employees = () => {
                 </div>
               </div>
               <div class="col-sm-9">
-                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 <div class="filter-group">
                   <label>Name</label>
                   <input type="text" class="form-control" />
+                  <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
                 <div class="filter-group">
                   <label>الوظيفة</label>
@@ -202,7 +202,7 @@ const Employees = () => {
                 </div>
                 <div class="filter-group">
                   <label>الحالة</label>
-                  <select class="form-control" onChange={(e)=>filterEmpByStatus(e.target.value)} >
+                  <select class="form-control" onChange={(e) => filterEmpByStatus(e.target.value)} >
                     <option >الكل</option>
                     <option value={true}>متاح</option>
                     <option value={false}>غير متاح</option>
@@ -291,7 +291,7 @@ const Employees = () => {
             </tbody>
           </table>
           <div className="clearfix">
-            <div className="hint-text">Showing <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> out of <b>{listofemployee.length}</b> entries</div>
+            <div className="hint-text text-dark">Showing <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> out of <b>{listofemployee.length}</b> entries</div>
             <ul className="pagination">
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

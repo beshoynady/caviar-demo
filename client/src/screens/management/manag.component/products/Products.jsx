@@ -102,6 +102,11 @@ const Products = () => {
     }
 
   }
+  const [productFilterd, setproductFilterd] = useState([])
+  const getemployeesByCategory = (category) =>{
+    const products = listofProducts.filter(product => product.category == category)
+    setproductFilterd(products)
+  }
 
   const deleteProduct = async (e) => {
     e.preventDefault();
@@ -169,21 +174,21 @@ const Products = () => {
                 </div>
               </div>
               <div class="col-sm-9">
-                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 <div class="filter-group">
                   <label>Name</label>
                   <input type="text" class="form-control" />
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
-                {/* <div class="filter-group">
-                  <label>الوظيفة</label>
-                  <select class="form-control" onChange={(e)=>getemployeesByJob(e.target.value)} >
-                    <option>اختار وظيفة</option>
-                    <option value="manager">مدير</option>
-                    <option value="casher">كاشير</option>
-                    <option value="waiter">ويتر</option>
-                    <option value="Chef">شيف</option>
+                <div class="filter-group">
+                  <label>التصنيف</label>
+                  <select class="form-control" onChange={(e)=>getemployeesByCategory(e.target.value)} >
+                    <option>اختار التصنيف</option>
+                    {listofcategories.map((category, i) => {
+                      return <option value={category._id} key={i} >{category.name}</option>
+                    })
+                    }
                   </select>
-                </div> */}
+                </div>
                 <div class="filter-group">
                   <label>Status</label>
                   <select class="form-control">
@@ -219,7 +224,8 @@ const Products = () => {
               </tr>
             </thead>
             <tbody>
-              {listofProducts && listofProducts.map((p, i) => {
+              {productFilterd.length>0?
+              productFilterd.map((p, i) => {
                 if (i >= startpagination & i < endpagination) {
                   return (
                     <tr key={i}>
@@ -244,11 +250,38 @@ const Products = () => {
                     </tr>
                   )
                 }
-              })}
+              })
+              :listofProducts.map((p, i) => {
+                if (i >= startpagination & i < endpagination) {
+                  return (
+                    <tr key={i}>
+                      <td>
+                        <span className="custom-checkbox">
+                          <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                          <label htmlFor="checkbox1"></label>
+                        </span>
+                      </td>
+                      <td>{i + 1}</td>
+                      <td><img src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${p.image}`} style={{ "width": "60px", "height": "50px" }} /></td>
+                      <td>{p.name}</td>
+                      <td>{p.description}</td>
+                      <td>{listofcategories.length > 0 ? listofcategories.find(c => c._id == p.category).name : ""}</td>
+                      <td>{p.price}</td>
+                      <td>{p.discount}</td>
+                      <td>{p.sales}</td>
+                      <td>
+                        <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                      </td>
+                    </tr>
+                  )
+                }
+              })
+              }
             </tbody>
           </table>
           <div className="clearfix">
-            <div className="hint-text">المعروض <b>{listofProducts.length > endpagination ? endpagination : listofProducts.length}</b> من <b>{listofProducts.length}</b> الكل</div>
+            <div className="hint-text text-dark">المعروض <b>{listofProducts.length > endpagination ? endpagination : listofProducts.length}</b> من <b>{listofProducts.length}</b> الكل</div>
             <ul className="pagination">
               <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
               <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

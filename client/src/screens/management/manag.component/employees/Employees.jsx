@@ -198,7 +198,7 @@ const Employees = () => {
                 </div>
                 <div class="filter-group">
                   <label>الحالة</label>
-                  <select class="form-control" onChange={(e) = filterEmpByStatus(e.target.value)} >
+                  <select class="form-control" onChange={(e)=>filterEmpByStatus(e.target.value)} >
                     <option >الكل</option>
                     <option value="true">متاح</option>
                     <option value="false">غير متاح</option>

@@ -122,7 +122,7 @@ const Employees = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination, endpagination }) => {
+        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination}) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">

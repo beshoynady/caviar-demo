@@ -90,7 +90,7 @@ const [tableFiltered, settableFiltered] = useState([])
 
   useEffect(() => {
     getallTable()
-  }, [pagination])
+  }, [])
   return (
     <detacontext.Consumer>
       {

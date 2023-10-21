@@ -65,17 +65,18 @@ const Category = () => {
                   <div class="table-filter">
                     <div class="row text-dark">
                       <div class="col-sm-3">
-                        <div class="show-entries">
+                      <div class="show-entries">
                           <span>عرض</span>
-                          <select class="form-control">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
                           </select>
-                          <span>عنصر</span>
-                        </div>
-                      </div>
+                          <span>صفوف</span>
+                        </div>                      </div>
                       <div class="col-sm-9">
                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">

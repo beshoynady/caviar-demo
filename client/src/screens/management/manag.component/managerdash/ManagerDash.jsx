@@ -189,10 +189,10 @@ const ManagerDash = () => {
                         </div>
                       </div>
                       <div class="col-sm-9">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
                           <label>Name</label>
                           <input type="text" class="form-control" />
+                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
                           <label>Location</label>
@@ -205,7 +205,7 @@ const ManagerDash = () => {
                             <option>Paris</option>
                           </select>
                         </div>
-                        <div class="filter-group">
+                        {/* <div class="filter-group">
                           <label>Status</label>
                           <select class="form-control">
                             <option>Any</option>
@@ -214,8 +214,8 @@ const ManagerDash = () => {
                             <option>Pending</option>
                             <option>Cancelled</option>
                           </select>
-                        </div>
-                        <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                        </div> */}
+                        {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
                     </div>
                   </div>

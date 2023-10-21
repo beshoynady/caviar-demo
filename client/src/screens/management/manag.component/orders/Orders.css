@@ -87,11 +87,11 @@
 	margin-left: 5px;
 }
 .table-filter input {
-	width: 200px;
+	width: 150px;
 	display: inline-block;
 }
 .filter-group select.form-control {
-	width: 110px;
+	width: 120px;
 }
 .filter-icon {
 	float: right;

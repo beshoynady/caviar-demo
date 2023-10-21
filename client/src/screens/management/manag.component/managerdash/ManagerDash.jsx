@@ -172,7 +172,6 @@ const ManagerDash = () => {
                     <i className='bx bx-filter'></i>
                     <i className='bx bx-search'></i>
                   </div>
-                  <table>
                   <div class="table-filter">
                     <div class="row text-dark">
                       <div class="col-sm-3">
@@ -220,6 +219,7 @@ const ManagerDash = () => {
                       </div>
                     </div>
                   </div>
+                  <table>
                     <thead>
                       <tr>
                         <th>م.</th>

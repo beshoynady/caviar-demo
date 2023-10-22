@@ -3,13 +3,15 @@ const Productmodel = require('../models/Product.model.js')
 
 const createproduct = async (req, res) => {
     try {
-        const productname = await req.body.productname;
-        const productprice = await req.body.productprice;
-        const productdescription = await req.body.productdescription;
+        const name = await req.body.productname;
+        const price = await req.body.productprice;
+        const description = await req.body.productdescription;
+        const ingredients = await req.body.ingredients;
+        const totalCost = await req.body.totalCost;
         const image = await req.file.filename;
-        const categoryid = await req.body.productcategoryid;
+        const category = await req.body.productcategoryid;
 
-        const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image: image, category: categoryid });
+        const newproduct = await Productmodel.create({ name, description, price,ingredients,totalCost, image, category });
         newproduct.save();
         res.status(200).json(newproduct);
     } catch (err) {
@@ -52,11 +54,13 @@ const updateproduct = async (req, res) => {
         const name = await req.body.productname;
         const price = await req.body.productprice;
         const description = await req.body.productdescription;
+        const ingredients = await req.body.ingredients;
+        const totalCost = await req.body.totalCost;
         const category = await req.body.productcategoryid;
         const discount = await req.body.productdiscount;
         const sales = await req.body.sales;
         const image = await req.file.filename;
-        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description, price, category, discount, sales, image }, { new: true })
+        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description, price,ingredients,totalCost, category, discount, sales, image }, { new: true })
         res.status(200).json(product)
     } catch (err) {
         res.status(400).json(err)
@@ -68,10 +72,12 @@ const updateproductwithoutimage = async (req, res) => {
         const name = await req.body.productname;
         const price = await req.body.productprice;
         const description = await req.body.productdescription;
+        const ingredients = await req.body.ingredients;
+        const totalCost = await req.body.totalCost;
         const category = await req.body.productcategoryid;
         const discount = await req.body.productdiscount;
         const sales = await req.body.sales;
-        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description, price, category, discount, sales }, { new: true })
+        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description,ingredients,totalCost, price, category, discount, sales }, { new: true })
         res.status(200).json(product)
     } catch (err) {
         res.status(400).json(err)

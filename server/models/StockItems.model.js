@@ -8,7 +8,11 @@ const StockItemSchema = new mongoose.Schema(
       require: true,
       unique: true
     },
-    unit: {
+    largeUnit: {
+      type: String,
+      require: true,
+    },
+    smallUnit: {
       type: String,
       require: true,
     },
@@ -22,10 +26,25 @@ const StockItemSchema = new mongoose.Schema(
       require: true,
       default: 0,
     },
+    Parts: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
     cost: {
       type: Number,
       require: true,
       default: 0,
+    },
+    costOfPart: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
+    category: {
+      type: String,
+      require: true,
+      enum: ['مواد خام', ''
     },
     createAt: {
       type: Date,

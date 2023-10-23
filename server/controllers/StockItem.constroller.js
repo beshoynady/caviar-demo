@@ -4,17 +4,14 @@ const StockItemsModel = require('../models/StockItems.model');
 const CreateStockItem = async (req, res) => {
     try {
         const itemName = await req.body.itemName;
-        const largeUnit = await req.body.largeUnit;
-        const smallUnit = await req.body.unit;
-        const Parts = await req.body.Parts;
+        const unit = await req.body.unit;
         const Balance = await req.body.Balance;
         const price = await req.body.price;
-        const cost = await req.body.cost;  
-        const costOfPart = await req.body.costOfPart;  
+        const cost = await req.body.cost;
         const createBy = await req.body.createBy;             
         const createAt = await req.body.createAt;      
 
-        const newstockitem = await StockItemsModel.create({ itemName, largeUnit, smallUnit, Parts, costOfPart, price,Balance,cost, createBy, createAt });
+        const newstockitem = await StockItemsModel.create({ itemName, unit, price,Balance,cost, createBy, createAt });
         
         newstockitem.save();
         res.status(200).json(newstockitem);
@@ -49,16 +46,13 @@ const updateStockItem = async (req, res) => {
     try {
         const itemId = await req.params.itemId;
         const itemName = await req.body.itemName;
-        const largeUnit = await req.body.largeUnit;
-        const smallUnit = await req.body.unit;
-        const Parts = await req.body.Parts;
+        const unit = await req.body.unit;
         const Balance = await req.body.Balance;
         const price = await req.body.price;
-        const cost = await req.body.cost;  
-        const costOfPart = await req.body.costOfPart;  
+        const cost = await req.body.cost;
         const createBy = await req.body.createBy;             
 
-        const updatedstockitem = await StockItemsModel.findByIdAndUpdate({_id: itemId },{itemName, largeUnit, smallUnit, Parts, costOfPart, price,Balance,cost, createBy}, { new: true });
+        const updatedstockitem = await StockItemsModel.findByIdAndUpdate({_id: itemId },{ itemName, unit, Balance,cost, price,createBy}, { new: true });
         res.status(200).json(updatedstockitem);
     } catch (err) {
         res.status(500).json({ err: err });

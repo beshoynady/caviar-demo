@@ -85,13 +85,13 @@
 .table-filter select, .table-filter input {
 	display: inline-block;
 	margin-left: 5px;
-} 
+}
 .table-filter input {
-	width: 135px;
+	width: 200px;
 	display: inline-block;
 }
 .filter-group select.form-control {
-	width: 120px;
+	width: 110px;
 }
 .filter-icon {
 	float: right;

@@ -49,53 +49,6 @@ const Orders = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="table-filter">
-                    <div class="row text-dark">
-                      <div class="col-sm-3">
-                      <div class="show-entries">
-                          <span>عرض</span>
-                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
-                            <option value={5}>5</option>
-                            <option value={10}>10</option>
-                            <option value={15}>15</option>
-                            <option value={20}>20</option>
-                            <option value={25}>25</option>
-                            <option value={30}>30</option>
-                          </select>
-                          <span>صفوف</span>
-                        </div>
-                      </div>
-                      <div class="col-sm-9">
-                        <div class="filter-group">
-                          <label>Name</label>
-                          <input type="text" class="form-control" />
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>
-                        <div class="filter-group">
-                          <label>Location</label>
-                          <select class="form-control">
-                            <option>All</option>
-                            <option>Berlin</option>
-                            <option>London</option>
-                            <option>Madrid</option>
-                            <option>New York</option>
-                            <option>Paris</option>
-                          </select>
-                        </div>
-                        {/* <div class="filter-group">
-                          <label>Status</label>
-                          <select class="form-control">
-                            <option>Any</option>
-                            <option>Delivered</option>
-                            <option>Shipped</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
-                          </select>
-                        </div> */}
-                        {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
-                      </div>
-                    </div>
-                  </div>
                   <table className="table table-striped table-hover">
                     <thead>
                       <tr>

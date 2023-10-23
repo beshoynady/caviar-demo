@@ -112,7 +112,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle, list_day_order, total_day_salse,EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({ usertitle, list_day_order, total_day_salse,pagination,EditPagination }) => {
           return (
             <section className='dashboard'>
               <div className="header">
@@ -172,53 +172,6 @@ const ManagerDash = () => {
                     <i className='bx bx-filter'></i>
                     <i className='bx bx-search'></i>
                   </div>
-                  <div class="table-filter">
-                    <div class="row text-dark">
-                      <div class="col-sm-3">
-                      <div class="show-entries">
-                          <span>عرض</span>
-                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
-                            <option value={5}>5</option>
-                            <option value={10}>10</option>
-                            <option value={15}>15</option>
-                            <option value={20}>20</option>
-                            <option value={25}>25</option>
-                            <option value={30}>30</option>
-                          </select>
-                          <span>صفوف</span>
-                        </div>
-                      </div>
-                      <div class="col-sm-9">
-                        <div class="filter-group">
-                          <label>Name</label>
-                          <input type="text" class="form-control" />
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>
-                        <div class="filter-group">
-                          <label>Location</label>
-                          <select class="form-control">
-                            <option>All</option>
-                            <option>Berlin</option>
-                            <option>London</option>
-                            <option>Madrid</option>
-                            <option>New York</option>
-                            <option>Paris</option>
-                          </select>
-                        </div>
-                        {/* <div class="filter-group">
-                          <label>Status</label>
-                          <select class="form-control">
-                            <option>Any</option>
-                            <option>Delivered</option>
-                            <option>Shipped</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
-                          </select>
-                        </div> */}
-                        {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
-                      </div>
-                    </div>
-                  </div>
                   <table>
                     <thead>
                       <tr>
@@ -235,8 +188,8 @@ const ManagerDash = () => {
                     </thead>
                     <tbody>
                       {pending_payment.map((recent, i) => {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
+                        if (i < pagination & i >= pagination - 5) {
+                          return (
                             <tr key={i}>
                               <td>{i + 1}</td>
                               <td>{recent.serial}</td>
@@ -270,12 +223,12 @@ const ManagerDash = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text">عرض <b>{pending_payment.length > endpagination ? endpagination : pending_payment.length}</b> من <b>{pending_payment.length}</b> عنصر</div>
+                    <div className="hint-text">Showing <b>{pending_payment.length > pagination ? pagination : pending_payment.length}</b> out of <b>{pending_payment.length}</b> entries</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
-                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">3</a></li>
+                      <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>

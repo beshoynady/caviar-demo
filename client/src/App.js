@@ -579,7 +579,7 @@ function App() {
     setlist_day_order(dayorder)
     // console.log(dayorder)
     if (dayorder.length > 0) {
-      const order_day_paid = dayorder.filter((order) => order.payment_status == 'تم الدفع')
+      const order_day_paid = dayorder.filter((order) => order.payment_status == 'Paid')
       //  console.log(order_day_paid)
       let total = 0;
       if (order_day_paid.length > 0) {

@@ -113,7 +113,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle, list_day_order, total_day_salse,pagination,EditPagination }) => {
+        ({ usertitle, list_day_order, total_day_salse,EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
               <div className="header">
@@ -189,7 +189,7 @@ const ManagerDash = () => {
                     </thead>
                     <tbody>
                       {pending_payment && pending_payment.map((recent, i) => {
-                        if (i < pagination & i >= pagination - 5) {
+                        if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
                               <td>{i + 1}</td>

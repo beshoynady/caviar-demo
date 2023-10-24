@@ -119,6 +119,7 @@ const StockItem = () => {
                         </th>
                         <th>م</th>
                         <th>اسم الصنف</th>
+                        <th>المخزن</th>
                         <th>الرصيد الحالي</th>
                         <th>الوحدة كبيرة</th>
                         <th>السعر</th>
@@ -144,6 +145,7 @@ const StockItem = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>{item.itemName}</td>
+                              <td>{allCategoryStock.length > 0 ? allCategoryStock.filter(c=>c._id==item.categoryId)[0].name:''}</td>
                               <td>{item.Balance}</td>
                               <td>{item.largeUnit}</td>
                               <td>{item.price}</td>

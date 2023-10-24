@@ -224,15 +224,15 @@ const ManagerDash = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text">Showing <b>{pending_payment.length > pagination ? pagination : pending_payment.length}</b> out of <b>{pending_payment.length}</b> entries</div>
+                    <div className="hint-text">عرض <b>{pending_payment.length > startpagination ? startpagination : pending_payment.length}</b> من <b>{pending_payment.length}</b> عنصر</div>
                     <ul className="pagination">
-                      <li onClick={EditPagination} className="page-item disabled"><a href="#">Previous</a></li>
+                      <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
-                      <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
+                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">3</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
-                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">Next</a></li>
+                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
                     </ul>
                   </div>
                 </div>

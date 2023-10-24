@@ -77,8 +77,16 @@ const StockItem = () => {
     }
   }
 
+  const [allCategoryStock, setallCategoryStock] = useState([])
+
+  const getallCategoryStock = async () => {
+    const res = await axios.get("https://caviar-api.vercel.app/api/categoryStock/");
+    setallCategoryStock(res.data)
+  }
+
   useEffect(() => {
     getallStockItem()
+    getallCategoryStock()
   }, [])
   return (
     <detacontext.Consumer>
@@ -161,7 +169,7 @@ const StockItem = () => {
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">2</a></li>
-                      <li onClick={EditPagination} className="page-item active"><a href="#" className="page-link">3</a></li>
+                      <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">3</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">4</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
@@ -181,6 +189,15 @@ const StockItem = () => {
                         <div className="form-group">
                           <label>اسم الصنف</label>
                           <input type="text" className="form-control" required onChange={(e) => setitemName(e.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>نوع المخزن</label>
+                          <select name="category" id="category" form="carform" onChange={(e) => setcategoryId(e.target.value)}>
+                            {allCategoryStock.map((category, i) => {
+                              return <option value={category._id} key={i} >{category.name}</option>
+                            })
+                            }
+                          </select>
                         </div>
                         <div className="form-group">
                           <label>الوحدة الكبيرة</label>
@@ -236,6 +253,16 @@ const StockItem = () => {
                           <label>اسم الصنف</label>
                           <input type="text" className="form-control" defaultValue={itemName} required onChange={(e) => setitemName(e.target.value)} />
                         </div>
+                        <div className="form-group">
+                          <label>نوع المخزن</label>
+                          <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
+                            {allCategoryStock.map((category, i) => {
+                              return <option value={category._id} key={i} >{category.name}</option>
+                            })
+                            }
+                          </select>
+                        </div>
+
                         <div className="form-group">
                           <label>الوحدة الكبيرة</label>
                           <input type='text' className="form-control" defaultValue={largeUnit} required onChange={(e) => setlargeUnit(e.target.value)}></input>

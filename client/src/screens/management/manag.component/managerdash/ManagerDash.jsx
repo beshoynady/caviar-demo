@@ -14,6 +14,7 @@ const ManagerDash = () => {
     setallorders(res.data)
     const recent_status = await res.data.filter((order) => order.status == 'انتظار')
     const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
+    console.log({recent_payment_status: recent_payment_status})
     setpending_order(recent_status)
     setpending_payment(recent_payment_status)
   }

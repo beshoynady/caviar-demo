@@ -15,6 +15,7 @@ import Products from './screens/management/manag.component/products/Products';
 import Tables from './screens/management/manag.component/tables/Tables';
 import Employees from './screens/management/manag.component/employees/Employees';
 import Category from './screens/management/manag.component/category/Category';
+import CategoryStock from './screens/management/manag.component/categoryStock/CategoryStock';
 import Kitchen from './screens/management/manag.component/kitchen/Kitchen';
 import Waiter from './screens/management/manag.component/waiter/Waiter';
 import Login from './screens/management/manag.component/login/Login';
@@ -719,6 +720,7 @@ function App() {
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
             <Route path='pos' element={<POS />} />
+            <Route path='categoryStock' element={<CategoryStock/>} />
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
           </Route>

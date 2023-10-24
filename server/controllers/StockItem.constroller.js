@@ -4,10 +4,13 @@ const StockItemsModel = require('../models/StockItems.model');
 const CreateStockItem = async (req, res) => {
     try {
         const itemName = await req.body.itemName;
-        const unit = await req.body.unit;
+        const largeUnit = await req.body.largeUnit;
+        const smallUnit = await req.body.smallUnit;
         const Balance = await req.body.Balance;
         const price = await req.body.price;
-        const cost = await req.body.cost;
+        const totalCost = await req.body.totalCost;
+        const Parts = await req.body.Parts;
+        const costOfPart = await req.body.costOfPart;
         const createBy = await req.body.createBy;             
         const createAt = await req.body.createAt;      
 

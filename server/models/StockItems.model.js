@@ -8,7 +8,8 @@ const StockItemSchema = new mongoose.Schema(
       require: true,
       unique: true
     },
-    unit: {
+    
+    largeUnit: {
       type: String,
       require: true,
     },
@@ -22,10 +23,22 @@ const StockItemSchema = new mongoose.Schema(
       require: true,
       default: 0,
     },
-    cost: {
+    totalCost: {
       type: Number,
       require: true,
       default: 0,
+    },
+    smallUnit:{
+      type: String,
+      require: true,
+    },
+    parts: {
+      type: Number,
+      require: true,
+    },
+    costOfPart: { 
+      type : Number,
+      require: true
     },
     createAt: {
       type: Date,

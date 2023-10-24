@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 const connectdb = require('./database/connectdb.js');
 const routecategory = require('./router/Category.router.js');
+const routecategoryStock = require('./router/CategoryStock.router.js');
 const routeproduct = require('./router/Product.router.js');
 const routeuser = require('./router/User.router.js');
 const routetable = require('./router/Table.router.js');
@@ -54,6 +55,7 @@ app.use('/api/user', routeuser);
 app.use('/api/table', routetable );
 app.use('/api/order', routeorder);
 app.use('/api/auth', routeauth);
+app.use('/api/categoryStock', routecategoryStock);
 app.use('/api/stockitem', routestockitems);
 app.use('/api/stockmanag', routestockmanag);
 

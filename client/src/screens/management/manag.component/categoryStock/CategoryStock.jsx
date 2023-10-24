@@ -137,8 +137,8 @@ const CategoryStock = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>{categoryStock.name}</td>
-                              <td>{allProducts ? allProducts.filter((pro) => pro.categoryStock == categoryStock._id).length : 0}</td>
-                              <td>{calcTotalSalesOfCategoryStock(categoryStock._id)}</td>
+                              {/* <td>{allProducts ? allProducts.filter((pro) => pro.categoryStock == categoryStock._id).length : 0}</td>
+                              <td>{calcTotalSalesOfCategoryStock(categoryStock._id)}</td> */}
                               <td>
                                 <a href="#editCategoryStockModal" className="edit" data-toggle="modal" onClick={() => setcategoryStockId(categoryStock._id)}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 

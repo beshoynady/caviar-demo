@@ -280,10 +280,14 @@ function App() {
         try {
           const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
           const table = alltable.find((t, i) => t._id == clientid) ? clientid : null;
-          const user = allusers.find((u, i) => u._id == clientid) ? clientid : null;
+          const finduser = allusers.find((u, i) => u._id == clientid);
+          console.log({findu : finduser})
+          const user = finduser ? clientid : null;
           const products = [...itemsincart]
           const total = costOrder;
           const tax = total * 0.14
+          const phone = finduser.phone
+          const address = finduser.address
           const totalAfterTax = total + tax
           if (user) {
             const order_type = 'ديلفري'
@@ -291,6 +295,8 @@ function App() {
               serial,
               table,
               user,
+              phone,
+              address,
               products,
               total,
               totalAfterTax,

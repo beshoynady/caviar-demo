@@ -15,7 +15,12 @@ const CategoryStock = () => {
 
 
   const createCategoryStock = async () => {
-    const send = await axios.post("https://caviar-api.vercel.app/api/categoryStock/", { name: categoryStockname });
+    try {
+      const send = await axios.post("https://caviar-api.vercel.app/api/categoryStock/", { name: categoryStockname });
+      getallCategoryStock()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -25,6 +30,7 @@ const CategoryStock = () => {
     try {
       const edit = await axios.put("https://caviar-api.vercel.app/api/categoryStock/" + categoryStockId, { name: categoryStockname })
       console.log(edit)
+      getallCategoryStock()
     } catch (error) {
       console.log(error)
     }

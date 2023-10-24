@@ -8,7 +8,10 @@ const StockItemSchema = new mongoose.Schema(
       require: true,
       unique: true
     },
-    
+    categoryId: {
+      type: ObjectId,
+      required: true
+    },
     largeUnit: {
       type: String,
       require: true,

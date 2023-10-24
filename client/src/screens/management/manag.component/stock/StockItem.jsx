@@ -6,10 +6,14 @@ const StockItem = () => {
 
 
   const [itemName, setitemName] = useState("");
-  const [unit, setunit] = useState('');
+  const [categoryId, setcategoryId] = useState("");
+  const [largeUnit, setlargeUnit] = useState('');
+  const [smallUnit, setsmallUnit] = useState('');
   const [Balance, setBalance] = useState();
   const [price, setprice] = useState();
-  const [cost, setcost] = useState();
+  const [totalCost, settotalCost] = useState();
+  const [Parts, setParts] = useState();
+  const [costOfPart, setcostOfPart] = useState();
   const createAt =new Date().toLocaleString()
 
   const createitem = async (e, userid) => {
@@ -17,7 +21,7 @@ const StockItem = () => {
     e.preventDefault();
     try {
       const createBy = userid;
-      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName, unit, Balance, price,cost,createBy, createAt });
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName,categoryId,smallUnit,Parts,totalCost,costOfPart, largeUnit, Balance, price,createBy, createAt });
       console.log(response.data);
       getallStockItem()
     } catch (error) {
@@ -31,7 +35,7 @@ const StockItem = () => {
     e.preventDefault()
     const createBy = userid
       try {
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName, unit, Balance, price,cost, createBy
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName,categoryId,smallUnit,Parts,totalCost,costOfPart, largeUnit, Balance, price,createBy
         });
         console.log(response.data);
         if (response) {
@@ -107,10 +111,13 @@ const StockItem = () => {
                         </th>
                         <th>م</th>
                         <th>اسم الصنف</th>
-                        <th>الوحدة</th>
                         <th>الرصيد الحالي</th>
+                        <th>الوحدة كبيرة</th>
                         <th>السعر</th>
                         <th>اجمالي التكلفة</th>
+                        <th>الاجزاء</th>
+                        <th>الوحدة صغيرة</th>
+                        <th>تكلفة الجزء</th>
                         <th>تاريخ الاضافه</th>
                         <th>اضيف بواسطه</th>
                         <th>اجراءات</th>
@@ -129,14 +136,17 @@ const StockItem = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>{item.itemName}</td>
-                              <td>{item.unit}</td>
                               <td>{item.Balance}</td>
+                              <td>{item.largeUnit}</td>
                               <td>{item.price}</td>
-                              <td>{item.cost}</td>
+                              <td>{item.totalCost}</td>
+                              <td>{item.Parts}</td>
+                              <td>{item.smallUnit}</td>
+                              <td>{item.costOfPart}</td>
                               <td>{item.createAt}</td>
                               <td>{usertitle(item.createBy)}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setunit(item.unit); setprice(item.price)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price);setParts(item.Parts);setcostOfPart(item.costOfPart)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -173,8 +183,12 @@ const StockItem = () => {
                           <input type="text" className="form-control" required onChange={(e) => setitemName(e.target.value)} />
                         </div>
                         <div className="form-group">
-                          <label>الوحدة</label>
-                          <input type='text' className="form-control" required onChange={(e) => setunit(e.target.value)}></input>
+                          <label>الوحدة الكبيرة</label>
+                          <input type='text' className="form-control" required onChange={(e) => setlargeUnit(e.target.value)}></input>
+                        </div>
+                        <div className="form-group">
+                          <label>الوحدة الصغيره</label>
+                          <input type='text' className="form-control" required onChange={(e) => setsmallUnit(e.target.value)}></input>
                         </div>
                         <div className="form-group">
                           <label>رصيد افتتاحي</label>
@@ -182,11 +196,19 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" required onChange={(e) => {setprice(e.target.value); setcost(e.target.value * Balance)} }/>
+                          <input type='Number' className="form-control" required onChange={(e) => {setprice(e.target.value); settotalCost(e.target.value * Balance)} }/>
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" required  defaultValue={cost} readOnly/>
+                          <input type='Number' className="form-control" required  defaultValue={totalCost} readOnly/>
+                        </div>
+                        <div className="form-group">
+                          <label>عدد الوحدات</label>
+                          <input type='Number' className="form-control" required  onChange={(e)=>{setParts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                        </div>
+                        <div className="form-group">
+                          <label>تكلفة الوحده</label>
+                          <input type='Number' className="form-control" required  defaultValue={costOfPart} readOnly/>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -215,20 +237,36 @@ const StockItem = () => {
                           <input type="text" className="form-control" defaultValue={itemName} required onChange={(e) => setitemName(e.target.value)} />
                         </div>
                         <div className="form-group">
-                          <label>الوحدة</label>
-                          <input type='text' className="form-control" defaultValue={unit} required onChange={(e) => setunit(e.target.value)}></input>
+                          <label>الوحدة الكبيرة</label>
+                          <input type='text' className="form-control" defaultValue={largeUnit} required onChange={(e) => setlargeUnit(e.target.value)}></input>
+                        </div>
+                        <div className="form-group">
+                          <label>الوحدة الصغيره</label>
+                          <input type='text' className="form-control" defaultValue={smallUnit} required onChange={(e) => setsmallUnit(e.target.value)}></input>
                         </div>
                         <div className="form-group">
                           <label>رصيد افتتاحي</label>
-                          <input type='Number' className="form-control" defaultValue={Balance} onChange={(e) =>{setBalance(Number(e.target.value)); setcost(e.target.value * price)}} />
+                          <input type='Number' className="form-control" defaultValue={Balance} required onChange={(e) => setBalance(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" defaultValue={price} onChange={(e) =>{setprice(Number(e.target.value)); setcost(e.target.value * Balance)}} />
+                          <input type='Number' className="form-control" defaultValue={price} required onChange={(e) => {setprice(e.target.value); settotalCost(e.target.value * Balance)} }/>
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" defaultValue={cost} readOnly/>
+                          <input type='Number' className="form-control" required  defaultValue={totalCost} readOnly/>
+                        </div>
+                        <div className="form-group">
+                          <label>عدد الوحدات</label>
+                          <input type='Number' className="form-control" defaultValue required  onChange={(e)=>{setParts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                        </div>
+                        <div className="form-group">
+                          <label>تكلفة الوحده</label>
+                          <input type='Number' className="form-control" required  defaultValue={costOfPart} readOnly/>
+                        </div>
+                        <div className="form-group">
+                          <label>التاريخ</label>
+                          <input type='text' className="form-control" defaultValue={new Date()} required readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">

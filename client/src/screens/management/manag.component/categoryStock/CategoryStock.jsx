@@ -19,7 +19,8 @@ const CategoryStock = () => {
   }
 
 
-  const editCategoryStock = async () => {
+  const editCategoryStock = async (e) => {
+    e.preventDefault();
     console.log(categoryStockId)
     try {
       const edit = await axios.put("https://caviar-api.vercel.app/api/categoryStock/" + categoryStockId, { name: categoryStockname })

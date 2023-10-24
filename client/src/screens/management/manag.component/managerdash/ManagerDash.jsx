@@ -188,7 +188,7 @@ const ManagerDash = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {pending_payment.map((recent, i) => {
+                      {pending_payment && pending_payment.map((recent, i) => {
                         if (i < pagination & i >= pagination - 5) {
                           return (
                             <tr key={i}>

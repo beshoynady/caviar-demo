@@ -10,12 +10,12 @@ const CreateStockItem = async (req, res) => {
         const Balance = await req.body.Balance;
         const price = await req.body.price;
         const totalCost = await req.body.totalCost;
-        const Parts = await req.body.Parts;
+        const parts = await req.body.parts;
         const costOfPart = await req.body.costOfPart;
         const createBy = await req.body.createBy;             
         const createAt = await req.body.createAt;      
 
-        const newstockitem = await StockItemsModel.create({ itemName,categoryId, largeUnit,smallUnit,costOfPart,Parts,totalCost, price,Balance, createBy, createAt });
+        const newstockitem = await StockItemsModel.create({ itemName,categoryId, largeUnit,smallUnit,costOfPart,parts,totalCost, price,Balance, createBy, createAt });
         
         newstockitem.save();
         res.status(200).json(newstockitem);
@@ -56,11 +56,11 @@ const updateStockItem = async (req, res) => {
         const Balance = await req.body.Balance;
         const price = await req.body.price;
         const totalCost = await req.body.totalCost;
-        const Parts = await req.body.Parts;
+        const parts = await req.body.parts;
         const costOfPart = await req.body.costOfPart;
         const createBy = await req.body.createBy;             
 
-        const updatedstockitem = await StockItemsModel.findByIdAndUpdate({_id: itemId },{ itemName, categoryId,largeUnit,smallUnit,costOfPart,Parts,totalCost, price,Balance, createBy}, { new: true });
+        const updatedstockitem = await StockItemsModel.findByIdAndUpdate({_id: itemId },{ itemName, categoryId,largeUnit,smallUnit,costOfPart,parts,totalCost, price,Balance, createBy}, { new: true });
         res.status(200).json(updatedstockitem);
     } catch (err) {
         res.status(500).json({ err: err });

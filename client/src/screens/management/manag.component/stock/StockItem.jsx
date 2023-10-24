@@ -12,7 +12,7 @@ const StockItem = () => {
   const [Balance, setBalance] = useState();
   const [price, setprice] = useState();
   const [totalCost, settotalCost] = useState();
-  const [Parts, setParts] = useState();
+  const [parts, setparts] = useState();
   const [costOfPart, setcostOfPart] = useState();
   const createAt =new Date().toLocaleString()
 
@@ -21,7 +21,7 @@ const StockItem = () => {
     e.preventDefault();
     try {
       const createBy = userid;
-      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName,categoryId,smallUnit,Parts,totalCost,costOfPart, largeUnit, Balance, price,createBy, createAt });
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName,categoryId,smallUnit,parts,totalCost,costOfPart, largeUnit, Balance, price,createBy, createAt });
       console.log(response.data);
       getallStockItem()
     } catch (error) {
@@ -35,7 +35,7 @@ const StockItem = () => {
     e.preventDefault()
     const createBy = userid
       try {
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName,categoryId,smallUnit,Parts,totalCost,costOfPart, largeUnit, Balance, price,createBy
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName,categoryId,smallUnit,parts,totalCost,costOfPart, largeUnit, Balance, price,createBy
         });
         console.log(response.data);
         if (response) {
@@ -148,13 +148,13 @@ const StockItem = () => {
                               <td>{item.largeUnit}</td>
                               <td>{item.price}</td>
                               <td>{item.totalCost}</td>
-                              <td>{item.Parts}</td>
+                              <td>{item.parts}</td>
                               <td>{item.smallUnit}</td>
                               <td>{item.costOfPart}</td>
                               <td>{item.createAt}</td>
                               <td>{usertitle(item.createBy)}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price);setParts(item.Parts);setcostOfPart(item.costOfPart)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price);setparts(item.parts);setcostOfPart(item.costOfPart)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -192,6 +192,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>نوع المخزن</label>
+                          <option>اختر نوع المخزن</option>
                           <select name="category" id="category" form="carform" onChange={(e) => setcategoryId(e.target.value)}>
                             {allCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
@@ -221,7 +222,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" required  onChange={(e)=>{setParts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                          <input type='Number' className="form-control" required  onChange={(e)=>{setparts(e.target.value);setcostOfPart(price / e.target.value)}}/>
                         </div>
                         <div className="form-group">
                           <label>تكلفة الوحده</label>
@@ -256,6 +257,7 @@ const StockItem = () => {
                         <div className="form-group">
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
+                            <option>{allCategoryStock.filter(c=>c._id == categoryId)[0].name}</option>
                             {allCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
@@ -285,7 +287,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" defaultValue required  onChange={(e)=>{setParts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                          <input type='Number' className="form-control" defaultValue required  onChange={(e)=>{setparts(e.target.value);setcostOfPart(price / e.target.value)}}/>
                         </div>
                         <div className="form-group">
                           <label>تكلفة الوحده</label>

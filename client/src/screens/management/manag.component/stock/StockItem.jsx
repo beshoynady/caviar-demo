@@ -257,7 +257,7 @@ const StockItem = () => {
                         <div className="form-group">
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                            <option>{allCategoryStock.length>0?allCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option>
+                            <option>{allCategoryStock.length>0?console.log(allCategoryStock.filter(c=>c._id == categoryId)):''}</option>
                             {allCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })

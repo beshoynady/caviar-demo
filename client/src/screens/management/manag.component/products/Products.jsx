@@ -417,7 +417,7 @@ const Products = () => {
                         <div className="form-group">
                           <label>الاسم</label>
                           <select name="category" id="category" form="carform"  onChange={(e) => {setitemId(e.target.value); setname(e.target.name); setunit(e.target.unit); setcostofitem(e.target.costofitem)}}>
-                            {AllStockItems.map((item, i) => {
+                            {AllStockItems&&AllStockItems.map((item, i) => {
                               return <option name={item.itemName} unit={item.smallUnit} costofitem={item.costOfPart}  value={item._id} key={i} >{item.name}</option>
                             })
                             }

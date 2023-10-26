@@ -64,7 +64,7 @@ const Products = () => {
 
   }
 
-
+  
   const [listofProducts, setlistofProducts] = useState([]);
 
   const getallproducts = async () => {
@@ -118,8 +118,34 @@ const Products = () => {
     }
   }
 
+  
+  const [AllStockItems, setAllStockItems] = useState([]);
 
+  const getallStockItem = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+      const StockItems = await response.data;
+      console.log(response.data)
+      setAllStockItems(StockItems)
 
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  const [itemId, setitemId] = useState("")
+  const [name, setname] = useState("")
+  const [amount, setamount] = useState(0)
+  const [costofitem, setcostofitem] = useState(0)
+  const [unit, setunit] = useState("")
+  const [totalcostofitem, settotalcostofitem] = useState(0)
+
+  const [totalcost, settotalcost] = useState(0)
+  const createRecipe = async ()=>{
+    
+  }
+  
 
   useEffect(() => {
     getallproducts()
@@ -130,7 +156,7 @@ const Products = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination,endpagination,setstartpagination,setendpagination}) => {
+        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive mt-1">
@@ -235,6 +261,9 @@ const Products = () => {
                                 <td>{p.sales}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id)}}><span class="material-symbols-outlined">
+                                    tune
+                                  </span></a>
                                   <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
@@ -365,6 +394,50 @@ const Products = () => {
                           <label>الصورة</label>
                           <input type="file" className="form-control" onChange={(e) => setproductimg(e.target.files[0])} />
                         </div>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
+                        <input type="submit" className="btn btn-info" value="Save" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="recipeProductModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={createRecipe}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">تعديل منتج</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <div className="form-group">
+                          <label>الاسم</label>
+                          <select name="category" id="category" form="carform"  onChange={(e) => {setitemId(e.target.value); setname(e.target.name); setunit(e.target.unit); setcostofitem(e.target.costofitem)}}>
+                            {AllStockItems.map((item, i) => {
+                              return <option name={item.itemName} unit={item.smallUnit} costofitem={item.costOfPart}  value={item._id} key={i} >{item.name}</option>
+                            })
+                            }
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label>الكمية</label>
+                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); setcostofitem(e.target.value * costofitem)}} />
+                          <input type="text" className="form-control" defaultValue={unit}  required />
+                        </div>
+                        <div className="form-group">
+                          <label>التكلفة</label>
+                          <input type='Number' className="form-control" defaultValue={costofitem}  required />
+                        </div>
+                        <div className="form-group">
+                          <label>التكلفة الاجمالية</label>
+                          <input type='Number' className="form-control" defaultValue={totalcostofitem}  required />
+                        </div>
+                        <div className="form-group">
+                          <button>اضافه جديدة</button>
+                        </div>
+
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />

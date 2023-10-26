@@ -10,6 +10,7 @@ const StockItemSchema = new mongoose.Schema(
     },
     categoryId: {
       type: ObjectId,
+      ref: 'CategoryStock',
       required: true
     },
     largeUnit: {

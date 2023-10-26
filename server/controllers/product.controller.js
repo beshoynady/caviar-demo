@@ -17,6 +17,19 @@ const createproduct = async (req, res) => {
     }
 }
 
+const createRecipe = async (req, res) => {
+    try {
+        const productId =await req.params.productid
+        const Recipe = await req.body.Recipe
+        const totalcost = await req.body.totalcost
+        const productRecipe = await Productmodel.findByIdAndUpdate({_id: productId}, {Recipe,totalcost})
+        res.status(200).json({Recipe : productRecipe})
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+}
+
+
 const getAllproducts = async (req, res) => {
     try {
         const allproducts = await Productmodel.find({});
@@ -26,9 +39,9 @@ const getAllproducts = async (req, res) => {
     }
 }
 
-const getproductbycategory = async (req, res, next) => {
+const getproductbycategory = async (req, res) => {
     try {
-        const categoryid = await req.query.categoryid;
+        const categoryid = await req.params.categoryid;
         const products = await Productmodel.find({ category: categoryid });
         res.status(200).json(products)
     } catch (err) {
@@ -90,4 +103,4 @@ const deleteproduct = async (req, res) => {
 
 
 
-module.exports = { createproduct, getAllproducts, getproductbycategory, getoneproduct, updateproduct, updateproductwithoutimage, deleteproduct }
+module.exports = { createproduct,createRecipe, getAllproducts, getproductbycategory, getoneproduct, updateproduct, updateproductwithoutimage, deleteproduct }

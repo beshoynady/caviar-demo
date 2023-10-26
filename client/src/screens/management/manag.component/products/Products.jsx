@@ -416,7 +416,7 @@ const Products = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select  form="carform"  onChange={(e) => {setitemId(e.target.value); setname(e.target.name); setunit(e.target.unit); setcostofitem(e.target.costofitem)}}>
+                          <select  form="carform"  onChange={(e) => {console.log(e.target.unit);console.log(e.target.costofitem); setitemId(e.target.value); setname(e.target.name); setunit(e.target.unit); setcostofitem(e.target.costofitem)}}>
                             {AllStockItems && AllStockItems.map((item, i) => {
                               return(
                               <option name={item.itemName} unit={item.smallUnit} costofitem={item.costOfPart} value={item._id} key={i} >{item.itemName}</option>
@@ -428,7 +428,7 @@ const Products = () => {
                         <div className="form-group">
                           <label>الكمية</label>
                           <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); setcostofitem(e.target.value * costofitem)}} />
-                          <input type="text" className="form-control" defaultValue={unit}  required />
+                          <input type="text" className="form-control" defaultValue={unit} readOnly required />
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>

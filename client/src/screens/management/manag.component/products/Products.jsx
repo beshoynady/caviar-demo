@@ -426,13 +426,13 @@ const Products = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>الكمية</label>
-                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); setcostofitem(e.target.value * costofitem)}} />
-                          <input type="text" className="form-control" defaultValue={unit} readOnly required />
-                        </div>
-                        <div className="form-group">
                           <label>التكلفة</label>
                           <input type='Number' className="form-control" defaultValue={costofitem} readOnly required />
+                        </div>
+                        <div className="form-group">
+                          <label>الكمية</label>
+                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); settotalcost(e.target.value * costofitem)}} />
+                          <input type="text" className="form-control" defaultValue={unit} readOnly required />
                         </div>
                         <div className="form-group">
                           <label>التكلفة الاجمالية</label>

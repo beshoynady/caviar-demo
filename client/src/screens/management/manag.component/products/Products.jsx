@@ -136,12 +136,12 @@ const Products = () => {
 
   const [itemId, setitemId] = useState("")
   const [name, setname] = useState("")
-  const [amount, setamount] = useState(0)
-  const [costofitem, setcostofitem] = useState(0)
+  const [amount, setamount] = useState()
+  const [costofitem, setcostofitem] = useState()
   const [unit, setunit] = useState("")
-  const [totalcostofitem, settotalcostofitem] = useState(0)
+  const [totalcostofitem, settotalcostofitem] = useState()
 
-  const [totalcost, settotalcost] = useState(0)
+  const [totalcost, settotalcost] = useState()
   const createRecipe = async ()=>{
     
   }

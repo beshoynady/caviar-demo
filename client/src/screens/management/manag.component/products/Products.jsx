@@ -416,7 +416,7 @@ const Products = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select  form="carform"  onChange={(e) => {setitemId(e.target.value); setname(AllStockItems.find(s=>s._id ==e.target.value).itemName); setunit(AllStockItems.find(s=>s._id ==e.target.value).smallUnit); setcostofitem(AllStockItems.find(s=>s._id ==e.target.value).costOfPart)}}>
+                          <select  form="carform"  onChange={(e) => {console.log(AllStockItems.find(s=>s._id ==e.target.value).costOfPart); setitemId(e.target.value); setname(AllStockItems.find(s=>s._id ==e.target.value).itemName); setunit(AllStockItems.find(s=>s._id ==e.target.value).smallUnit); setcostofitem(AllStockItems.find(s=>s._id ==e.target.value).costOfPart)}}>
                             <option >اختر</option>
                             {AllStockItems && AllStockItems.map((item, i) => {
                               return(

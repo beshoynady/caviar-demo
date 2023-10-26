@@ -432,7 +432,7 @@ const Products = () => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); settotalcost(e.target.value * costofitem)}} />
+                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); settotalcostofitem(e.target.value * costofitem)}} />
                           <input type="text" className="form-control" defaultValue={unit} readOnly required />
                         </div>
                         <div className="form-group">

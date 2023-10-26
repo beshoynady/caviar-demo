@@ -263,7 +263,8 @@ const Products = () => {
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
                                   <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+{/*                                   
+                                  <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> */}
                                 </td>
                               </tr>
                             )

@@ -416,10 +416,10 @@ const Products = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select  form="carform"  onChange={(e) => {console.log(e.target.unit);console.log(e.target.costofitem); setitemId(e.target.value); setname(e.target.name); setunit(e.target.unit); setcostofitem(e.target.costofitem)}}>
+                          <select  form="carform"  onChange={(e) => {console.log(e.target.name); setitemId(e.target.value); setname(e.target.name); setunit(AllStockItems.find(s=>s._id ==e.target.value).smallUnit); setcostofitem(AllStockItems.find(s=>s._id ==e.target.value).costOfPart)}}>
                             {AllStockItems && AllStockItems.map((item, i) => {
                               return(
-                              <option name={item.itemName} unit={item.smallUnit} costofitem={item.costOfPart} value={item._id} key={i} >{item.itemName}</option>
+                              <option name={item.itemName} value={item._id} key={i} >{item.itemName}</option>
                               )
                             })
                             }

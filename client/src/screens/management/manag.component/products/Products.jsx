@@ -145,15 +145,15 @@ const Products = () => {
 
 
   const [recipe, setrecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
-
+ 
   const add = (e) => {
     e.preventDefault()
     console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
     setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+    console.log(recipe)
   }
 
   const createRecipe = async () => {
-
   }
 
 

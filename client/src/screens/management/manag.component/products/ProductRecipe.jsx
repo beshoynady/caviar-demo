@@ -66,13 +66,13 @@ const ProductRecipe = () => {
 
   const getProductRecipe = async (id) => {
     const product = await axios.get(`https://caviar-api.vercel.app/api/product/${productid}`)
-    const productrecipe = product.data.recipe
-    if (productrecipe){
-      setrecipe(productrecipe)
+    const productRecipe = product.data.Recipe
+    if (productRecipe){
+      setRecipe(productRecipe)
     }
     const totalProductRecipe = product.data.totalcost
     if (totalProductRecipe){
-      settotalcost(productrecipe.totalcost)
+      settotalcost(productRecipe.totalcost)
     }
   }
 
@@ -86,7 +86,7 @@ const ProductRecipe = () => {
   const [totalcost, settotalcost] = useState()
 
 
-  // const [recipe, setrecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
+  // const [Recipe, setRecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
   const [Recipe, setRecipe] = useState([])
 
   const add = (e) => {
@@ -233,7 +233,7 @@ const ProductRecipe = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {recipe && recipe.map((rec, i) => {
+                      {Recipe && Recipe.map((rec, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>

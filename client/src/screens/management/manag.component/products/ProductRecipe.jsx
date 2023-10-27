@@ -28,10 +28,10 @@ const ProductRecipe = () => {
     setproductFilterd(products)
   }
 
-  const searchByName = (name) => {
-    const products = listofProducts.filter((pro) => pro.name.startsWith(name) == true)
-    setproductFilterd(products)
-  }
+  // const searchByName = (name) => {
+  //   const products = listofProducts.filter((pro) => pro.name.startsWith(name) == true)
+  //   setproductFilterd(products)
+  // }
 
 
   const [listofcategories, setlistofcategories] = useState([])
@@ -90,25 +90,9 @@ const ProductRecipe = () => {
   const [totalcostofitem, settotalcostofitem] = useState()
 
 
-
-  // const [Recipe, setRecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
-
-  // const add = () => {
-  //   // console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
-  //   if (productRecipe.length > 0) {
-  //     const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
-  //     const totalcost= producttotalcost + totalcostofitem
-  //   } else {
-  //     const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
-
-  //     const totalcost= totalcostofitem
-  //   }
-  //   console.log(Recipe)
-  // }
-
   const createRecipe = async (e) => {
     e.preventDefault()
-    console.log(productid)
+    console.log(productRecipe)
 if (productRecipe.length > 0) {
       const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
@@ -201,11 +185,11 @@ if (productRecipe.length > 0) {
                             }
                           </select>
                         </div>
-                        <div class="filter-group">
+                        {/* <div class="filter-group">
                           <label>Name</label>
                           <input type="text" class="form-control" onChange={(e) => searchByName(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>
+                        </div> */}
                         <div class="filter-group">
                           <label>اجمالي التكاليف</label>
                           <input type="Number" class="form-control" readOnly defaultValue={producttotalcost} />

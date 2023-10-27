@@ -72,7 +72,7 @@ const ProductRecipe = () => {
     console.log({product : product})
     const productRecipe =await product.data.Recipe
     console.log({productRecipe:productRecipe})
-    
+
     if (productRecipe){
       setproductRecipe(productRecipe)
     }
@@ -205,7 +205,7 @@ if (productRecipe.length > 0) {
                         </div>
                         <div class="filter-group">
                           <label>اجمالي التكاليف</label>
-                          <input type="Number" class="form-control" readOnly defaultValue={totalcost} />
+                          <input type="Number" class="form-control" readOnly defaultValue={producttotalcost} />
                         </div>
                         {/* <div class="filter-group">
                   <label>Status</label>
@@ -240,7 +240,7 @@ if (productRecipe.length > 0) {
                       </tr>
                     </thead>
                     <tbody>
-                      {Recipe.length>0? Recipe.map((rec, i) => {
+                      {productRecipe.length>0? productRecipe.map((rec, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -316,9 +316,9 @@ if (productRecipe.length > 0) {
                           <label>التكلفة الاجمالية</label>
                           <input type='Number' className="form-control" defaultValue={totalcostofitem} required readOnly />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <button onClick={add}>اضافه جديدة</button>
-                        </div>
+                        </div> */}
 
                       </div>
                       <div className="modal-footer">
@@ -330,7 +330,7 @@ if (productRecipe.length > 0) {
                 </div>
               </div>
 
-              <div id="editRecipeModal" className="modal fade">
+              {/* <div id="editRecipeModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={editRecipe}>
@@ -376,7 +376,7 @@ if (productRecipe.length > 0) {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div id="deleteProductModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">

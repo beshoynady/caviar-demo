@@ -51,8 +51,8 @@ const getproductbycategory = async (req, res) => {
 
 const getoneproduct = async (req, res) => {
     try {
-        const productid = req.params.productid;
-        const oneproduct = await Productmodel.findById({_id: productid});
+        const productid = await req.params.productid;
+        const oneproduct = await Productmodel.findById(productid);
         res.status(200).json(oneproduct);
     } catch (err) {
         res.status(400).json(err)

@@ -94,21 +94,24 @@ const ProductRecipe = () => {
     console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
     if (Recipe.length > 0) {
       setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+      settotalcost(totalcost + totalcostofitem)
     } else {
       setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+      settotalcost(totalcostofitem)
     }
     console.log(Recipe)
   }
 
   const createRecipe = async (e) => {
     e.preventDefault()
-    if (Recipe.length > 0) {
-      setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-      settotalcost(totalcost + totalcostofitem)
-    } else {
-      setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-      settotalcost(totalcostofitem)
-    }
+    add()
+    // if (Recipe.length > 0) {
+    //   setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+    //   settotalcost(totalcost + totalcostofitem)
+    // } else {
+    //   setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+    //   settotalcost(totalcostofitem)
+    // }
     try {
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
       console.log(addRecipetoProduct)
@@ -198,7 +201,7 @@ const ProductRecipe = () => {
                         </div>
                         <div class="filter-group">
                           <label>اجمالي التكاليف</label>
-                          <input type="text" class="form-control" readOnly defaultValue={totalcost} />
+                          <input type="Number" class="form-control" readOnly defaultValue={totalcost} />
                         </div>
                         {/* <div class="filter-group">
                   <label>Status</label>

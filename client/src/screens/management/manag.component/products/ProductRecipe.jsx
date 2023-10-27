@@ -91,9 +91,8 @@ const ProductRecipe = () => {
   // const [Recipe, setRecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
   const [Recipe, setRecipe] = useState([])
 
-  const add = (e) => {
-    e.preventDefault()
-    console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
+  const add = () => {
+    // console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
     if (Recipe.length > 0) {
       setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
       settotalcost(totalcost + totalcostofitem)

@@ -66,13 +66,15 @@ const ProductRecipe = () => {
 
   const getProductRecipe = async (id) => {
     const product = await axios.get(`https://caviar-api.vercel.app/api/product/${productid}`)
+    console.log(product)
     const productRecipe = product.data.Recipe
+    console.log(productRecipe)
     if (productRecipe){
       setRecipe(productRecipe)
     }
     const totalProductRecipe = product.data.totalcost
     if (totalProductRecipe){
-      settotalcost(productRecipe.totalcost)
+      settotalcost(totalProductRecipe)
     }
   }
 

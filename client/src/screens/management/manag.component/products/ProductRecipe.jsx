@@ -108,6 +108,7 @@ const ProductRecipe = () => {
 
   const createRecipe = async (e) => {
     e.preventDefault()
+    console.log(productid)
 if (productRecipe.length > 0) {
       const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
@@ -116,14 +117,15 @@ if (productRecipe.length > 0) {
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
 
       console.log({addRecipetoProduct:addRecipetoProduct})
+      // getProductRecipe(productid)
     } else {
       const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
       const totalcost= totalcostofitem
 
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
       console.log({addRecipetoProduct:addRecipetoProduct})
+      // getProductRecipe(productid)
     }
-    getProductRecipe(productid)
   }
 
 
@@ -191,7 +193,7 @@ if (productRecipe.length > 0) {
                         </div>
                         <div class="filter-group">
                           <label>المنتج</label>
-                          <select class="form-control" onChange={(e) => { setproductid(e.target.value); getProductRecipe(e.target.value) }} >
+                          <select class="form-control" onChange={(e) => {setproductid(e.target.value); getProductRecipe(e.target.value) }} >
                             <option value={""}>الكل</option>
                             {productFilterd.map((product, i) => {
                               return <option value={product._id} key={i} >{product.name}</option>

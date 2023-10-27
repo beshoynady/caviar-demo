@@ -67,8 +67,8 @@ const ProductRecipe = () => {
   const getProductRecipe = async (id) => {
     console.log(id)
     const product = await axios.get(`https://caviar-api.vercel.app/api/product/${productid}`)
-    console.log(product)
-    const productRecipe = product.data.Recipe
+    console.log({product : product})
+    const productRecipe =await product.data.Recipe
     console.log(productRecipe)
     if (productRecipe){
       setRecipe(productRecipe)

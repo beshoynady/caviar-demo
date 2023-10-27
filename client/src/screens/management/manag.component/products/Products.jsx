@@ -64,7 +64,7 @@ const Products = () => {
 
   }
 
-  
+
   const [listofProducts, setlistofProducts] = useState([]);
 
   const getallproducts = async () => {
@@ -118,7 +118,7 @@ const Products = () => {
     }
   }
 
-  
+
   const [AllStockItems, setAllStockItems] = useState([]);
 
   const getallStockItem = async () => {
@@ -142,10 +142,19 @@ const Products = () => {
   const [totalcostofitem, settotalcostofitem] = useState()
 
   const [totalcost, settotalcost] = useState()
-  const createRecipe = async ()=>{
-    
+
+
+  const [recipe, setrecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
+
+  const add = () => {
+    console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
+    setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
   }
-  
+
+  const createRecipe = async () => {
+
+  }
+
 
   useEffect(() => {
     getallproducts()
@@ -263,7 +272,7 @@ const Products = () => {
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
                                   <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
@@ -291,7 +300,7 @@ const Products = () => {
                                 <td>{p.sales}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
@@ -416,11 +425,11 @@ const Products = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select  form="carform"  onChange={(e) => {console.log(AllStockItems.find(s=>s._id ==e.target.value).costOfPart); setitemId(e.target.value); setname(AllStockItems.find(s=>s._id ==e.target.value).itemName); setunit(AllStockItems.find(s=>s._id ==e.target.value).smallUnit); setcostofitem(AllStockItems.find(s=>s._id ==e.target.value).costOfPart)}}>
+                          <select form="carform" onChange={(e) => { console.log(AllStockItems.find(s => s._id == e.target.value).costOfPart); setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
                             <option >اختر</option>
                             {AllStockItems && AllStockItems.map((item, i) => {
-                              return(
-                              <option value={item._id} key={i} >{item.itemName}</option>
+                              return (
+                                <option value={item._id} key={i} >{item.itemName}</option>
                               )
                             })
                             }
@@ -428,19 +437,19 @@ const Products = () => {
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" required  defaultValue={costofitem} readOnly />
+                          <input type='Number' className="form-control" required defaultValue={costofitem} readOnly />
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type="Number" className="form-control"  required onChange={(e) =>{setamount(e.target.value); settotalcostofitem(e.target.value * costofitem)}} />
+                          <input type="Number" className="form-control" required onChange={(e) => { setamount(e.target.value); settotalcostofitem(e.target.value * costofitem) }} />
                           <input type="text" className="form-control" defaultValue={unit} readOnly required />
                         </div>
                         <div className="form-group">
                           <label>التكلفة الاجمالية</label>
-                          <input type='Number' className="form-control" defaultValue={totalcostofitem}  required readOnly />
+                          <input type='Number' className="form-control" defaultValue={totalcostofitem} required readOnly />
                         </div>
                         <div className="form-group">
-                          <button>اضافه جديدة</button>
+                          <button onClick={add}>اضافه جديدة</button>
                         </div>
 
                       </div>

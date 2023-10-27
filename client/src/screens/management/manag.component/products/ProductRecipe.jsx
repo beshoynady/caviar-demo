@@ -117,14 +117,14 @@ if (productRecipe.length > 0) {
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
 
       console.log({addRecipetoProduct:addRecipetoProduct})
-      // getProductRecipe(productid)
+      getProductRecipe(productid)
     } else {
       const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
       const totalcost= totalcostofitem
 
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
       console.log({addRecipetoProduct:addRecipetoProduct})
-      // getProductRecipe(productid)
+      getProductRecipe(productid)
     }
   }
 

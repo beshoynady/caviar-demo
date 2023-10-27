@@ -196,6 +196,10 @@ const ProductRecipe = () => {
                           <input type="text" class="form-control" onChange={(e) => searchByName(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
+                        <div class="filter-group">
+                          <label>اجمالي التكاليف</label>
+                          <input type="text" class="form-control" readOnly defaultValue={totalcost} />
+                        </div>
                         {/* <div class="filter-group">
                   <label>Status</label>
                   <select class="form-control">

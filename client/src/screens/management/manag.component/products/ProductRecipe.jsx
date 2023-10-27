@@ -61,21 +61,24 @@ const ProductRecipe = () => {
     } catch (error) {
       console.log(error)
     }
-
+    
   }
-
+  
+  const [productRecipe, setproductRecipe] = useState([])
+  const [producttotalcost, setproducttotalcost] = useState()
   const getProductRecipe = async (id) => {
     console.log(id)
     const product = await axios.get(`https://caviar-api.vercel.app/api/product/${id}`)
     console.log({product : product})
     const productRecipe =await product.data.Recipe
     console.log({productRecipe:productRecipe})
+    
     if (productRecipe){
-      setRecipe(productRecipe)
+      setproductRecipe(productRecipe)
     }
     const totalProductRecipe =await product.data.totalcost
     if (totalProductRecipe){
-      settotalcost(totalProductRecipe)
+      setproducttotalcost(totalProductRecipe)
     }
   }
 
@@ -86,41 +89,40 @@ const ProductRecipe = () => {
   const [unit, setunit] = useState("")
   const [totalcostofitem, settotalcostofitem] = useState()
 
-  const [totalcost, settotalcost] = useState()
 
 
   // const [Recipe, setRecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
-  const [Recipe, setRecipe] = useState([])
 
-  const add = () => {
-    // console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
-    if (Recipe.length > 0) {
-      setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-      settotalcost(totalcost + totalcostofitem)
-    } else {
-      setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-      settotalcost(totalcostofitem)
-    }
-    console.log(Recipe)
-  }
+  // const add = () => {
+  //   // console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
+  //   if (productRecipe.length > 0) {
+  //     const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+  //     const totalcost= producttotalcost + totalcostofitem
+  //   } else {
+  //     const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+
+  //     const totalcost= totalcostofitem
+  //   }
+  //   console.log(Recipe)
+  // }
 
   const createRecipe = async (e) => {
     e.preventDefault()
-    add()
-    // if (Recipe.length > 0) {
-    //   setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-    //   settotalcost(totalcost + totalcostofitem)
-    // } else {
-    //   setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-    //   settotalcost(totalcostofitem)
-    // }
-    try {
+if (productRecipe.length > 0) {
+      const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+
+      const totalcost= producttotalcost + totalcostofitem
+
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
+
+      console.log({addRecipetoProduct:addRecipetoProduct})
+    } else {
+      const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+      const totalcost= totalcostofitem
+
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
       console.log({addRecipetoProduct:addRecipetoProduct})
-    } catch (error) {
-      console.log({ message: error.message})
     }
-    
   }
 
 
@@ -291,7 +293,7 @@ const ProductRecipe = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" onChange={(e) => { console.log(AllStockItems.find(s => s._id == e.target.value).costOfPart); setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
+                          <select form="carform" onChange={(e) => {setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
                             <option >اختر</option>
                             {AllStockItems && AllStockItems.map((item, i) => {
                               return (
@@ -307,7 +309,7 @@ const ProductRecipe = () => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type="Number" className="form-control" required onChange={(e) => { setamount(e.target.value); settotalcostofitem(e.target.value * costofitem) }} />
+                          <input type="Number" className="form-control" required onChange={(e) => { setamount(e.target.value); settotalcostofitem(e.target.value * costofitem)}} />
                           <input type="text" className="form-control" defaultValue={unit} readOnly required />
                         </div>
                         <div className="form-group">

@@ -166,7 +166,7 @@ const Products = () => {
   useEffect(() => {
     getallproducts()
     getallCategories()
-    getallStockItem()
+    // getallStockItem()
   }, [])
 
 

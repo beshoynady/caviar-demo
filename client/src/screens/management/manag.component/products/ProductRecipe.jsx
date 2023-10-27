@@ -236,7 +236,7 @@ const ProductRecipe = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Recipe && Recipe.map((rec, i) => {
+                      {Recipe.length>0? Recipe.map((rec, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -260,7 +260,7 @@ const ProductRecipe = () => {
                             </tr>
                           )
                         }
-                      })
+                      }):''
                       }
                     </tbody>
                   </table>

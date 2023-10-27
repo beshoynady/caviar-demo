@@ -119,47 +119,48 @@ const Products = () => {
   }
 
 
-  const [AllStockItems, setAllStockItems] = useState([]);
+  // const [AllStockItems, setAllStockItems] = useState([]);
 
-  const getallStockItem = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      const StockItems = await response.data;
-      console.log(response.data)
-      setAllStockItems(StockItems)
+  // const getallStockItem = async () => {
+  //   try {
+  //     const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+  //     const StockItems = await response.data;
+  //     console.log(response.data)
+  //     setAllStockItems(StockItems)
 
-    } catch (error) {
-      console.log(error)
-    }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 
-  }
+  // }
 
-  const [itemId, setitemId] = useState("")
-  const [name, setname] = useState("")
-  const [amount, setamount] = useState()
-  const [costofitem, setcostofitem] = useState()
-  const [unit, setunit] = useState("")
-  const [totalcostofitem, settotalcostofitem] = useState()
+  // const [itemId, setitemId] = useState("")
+  // const [name, setname] = useState("")
+  // const [amount, setamount] = useState()
+  // const [costofitem, setcostofitem] = useState()
+  // const [unit, setunit] = useState("")
+  // const [totalcostofitem, settotalcostofitem] = useState()
 
-  const [totalcost, settotalcost] = useState()
+  // const [totalcost, settotalcost] = useState()
 
 
   // const [recipe, setrecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
-  const [recipe, setrecipe] = useState([])
+  // const [recipe, setrecipe] = useState([])
  
-  const add = (e) => {
-    e.preventDefault()
-    console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
-    if (recipe.length > 0){
-      setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
-    }else{
-      setrecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])      
-    }
-    console.log(recipe)
-  }
+  // const add = (e) => {
+  //   e.preventDefault()
+  //   console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
+  //   if (recipe.length > 0){
+  //     setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+  //   }else{
+  //     setrecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])      
+  //   }
+  //   console.log(recipe)
+  // }
 
-  const createRecipe = async () => {
-  }
+  // const createRecipe = async () => {
+
+  // }
 
 
   useEffect(() => {
@@ -278,7 +279,7 @@ const Products = () => {
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  {/* <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> */}
 
                                   <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
@@ -306,7 +307,7 @@ const Products = () => {
                                 <td>{p.sales}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  {/* <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> */}
                                   <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(p._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
@@ -420,7 +421,7 @@ const Products = () => {
                   </div>
                 </div>
               </div>
-              <div id="recipeProductModal" className="modal fade">
+              {/* <div id="recipeProductModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={createRecipe}>
@@ -466,7 +467,7 @@ const Products = () => {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div id="deleteProductModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">

@@ -11,6 +11,7 @@ const SideBar = () => {
     { title: 'الطلبات', sideitem: 'orders', icon: "list_alt" },
     { title: 'التصنيفات', sideitem: 'category', icon: "category" },
     { title: 'المنتجات', sideitem: 'products', icon: "restaurant" },
+    { title: 'التكاليف', sideitem: 'productrecipe', icon: "restaurant" },
     { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
     { title: 'الموظفين', sideitem: 'employees', icon: "group_add" },
     { title: 'تصنيفات المخزون', sideitem: 'categoryStock', icon: "category" },

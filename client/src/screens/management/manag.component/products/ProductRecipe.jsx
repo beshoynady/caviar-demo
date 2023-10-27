@@ -70,7 +70,8 @@ const ProductRecipe = () => {
     if (productrecipe){
       setrecipe(productrecipe)
     }
-    if (productrecipe.totalcost){
+    const totalProductRecipe = product.data.totalcost
+    if (totalProductRecipe){
       settotalcost(productrecipe.totalcost)
     }
   }

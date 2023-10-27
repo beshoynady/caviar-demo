@@ -23,11 +23,11 @@ const productSchema = new mongoose.Schema({
                 trim: true,
                 required: [true, 'name required'],
             },
-            amount:{
+            amount: {
                 type: Number,
                 required: [true, 'amount required'],
             },
-            unit:{
+            unit: {
                 type: String,
                 trim: true,
                 required: [true, 'unit required'],
@@ -42,7 +42,7 @@ const productSchema = new mongoose.Schema({
             },
         }
     ],
-    totalcost:{
+    totalcost: {
         type: Number,
         required: [true, 'amount required'],
     },

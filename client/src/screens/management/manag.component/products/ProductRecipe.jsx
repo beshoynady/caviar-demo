@@ -87,30 +87,30 @@ const ProductRecipe = () => {
 
 
   // const [recipe, setrecipe] = useState([{ itemId: '', name: '', amount: 0, costofitem: 0, unit: '', totalcostofitem: 0 }])
-  const [recipe, setrecipe] = useState([])
+  const [Recipe, setRecipe] = useState([])
 
   const add = (e) => {
     e.preventDefault()
     console.log({ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem })
-    if (recipe.length > 0) {
-      setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+    if (Recipe.length > 0) {
+      setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
     } else {
-      setrecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+      setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
     }
-    console.log(recipe)
+    console.log(Recipe)
   }
 
   const createRecipe = async (e) => {
     e.preventDefault()
-    if (recipe.length > 0) {
-      setrecipe([...recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+    if (Recipe.length > 0) {
+      setRecipe([...Recipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
       settotalcost(totalcost + totalcostofitem)
     } else {
-      setrecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
+      setRecipe([{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }])
       settotalcost(totalcostofitem)
     }
     try {
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{recipe , totalcost})
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
       console.log(addRecipetoProduct)
     } catch (error) {
       console.log({ message: error.message})

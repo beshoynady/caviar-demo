@@ -5,7 +5,7 @@ const path = require("path");
 const {
   createproduct,
   getAllproducts,
-  createRecipe,
+  addRecipe,
   getproductbycategory,
   getoneproduct,
   updateproduct,

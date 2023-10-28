@@ -92,7 +92,7 @@ const ProductRecipe = () => {
 
   const createRecipe = async (e) => {
     e.preventDefault()
-    console.log(productRecipe)
+    // console.log(productRecipe)
     if (productRecipe.length > 0) {
       const Recipe = [...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
@@ -101,6 +101,7 @@ const ProductRecipe = () => {
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost })
 
       console.log({ addRecipetoProduct: addRecipetoProduct })
+
       getProductRecipe(productid)
     } else {
       const Recipe = [{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
@@ -145,10 +146,6 @@ const ProductRecipe = () => {
 
   const deleteRecipe = async (e) => {
     e.preventDefault()
-    // const getRecipe = productRecipe.find(recipe => recipe._id == recipeid)
-    // console.log(getRecipe)
-    // const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
-    // console.log(recipeIndex)
     console.log(productRecipe)
     const newRecipe = productRecipe.filter(recipe => recipe._id != recipeid)
     console.log(newRecipe)
@@ -160,7 +157,7 @@ const ProductRecipe = () => {
     // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
     const deleteRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: newRecipe, totalcost: total })
     console.log(deleteRecipetoProduct)
-    // getProductRecipe(productid)
+    getProductRecipe(productid)
   }
 
 
@@ -295,7 +292,7 @@ const ProductRecipe = () => {
                                   settotalcostofitem(rec.settotalcostofitem)
                                 }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setrecipeid(rec._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() =>{setrecipeid(rec._id)}}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )

@@ -150,7 +150,7 @@ const ProductRecipe = () => {
     // const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
     // console.log(recipeIndex)
     console.log(productRecipe)
-    const newRecipe = productRecipe.map(recipe=>{return( recipe._id != recipeid)})
+    const newRecipe = productRecipe.filter(recipe => recipe._id != recipeid)
     console.log(newRecipe)
     let total = 0
     for (let i = 0; i < newRecipe.length; i++) {

@@ -98,7 +98,7 @@ const ProductRecipe = () => {
 
       const totalcost = producttotalcost + totalcostofitem
 
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`, { Recipe, totalcost })
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost })
 
       console.log({ addRecipetoProduct: addRecipetoProduct })
       getProductRecipe(productid)

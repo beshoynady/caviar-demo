@@ -17,7 +17,7 @@ const createproduct = async (req, res) => {
     }
 }
 
-const createRecipe = async (req, res) => {
+const addRecipe = async (req, res) => {
     try {
         const productId =await req.params.productid
         const Recipe = await req.body.Recipe

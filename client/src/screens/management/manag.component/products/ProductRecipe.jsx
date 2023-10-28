@@ -61,23 +61,23 @@ const ProductRecipe = () => {
     } catch (error) {
       console.log(error)
     }
-    
+
   }
-  
+
   const [productRecipe, setproductRecipe] = useState([])
   const [producttotalcost, setproducttotalcost] = useState()
   const getProductRecipe = async (id) => {
     console.log(id)
     const product = await axios.get(`https://caviar-api.vercel.app/api/product/${id}`)
-    console.log({product : product})
-    const productRecipe =await product.data.Recipe
-    console.log({productRecipe:productRecipe})
+    console.log({ product: product })
+    const productRecipe = await product.data.Recipe
+    console.log({ productRecipe: productRecipe })
 
-    if (productRecipe){
+    if (productRecipe) {
       setproductRecipe(productRecipe)
     }
-    const totalProductRecipe =await product.data.totalcost
-    if (totalProductRecipe){
+    const totalProductRecipe = await product.data.totalcost
+    if (totalProductRecipe) {
       setproducttotalcost(totalProductRecipe)
     }
   }
@@ -93,29 +93,41 @@ const ProductRecipe = () => {
   const createRecipe = async (e) => {
     e.preventDefault()
     console.log(productRecipe)
-if (productRecipe.length > 0) {
-      const Recipe=[...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+    if (productRecipe.length > 0) {
+      const Recipe = [...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
-      const totalcost= producttotalcost + totalcostofitem
+      const totalcost = producttotalcost + totalcostofitem
 
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`, { Recipe, totalcost })
 
-      console.log({addRecipetoProduct:addRecipetoProduct})
+      console.log({ addRecipetoProduct: addRecipetoProduct })
       getProductRecipe(productid)
     } else {
-      const Recipe=[{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
-      const totalcost= totalcostofitem
+      const Recipe = [{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
+      const totalcost = totalcostofitem
 
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/createRecipe/${productid}`,{Recipe,totalcost})
-      console.log({addRecipetoProduct:addRecipetoProduct})
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost })
+      console.log({ addRecipetoProduct: addRecipetoProduct })
       getProductRecipe(productid)
+      setitemId('')
+      setname('')
+      setamount()
+      setunit('')
+      setcostofitem()
     }
   }
 
 
 
-  const editRecipe = async () => {
+  const editRecipe = async (id) => {
+    const getRecipe = productRecipe.find(recipe => recipe._id == id)
+    console.log(getRecipe)
+    const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
+    console.log(recipeIndex)
+    productRecipe[recipeIndex] = { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }
+    console.log(productRecipe)
 
+    // const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,{Recipe,totalcost})
   }
 
   const deleteRecipe = async () => {
@@ -177,7 +189,7 @@ if (productRecipe.length > 0) {
                         </div>
                         <div class="filter-group">
                           <label>المنتج</label>
-                          <select class="form-control" onChange={(e) => {setproductid(e.target.value); getProductRecipe(e.target.value) }} >
+                          <select class="form-control" onChange={(e) => { setproductid(e.target.value); getProductRecipe(e.target.value) }} >
                             <option value={""}>الكل</option>
                             {productFilterd.map((product, i) => {
                               return <option value={product._id} key={i} >{product.name}</option>
@@ -227,7 +239,7 @@ if (productRecipe.length > 0) {
                       </tr>
                     </thead>
                     <tbody>
-                      {productRecipe.length>0? productRecipe.map((rec, i) => {
+                      {productRecipe.length > 0 ? productRecipe.map((rec, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -244,14 +256,21 @@ if (productRecipe.length > 0) {
                               <td>{rec.amount}</td>
                               <td>{rec.totalcostofitem}</td>
                               <td>
-                                <a href="#editRecipeModal" className="edit" data-toggle="modal" onClick={() => { setproductid(rec._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editRecipeModal" className="edit" data-toggle="modal" onClick={() => {
+                                  setitemId(rec.itemId);
+                                  setname(rec.name);
+                                  setamount(rec.amount)
+                                  setunit(rec.unit)
+                                  setcostofitem(rec.costofitem);
+                                  settotalcostofitem(rec.settotalcostofitem)
+                                }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
                                 <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(rec._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )
                         }
-                      }):''
+                      }) : ''
                       }
                     </tbody>
                   </table>
@@ -280,55 +299,7 @@ if (productRecipe.length > 0) {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" onChange={(e) => {setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
-                            <option >اختر</option>
-                            {AllStockItems && AllStockItems.map((item, i) => {
-                              return (
-                                <option value={item._id} key={i} >{item.itemName}</option>
-                              )
-                            })
-                            }
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة</label>
-                          <input type='Number' className="form-control" required defaultValue={costofitem} readOnly />
-                        </div>
-                        <div className="form-group">
-                          <label>الكمية</label>
-                          <input type="Number" className="form-control" required onChange={(e) => { setamount(e.target.value); settotalcostofitem(e.target.value * costofitem)}} />
-                          <input type="text" className="form-control" defaultValue={unit} readOnly required />
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة الاجمالية</label>
-                          <input type='Number' className="form-control" defaultValue={totalcostofitem} required readOnly />
-                        </div>
-                        {/* <div className="form-group">
-                          <button onClick={add}>اضافه جديدة</button>
-                        </div> */}
-
-                      </div>
-                      <div className="modal-footer">
-                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success" value="اضافه" />
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-
-              {/* <div id="editRecipeModal" className="modal fade">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <form onSubmit={editRecipe}>
-                      <div className="modal-header">
-                        <h4 className="modal-title">تعديل مكون</h4>
-                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      </div>
-                      <div className="modal-body">
-                        <div className="form-group">
-                          <label>الاسم</label>
-                          <select form="carform" onChange={(e) => { console.log(AllStockItems.find(s => s._id == e.target.value).costOfPart); setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
+                          <select form="carform" onChange={(e) => { setitemId(e.target.value); setname(AllStockItems.find(s => s._id == e.target.value).itemName); setunit(AllStockItems.find(s => s._id == e.target.value).smallUnit); setcostofitem(AllStockItems.find(s => s._id == e.target.value).costOfPart) }}>
                             <option >اختر</option>
                             {AllStockItems && AllStockItems.map((item, i) => {
                               return (
@@ -351,10 +322,46 @@ if (productRecipe.length > 0) {
                           <label>التكلفة الاجمالية</label>
                           <input type='Number' className="form-control" defaultValue={totalcostofitem} required readOnly />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <button onClick={add}>اضافه جديدة</button>
-                        </div>
+                        </div> */}
 
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
+                        <input type="submit" className="btn btn-success" value="اضافه" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div id="editRecipeModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={editRecipe}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">تعديل مكون</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <div className="form-group">
+                          <label>الاسم</label>
+                          <input type='text' className="form-control" defaultValue={name} readOnly />
+                        </div>
+                        <div className="form-group">
+                          <label>التكلفة</label>
+                          <input type='Number' className="form-control" required defaultValue={costofitem} readOnly />
+                          <input type="text" className="form-control" defaultValue={unit} readOnly required />
+                        </div>
+                        <div className="form-group">
+                          <label>الكمية</label>
+                          <input type="Number" className="form-control" defaultValue={amount} required onChange={(e) => { setamount(e.target.value); settotalcostofitem(e.target.value * costofitem) }} />
+                        </div>
+                        <div className="form-group">
+                          <label>التكلفة الاجمالية</label>
+                          <input type='Number' className="form-control" defaultValue={totalcostofitem} required readOnly />
+                        </div>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
@@ -363,7 +370,7 @@ if (productRecipe.length > 0) {
                     </form>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div id="deleteProductModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">

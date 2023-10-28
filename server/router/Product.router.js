@@ -35,7 +35,7 @@ router.route('/').post(upload.single("image"), createproduct).get(getAllproducts
 router.route('/getproductbycategory/:categoryid').get(getproductbycategory)
 router.route('/:productid').get(getoneproduct).put(upload.single("image"), updateproduct).delete(deleteproduct);
 router.route('/withoutimage/:productid').put(updateproductwithoutimage)
-router.route('/createRecipe/:productid').put(createRecipe)
+router.route('/addrecipe/:productid').put(addRecipe)
 // router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
 
 module.exports = router;

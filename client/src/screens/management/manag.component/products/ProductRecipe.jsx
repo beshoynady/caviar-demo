@@ -127,16 +127,43 @@ const ProductRecipe = () => {
     console.log(recipeIndex)
     productRecipe[recipeIndex] = { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }
     console.log(productRecipe)
-    let total = 0 
-    for(let i = 0; i < productRecipe.length; i++) {
+    let total = 0
+    for (let i = 0; i < productRecipe.length; i++) {
       total += productRecipe[i].totalcostofitem
     }
-    console.log({totalcost:total})
+    console.log({ totalcost: total })
     // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
-    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,{Recipe:productRecipe,totalcost:total})
+    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost: total })
+    getProductRecipe(productid)
+    setitemId('')
+    setname('')
+    setamount()
+    setunit('')
+    setcostofitem()
+
   }
 
-  const deleteRecipe = async () => {
+  const deleteRecipe = async (e) => {
+    e.preventDefault()
+    const getRecipe = productRecipe.find(recipe => recipe._id == recipeid)
+    console.log(getRecipe)
+    const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
+    console.log(recipeIndex)
+    productRecipe = productRecipe.splice(recipeIndex)
+    console.log(productRecipe)
+    let total = 0
+    for (let i = 0; i < productRecipe.length; i++) {
+      total += productRecipe[i].totalcostofitem
+    }
+    console.log({ totalcost: total })
+    // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
+    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost: total })
+    getProductRecipe(productid)
+    setitemId('')
+    setname('')
+    setamount()
+    setunit('')
+    setcostofitem()
 
   }
 
@@ -272,7 +299,7 @@ const ProductRecipe = () => {
                                   settotalcostofitem(rec.settotalcostofitem)
                                 }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setproductid(rec._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => setrecipeid(rec._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )

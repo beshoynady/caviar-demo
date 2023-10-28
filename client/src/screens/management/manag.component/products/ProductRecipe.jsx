@@ -127,7 +127,7 @@ const ProductRecipe = () => {
     console.log(recipeIndex)
     productRecipe[recipeIndex] = { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }
     console.log(productRecipe)
-    const total = 0 
+    let total = 0 
     for(let i = 0; i < productRecipe.length; i++) {
       total += productRecipe[i].totalcostofitem
     }

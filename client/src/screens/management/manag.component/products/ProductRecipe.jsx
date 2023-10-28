@@ -118,10 +118,10 @@ const ProductRecipe = () => {
   }
 
 
-
-  const editRecipe = async (e, id) => {
+  const [recipeid, setrecipeid] = useState('')
+  const editRecipe = async (e) => {
     e.preventDefault()
-    const getRecipe = productRecipe.find(recipe => recipe._id == id)
+    const getRecipe = productRecipe.find(recipe => recipe._id == recipeid)
     console.log(getRecipe)
     const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
     console.log(recipeIndex)
@@ -258,6 +258,7 @@ const ProductRecipe = () => {
                               <td>{rec.totalcostofitem}</td>
                               <td>
                                 <a href="#editRecipeModal" className="edit" data-toggle="modal" onClick={() => {
+                                  setrecipeid(rec._id)
                                   setitemId(rec.itemId);
                                   setname(rec.name);
                                   setamount(rec.amount)

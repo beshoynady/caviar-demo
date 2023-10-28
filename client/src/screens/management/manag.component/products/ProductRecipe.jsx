@@ -119,7 +119,8 @@ const ProductRecipe = () => {
 
 
 
-  const editRecipe = async (id) => {
+  const editRecipe = async (e, id) => {
+    e.preventDefault()
     const getRecipe = productRecipe.find(recipe => recipe._id == id)
     console.log(getRecipe)
     const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)

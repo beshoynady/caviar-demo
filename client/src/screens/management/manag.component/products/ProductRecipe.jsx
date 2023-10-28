@@ -153,14 +153,14 @@ const ProductRecipe = () => {
     const newRecipe = productRecipe.map((recipe)=>{if(recipe._id !== recipeid){return recipe}})
     console.log(newRecipe)
     let total = 0
-    for (let i = 0; i < productRecipe.length; i++) {
-      total += productRecipe[i].totalcostofitem
+    for (let i = 0; i < newRecipe.length; i++) {
+      total += newRecipe[i].totalcostofitem
     }
     console.log({ totalcost: total })
     // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
     const deleteRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: newRecipe, totalcost: total })
     console.log(deleteRecipetoProduct)
-    getProductRecipe(productid)
+    // getProductRecipe(productid)
   }
 
 

@@ -288,7 +288,7 @@ const StockManag = () => {
                         </div>
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].unit); 
+                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); 
                           setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
                           setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost) }}>
                             <option >اختر الصنف</option>

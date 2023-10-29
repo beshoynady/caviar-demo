@@ -23,6 +23,7 @@ import POS from './screens/management/manag.component/pos/POS';
 import StockItem from './screens/management/manag.component/stock/StockItem'
 import StockManag from './screens/management/manag.component/stock/StockManag';
 import ProductRecipe from './screens/management/manag.component/products/ProductRecipe';
+import EmployeesSalary from './screens/management/manag.component/employees/EmployeesSalary';
 
 
 export const detacontext = createContext({})
@@ -718,6 +719,7 @@ function App() {
             <Route path='productrecipe' element={<ProductRecipe/>} />
             <Route path='tables' element={<Tables />} />
             <Route path='employees' element={<Employees />} />
+            <Route path='Employeessalary' element={<EmployeesSalary/>} />
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />

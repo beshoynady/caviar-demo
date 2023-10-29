@@ -277,6 +277,7 @@ const ProductRecipe = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>{rec.name}</td>
+                              {/* <td>{AllStockItems.find(item=>item._id == rec.itemId).costOfPart}</td> */}
                               <td>{rec.costofitem}</td>
                               <td>{rec.unit}</td>
                               <td>{rec.amount}</td>

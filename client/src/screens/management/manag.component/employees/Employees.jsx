@@ -88,7 +88,7 @@ const Employees = () => {
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {
     if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employeemp.role == role)
+      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
       setfilterEmp(FilterEmployees)
     }
   }
@@ -96,11 +96,11 @@ const Employees = () => {
     console.log(status)
     // if (status == true) {
     //   console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employeemp.isActive == true)
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
       console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     // } else if (status == false) {
-    //   const filteredEmployees = listofemployee.filter(employee => employeemp.isActive == false)
+    //   const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
     //   console.log(filteredEmployees)
     //   setfilterEmp(filteredEmployees)
     // }
@@ -146,7 +146,7 @@ const Employees = () => {
                       <div class="col-sm-3">
                         <div class="show-entries">
                           <span>عرض</span>
-                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(emp.target.value) }}>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={15}>15</option>
@@ -165,7 +165,7 @@ const Employees = () => {
                         </div>
                         <div class="filter-group">
                           <label>الوظيفة</label>
-                          <select class="form-control" onChange={(e) => getemployeesByJob(emp.target.value)} >
+                          <select class="form-control" onChange={(e) => getemployeesByJob(e.target.value)} >
                             <option>الكل</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -175,7 +175,7 @@ const Employees = () => {
                         </div>
                         <div class="filter-group">
                           <label>الحالة</label>
-                          <select class="form-control" onChange={(e) => filterEmpByStatus(emp.target.value)} >
+                          <select class="form-control" onChange={(e) => filterEmpByStatus(e.target.value)} >
                             <option >الكل</option>
                             <option value={true}>متاح</option>
                             <option value={false}>غير متاح</option>
@@ -291,38 +291,38 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required onChange={(e) => setusername(emp.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الرقم القومي</label>
-                          <input type="text" className="form-control" required onChange={(e) => setnumberID(emp.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setnumberID(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الموبايل</label>
-                          <input type="text" className="form-control" required onChange={(e) => setphone(emp.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setphone(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
-                          <input type="text" className="form-control" required onChange={(e) => setpassword(emp.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setpassword(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
-                          <input type="email" className="form-control" required onChange={(e) => setemail(emp.target.value)} />
+                          <input type="email" className="form-control" required onChange={(e) => setemail(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>العنوان</label>
-                          <textarea className="form-control" required onChange={(e) => setaddress(emp.target.value)}></textarea>
+                          <textarea className="form-control" required onChange={(e) => setaddress(e.target.value)}></textarea>
                         </div>
                         <div className="form-group">
                           <label>ادمن</label>
-                          <select form="carform" required onChange={(e) => setisAdmin(emp.target.value)}>
+                          <select form="carform" required onChange={(e) => setisAdmin(e.target.value)}>
                             <option value={true}>ادمن</option>
                             <option value={false}>ليس ادمن</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select name={role} form="carform" required onChange={(e) => setrole(emp.target.value)}>
+                          <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -332,7 +332,7 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>المرتب الاساسي</label>
-                          <input type="Number" min={0} className="form-control" required onChange={(e) => setbasicSalary(emp.target.value)} />
+                          <input type="Number" min={0} className="form-control" required onChange={(e) => setbasicSalary(e.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -354,45 +354,45 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required defaultValue={username} onChange={(e) => setusername(emp.target.value)} />
+                          <input type="text" className="form-control" required defaultValue={username} onChange={(e) => setusername(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الرقم القومي</label>
-                          <input type="text" className="form-control" required defaultValue={numberID} onChange={(e) => setnumberID(emp.target.value)} />
+                          <input type="text" className="form-control" required defaultValue={numberID} onChange={(e) => setnumberID(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الموبايل</label>
-                          <input type="text" className="form-control" required defaultValue={phone} onChange={(e) => setphone(emp.target.value)} />
+                          <input type="text" className="form-control" required defaultValue={phone} onChange={(e) => setphone(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
-                          <input type="text" className="form-control" onChange={(e) => setpassword(emp.target.value)} />
+                          <input type="text" className="form-control" onChange={(e) => setpassword(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
-                          <input type="email" className="form-control" required defaultValue={email} onChange={(e) => setemail(emp.target.value)} />
+                          <input type="email" className="form-control" required defaultValue={email} onChange={(e) => setemail(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>العنوان</label>
-                          <textarea className="form-control" required defaultValue={address} onChange={(e) => setaddress(emp.target.value)}></textarea>
+                          <textarea className="form-control" required defaultValue={address} onChange={(e) => setaddress(e.target.value)}></textarea>
                         </div>
                         <div className="form-group">
                           <label>ادمن</label>
-                          <select form="carform" required defaultValue={isAdmin} onChange={(e) => setisAdmin(emp.target.value)}>
+                          <select form="carform" required defaultValue={isAdmin} onChange={(e) => setisAdmin(e.target.value)}>
                             <option value={true}>ادمن</option>
                             <option value={false}>ليس ادمن</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الحالة</label>
-                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(emp.target.value)}>
+                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(e.target.value)}>
                             <option value={true}>متاح</option>
                             <option value={false}>ليس متاح</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(emp.target.value)}>
+                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -402,7 +402,7 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>المرتب الاساسي</label>
-                          <input type="Number" min={0} className="form-control" required defaultValue={basicSalary} onChange={(e) => setbasicSalary(emp.target.value)} />
+                          <input type="Number" min={0} className="form-control" required defaultValue={basicSalary} onChange={(e) => setbasicSalary(e.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">

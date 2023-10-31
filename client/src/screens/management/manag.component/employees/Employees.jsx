@@ -9,11 +9,11 @@ const Employees = () => {
   const getemployees = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee')
-      const data = await responsemp.data
+      const data = await response.data
       const employee = data.filter((em) => em.isAdmin == true)
       setlistofemployee(employee)
     } catch (error) {
-      consolemp.log(error)
+      console.log(error)
     }
   }
 
@@ -33,88 +33,88 @@ const Employees = () => {
 
 
   const createEmployee = async (e) => {
-    emp.preventDefault()
-    consolemp.log(username)
-    consolemp.log(password)
-    consolemp.log(address)
-    consolemp.log(phone)
-    consolemp.log(email)
-    consolemp.log(isAdmin)
-    consolemp.log(role)
-    consolemp.log(basicSalary)
+    e.preventDefault()
+    console.log(username)
+    console.log(password)
+    console.log(address)
+    console.log(phone)
+    console.log(email)
+    console.log(isAdmin)
+    console.log(role)
+    console.log(basicSalary)
 
     try {
       const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isAdmin, role })
-      consolemp.log(newemployee)
+      console.log(newemployee)
       if (newemployee) {
         getemployees()
       }
     } catch (error) {
-      consolemp.log(error)
+      console.log(error)
     }
   }
 
   const updateEmployee = async (e) => {
-    emp.preventDefault()
-    consolemp.log(employeeid)
-    consolemp.log(username)
-    consolemp.log(password)
-    consolemp.log(address)
-    consolemp.log(phone)
-    consolemp.log(email)
-    consolemp.log(isAdmin)
-    consolemp.log(isActive)
-    consolemp.log(role)
-    consolemp.log(basicSalary)
+    e.preventDefault()
+    console.log(employeeid)
+    console.log(username)
+    console.log(password)
+    console.log(address)
+    console.log(phone)
+    console.log(email)
+    console.log(isAdmin)
+    console.log(isActive)
+    console.log(role)
+    console.log(basicSalary)
     try {
       if (password) {
         const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, address, phone, email, isAdmin, role })
-        consolemp.log(update)
+        console.log(update)
         if (update) {
           getemployees()
         }
       } else {
         const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isAdmin, role})
-        consolemp.log(update)
+        console.log(update)
         if (update) {
           getemployees()
         }
       }
     } catch (error) {
-      consolemp.log(error)
+      console.log(error)
     }
   }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {
-    if (listofemployeemp.length > 0) {
-      const FilterEmployees = listofemployeemp.filter(employee => employeemp.role == role)
+    if (listofemployee.length > 0) {
+      const FilterEmployees = listofemployee.filter(employee => employeemp.role == role)
       setfilterEmp(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
-    consolemp.log(status)
+    console.log(status)
     // if (status == true) {
-    //   consolemp.log(listofemployee)
-      const filteredEmployees = listofemployeemp.filter(employee => employeemp.isActive == true)
-      consolemp.log(filteredEmployees)
+    //   console.log(listofemployee)
+      const filteredEmployees = listofemployee.filter(employee => employeemp.isActive == true)
+      console.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
     // } else if (status == false) {
-    //   const filteredEmployees = listofemployeemp.filter(employee => employeemp.isActive == false)
-    //   consolemp.log(filteredEmployees)
+    //   const filteredEmployees = listofemployee.filter(employee => employeemp.isActive == false)
+    //   console.log(filteredEmployees)
     //   setfilterEmp(filteredEmployees)
     // }
   }
 
   const deleteEmployee = async (e) => {
-    emp.preventDefault()
+    e.preventDefault()
     try {
-      consolemp.log(employeeid)
+      console.log(employeeid)
       const deleted = await axios.delete(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
-      consolemp.log(deleted)
+      console.log(deleted)
       getemployees()
     } catch (error) {
-      consolemp.log(error)
+      console.log(error)
     }
   }
 
@@ -234,7 +234,7 @@ const Employees = () => {
                           )
                         }
                       })
-                        : listofemployeemp.map((e, i) => {
+                        : listofemployee.map((e, i) => {
                           // if (i < pagination & i >= pagination - 5) {
                           if (i >= startpagination & i < endpagination) {
                             return (
@@ -267,7 +267,7 @@ const Employees = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{listofemployeemp.length > endpagination ? endpagination : listofemployeemp.length}</b> من <b>{listofemployeemp.length}</b> عنصر</div>
+                    <div className="hint-text text-dark">عرض <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> من <b>{listofemployee.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

@@ -14,7 +14,7 @@ const SideBar = () => {
     { title: 'التكاليف', sideitem: 'productrecipe', icon: "restaurant" },
     { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
     { title: 'الموظفين', sideitem: 'employees', icon: "group_add" },
-    { title: 'المرتبات', sideitem: 'Employeessalary', icon: "group_add" },
+    // { title: 'المرتبات', sideitem: 'Employeessalary', icon: "group_add" },
     { title: 'تصنيفات المخزون', sideitem: 'categoryStock', icon: "category" },
     { title: 'اصناف المخزن', sideitem: 'stockitem', icon: "inventory_2" },
     { title: 'ادارة المخزون', sideitem: 'stockmang', icon: "inventory" },

@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 // }
 
 
-const createemployee = async (req, res, next) => {
+const createEmployee = async (req, res, next) => {
     try {
         const fullname = await req.body.fullname;
         const numberID = await req.body.numberID;
@@ -53,7 +53,7 @@ const createemployee = async (req, res, next) => {
     }
 }
 
-const getoneemployee = async (req, res) => {
+const getoneEmployee = async (req, res) => {
     try {
         const employeeId = await req.params.employeeId;
         const employee = await Employeemodel.findById(employeeId);
@@ -108,7 +108,7 @@ const loginEmployee = async (req, res) => {
 
 
 
-const getallemployees = async (req, res) => {
+const getallEmployees = async (req, res) => {
     try {
         const allemployees = await Employeemodel.find({});
         res.status(200).json(allemployees);
@@ -117,7 +117,7 @@ const getallemployees = async (req, res) => {
     }
 }
 
-const updateemployee = async (req, res) => {
+const updateEmployee = async (req, res) => {
     try {
         const id = req.params.employeeId;
         const fullname = await req.body.fullname;
@@ -168,7 +168,7 @@ const updateemployee = async (req, res) => {
 }
 
 
-const deleteemployee = async (req, res) => {
+const deleteEmployee = async (req, res) => {
     const id = await req.params.employeeId;
     try {
         const employeedeleted = await Employeemodel.findByIdAndDelete(id).exec();
@@ -183,4 +183,4 @@ const deleteemployee = async (req, res) => {
     }
 }
 
-module.exports = { createemployee, getoneemployee, loginEmployee, getallemployees, updateemployee, deleteemployee };
+module.exports = {createEmployee, getoneEmployee, loginEmployee, getallEmployees, updateEmployee, deleteEmployee };

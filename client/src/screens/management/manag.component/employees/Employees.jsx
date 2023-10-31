@@ -56,7 +56,7 @@ const Employees = () => {
 
   const updateEmployee = async (e) => {
     e.preventDefault()
-    console.log(employeeid)
+    console.log(fullname)
     console.log(username)
     console.log(password)
     console.log(address)
@@ -291,7 +291,7 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setfullname(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>اسم المستخدم</label>

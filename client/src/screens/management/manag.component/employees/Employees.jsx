@@ -234,7 +234,7 @@ const Employees = () => {
                           )
                         }
                       })
-                        : listofemployee.map((e, i) => {
+                        : listofemployee.map((emp, i) => {
                           // if (i < pagination & i >= pagination - 5) {
                           if (i >= startpagination & i < endpagination) {
                             return (

@@ -30,7 +30,6 @@ const Products = () => {
 
   const [productid, setproductid] = useState("")
   const [productdiscount, setproductdiscount] = useState(null)
-
   const editProduct = async (e) => {
     e.preventDefault()
     if (productimg) {

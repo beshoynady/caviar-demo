@@ -1,64 +1,162 @@
 const mongoose = require('mongoose');
 
-const userschema = new mongoose.Schema({
-    username :{
-        type : String,
-        unique : true,
-        require : [ true, 'required username' ],
-        trim : true,
-        minlength : 3,
-        maxlength : 100,
-    }, 
-    email : {
-        type : String,
-        unique : true,
-        maxlength : 100,
-        minlength : 10,
-        trim : true,
-    },
-    password : {
-        type : String,
-        trim : true,
-        require : [true , 'password required'],
-        maxlength : 200,
-        minlength : 3,
-    },
-    address:{
-        type:String,
+const employeeschema = new mongoose.Schema({
+    fullname: {
+        type: String,
         trim: true,
-        minlength:3,
-        maxlength: 150,
-        
+        require: [true, 'required fullname'],
+        minlength: 3,
+        maxlength: 100,
     },
-    phone:{
-        type : String,
-        trim : true,
+    numberID: {
+        type: String,
+        unique: true,
+        require: [true, 'required username'],
+        trim: true,
+        minlength: 14,
+        maxlength: 14,
+    },
+    address: {
+        type: String,
+        trim: true,
+        minlength: 3,
+        maxlength: 150,
+    },
+    email: {
+        type: String,
+        unique: true,
+        maxlength: 100,
+        minlength: 10,
+        trim: true,
+    },
+    username: {
+        type: String,
+        unique: true,
+        require: [true, 'required username'],
+        trim: true,
+        minlength: 3,
+        maxlength: 100,
+    },
+    phone: {
+        type: String,
+        trim: true,
         length: 11,
     },
-    isAdmin :{
-        type : Boolean,
-        default : false
+    password: {
+        type: String,
+        trim: true,
+        require: [true, 'password required'],
+        maxlength: 200,
+        minlength: 3,
     },
-    role :{
-        type : String,
-        enum : ['manager', 'casher', 'waiter', 'Chef','user'],
-        default : 'user',
+    isAdmin: {
+        type: Boolean,
+        default: true,
     },
-    salary : {
-        type : Number,
-        min : 10,
+    isActive: {
+        type: Boolean,
+        default: true,
+        require: [true, 'isActive required'],
     },
-
-    isVarified :{
-        type : Boolean,
-        default : false
+    role: {
+        type: String,
+        trim: true,
+        enum: ['manager', 'casher', 'waiter', 'Chef'],
+        require: [true, 'role required'],
     },
-    
+    basicSalary: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
+    payRole: [
+        {
+            Month: {
+                type: String,
+                required: true,
+                enum: ['manager', 'casher', 'waiter', 'Chef'],
+            },
+            salary: {
+                type: Number,
+                required: true,
+                min: 0,
+            },
+            Additional: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Bonus: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            TotalDue: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Absence: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Deduction: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Predecessor: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Insurance: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            Tax: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            TotalDeductible: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            NetSalary: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 0,
+            },
+            ispaid: {
+                type: Boolean,
+                required: true,
+                default: false,
+            }
+        }
+    ],
+    isVarified: {
+        type: Boolean,
+        default: false
+    },
 },
-{timestamp: true}
+    { timestamp: true }
 );
 
-const Usermodel = mongoose.model('User', userschema);
+const Employeemodel = mongoose.model('Employee', employeeschema);
 
-module.exports = Usermodel;
+module.exports = Employeemodel;
 

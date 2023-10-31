@@ -8,17 +8,21 @@ const Employees = () => {
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/user')
-      const data = await response.data
+      const response = await axios.get('https://caviar-api.vercel.app/api/employee')
+      const data = await responsemp.data
       const employee = data.filter((em) => em.isAdmin == true)
       setlistofemployee(employee)
     } catch (error) {
-      console.log(error)
+      consolemp.log(error)
     }
   }
 
-  const [userid, setuserid] = useState("")
+  const [employeeid, setemployeeid] = useState("")
+  const [fullname, setfullname] = useState("")
+  const [numberID, setnumberID] = useState("")
   const [username, setusername] = useState("")
+  const [basicSalary, setbasicSalary] = useState()
+  const [payRole, setpayRole] = useState([])
   const [password, setpassword] = useState("")
   const [address, setaddress] = useState("")
   const [phone, setphone] = useState("")
@@ -26,92 +30,91 @@ const Employees = () => {
   const [isAdmin, setisAdmin] = useState(true)
   const [isActive, setisActive] = useState(true)
   const [role, setrole] = useState("")
-  const [salary, setsalary] = useState()
 
 
   const createEmployee = async (e) => {
-    e.preventDefault()
-    console.log(username)
-    console.log(password)
-    console.log(address)
-    console.log(phone)
-    console.log(email)
-    console.log(isAdmin)
-    console.log(role)
-    console.log(salary)
+    emp.preventDefault()
+    consolemp.log(username)
+    consolemp.log(password)
+    consolemp.log(address)
+    consolemp.log(phone)
+    consolemp.log(email)
+    consolemp.log(isAdmin)
+    consolemp.log(role)
+    consolemp.log(basicSalary)
 
     try {
-      const newemployee = await axios.post('https://caviar-api.vercel.app/api/user', { username, password, address, phone, email, isAdmin, role, salary })
-      console.log(newemployee)
+      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isAdmin, role })
+      consolemp.log(newemployee)
       if (newemployee) {
         getemployees()
       }
     } catch (error) {
-      console.log(error)
+      consolemp.log(error)
     }
   }
 
   const updateEmployee = async (e) => {
-    e.preventDefault()
-    console.log(userid)
-    console.log(username)
-    console.log(password)
-    console.log(address)
-    console.log(phone)
-    console.log(email)
-    console.log(isAdmin)
-    console.log(isActive)
-    console.log(role)
-    console.log(salary)
+    emp.preventDefault()
+    consolemp.log(employeeid)
+    consolemp.log(username)
+    consolemp.log(password)
+    consolemp.log(address)
+    consolemp.log(phone)
+    consolemp.log(email)
+    consolemp.log(isAdmin)
+    consolemp.log(isActive)
+    consolemp.log(role)
+    consolemp.log(basicSalary)
     try {
       if (password) {
-        const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, password, address, phone, email, isAdmin, isActive, role, salary })
-        console.log(update)
+        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, address, phone, email, isAdmin, role })
+        consolemp.log(update)
         if (update) {
           getemployees()
         }
       } else {
-        const update = await axios.put(`https://caviar-api.vercel.app/api/user/${userid}`, { username, address, phone, email, isAdmin, isActive, role, salary })
-        console.log(update)
+        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isAdmin, role})
+        consolemp.log(update)
         if (update) {
           getemployees()
         }
       }
     } catch (error) {
-      console.log(error)
+      consolemp.log(error)
     }
   }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {
-    if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+    if (listofemployeemp.length > 0) {
+      const FilterEmployees = listofemployeemp.filter(employee => employeemp.role == role)
       setfilterEmp(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
-    console.log(status)
-    if (status == true) {
-      console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
-      console.log(filteredEmployees)
+    consolemp.log(status)
+    // if (status == true) {
+    //   consolemp.log(listofemployee)
+      const filteredEmployees = listofemployeemp.filter(employee => employeemp.isActive == true)
+      consolemp.log(filteredEmployees)
       setfilterEmp(filteredEmployees)
-    } else if (status == false) {
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    }
+    // } else if (status == false) {
+    //   const filteredEmployees = listofemployeemp.filter(employee => employeemp.isActive == false)
+    //   consolemp.log(filteredEmployees)
+    //   setfilterEmp(filteredEmployees)
+    // }
   }
 
   const deleteEmployee = async (e) => {
-    e.preventDefault()
+    emp.preventDefault()
     try {
-      console.log(userid)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/user/${userid}`)
-      console.log(deleted)
+      consolemp.log(employeeid)
+      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
+      consolemp.log(deleted)
       getemployees()
     } catch (error) {
-      console.log(error)
+      consolemp.log(error)
     }
   }
 
@@ -143,7 +146,7 @@ const Employees = () => {
                       <div class="col-sm-3">
                         <div class="show-entries">
                           <span>عرض</span>
-                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(emp.target.value) }}>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={15}>15</option>
@@ -162,7 +165,7 @@ const Employees = () => {
                         </div>
                         <div class="filter-group">
                           <label>الوظيفة</label>
-                          <select class="form-control" onChange={(e) => getemployeesByJob(e.target.value)} >
+                          <select class="form-control" onChange={(e) => getemployeesByJob(emp.target.value)} >
                             <option>الكل</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -172,7 +175,7 @@ const Employees = () => {
                         </div>
                         <div class="filter-group">
                           <label>الحالة</label>
-                          <select class="form-control" onChange={(e) => filterEmpByStatus(e.target.value)} >
+                          <select class="form-control" onChange={(e) => filterEmpByStatus(emp.target.value)} >
                             <option >الكل</option>
                             <option value={true}>متاح</option>
                             <option value={false}>غير متاح</option>
@@ -193,16 +196,17 @@ const Employees = () => {
                         </th>
                         <th>م</th>
                         <th>الاسم</th>
+                        <th>رقم قومي</th>
                         <th>العنوان</th>
                         <th>الموبايل</th>
-                        <th>الراتب</th>
                         <th>الوظيفه</th>
+                        <th>الراتب</th>
                         <th>الحالة</th>
                         <th>اجراءات</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {filterEmp.length > 0 ? filterEmp.map((e, i) => {
+                      {filterEmp.length > 0 ? filterEmp.map((emp, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -213,23 +217,24 @@ const Employees = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{e.username}</td>
-                              <td>{e.address}</td>
-                              <td>{e.phone}</td>
-                              <td>{e.salary}</td>
-                              <td>{e.role}</td>
-                              <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
+                              <td>{emp.username}</td>
+                              <td>{emp.numberID}</td>
+                              <td>{emp.address}</td>
+                              <td>{emp.phone}</td>
+                              <td>{emp.role}</td>
+                              <td>{emp.basicSalary}</td>
+                              <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
                               <td>
                                 <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                  setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                  setemployeeid(emp._id);setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
                                 }}>&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
+                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setemployeeid(emp._id)}>&#xE872;</i></a>
                               </td>
                             </tr>
                           )
                         }
                       })
-                        : listofemployee.map((e, i) => {
+                        : listofemployeemp.map((e, i) => {
                           // if (i < pagination & i >= pagination - 5) {
                           if (i >= startpagination & i < endpagination) {
                             return (
@@ -241,17 +246,18 @@ const Employees = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{e.username}</td>
-                                <td>{e.address}</td>
-                                <td>{e.phone}</td>
-                                <td>{e.salary}</td>
-                                <td>{e.role}</td>
-                                <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
+                                <td>{emp.username}</td>
+                                <td>{emp.numberID}</td>
+                                <td>{emp.address}</td>
+                                <td>{emp.phone}</td>
+                                <td>{emp.role}</td>
+                                <td>{emp.basicSalary}</td>
+                                <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                    setemployeeid(emp._id);setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
                                   }}>&#xE254;</i></a>
-                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
+                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setemployeeid(emp._id)}>&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
@@ -261,7 +267,7 @@ const Employees = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> out of <b>{listofemployee.length}</b> entries</div>
+                    <div className="hint-text text-dark">عرض <b>{listofemployeemp.length > endpagination ? endpagination : listofemployeemp.length}</b> من <b>{listofemployeemp.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
@@ -285,34 +291,38 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setusername(emp.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>الرقم القومي</label>
+                          <input type="text" className="form-control" required onChange={(e) => setnumberID(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الموبايل</label>
-                          <input type="text" className="form-control" required onChange={(e) => setphone(e.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setphone(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
-                          <input type="text" className="form-control" required onChange={(e) => setpassword(e.target.value)} />
+                          <input type="text" className="form-control" required onChange={(e) => setpassword(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
-                          <input type="email" className="form-control" required onChange={(e) => setemail(e.target.value)} />
+                          <input type="email" className="form-control" required onChange={(e) => setemail(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>العنوان</label>
-                          <textarea className="form-control" required onChange={(e) => setaddress(e.target.value)}></textarea>
+                          <textarea className="form-control" required onChange={(e) => setaddress(emp.target.value)}></textarea>
                         </div>
                         <div className="form-group">
                           <label>ادمن</label>
-                          <select form="carform" required onChange={(e) => setisAdmin(e.target.value)}>
+                          <select form="carform" required onChange={(e) => setisAdmin(emp.target.value)}>
                             <option value={true}>ادمن</option>
                             <option value={false}>ليس ادمن</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
+                          <select name={role} form="carform" required onChange={(e) => setrole(emp.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -321,8 +331,8 @@ const Employees = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>المرتب</label>
-                          <input type="Number" min={0} className="form-control" required onChange={(e) => setsalary(e.target.value)} />
+                          <label>المرتب الاساسي</label>
+                          <input type="Number" min={0} className="form-control" required onChange={(e) => setbasicSalary(emp.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -344,41 +354,45 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required defaultValue={username} onChange={(e) => setusername(e.target.value)} />
+                          <input type="text" className="form-control" required defaultValue={username} onChange={(e) => setusername(emp.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>الرقم القومي</label>
+                          <input type="text" className="form-control" required defaultValue={numberID} onChange={(e) => setnumberID(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الموبايل</label>
-                          <input type="text" className="form-control" required defaultValue={phone} onChange={(e) => setphone(e.target.value)} />
+                          <input type="text" className="form-control" required defaultValue={phone} onChange={(e) => setphone(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
-                          <input type="text" className="form-control" onChange={(e) => setpassword(e.target.value)} />
+                          <input type="text" className="form-control" onChange={(e) => setpassword(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
-                          <input type="email" className="form-control" required defaultValue={email} onChange={(e) => setemail(e.target.value)} />
+                          <input type="email" className="form-control" required defaultValue={email} onChange={(e) => setemail(emp.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>العنوان</label>
-                          <textarea className="form-control" required defaultValue={address} onChange={(e) => setaddress(e.target.value)}></textarea>
+                          <textarea className="form-control" required defaultValue={address} onChange={(e) => setaddress(emp.target.value)}></textarea>
                         </div>
                         <div className="form-group">
                           <label>ادمن</label>
-                          <select form="carform" required defaultValue={isAdmin} onChange={(e) => setisAdmin(e.target.value)}>
+                          <select form="carform" required defaultValue={isAdmin} onChange={(e) => setisAdmin(emp.target.value)}>
                             <option value={true}>ادمن</option>
                             <option value={false}>ليس ادمن</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الحالة</label>
-                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(e.target.value)}>
+                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(emp.target.value)}>
                             <option value={true}>متاح</option>
                             <option value={false}>ليس متاح</option>
                           </select>
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
+                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(emp.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -387,8 +401,8 @@ const Employees = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>المرتب</label>
-                          <input type="Number" min={0} className="form-control" required defaultValue={salary} onChange={(e) => setsalary(e.target.value)} />
+                          <label>المرتب الاساسي</label>
+                          <input type="Number" min={0} className="form-control" required defaultValue={basicSalary} onChange={(e) => setbasicSalary(emp.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">

@@ -46,10 +46,10 @@ const userschema = new mongoose.Schema({
         enum : ['manager', 'casher', 'waiter', 'Chef','user'],
         default : 'user',
     },
-    salary : {
-        type : Number,
-        min : 10,
-    },
+    // salary : {
+    //     type : Number,
+    //     min : 10,
+    // },
 
     isVarified :{
         type : Boolean,

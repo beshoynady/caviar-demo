@@ -27,8 +27,8 @@ const createEmployee = async (req, res, next) => {
         const pass = await req.body.password;
         const password = await bcrypt.hash(pass, 10);
 
-        if (!fullname || !phone || !password || !pass) {
-            return res.status(404).json({ message: 'fullname or password or phone is incorrect' })
+        if (!fullname || !phone || !pass) {
+            return res.status(404).json({ message: 'fullname or pass or phone is incorrect' })
         }
         const isemployeefound = await Employeemodel.findOne({ phone });
         if (isemployeefound) {

@@ -294,6 +294,14 @@ const Employees = () => {
                           <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
                         </div>
                         <div className="form-group">
+                          <label>اسم المستخدم</label>
+                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>الباسورد</label>
+                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
+                        </div>
+                        <div className="form-group">
                           <label>الرقم القومي</label>
                           <input type="text" className="form-control" required onChange={(e) => setnumberID(e.target.value)} />
                         </div>

@@ -21,7 +21,6 @@ const createEmployee = async (req, res, next) => {
         const basicSalary = await req.body.basicSalary;
         const payRole = await req.body.payRole;
         const role = await req.body.role;
-        const isAdmin = await req.body.isAdmin;
         const isActive = await req.body.isActive;
 
         const pass = await req.body.password;
@@ -34,12 +33,12 @@ const createEmployee = async (req, res, next) => {
         if (isemployeefound) {
             return res.status(404).json({ message: 'this phone is already in use' })
         }
-        const newEmployee = await Employeemodel.create({ fullname, username, numberID, email, phone, salary, address, password, basicSalary, payRole, isActive, isAdmin, role })
+        const newEmployee = await Employeemodel.create({ fullname, username, numberID, email, phone, address, password, basicSalary, payRole, role, isActive })
         newEmployee.save()
         const accessToken = jwt.sign({
             employeeinfo: {
                 id: newEmployee._id,
-                username: newEmployee._username,
+                username: newEmployee.username,
                 isAdmin: newEmployee.isAdmin,
                 isActive: newEmployee.isActive,
                 role: newEmployee.role

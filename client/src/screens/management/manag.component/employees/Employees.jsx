@@ -44,7 +44,7 @@ const Employees = () => {
     console.log(basicSalary)
 
     try {
-      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isAdmin, role })
+      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isActive, role })
       console.log(newemployee)
       if (newemployee) {
         getemployees()
@@ -298,20 +298,16 @@ const Employees = () => {
                           <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
                         </div>
                         <div className="form-group">
-                          <label>الباسورد</label>
-                          <input type="text" className="form-control" required onChange={(e) => setusername(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>الرقم القومي</label>
-                          <input type="text" className="form-control" required onChange={(e) => setnumberID(e.target.value)} />
-                        </div>
-                        <div className="form-group">
                           <label>الموبايل</label>
                           <input type="text" className="form-control" required onChange={(e) => setphone(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
                           <input type="text" className="form-control" required onChange={(e) => setpassword(e.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>الرقم القومي</label>
+                          <input type="text" className="form-control" required onChange={(e) => setnumberID(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
@@ -322,8 +318,9 @@ const Employees = () => {
                           <textarea className="form-control" required onChange={(e) => setaddress(e.target.value)}></textarea>
                         </div>
                         <div className="form-group">
-                          <label>ادمن</label>
-                          <select form="carform" required onChange={(e) => setisAdmin(e.target.value)}>
+                          <label>الحالة</label>
+                          <select form="carform" required onChange={(e) => setisActive(e.target.value)}>
+                            <option >اختر</option>
                             <option value={true}>ادمن</option>
                             <option value={false}>ليس ادمن</option>
                           </select>

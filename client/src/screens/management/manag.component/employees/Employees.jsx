@@ -66,15 +66,11 @@ const Employees = () => {
       if (password) {
         const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, address, phone, email, isActive, role })
         console.log(update)
-        if (update) {
-          getemployees()
-        }
+        getemployees()
       } else {
         const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isActive, role})
         console.log(update)
-        if (update) {
-          getemployees()
-        }
+        getemployees()
       }
     } catch (error) {
       console.log(error)

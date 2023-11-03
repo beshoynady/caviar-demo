@@ -88,7 +88,7 @@ const loginEmployee = async (req, res) => {
                             isActive: findEmployee.isActive,
                             role: findEmployee.role
                         }
-            
+
                     }, process.env.jwt_secret_key,
                         { expiresIn: process.env.jwt_expire }
                     )
@@ -147,17 +147,29 @@ const updateEmployee = async (req, res) => {
         }
     } catch (err) { res.status(400).json(err) }
 }
+const payRoleEmployee = async (req, res) => {
+    try {
+        const id = await req.params.employeeid;
+        const payRole = await req.body.payRole;
+
+        const updatepayRole = await Employeemodel.findByIdAndUpdate(id, { payRole }, { new: true });
+        updatepayRole.save()
+        res.status(200).json(updatepayRole)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
 
 
 const deleteEmployee = async (req, res) => {
     try {
         const id = await req.params.employeeid;
         const employeedeleted = await Employeemodel.findByIdAndDelete(id).exec();
-        
+
     } catch (error) {
         res.status(500).json(error)
 
     }
 }
 
-module.exports = {createEmployee, getoneEmployee, loginEmployee, getallEmployees, updateEmployee, deleteEmployee };
+module.exports = { createEmployee, getoneEmployee, loginEmployee,payRoleEmployee, getallEmployees, updateEmployee, deleteEmployee };

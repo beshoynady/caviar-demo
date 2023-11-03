@@ -5,54 +5,42 @@ const EmployeeSalarySchema = new mongoose.Schema(
   {
     EmployeeId: {
       type: ObjectId,
-      ref: 'StockItems',
+      ref: 'Employee',
       require: true,
     },
-    Employeename: {
+    EmployeeName: {
       type: String,
       require: true,
     },
     movement: {
       type: String,
-      enum: ['سلف', 'خصم', 'غياب','اضافي','','','','','','','','','','','','','',''],
+      enum: ['سلف', 'خصم', 'غياب','اضافي','مكافأة'],
       require: true
     },
-    Quantity: {
+    Amount: {
       type: Number,
       default: 0,
       require: true,
     },
-    oldBalance:{
+    oldAmount:{
       type: Number,
       require: true,
     },
-    Balance:{
+    newAmount:{
       type: Number,
       require: true,
     }, 
-    price: {
-      type: Number,
-      require: true,
-    },
-    oldCost: {
-      type: Number,
-      require: true,
-    },
-    cost: {
-      type: Number,
-      require: true,
-    },
     actionBy: {
       type: ObjectId,
-      ref: 'User',
+      ref: 'employees',
       require: true
     },
     actionAt: {
       type: Date,
+      default: Date.now
     },
     updatedAt: {
       type: Date,
-      default: Date.now
      }
   },
   {

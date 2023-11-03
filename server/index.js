@@ -3,11 +3,14 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 const connectdb = require('./database/connectdb.js');
+
+
 const routecategory = require('./router/Category.router.js');
 const routecategoryStock = require('./router/CategoryStock.router.js');
 const routeproduct = require('./router/Product.router.js');
 const routeuser = require('./router/User.router.js');
 const routeemployee = require('./router/Employee.router.js');
+const routesalarymovement = require('./router/EmployeeSalary.router.js');
 const routetable = require('./router/Table.router.js');
 const routeorder = require('./router/Order.router.js');
 const routeauth = require('./router/Auth.router.js');
@@ -54,6 +57,7 @@ app.use('/api/product', routeproduct)
 app.use('/api/category', routecategory);
 app.use('/api/user', routeuser);
 app.use('/api/employee', routeemployee);
+app.use('/api/salarymovement', routesalarymovement);
 app.use('/api/table', routetable );
 app.use('/api/order', routeorder);
 app.use('/api/auth', routeauth);

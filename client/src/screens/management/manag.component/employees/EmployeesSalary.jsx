@@ -8,25 +8,31 @@ const EmployeesSalary = () => {
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/user')
-      const data = await response.data
-      const employee = data.filter((em) => em.isAdmin == true)
+      const response = await axios.get('https://caviar-api.vercel.app/api/employee')
+      const employee = await response.data
       setlistofemployee(employee)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const [userid, setuserid] = useState("")
-  const [username, setusername] = useState("")
-  const [password, setpassword] = useState("")
-  const [address, setaddress] = useState("")
-  const [phone, setphone] = useState("")
-  const [email, setemail] = useState("")
-  const [isAdmin, setisAdmin] = useState(true)
-  const [isActive, setisActive] = useState(true)
-  const [role, setrole] = useState("")
-  const [salary, setsalary] = useState()
+  const [EmployeeId, setEmployeeId] = useState("")
+  const [EmployeeName, setEmployeeName] = useState("")
+  const [movement, setmovement] = useState("")
+  const [Amount, setAmount] = useState()
+  const [oldAmount, setoldAmount] = useState()
+  const [newAmount, setnewAmount] = useState()
+  const [actionBy, setactionBy] = useState("")
+
+  const addSalaryMovement = async()=>{
+    try {
+      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement',{EmployeeId,EmployeeName,movement,Amount,oldAmount,newAmount,actionBy})
+      console.log(SalaryMovement)
+    } catch (error) {
+     console.log(error) 
+    }
+  }
+
 
 
   const [filterEmp, setfilterEmp] = useState([])
@@ -50,11 +56,11 @@ const EmployeesSalary = () => {
     }
   }
 
-  const deleteEmployee = async (e) => {
+  const deleteSalaryMovement = async (e) => {
     e.preventDefault()
     try {
       console.log(userid)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/user/${userid}`)
+      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/employee/${EmployeeId}`)
       console.log(deleted)
       getemployees()
     } catch (error) {

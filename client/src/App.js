@@ -671,22 +671,22 @@ function App() {
     try {
       const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
       console.log(employee.data)
-      // if (employee) {
-      //   setislogin(!islogin)
-      //   const token = employee.data.accessToken;
-      //   console.log(token)
-      //   if (token) {
-      //     localStorage.setItem("token", token)
-      //     if (localStorage.getItem('token')) {
-      //       getdatafromtoken()
-      //     }
-      //   }
-      //   setislogin(!islogin)
-      //   // returnToMange()
-      // }
-      // if (employee.data.findEmployee.isAdmin == true) {
-      //   window.location.href = `https://${window.location.hostname}/management`;
-      // }
+      if (employee) {
+        setislogin(!islogin)
+        const token = employee.data.accessToken;
+        console.log(token)
+        if (token) {
+          localStorage.setItem("token", token)
+          if (localStorage.getItem('token')) {
+            getdatafromtoken()
+          }
+        }
+        setislogin(!islogin)
+        // returnToMange()
+      }
+      if (employee.data.findEmployee.isAdmin == true) {
+        window.location.href = `https://${window.location.hostname}/management`;
+      }
     } catch (error) {
       console.log(error)
     }

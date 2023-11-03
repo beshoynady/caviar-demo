@@ -10,8 +10,7 @@ const Employees = () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee')
       const data = await response.data
-      const employee = data.filter((em) => em.isAdmin == true)
-      setlistofemployee(employee)
+      setlistofemployee(data)
     } catch (error) {
       console.log(error)
     }
@@ -214,7 +213,7 @@ const Employees = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{emp.username}</td>
+                              <td>{emp.fullname}</td>
                               <td>{emp.numberID}</td>
                               <td>{emp.address}</td>
                               <td>{emp.phone}</td>
@@ -243,7 +242,7 @@ const Employees = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{emp.username}</td>
+                                <td>{emp.fullname}</td>
                                 <td>{emp.numberID}</td>
                                 <td>{emp.address}</td>
                                 <td>{emp.phone}</td>

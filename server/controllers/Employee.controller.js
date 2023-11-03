@@ -139,7 +139,6 @@ const updateEmployee = async (req, res) => {
             const password = await bcrypt.hash(pass, 10);
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, payRole, isActive, role }, { new: true });
             updateemployee.save()
-            res.status(200).json(updateemployee)
             const accessToken = jwt.sign({
                 employeeinfo: {
                     id: newEmployee._id,
@@ -155,7 +154,6 @@ const updateEmployee = async (req, res) => {
         } else {
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, payRole, isActive, role }, { new: true });
             updateemployee.save()
-            res.status(200).json(updateemployee)
             const accessToken = jwt.sign({
                 employeeinfo: {
                     id: newEmployee._id,

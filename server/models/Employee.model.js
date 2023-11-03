@@ -11,7 +11,7 @@ const employeeschema = new mongoose.Schema({
     numberID: {
         type: String,
         unique: true,
-        require: [true, 'required username'],
+        require: [true, 'required numberID'],
         trim: true,
         minlength: 14,
         maxlength: 14,

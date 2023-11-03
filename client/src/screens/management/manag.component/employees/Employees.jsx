@@ -46,9 +46,7 @@ const Employees = () => {
     try {
       const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isActive, role })
       console.log(newemployee)
-      if (newemployee) {
-        getemployees()
-      }
+      getemployees()
     } catch (error) {
       console.log(error)
     }

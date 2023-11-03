@@ -121,7 +121,7 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const id =await req.params.employeeid;
+        const id = await req.params.employeeid;
         const fullname = await req.body.fullname;
         const numberID = await req.body.numberID;
         const username = await req.body.username;
@@ -131,14 +131,13 @@ const updateEmployee = async (req, res) => {
         const basicSalary = await req.body.basicSalary;
         const payRole = await req.body.payRole;
         const role = await req.body.role;
-        const isAdmin = await req.body.isAdmin;
         const isActive = await req.body.isActive;
 
         const pass = await req.body.password;
 
         if (pass) {
             const password = await bcrypt.hash(pass, 10);
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, salary, address, password, basicSalary, payRole, isActive, isAdmin, role }, { new: true });
+            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, payRole, isActive, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
             const accessToken = jwt.sign({
@@ -154,7 +153,7 @@ const updateEmployee = async (req, res) => {
             )
             res.status(200).json({ accessToken, updateemployee })
         } else {
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, salary, address, basicSalary, payRole, isActive, isAdmin, role }, { new: true });
+            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, payRole, isActive, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
             const accessToken = jwt.sign({

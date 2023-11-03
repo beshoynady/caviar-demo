@@ -626,9 +626,9 @@ function App() {
     const tokenStorage = localStorage.getItem('token')
     if (tokenStorage) {
       const decodetoken = jwt_decode(tokenStorage)
+      console.log(decodetoken)
       if(decodetoken.userinfo){
       setuserlogininfo(decodetoken.userinfo)
-      // console.log(decodetoken)
     }else{
         setuserlogininfo(decodetoken.employeeinfo)
 

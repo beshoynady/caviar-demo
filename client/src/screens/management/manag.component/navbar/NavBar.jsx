@@ -8,7 +8,7 @@ const NavBar = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle,userlogininfo, logout }) => {
+        ({userlogininfo, logout }) => {
           return (
 
             <header className='manag-header'>
@@ -16,7 +16,7 @@ const NavBar = () => {
                 <nav className='manag-nav'>
                   <div className="profile">
                     <div className="info">
-                      <p>اهلا, <b>{userlogininfo?usertitle(userlogininfo.id):''}</b></p>
+                      <p>اهلا, <b>{userlogininfo.username}</b></p>
                     </div>
                     <div className="logout-btn">
                       <a href='/login' onClick={logout}>خروج</a>

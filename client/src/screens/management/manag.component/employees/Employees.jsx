@@ -253,7 +253,7 @@ const Employees = () => {
                                 <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setemployeeid(emp._id);setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
+                                    setemployeeid(emp._id);setfullname(emp.fullname);setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
                                   }}>&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setemployeeid(emp._id)}>&#xE872;</i></a>
                                 </td>

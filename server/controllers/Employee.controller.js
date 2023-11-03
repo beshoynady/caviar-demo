@@ -54,8 +54,8 @@ const createEmployee = async (req, res, next) => {
 
 const getoneEmployee = async (req, res) => {
     try {
-        const employeeId = await req.params.employeeId;
-        const employee = await Employeemodel.findById(employeeId);
+        const employeeid = await req.params.employeeid;
+        const employee = await Employeemodel.findById(employeeid);
         res.status(200).json(employee);
     } catch (err) {
         res.status(400).json(err)
@@ -121,7 +121,7 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const id = req.params.employeeId;
+        const id = req.params.employeeid;
         const fullname = await req.body.fullname;
         const numberID = await req.body.numberID;
         const username = await req.body.username;
@@ -171,7 +171,7 @@ const updateEmployee = async (req, res) => {
 
 
 const deleteEmployee = async (req, res) => {
-    const id = await req.params.employeeId;
+    const id = await req.params.employeeid;
     try {
         const employeedeleted = await Employeemodel.findByIdAndDelete(id).exec();
         if (employeedeleted) {

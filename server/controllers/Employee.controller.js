@@ -82,11 +82,11 @@ const loginEmployee = async (req, res) => {
                 } else {
                     const accessToken = jwt.sign({
                         employeeinfo: {
-                            id: newEmployee._id,
-                            username: newEmployee.username,
-                            isAdmin: newEmployee.isAdmin,
-                            isActive: newEmployee.isActive,
-                            role: newEmployee.role
+                            id: findEmployee._id,
+                            username: findEmployee.username,
+                            isAdmin: findEmployee.isAdmin,
+                            isActive: findEmployee.isActive,
+                            role: findEmployee.role
                         }
             
                     }, process.env.jwt_secret_key,

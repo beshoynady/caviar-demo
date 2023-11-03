@@ -369,7 +369,7 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
-                          <input type="text" className="form-control" required onChange={(e) => setpassword(e.target.value)} />
+                          <input type="text" className="form-control" onChange={(e) => setpassword(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الرقم القومي</label>

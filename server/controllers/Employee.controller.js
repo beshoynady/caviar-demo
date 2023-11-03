@@ -121,7 +121,7 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const id = req.params.employeeid;
+        const id =await req.params.employeeid;
         const fullname = await req.body.fullname;
         const numberID = await req.body.numberID;
         const username = await req.body.username;
@@ -136,36 +136,40 @@ const updateEmployee = async (req, res) => {
 
         const pass = await req.body.password;
 
-        if (!phone) {
-            return res.status(404).json({ message: 'username or phone is incorrect' })
-        }
-
-        const isemployeefound = await Employeemodel.findOne({ phone });
-        if (!isemployeefound) {
-            return res.status(404).json({ message: 'this employee not found' })
-        }
         if (pass) {
             const password = await bcrypt.hash(pass, 10);
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, salary, address, password, basicSalary, payRole, isActive, isAdmin, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
+            const accessToken = jwt.sign({
+                employeeinfo: {
+                    id: newEmployee._id,
+                    username: newEmployee._username,
+                    isAdmin: newEmployee.isAdmin,
+                    isActive: newEmployee.isActive,
+                    role: newEmployee.role
+                }
+            }, process.env.jwt_secret_key,
+                { expiresIn: process.env.jwt_expire }
+            )
+            res.status(200).json({ accessToken, updateemployee })
         } else {
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, salary, address, basicSalary, payRole, isActive, isAdmin, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
+            const accessToken = jwt.sign({
+                employeeinfo: {
+                    id: newEmployee._id,
+                    username: newEmployee._username,
+                    isAdmin: newEmployee.isAdmin,
+                    isActive: newEmployee.isActive,
+                    role: newEmployee.role
+                }
+            }, process.env.jwt_secret_key,
+                { expiresIn: process.env.jwt_expire }
+            )
+            res.status(200).json({ accessToken, updateemployee })
         }
-        const accessToken = jwt.sign({
-            employeeinfo: {
-                id: newEmployee._id,
-                username: newEmployee._username,
-                isAdmin: newEmployee.isAdmin,
-                isActive: newEmployee.isActive,
-                role: newEmployee.role
-            }
-        }, process.env.jwt_secret_key,
-            { expiresIn: process.env.jwt_expire }
-        )
-        res.status(200).json({ accessToken, updateemployee })
     } catch (err) { res.status(400).json(err) }
 }
 

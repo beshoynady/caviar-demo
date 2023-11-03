@@ -677,14 +677,14 @@ function App() {
         console.log(token)
         if (token) {
           localStorage.setItem("token", token)
-          // if (localStorage.getItem('token')) {
-          //   getdatafromtoken()
-          // }
+          if (localStorage.getItem('token')) {
+            getdatafromtoken()
+          }
         }
         setislogin(!islogin)
         // returnToMange()
       }
-      if (employee.data.findEmployee.isAdmin == true & employee.data.findEmployee.isActive == true) {
+      if (employee.data.findEmployee.isAdmin == true) {
         window.location.href = `https://${window.location.hostname}/management`;
       }
     } catch (error) {

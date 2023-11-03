@@ -16,7 +16,7 @@ const ManagLayout = () => {
       if (tokenStorage) {
         const decodetoken = jwt_decode(tokenStorage)
         console.log(decodetoken)
-       if(decodetoken.userinfo.isAdmin){
+       if(decodetoken.employeeinfo.isAdmin){
         return(
           <div className='manag-screen'>
             <SideBar />

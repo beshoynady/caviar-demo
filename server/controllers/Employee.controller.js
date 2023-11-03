@@ -81,11 +81,14 @@ const loginEmployee = async (req, res) => {
                     return res.status(401).json({ message: "Wrong Password" })
                 } else {
                     const accessToken = jwt.sign({
-                        Employeeinfo: {
-                            id: findEmployee._id,
-                            isAdmin: findEmployee.isAdmin,
-                            role: findEmployee.role
+                        employeeinfo: {
+                            id: newEmployee._id,
+                            username: newEmployee.username,
+                            isAdmin: newEmployee.isAdmin,
+                            isActive: newEmployee.isActive,
+                            role: newEmployee.role
                         }
+            
                     }, process.env.jwt_secret_key,
                         { expiresIn: process.env.jwt_expire }
                     )

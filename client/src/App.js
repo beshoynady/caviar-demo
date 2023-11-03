@@ -679,7 +679,7 @@ function App() {
         setislogin(!islogin)
         // returnToMange()
       }
-      if (employee.data.finduser.isAdmin == true & employee.data.finduser.isActive == true) {
+      if (employee.data.findEmployee.isAdmin == true & employee.data.findEmployee.isActive == true) {
         window.location.href = `https://${window.location.hostname}/management`;
       }
     } catch (error) {

@@ -15,6 +15,7 @@ const ManagLayout = () => {
       const tokenStorage = localStorage.getItem('token')
       if (tokenStorage) {
         const decodetoken = jwt_decode(tokenStorage)
+        console.log(decodetoken)
        if(decodetoken.userinfo.isAdmin){
         return(
           <div className='manag-screen'>

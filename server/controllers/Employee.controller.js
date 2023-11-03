@@ -137,35 +137,37 @@ const updateEmployee = async (req, res) => {
 
         if (pass) {
             const password = await bcrypt.hash(pass, 10);
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, payRole, isActive, role }, { new: true });
+            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, isActive, role }, { new: true });
             updateemployee.save()
-            const accessToken = jwt.sign({
-                employeeinfo: {
-                    id: newEmployee._id,
-                    username: newEmployee._username,
-                    isAdmin: newEmployee.isAdmin,
-                    isActive: newEmployee.isActive,
-                    role: newEmployee.role
-                }
-            }, process.env.jwt_secret_key,
-                { expiresIn: process.env.jwt_expire }
-            )
-            res.status(200).json({ accessToken, updateemployee })
+            res.status(200).json(updateemployee)
+            // const accessToken = jwt.sign({
+                //     employeeinfo: {
+            //         id: newEmployee._id,
+            //         username: newEmployee._username,
+            //         isAdmin: newEmployee.isAdmin,
+            //         isActive: newEmployee.isActive,
+            //         role: newEmployee.role
+            //     }
+            // }, process.env.jwt_secret_key,
+            //     { expiresIn: process.env.jwt_expire }
+            // )
+            // res.status(200).json({ accessToken, updateemployee })
         } else {
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, payRole, isActive, role }, { new: true });
+            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, isActive, role }, { new: true });
             updateemployee.save()
-            const accessToken = jwt.sign({
-                employeeinfo: {
-                    id: newEmployee._id,
-                    username: newEmployee._username,
-                    isAdmin: newEmployee.isAdmin,
-                    isActive: newEmployee.isActive,
-                    role: newEmployee.role
-                }
-            }, process.env.jwt_secret_key,
-                { expiresIn: process.env.jwt_expire }
-            )
-            res.status(200).json({ accessToken, updateemployee })
+            res.status(200).json(updateemployee)
+            // const accessToken = jwt.sign({
+            //     employeeinfo: {
+            //         id: newEmployee._id,
+            //         username: newEmployee._username,
+            //         isAdmin: newEmployee.isAdmin,
+            //         isActive: newEmployee.isActive,
+            //         role: newEmployee.role
+            //     }
+            // }, process.env.jwt_secret_key,
+            //     { expiresIn: process.env.jwt_expire }
+            // )
+            // res.status(200).json({ accessToken, updateemployee })
         }
     } catch (err) { res.status(400).json(err) }
 }

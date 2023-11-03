@@ -51,7 +51,7 @@ const Employees = () => {
     }
   }
 
-  const updateEmployee = async (e) => {
+  const editEmployee = async (e) => {
     e.preventDefault()
     console.log(fullname)
     console.log(username)
@@ -62,27 +62,31 @@ const Employees = () => {
     console.log(isActive)
     console.log(role)
     console.log(basicSalary)
+    if (password) {
     try {
-      if (password) {
-        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, address, phone, email, isActive, role })
+        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, username, address, phone, email, isActive, role })
         console.log(update)
-        if (update) {
-          const token = update.accessToken
-          localStorage.setItem("token", token)
-        }
+        // if (update) {
+        //   const token = update.accessToken
+        //   localStorage.setItem("token", token)
+        // }
         getemployees()
-      } else {
-        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isActive, role})
-        console.log(update)
-        if (update) {
-          const token = update.accessToken
-          localStorage.setItem("token", token)
-        }
-        getemployees()
-      }
-    } catch (error) {
-      console.log(error)
+    }catch(err){
+      console.log(err.message)
     }
+      } else {
+        try{
+        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, {fullname, basicSalary, numberID, username, password, address, phone, email, isActive, role})
+        console.log(update)
+        // if (update) {
+        //   const token = update.accessToken
+        //   localStorage.setItem("token", token)
+        // }
+        getemployees()
+      } catch (error) {
+        console.log(error)
+      }
+      }
   }
 
   const [filterEmp, setfilterEmp] = useState([])
@@ -351,7 +355,7 @@ const Employees = () => {
               <div id="editEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={updateEmployee}>
+                    <form onSubmit={editEmployee}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل بيانات الموظفين</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

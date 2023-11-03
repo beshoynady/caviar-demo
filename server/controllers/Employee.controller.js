@@ -140,48 +140,20 @@ const updateEmployee = async (req, res) => {
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, isActive, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
-            // const accessToken = jwt.sign({
-                //     employeeinfo: {
-            //         id: newEmployee._id,
-            //         username: newEmployee._username,
-            //         isAdmin: newEmployee.isAdmin,
-            //         isActive: newEmployee.isActive,
-            //         role: newEmployee.role
-            //     }
-            // }, process.env.jwt_secret_key,
-            //     { expiresIn: process.env.jwt_expire }
-            // )
-            // res.status(200).json({ accessToken, updateemployee })
         } else {
             const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, isActive, role }, { new: true });
             updateemployee.save()
             res.status(200).json(updateemployee)
-            // const accessToken = jwt.sign({
-            //     employeeinfo: {
-            //         id: newEmployee._id,
-            //         username: newEmployee._username,
-            //         isAdmin: newEmployee.isAdmin,
-            //         isActive: newEmployee.isActive,
-            //         role: newEmployee.role
-            //     }
-            // }, process.env.jwt_secret_key,
-            //     { expiresIn: process.env.jwt_expire }
-            // )
-            // res.status(200).json({ accessToken, updateemployee })
         }
     } catch (err) { res.status(400).json(err) }
 }
 
 
 const deleteEmployee = async (req, res) => {
-    const id = await req.params.employeeid;
     try {
+        const id = await req.params.employeeid;
         const employeedeleted = await Employeemodel.findByIdAndDelete(id).exec();
-        if (employeedeleted) {
-            return res.status(200).send("employee deleted successfully").json(employeedeleted);
-        } else {
-            return res.status(404).json({ "Error message": "Requested employee not found or already deleted!" })
-        };
+        
     } catch (error) {
         res.status(500).json(error)
 

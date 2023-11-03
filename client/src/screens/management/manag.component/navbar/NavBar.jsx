@@ -5,15 +5,10 @@ import { Link } from 'react-router-dom'
 
 
 const NavBar = () => {
-  const logout = () => {
-    localStorage.clear('token');
-    window.location.href = `https://${window.location.hostname}/login`;
-  }
-
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle,userlogininfo }) => {
+        ({ usertitle,userlogininfo, logout }) => {
           return (
 
             <header className='manag-header'>

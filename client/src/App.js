@@ -652,7 +652,34 @@ function App() {
         setislogin(!islogin)
         // returnToMange()
       }
-      if (client.data.finduser.isAdmin == true) {
+      // if (client.data.finduser.isAdmin == true) {
+      //   window.location.href = `https://${window.location.hostname}/management`;
+      // }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const employeelogin = async (e, phone, password) => {
+    e.preventDefault()
+    console.log(phone);
+    console.log(password);
+    try {
+      const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
+      console.log(employee.data)
+      if (employee) {
+        setislogin(!islogin)
+        const token = employee.data.accessToken;
+        console.log(token)
+        if (token) {
+          localStorage.setItem("token", token)
+          if (localStorage.getItem('token')) {
+            getdatafromtoken()
+          }
+        }
+        setislogin(!islogin)
+        // returnToMange()
+      }
+      if (employee.data.finduser.isAdmin == true & employee.data.finduser.isActive == true) {
         window.location.href = `https://${window.location.hostname}/management`;
       }
     } catch (error) {
@@ -663,6 +690,10 @@ function App() {
   const logout = () => {
     localStorage.clear('token');
     window.location.href = `https://${window.location.hostname}`;
+  }
+  const employeelogout = () => {
+    localStorage.clear('token');
+    window.location.href = `https://${window.location.hostname}/login`;
   }
 
 
@@ -695,7 +726,7 @@ function App() {
 
   return (
     <detacontext.Provider value={{
-      userlogininfo, getdatafromtoken, login, signup, logout,
+      userlogininfo, getdatafromtoken, login, signup, logout, employeelogin, employeelogout,
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
       allusers, alltable, usertitle, allorders, askingForHelp,
       setproductnote, addnotrstoproduct,

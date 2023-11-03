@@ -5,46 +5,15 @@ import { detacontext } from '../../../../App'
 const Login = () => {
 const [phone, setphone] = useState('')
 const [password, setpassword] = useState('')
-
-const [islogin, setislogin] = useState(false)
-
-const login = async (e) => {
-  e.preventDefault()
-  console.log(phone);
-  console.log(password);
-  try {
-    const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
-    console.log(employee.data)
-    if (employee) {
-      setislogin(!islogin)
-      const token = employee.data.accessToken;
-      console.log(token)
-      if (token) {
-        localStorage.setItem("token", token)
-        if (localStorage.getItem('token')) {
-          getdatafromtoken()
-        }
-      }
-      setislogin(!islogin)
-      // returnToMange()
-    }
-    if (employee.data.finduser.isAdmin == true && employee.data.finduser.isActive == true) {
-      window.location.href = `https://${window.location.hostname}/management`;
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-    // return (
-    //     <detacontext.Consumer>
-    //         {
-    //             ({ login }) => {
+    return (
+        <detacontext.Consumer>
+            {
+                ({ employeelogin }) => {
                     return (
                         <div className="login-container">
                             <div className="screen">
                                 <div className="screen__content">
-                                    <form className="login-dash" onSubmit={(e)=>login(e,phone, password)} >
+                                    <form className="login-dash" onSubmit={(e)=>employeelogin(e,phone, password)} >
                                         <div className="login__field">
                                             <i className="login__icon fas fa-user"></i>
                                             <input type="text" className="login__input" placeholder="Your Phone" onChange={(e)=>setphone(e.target.value)}/>
@@ -68,10 +37,10 @@ const login = async (e) => {
                             </div>
                         </div>
                     )
-    //             }
-    //         }
-    //     </detacontext.Consumer>
-    // )
+                }
+            }
+        </detacontext.Consumer>
+    )
 }
 
 export default Login

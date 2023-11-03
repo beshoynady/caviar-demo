@@ -357,15 +357,15 @@ const Employees = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" defaultvalue={fullname} required onChange={(e) => setfullname(e.target.value)} />
+                          <input type="text" className="form-control" defaultValue={fullname} required onChange={(e) => setfullname(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>اسم المستخدم</label>
-                          <input type="text" className="form-control" defaultvalue={username} required onChange={(e) => setusername(e.target.value)} />
+                          <input type="text" className="form-control" defaultValue={username} required onChange={(e) => setusername(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الموبايل</label>
-                          <input type="text" className="form-control" defaultvalue={phone} required onChange={(e) => setphone(e.target.value)} />
+                          <input type="text" className="form-control" defaultValue={phone} required onChange={(e) => setphone(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الباسورد</label>
@@ -373,19 +373,19 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>الرقم القومي</label>
-                          <input type="text" className="form-control" defaultvalue={numberID} required onChange={(e) => setnumberID(e.target.value)} />
+                          <input type="text" className="form-control" defaultValue={numberID} required onChange={(e) => setnumberID(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الايميل</label>
-                          <input type="email" className="form-control" defaultvalue={email} required onChange={(e) => setemail(e.target.value)} />
+                          <input type="email" className="form-control" defaultValue={email} required onChange={(e) => setemail(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>العنوان</label>
-                          <textarea className="form-control" defaultvalue={address} required onChange={(e) => setaddress(e.target.value)}></textarea>
+                          <textarea className="form-control" defaultValue={address} required onChange={(e) => setaddress(e.target.value)}></textarea>
                         </div>
                         <div className="form-group">
                           <label>الحالة</label>
-                          <select form="carform" required defaultvalue={isActive} onChange={(e) => setisActive(e.target.value)}>
+                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(e.target.value)}>
                             <option >اختر</option>
                             <option value={true}>متاح</option>
                             <option value={false}>ليس متاح</option>
@@ -393,7 +393,7 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select name={role} form="carform" defaultvalue={role} required onChange={(e) => setrole(e.target.value)}>
+                          <select name={role} form="carform" defaultValue={role} required onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -403,7 +403,7 @@ const Employees = () => {
                         </div>
                         <div className="form-group">
                           <label>المرتب الاساسي</label>
-                          <input type="Number" min={0} className="form-control" defaultvalue={basicSalary} required onChange={(e) => setbasicSalary(e.target.value)} />
+                          <input type="Number" min={0} className="form-control" defaultValue={basicSalary} required onChange={(e) => setbasicSalary(e.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">

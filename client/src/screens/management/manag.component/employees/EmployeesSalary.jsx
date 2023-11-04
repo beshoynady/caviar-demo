@@ -82,7 +82,7 @@ const getSalaryMovement = async()=>{
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination}) => {
+        ({userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination}) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -281,11 +281,11 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="Number" className="form-control" required onChange={(e) => setactionBy(e.target.value)} />
+                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo.id} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo.username}</input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="Number" className="form-control" required onChange={(e) => setactionAt(e.target.value)} />
+                          <input type="date" className="form-control" readOnly defaultValue={Date()} onChange={(e) => setactionAt(e.target.value)} />
                         </div>
                       </div>
                       <div className="modal-footer">

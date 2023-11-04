@@ -251,7 +251,7 @@ const getSalaryMovement = async()=>{
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" required  onChange={(e) =>{setEmployeeName(e.target.name);setEmployeeId(e.target.value)}}>
+                          <select form="carform" required  onChange={(e) =>{console.log(e.target.name) ;console.log(e.target.innerText) ;setEmployeeName(e.target.name);setEmployeeId(e.target.value)}}>
                             <option>اختر</option>
                             {listofemployee.map(employee =>{
                               return(

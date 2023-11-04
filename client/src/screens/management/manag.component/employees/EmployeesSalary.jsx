@@ -26,10 +26,12 @@ const EmployeesSalary = () => {
   const [actionBy, setactionBy] = useState("")
   const [actionAt, setactionAt] = useState("")
 
-  const addSalaryMovement = async()=>{
+  const addSalaryMovement = async(e)=>{
+    e.preventDefault()
     try {
       const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement',{EmployeeId,EmployeeName,movement,Amount,oldAmount,newAmount,actionBy})
       console.log(SalaryMovement)
+      getSalaryMovement()
     } catch (error) {
      console.log(error) 
     }

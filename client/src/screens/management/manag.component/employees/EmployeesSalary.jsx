@@ -68,7 +68,7 @@ const getSalaryMovement = async()=>{
     e.preventDefault()
     try {
       console.log(salarymovementId)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/employee/${salarymovementId}`)
+      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`)
       console.log(deleted)
       getemployees()
     } catch (error) {

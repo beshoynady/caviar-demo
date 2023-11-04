@@ -3,7 +3,7 @@ import axios from 'axios'
 import { detacontext } from '../../../../App';
 
 
-const EmployeesSalary = () => {
+const PayRole = () => {
 
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
@@ -383,4 +383,4 @@ const EmployeesSalary = () => {
   )
 }
 
-export default EmployeesSalary
+export default PayRole

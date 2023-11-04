@@ -64,7 +64,6 @@ const EmployeesSalary = () => {
   }
 
   const updatePayRole = async () => {
-    payRole
     const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, payRole)
   }
 

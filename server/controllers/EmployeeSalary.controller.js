@@ -59,7 +59,7 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
 
     const deleteSalaryMovement =async (req, res)=>{
         try{
-            const salarymovementId = await req.params;
+            const salarymovementId = await req.params.salarymovementId;
             const SalaryMovementdeleted = await EmployeeSalarymodel.findByIdAndDelete(salarymovementId);
             res.status(200).json(SalaryMovementdeleted);
         }catch(error){

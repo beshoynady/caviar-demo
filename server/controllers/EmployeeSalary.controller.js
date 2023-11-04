@@ -31,9 +31,9 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
     }
 
     const getoneSalaryMovement = async (req, res) => {
-        const SalaryMovementId = req.params.SalaryMovementId
+        const salarymovementId = req.params.salarymovementId
         try{
-            const EmployeeSalary = await EmployeeSalarymodel.findById(SalaryMovementId)
+            const EmployeeSalary = await EmployeeSalarymodel.findById(salarymovementId)
             res.status(200).json(EmployeeSalary)
         }catch(error){
             res.status(404).json(error);
@@ -42,7 +42,7 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
 
     const editSalaryMovement = async (req, res)=>{
         try {
-            const employeesalaryId =await req.params.employeesalaryId;
+            const salarymovementId =await req.params.salarymovementId;
             const EmployeeId = await req.params.EmployeeId;
             const EmployeeName = await req.body.EmployeeName;
             const movement = await req.body.movement;
@@ -50,7 +50,7 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
             const oldAmount = await req.body.oldAmount;
             const newAmount = await req.body.newAmount;
             const actionBy = await req.body.actionBy;
-            const editMovement = await EmployeeSalarymodel.findByIdAndUpdate({_id:employeesalaryId},{EmployeeId,EmployeeName,movement,Amount,oldAmount,newAmount,actionBy},{new : true})
+            const editMovement = await EmployeeSalarymodel.findByIdAndUpdate({_id:salarymovementId},{EmployeeId,EmployeeName,movement,Amount,oldAmount,newAmount,actionBy},{new : true})
             res.status(200).json(editMovement);
         }catch(error){
             res.status(404).json(error);
@@ -59,8 +59,8 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
 
     const deleteSalaryMovement =async (req, res)=>{
         try{
-            const employeesalaryId = await req.params;
-            const SalaryMovementdeleted = await EmployeeSalarymodel.findByIdAndDelete(employeesalaryId);
+            const salarymovementId = await req.params;
+            const SalaryMovementdeleted = await EmployeeSalarymodel.findByIdAndDelete(salarymovementId);
             res.status(200).json(SalaryMovementdeleted);
         }catch(error){
             res.status(404).json(error);

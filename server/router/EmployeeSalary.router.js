@@ -13,7 +13,7 @@ const router = express.Router();
 
 
 router.route('/').post(addSalaryMovement).get(getallSalaryMovement);
-router.route('/:employeesalaryId').get(getoneSalaryMovement).put(editSalaryMovement).delete(deleteSalaryMovement);
+router.route('/:salarymovementId').get(getoneSalaryMovement).put(editSalaryMovement).delete(deleteSalaryMovement);
 module.exports = router;
 
 

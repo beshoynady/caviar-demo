@@ -281,10 +281,10 @@ const getSalaryMovement = async()=>{
                           <label>الاجمالي</label>
                           <input type="Number" className="form-control" required onChange={(e) => setnewAmount(e.target.value)} />
                         </div>
-                        {/* <div className="form-group">
+                        <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly  defaultValue={actionBy}>{userlogininfo?userlogininfo.username:''}</input>
-                        </div> */}
+                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo?userlogininfo.username:''}/>
+                        </div>
                         <div className="form-group">
                           <label>التاريخ</label>
                           <input type="date" className="form-control" readOnly defaultValue={actionAt} />

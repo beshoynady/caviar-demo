@@ -95,7 +95,7 @@ const getSalaryMovement = async()=>{
                         <h2>ادارة <b>الرواتب</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#addSalaryMovementModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
+                        <a href="#addSalaryMovementModal" onClick={setactionBy(userlogininfo?userlogininfo.id:'')} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
                         <a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
                       </div>
                     </div>
@@ -249,7 +249,7 @@ const getSalaryMovement = async()=>{
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        {/* <div className="form-group">
+                        <div className="form-group">
                           <label>الاسم</label>
                           <select form="carform" required  onChange={(e) =>{setEmployeeName(e.target.innerText);setEmployeeId(e.target.value)}}>
                             {listofemployee.map(employee =>{
@@ -258,7 +258,7 @@ const getSalaryMovement = async()=>{
                               )
                             })}
                           </select>
-                        </div> */}
+                        </div>
                         <div className="form-group">
                           <label>الحركه</label>
                           <select form="carform" required  onChange={(e) =>setmovement(e.target.value)}>
@@ -283,7 +283,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo?userlogininfo.id:''} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo?userlogininfo.username:''}</input>
+                          <input type="text" className="form-control" readOnly  defaultValue={actionBy}>{userlogininfo?userlogininfo.username:''}</input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

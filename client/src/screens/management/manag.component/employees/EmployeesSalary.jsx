@@ -252,6 +252,7 @@ const getSalaryMovement = async()=>{
                         <div className="form-group">
                           <label>الاسم</label>
                           <select form="carform" required  onChange={(e) =>{setEmployeeName(e.target.innerText);setEmployeeId(e.target.value)}}>
+                            <option>اختر</option>
                             {listofemployee.map(employee =>{
                               return(
                                 <option value={employee._id}>{employee.fullname}</option>
@@ -363,11 +364,11 @@ const getSalaryMovement = async()=>{
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div id="deleteEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={deleteEmployee}>
+                    <form onSubmit={deleteEmployeeModal}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف موظف</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -383,7 +384,7 @@ const getSalaryMovement = async()=>{
                     </form>
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           )
         }

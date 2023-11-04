@@ -628,10 +628,11 @@ function App() {
       const decodetoken = jwt_decode(tokenStorage)
       console.log(decodetoken)
       if(decodetoken.userinfo){
-      setuserlogininfo(decodetoken.userinfo)
-    }else{
+        setuserlogininfo(decodetoken.userinfo)
+        console.log(decodetoken.userinfo)
+      }else{
         setuserlogininfo(decodetoken.employeeinfo)
-
+        console.log(decodetoken.employeeinfo)
       }
     }
   }

@@ -283,7 +283,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo.id} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo.username}</input>
+                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo?userlogininfo.id:''} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo?userlogininfo.username:''}</input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

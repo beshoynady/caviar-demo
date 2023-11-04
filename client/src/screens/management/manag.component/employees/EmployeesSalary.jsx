@@ -15,7 +15,7 @@ const EmployeesSalary = () => {
       console.log(error)
     }
   }
-  const [listofmovement, setlistofmovement] = useState(['سلف', 'خصم', 'غياب','اضافي','مكافأة'])
+  const [listofmovement, setlistofmovement] = useState(['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة'])
   const [salarymovementId, setsalarymovementId] = useState("")
   const [EmployeeId, setEmployeeId] = useState("")
   const [EmployeeName, setEmployeeName] = useState("")
@@ -26,35 +26,53 @@ const EmployeesSalary = () => {
   const [actionBy, setactionBy] = useState("")
   const [actionAt, setactionAt] = useState(Date())
 
-  const addSalaryMovement = async(e)=>{
+  const addSalaryMovement = async (e) => {
     e.preventDefault()
     try {
-      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement',{EmployeeId,EmployeeName,movement,Amount,oldAmount,newAmount,actionBy})
+      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
       console.log(SalaryMovement)
       getSalaryMovement()
     } catch (error) {
-     console.log(error) 
+      console.log(error)
     }
   }
 
 
   const [payRole, setpayRole] = useState([])
-  const getpayRole = async (id)=>{
+  const [Month, setMonth] = useState(0)
+  const [Additional, setAdditional] = useState(0)
+  const [Bonus, setBonus] = useState(0)
+  const [Absence, setAbsence] = useState(0)
+  const [Deduction, setDeduction] = useState(0)
+  const [Predecessor, setPredecessor] = useState(0)
+
+  const getpayRole = async (id) => {
     const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
     const payrole = employee.data.payRole
-    console.log(payrole)
-    setpayRole(payrole)
+    console.log({payrole: payrole})
+    if (payrole.length > 0) {
+      const thismonth = payrole.find(pr => pr.Month == Date(actionAt).getMonth())
+      console.log({ thismonth: thismonth })
+      setMonth(thismonth.Month)
+      setAdditional(thismonth.Additional)
+      setBonus(thismonth.Bonus)
+      setAbsence(thismonth.Absence)
+      setDeduction(thismonth.Deduction)
+      setPredecessor(thismonth.Predecessor)
+      setpayRole([thismonth])
+    }
   }
 
-  const updatePayRole = async ()=>{
+  const updatePayRole = async () => {
+    payRole
     const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, payRole)
   }
 
-const [listofsalarymovement, setlistofsalarymovement] = useState([])
-const getSalaryMovement = async()=>{
-  const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
-  setlistofsalarymovement(movement.data)
-}
+  const [listofsalarymovement, setlistofsalarymovement] = useState([])
+  const getSalaryMovement = async () => {
+    const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    setlistofsalarymovement(movement.data)
+  }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {
@@ -97,7 +115,7 @@ const getSalaryMovement = async()=>{
   return (
     <detacontext.Consumer>
       {
-        ({userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination}) => {
+        ({ userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -108,7 +126,7 @@ const getSalaryMovement = async()=>{
                         <h2>ادارة <b>الرواتب</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#addSalaryMovementModal" onClick={()=>{setactionBy(userlogininfo?userlogininfo.id:'')}} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
+                        <a href="#addSalaryMovementModal" onClick={() => { setactionBy(userlogininfo ? userlogininfo.id : '') }} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
                         <a href="#deleteSalaryMovementModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
                       </div>
                     </div>
@@ -178,30 +196,30 @@ const getSalaryMovement = async()=>{
                     </thead>
                     <tbody>
                       {filterEmp.length > 0 ? filterEmp.map((mov, i) => {
-                          // if (i < pagination & i >= pagination - 5) {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
-                              <tr key={i}>
-                                <td>
-                                  <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                    <label htmlFor="checkbox1"></label>
-                                  </span>
-                                </td>
-                                <td>{i + 1}</td>
-                                <td>{mov.EmployeeName}</td>
-                                <td>{mov.movement}</td>
-                                <td>{mov.Amount}</td>
-                                <td>{mov.oldAmount}</td>
-                                <td>{mov.newAmount}</td>
-                                <td>{mov.actionBy}</td>
-                                <td>{mov.actionAt}</td>
-                                <td>
+                        // if (i < pagination & i >= pagination - 5) {
+                        if (i >= startpagination & i < endpagination) {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{mov.EmployeeName}</td>
+                              <td>{mov.movement}</td>
+                              <td>{mov.Amount}</td>
+                              <td>{mov.oldAmount}</td>
+                              <td>{mov.newAmount}</td>
+                              <td>{mov.actionBy}</td>
+                              <td>{mov.actionAt}</td>
+                              <td>
                                 <a href="#editSalaryMovementModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)
-                                  }}>&#xE254;</i></a>
-                                  <a href="#deleteSalaryMovementModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setsalarymovementId(mov._id)}>&#xE872;</i></a>
-                                </td>
+                                  setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)
+                                }}>&#xE254;</i></a>
+                                <a href="#deleteSalaryMovementModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setsalarymovementId(mov._id)}>&#xE872;</i></a>
+                              </td>
 
                             </tr>
                           )
@@ -264,10 +282,10 @@ const getSalaryMovement = async()=>{
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" required  onChange={(e) =>{setEmployeeName(listofemployee.find(em=>em._id == e.target.value).fullname);setEmployeeId(e.target.value);;getpayRole(e.target.value) }}>
+                          <select form="carform" required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value);; getpayRole(e.target.value) }}>
                             <option>اختر</option>
-                            {listofemployee.map(employee =>{
-                              return(
+                            {listofemployee.map(employee => {
+                              return (
                                 <option value={employee._id}>{employee.fullname}</option>
                               )
                             })}
@@ -275,9 +293,9 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>الحركه</label>
-                          <select form="carform" required  onChange={(e) =>setmovement(e.target.value)}>
-                            {listofmovement.map((movement, i) =>{
-                              return(
+                          <select form="carform" required onChange={(e) => setmovement(e.target.value)}>
+                            {listofmovement.map((movement, i) => {
+                              return (
                                 <option value={movement}>{movement}</option>
                               )
                             })}
@@ -297,7 +315,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo?userlogininfo.username:''}/>
+                          <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.username : ''} />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

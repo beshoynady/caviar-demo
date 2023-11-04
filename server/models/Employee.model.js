@@ -72,9 +72,8 @@ const employeeschema = new mongoose.Schema({
     payRole: [
         {
             Month: {
-                type: String,
+                type: Number,
                 required: true,
-                enum: ['manager', 'casher', 'waiter', 'Chef'],
             },
             salary: {
                 type: Number,

@@ -24,7 +24,7 @@ const EmployeesSalary = () => {
   const [oldAmount, setoldAmount] = useState()
   const [newAmount, setnewAmount] = useState()
   const [actionBy, setactionBy] = useState("")
-  const [actionAt, setactionAt] = useState("")
+  const [actionAt, setactionAt] = useState(Date())
 
   const addSalaryMovement = async(e)=>{
     e.preventDefault()
@@ -275,7 +275,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="text" className="form-control" required onChange={(e) => setoldAmount(e.target.value)} />
+                          <input type="Number" className="form-control" required onChange={(e) => setoldAmount(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
@@ -287,7 +287,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="date" className="form-control" readOnly defaultValue={Date()} onChange={(e) => setactionAt(e.target.value)} />
+                          <input type="date" className="form-control" readOnly defaultValue={actionAt} />
                         </div>
                       </div>
                       <div className="modal-footer">

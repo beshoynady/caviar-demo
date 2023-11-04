@@ -368,7 +368,7 @@ const getSalaryMovement = async()=>{
               <div id="deleteSalaryMovementModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={deleteSalaryMovementModal}>
+                    <form onSubmit={deleteSalaryMovement}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف موظف</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -39,8 +39,8 @@ const EmployeesSalary = () => {
 
 
   const [payRole, setpayRole] = useState([])
-  const getpayRole = async ()=>{
-    const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${EmployeeId}`)
+  const getpayRole = async (id)=>{
+    const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
     const payrole = employee.data.payRole
     console.log(payrole)
     setpayRole(payrole)
@@ -108,7 +108,7 @@ const getSalaryMovement = async()=>{
                         <h2>ادارة <b>الرواتب</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#addSalaryMovementModal" onClick={()=>{setactionBy(userlogininfo?userlogininfo.id:'');getpayRole() }} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
+                        <a href="#addSalaryMovementModal" onClick={()=>{setactionBy(userlogininfo?userlogininfo.id:'')}} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
                         <a href="#deleteSalaryMovementModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
                       </div>
                     </div>
@@ -264,7 +264,7 @@ const getSalaryMovement = async()=>{
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" required  onChange={(e) =>{setEmployeeName(listofemployee.find(em=>em._id == e.target.value).fullname);setEmployeeId(e.target.value)}}>
+                          <select form="carform" required  onChange={(e) =>{setEmployeeName(listofemployee.find(em=>em._id == e.target.value).fullname);setEmployeeId(e.target.value);;getpayRole(e.target.value) }}>
                             <option>اختر</option>
                             {listofemployee.map(employee =>{
                               return(

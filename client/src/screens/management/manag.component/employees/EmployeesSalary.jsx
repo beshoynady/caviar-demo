@@ -26,25 +26,16 @@ const EmployeesSalary = () => {
   const [actionBy, setactionBy] = useState("")
   const [actionAt, setactionAt] = useState(Date())
 
-  const addSalaryMovement = async (e) => {
-    e.preventDefault()
-    try {
-      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
-      console.log(SalaryMovement)
-      getSalaryMovement()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
 
   const [payRole, setpayRole] = useState([])
+  const [Currentmonth, setCurrentmonth] = useState({})
   const [Month, setMonth] = useState(0)
   const [Additional, setAdditional] = useState(0)
   const [Bonus, setBonus] = useState(0)
   const [Absence, setAbsence] = useState(0)
   const [Deduction, setDeduction] = useState(0)
   const [Predecessor, setPredecessor] = useState(0)
+
 
   const getpayRole = async (id) => {
     const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
@@ -59,14 +50,53 @@ const EmployeesSalary = () => {
       setAbsence(thismonth.Absence)
       setDeduction(thismonth.Deduction)
       setPredecessor(thismonth.Predecessor)
-      setpayRole([thismonth])
+      setCurrentmonth(thismonth)
     }
   }
 
   const updatePayRole = async () => {
-    const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, payRole)
+    payRole[payRole.length-1].Additional = Additional
+    const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, {payRole})
   }
 
+  
+  const addSalaryMovement = async (e) => {
+    e.preventDefault()
+    try {
+      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
+      console.log(SalaryMovement)
+      updatePayRole()
+      getSalaryMovement()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const updateSalaryMovement = async (e) => {
+    e.preventDefault()
+    try {
+      const SalaryMovement = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
+      console.log(SalaryMovement)
+      updatePayRole()
+      getSalaryMovement()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+  const deleteSalaryMovement = async (e) => {
+    e.preventDefault()
+    try {
+      console.log(salarymovementId)
+      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`)
+      console.log(deleted)
+      getSalaryMovement()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
     const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
@@ -93,19 +123,6 @@ const EmployeesSalary = () => {
       setfilterEmp(filteredEmployees)
     }
   }
-
-  const deleteSalaryMovement = async (e) => {
-    e.preventDefault()
-    try {
-      console.log(salarymovementId)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`)
-      console.log(deleted)
-      getSalaryMovement()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
 
   useEffect(() => {
     getSalaryMovement()
@@ -329,10 +346,10 @@ const EmployeesSalary = () => {
                   </div>
                 </div>
               </div>
-              {/* <div id="editSalaryMovementModal" className="modal fade">
+              <div id="editSalaryMovementModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={updateEmployee}>
+                    <form onSubmit={updateSalaryMovement}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل بيانات الموظفين</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -340,51 +357,44 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <input type="text" className="form-control" required defaultValue={username} onChange={(e) => setusername(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>الموبايل</label>
-                          <input type="text" className="form-control" required defaultValue={phone} onChange={(e) => setphone(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>الباسورد</label>
-                          <input type="text" className="form-control" onChange={(e) => setpassword(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>الايميل</label>
-                          <input type="email" className="form-control" required defaultValue={email} onChange={(e) => setemail(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>العنوان</label>
-                          <textarea className="form-control" required defaultValue={address} onChange={(e) => setaddress(e.target.value)}></textarea>
-                        </div>
-                        <div className="form-group">
-                          <label>ادمن</label>
-                          <select form="carform" required defaultValue={isAdmin} onChange={(e) => setisAdmin(e.target.value)}>
-                            <option value={true}>ادمن</option>
-                            <option value={false}>ليس ادمن</option>
+                          <select form="carform" defaultValue={EmployeeName} required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); getpayRole(e.target.value) }}>
+                            <option>اختر</option>
+                            {listofemployee.map(employee => {
+                              return (
+                                <option value={employee._id}>{employee.fullname}</option>
+                              )
+                            })}
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>الحالة</label>
-                          <select form="carform" required defaultValue={isActive} onChange={(e) => setisActive(e.target.value)}>
-                            <option value={true}>متاح</option>
-                            <option value={false}>ليس متاح</option>
+                          <label>الحركه</label>
+                          <select form="carform" defaultValue={movement} required onChange={(e) => setmovement(e.target.value)}>
+                            {listofmovement.map((movement, i) => {
+                              return (
+                                <option value={movement}>{movement}</option>
+                              )
+                            })}
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>الوظيفه</label>
-                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
-                            <option>اختار وظيفة</option>
-                            <option value="manager">مدير</option>
-                            <option value="casher">كاشير</option>
-                            <option value="waiter">ويتر</option>
-                            <option value="Chef">شيف</option>
-                          </select>
+                          <label>المبلغ</label>
+                          <input type="Number" className="form-control" defaultValue={Amount} required onChange={(e) => setAmount(e.target.value)} />
                         </div>
                         <div className="form-group">
-                          <label>المرتب</label>
-                          <input type="Number" min={0} className="form-control" required defaultValue={salary} onChange={(e) => setsalary(e.target.value)} />
+                          <label>المبلغ السابق</label>
+                          <input type="Number" className="form-control" defaultValue={oldAmount} required onChange={(e) => setoldAmount(e.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>الاجمالي</label>
+                          <input type="Number" className="form-control" defaultValue={newAmount} required onChange={(e) => setnewAmount(e.target.value)} />
+                        </div>
+                        <div className="form-group">
+                          <label>بواسطة</label>
+                          <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.username : ''} />
+                        </div>
+                        <div className="form-group">
+                          <label>التاريخ</label>
+                          <input type="date" className="form-control" readOnly defaultValue={actionAt} />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -394,7 +404,7 @@ const EmployeesSalary = () => {
                     </form>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div id="deleteSalaryMovementModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">

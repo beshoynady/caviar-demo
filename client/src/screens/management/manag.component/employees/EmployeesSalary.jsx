@@ -249,7 +249,7 @@ const getSalaryMovement = async()=>{
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <label>الاسم</label>
                           <select form="carform" required  onChange={(e) =>{setEmployeeName(e.target.innerText);setEmployeeId(e.target.value)}}>
                             {listofemployee.map(employee =>{
@@ -258,7 +258,7 @@ const getSalaryMovement = async()=>{
                               )
                             })}
                           </select>
-                        </div>
+                        </div> */}
                         <div className="form-group">
                           <label>الحركه</label>
                           <select form="carform" required  onChange={(e) =>setmovement(e.target.value)}>
@@ -283,7 +283,7 @@ const getSalaryMovement = async()=>{
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo?userlogininfo.id:''} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo?userlogininfo.username:''}</input>
+                          <input type="text" className="form-control" readOnly  defaultValue={userlogininfo.id} onChange={(e) => setactionBy(e.target.value)}>{userlogininfo?userlogininfo.username:''}</input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

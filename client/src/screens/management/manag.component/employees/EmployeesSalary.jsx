@@ -65,7 +65,7 @@ const getSalaryMovement = async()=>{
   const deleteSalaryMovement = async (e) => {
     e.preventDefault()
     try {
-      console.log(userid)
+      console.log(EmployeeId)
       const deleted = await axios.delete(`https://caviar-api.vercel.app/api/employee/${EmployeeId}`)
       console.log(deleted)
       getemployees()
@@ -183,7 +183,7 @@ const getSalaryMovement = async()=>{
                                 <td>{mov.actionAt}</td>
                                 <td>
                                 <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement); setsalary(e.salary)
+                                    setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)
                                   }}>&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setsalarymovementId(mov._id)}>&#xE872;</i></a>
                                 </td>
@@ -213,7 +213,7 @@ const getSalaryMovement = async()=>{
                                 <td>{mov.actionAt}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement); setsalary(e.salary)
+                                    setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)
                                   }}>&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setsalarymovementId(mov._id)}>&#xE872;</i></a>
                                 </td>

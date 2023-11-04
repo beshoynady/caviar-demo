@@ -230,7 +230,7 @@ const PayRole = () => {
                   </div>
                 </div>
               </div>
-              <div id="addEmployeeModal" className="modal fade">
+              {/* <div id="addEmployeeModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={createEmployee}>
@@ -374,7 +374,7 @@ const PayRole = () => {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           )
         }

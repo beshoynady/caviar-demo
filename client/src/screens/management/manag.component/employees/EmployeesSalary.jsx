@@ -106,6 +106,7 @@ const EmployeesSalary = () => {
 
   const [EmployeeSalaryMovement, setEmployeeSalaryMovement] = useState([])
   const filterEmployeeSalaryMovement = async (id) => {
+    console.log(listofsalarymovement)
    const filterSalaryMovement =listofsalarymovement.length>0 ? listofsalarymovement.filter(move => move.EmployeeId == id): []
    console.log(filterSalaryMovement)
    if (filterSalaryMovement.length>0){
@@ -120,6 +121,7 @@ const EmployeesSalary = () => {
   setfiltermovement(filterm)
   if(filterm.length>0){
   setoldAmount(filterm[filterm.length-1].newAmount)
+  console.log(filterm[filterm.length-1].newAmount)
 }else{
   setoldAmount(0)
 }

@@ -3,7 +3,7 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
     
     const addSalaryMovement = async (req, res , next) => {
         try{
-            const EmployeeId = await req.params.EmployeeId;
+            const EmployeeId = await req.body.EmployeeId;
             const EmployeeName = await req.body.EmployeeName;
             const movement = await req.body.movement;
             const Amount = await req.body.Amount;
@@ -43,7 +43,7 @@ const EmployeeSalarymodel = require('../models/EmployeeSalary.model');
     const editSalaryMovement = async (req, res)=>{
         try {
             const salarymovementId =await req.params.salarymovementId;
-            const EmployeeId = await req.params.EmployeeId;
+            const EmployeeId = await req.body.EmployeeId;
             const EmployeeName = await req.body.EmployeeName;
             const movement = await req.body.movement;
             const Amount = await req.body.Amount;

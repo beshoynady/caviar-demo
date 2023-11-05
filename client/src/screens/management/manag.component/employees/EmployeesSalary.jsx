@@ -123,6 +123,8 @@ const EmployeesSalary = () => {
     console.log(filterEmp)
     console.log(listofsalarymovement)
     if (filterEmp.length > 0) {
+      const reset = listofsalarymovement.filter(m => m.movement == mov)
+      setfilterEmp(reset)
       const filterlist = filterEmp.filter(m => m.movement == mov)
       setfilterEmp(filterlist)
     } else {

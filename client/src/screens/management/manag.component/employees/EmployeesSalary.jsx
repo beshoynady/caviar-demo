@@ -65,7 +65,7 @@ const EmployeesSalary = () => {
     try {
       const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
       console.log(SalaryMovement)
-      updatePayRole()
+      
       getSalaryMovement()
     } catch (error) {
       console.log(error)
@@ -76,7 +76,7 @@ const EmployeesSalary = () => {
     try {
       const SalaryMovement = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
       console.log(SalaryMovement)
-      updatePayRole()
+      
       getSalaryMovement()
     } catch (error) {
       console.log(error)
@@ -379,7 +379,7 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" defaultValue={EmployeeName} required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); getpayRole(e.target.value) }}>
+                          <select form="carform" defaultValue={EmployeeName} required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value) }}>
                             <option>اختر</option>
                             {listofemployee.map(employee => {
                               return (

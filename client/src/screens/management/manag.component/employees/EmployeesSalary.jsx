@@ -347,11 +347,11 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="text" className="form-control" required defaultValue={oldAmount>0?oldAmount:0}readOnly />
+                          <input type="Number" className="form-control" Value={oldAmount>0?oldAmount:0}readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
-                          <input type="Number" className="form-control" required readOnly defaultValue={newAmount} />
+                          <input type="Number" className="form-control" readOnly defaultValue={newAmount} />
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>

@@ -37,28 +37,6 @@ const EmployeesSalary = () => {
   const [Predecessor, setPredecessor] = useState(0)
 
 
-  // const getpayRole = async (id) => {
-  //   const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
-  //   const payrole = employee.data.payRole
-  //   console.log({payrole: payrole})
-  //   if (payrole.length > 0) {
-  //     const thismonth = payrole.find(pr => pr.Month == Date(actionAt).getMonth())
-  //     console.log({ thismonth: thismonth })
-  //     setMonth(thismonth.Month)
-  //     setAdditional(thismonth.Additional)
-  //     setBonus(thismonth.Bonus)
-  //     setAbsence(thismonth.Absence)
-  //     setDeduction(thismonth.Deduction)
-  //     setPredecessor(thismonth.Predecessor)
-  //     setCurrentmonth(thismonth)
-  //   }
-  // }
-
-  // const updatePayRole = async () => {
-  //   payRole[payRole.length-1].Additional = Additional
-  //   const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, {payRole})
-  // }
-
   
   const addSalaryMovement = async (e) => {
     e.preventDefault()
@@ -115,6 +93,7 @@ const EmployeesSalary = () => {
   }
 
   const [filtermovement, setfiltermovement] = useState([])
+  
   const filterSalaryMovement = async (m) => {
   const filterm= EmployeeSalaryMovement.filter(move => move.movement == m)
   console.log(filterm)
@@ -128,23 +107,26 @@ const EmployeesSalary = () => {
   }
 
   const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (role) => {
-    if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
-      setfilterEmp(FilterEmployees)
+  const getSalaryMovementByemp = (id) => {
+    if (filterEmp.length>0) {
+      const filterlist= filterEmp.filter(m =>m.EmployeeId == id)
+      filterEmp(filterlist)
+ 
+      }else{
+    if (listofsalarymovement.length > 0) {
+      const FilterByEmployees = listofsalarymovement.filter(m =>m.EmployeeId == id)
+      setfilterEmp(FilterByEmployees)
     }
   }
-  const filterEmpByStatus = (status) => {
-    console.log(status)
-    if (status == true) {
-      console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    } else if (status == false) {
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
+  }
+
+  const filterEmpSalaryMovement = (mov) => {
+    if (filterEmp.length>0) {
+     const filterlist= filterEmp.filter(m=>m.movement == mov)
+     filterEmp(filterlist)
+    } else {
+      const filterlist= listofsalarymovement.filter(m=>m.movement == mov)
+      filterEmp(filterlist)
     }
   }
 
@@ -194,21 +176,25 @@ const EmployeesSalary = () => {
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
-                          <label>الحركة</label>
-                          <select class="form-control" >
+                          <label>الموظف</label>
+                          <select class="form-control" onChange={(e)=>getSalaryMovementByemp(e.target.value)} >
                             <option>الكل</option>
-                            <option value="manager">مدير</option>
-                            <option value="casher">كاشير</option>
-                            <option value="waiter">ويتر</option>
-                            <option value="Chef">شيف</option>
+                            {listofemployee.map((em, i)=>{
+                              return(
+                                <option value={em._id} key={i}>{em.fullname}</option>
+                              )
+                            })}
                           </select>
                         </div>
                         <div class="filter-group">
-                          <label>الحالة</label>
-                          <select class="form-control" >
+                          <label>العملية</label>
+                          <select class="form-control" onChange={filterEmpSalaryMovement} >
                             <option >الكل</option>
-                            <option value={true}>متاح</option>
-                            <option value={false}>غير متاح</option>
+                            {listofmovement.map((m,i) =>{
+                              return(
+                                <option value={m} key={i}>{m}</option>
+                              )
+                            })}
                           </select>
                         </div>
                         {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}

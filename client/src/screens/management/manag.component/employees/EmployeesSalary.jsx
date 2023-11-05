@@ -24,7 +24,7 @@ const EmployeesSalary = () => {
   const [oldAmount, setoldAmount] = useState()
   const [newAmount, setnewAmount] = useState()
   const [actionBy, setactionBy] = useState("")
-  const [actionAt, setactionAt] = useState(Date().getMonth())
+  const [actionAt, setactionAt] = useState(Date())
 
 
   const [payRole, setpayRole] = useState([])

@@ -357,7 +357,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" readOnly defaultValue={new Date()} />
+                          <input type="text" className="form-control" readOnly defaultValue={actionAt} />
                         </div>
                       </div>
                       <div className="modal-footer">

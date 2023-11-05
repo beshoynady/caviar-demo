@@ -21,7 +21,7 @@ const EmployeesSalary = () => {
   const [EmployeeName, setEmployeeName] = useState("")
   const [movement, setmovement] = useState("")
   const [Amount, setAmount] = useState()
-  const [oldAmount, setoldAmount] = useState()
+  const [oldAmount, setoldAmount] = useState(0)
   const [newAmount, setnewAmount] = useState()
   const [actionBy, setactionBy] = useState("")
   const [actionAt, setactionAt] = useState(Date())
@@ -343,7 +343,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type="Number" min={0} className="form-control" required onChange={(e) =>{setAmount(e.target.value);setnewAmount(oldAmount+e.target.value)}} />
+                          <input type="Number" min={0} className="form-control" required onChange={(e) =>{setAmount(e.target.value);setnewAmount(Number(oldAmount) + Number(e.target.value))}} />
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>

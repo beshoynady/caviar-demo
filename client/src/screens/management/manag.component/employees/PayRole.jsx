@@ -17,6 +17,12 @@ const PayRole = () => {
     }
   }
 
+  const [listofsalarymovement, setlistofsalarymovement] = useState([])
+  const getSalaryMovement = async () => {
+    const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    setlistofsalarymovement(movement.data)
+  }
+
   const [userid, setuserid] = useState("")
   const [username, setusername] = useState("")
   const [password, setpassword] = useState("")
@@ -158,7 +164,8 @@ const PayRole = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {filterEmp.length > 0 ? filterEmp.map((e, i) => {
+                      {/* {
+                      filterEmp.length > 0 ? filterEmp.map((e, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -186,34 +193,36 @@ const PayRole = () => {
                         }
                       })
                         : listofemployee.map((e, i) => {
-                          // if (i < pagination & i >= pagination - 5) {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
-                              <tr key={i}>
-                                <td>
-                                  <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                    <label htmlFor="checkbox1"></label>
-                                  </span>
-                                </td>
-                                <td>{i + 1}</td>
-                                <td>{e.username}</td>
-                                <td>{e.address}</td>
-                                <td>{e.phone}</td>
-                                <td>{e.salary}</td>
-                                <td>{e.role}</td>
-                                <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
-                                <td>
-                                  <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                  }}>&#xE254;</i></a>
-                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
-                                </td>
-                              </tr>
-                            )
-                          }
+                          listofsalarymovement.filter(s=>s.EmployeeId==e._id).map((sal,i)=>{
+
+                            if (i >= startpagination & i < endpagination) {
+                              return (
+                                <tr key={i}>
+                                  <td>
+                                    <span className="custom-checkbox">
+                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                      <label htmlFor="checkbox1"></label>
+                                    </span>
+                                  </td>
+                                  <td>{i + 1}</td>
+                                  <td>{e.username}</td>
+                                  <td>{e.address}</td>
+                                  <td>{e.phone}</td>
+                                  <td>{e.salary}</td>
+                                  <td>{e.role}</td>
+                                  <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
+                                  <td>
+                                    <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
+                                      setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                    }}>&#xE254;</i></a>
+                                    <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
+                                  </td>
+                                </tr>
+                              )
+                            }
+                          })
                         })
-                      }
+                      } */}
                     </tbody>
                   </table>
                   <div className="clearfix">

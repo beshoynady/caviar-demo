@@ -24,7 +24,7 @@ const EmployeesSalary = () => {
   const [oldAmount, setoldAmount] = useState()
   const [newAmount, setnewAmount] = useState()
   const [actionBy, setactionBy] = useState("")
-  const [actionAt, setactionAt] = useState(Date())
+  const [actionAt, setactionAt] = useState(Date().getMonth())
 
 
   const [payRole, setpayRole] = useState([])
@@ -37,27 +37,27 @@ const EmployeesSalary = () => {
   const [Predecessor, setPredecessor] = useState(0)
 
 
-  const getpayRole = async (id) => {
-    const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
-    const payrole = employee.data.payRole
-    console.log({payrole: payrole})
-    if (payrole.length > 0) {
-      const thismonth = payrole.find(pr => pr.Month == Date(actionAt).getMonth())
-      console.log({ thismonth: thismonth })
-      setMonth(thismonth.Month)
-      setAdditional(thismonth.Additional)
-      setBonus(thismonth.Bonus)
-      setAbsence(thismonth.Absence)
-      setDeduction(thismonth.Deduction)
-      setPredecessor(thismonth.Predecessor)
-      setCurrentmonth(thismonth)
-    }
-  }
+  // const getpayRole = async (id) => {
+  //   const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
+  //   const payrole = employee.data.payRole
+  //   console.log({payrole: payrole})
+  //   if (payrole.length > 0) {
+  //     const thismonth = payrole.find(pr => pr.Month == Date(actionAt).getMonth())
+  //     console.log({ thismonth: thismonth })
+  //     setMonth(thismonth.Month)
+  //     setAdditional(thismonth.Additional)
+  //     setBonus(thismonth.Bonus)
+  //     setAbsence(thismonth.Absence)
+  //     setDeduction(thismonth.Deduction)
+  //     setPredecessor(thismonth.Predecessor)
+  //     setCurrentmonth(thismonth)
+  //   }
+  // }
 
-  const updatePayRole = async () => {
-    payRole[payRole.length-1].Additional = Additional
-    const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, {payRole})
-  }
+  // const updatePayRole = async () => {
+  //   payRole[payRole.length-1].Additional = Additional
+  //   const payroleUpdate = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${EmployeeId}`, {payRole})
+  // }
 
   
   const addSalaryMovement = async (e) => {
@@ -100,7 +100,29 @@ const EmployeesSalary = () => {
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
     const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    console.log(movement)
     setlistofsalarymovement(movement.data)
+  }
+
+  const [EmployeeSalaryMovement, setEmployeeSalaryMovement] = useState([])
+  const filterEmployeeSalaryMovement = async (id) => {
+   const filterSalaryMovement =listofsalarymovement.length>0 ? listofsalarymovement.filter(move => move.EmployeeId == id): []
+   console.log(filterSalaryMovement)
+   if (filterSalaryMovement.length>0){
+   setEmployeeSalaryMovement(filterSalaryMovement)
+  }
+  }
+
+  const [filtermovement, setfiltermovement] = useState([])
+  const filterSalaryMovement = async (m) => {
+  const filterm= EmployeeSalaryMovement.filter(move => move.movement == m)
+  console.log(filterm)
+  setfiltermovement(filterm)
+  if(filterm.length>0){
+  setoldAmount(filterm[filterm.length-1].newAmount)
+}else{
+  setoldAmount(0)
+}
   }
 
   const [filterEmp, setfilterEmp] = useState([])
@@ -298,7 +320,7 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value);; getpayRole(e.target.value) }}>
+                          <select form="carform" required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); filterEmployeeSalaryMovement(e.target.value) }}>
                             <option>اختر</option>
                             {listofemployee.map(employee => {
                               return (
@@ -309,7 +331,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>الحركه</label>
-                          <select form="carform" required onChange={(e) => setmovement(e.target.value)}>
+                          <select form="carform" required onChange={(e) =>{filterSalaryMovement(e.target.value); setmovement(e.target.value)}}>
                             {listofmovement.map((movement, i) => {
                               return (
                                 <option value={movement}>{movement}</option>
@@ -319,15 +341,15 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type="Number" className="form-control" required onChange={(e) => setAmount(e.target.value)} />
+                          <input type="Number" min={0} className="form-control" required onChange={(e) =>{setAmount(e.target.value);setnewAmount(oldAmount+e.target.value)}} />
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" required onChange={(e) => setoldAmount(e.target.value)} />
+                          <input type="Number" className="form-control" required defaultValue={oldAmount}readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
-                          <input type="Number" className="form-control" required onChange={(e) => setnewAmount(e.target.value)} />
+                          <input type="Number" className="form-control" required readOnly defaultValue={newAmount} />
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
@@ -335,7 +357,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="date" className="form-control" readOnly defaultValue={actionAt} />
+                          <input type="text" className="form-control" readOnly defaultValue={new Date()} />
                         </div>
                       </div>
                       <div className="modal-footer">

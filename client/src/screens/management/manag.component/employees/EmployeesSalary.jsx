@@ -27,17 +27,6 @@ const EmployeesSalary = () => {
   const [actionAt, setactionAt] = useState(Date())
 
 
-  const [payRole, setpayRole] = useState([])
-  const [Currentmonth, setCurrentmonth] = useState({})
-  const [Month, setMonth] = useState(0)
-  const [Additional, setAdditional] = useState(0)
-  const [Bonus, setBonus] = useState(0)
-  const [Absence, setAbsence] = useState(0)
-  const [Deduction, setDeduction] = useState(0)
-  const [Predecessor, setPredecessor] = useState(0)
-
-
-
   const addSalaryMovement = async (e) => {
     e.preventDefault()
     try {
@@ -92,15 +81,12 @@ const EmployeesSalary = () => {
     }
   }
 
-  const [filtermovement, setfiltermovement] = useState([])
 
   const filterSalaryMovement = async (m) => {
     const filterm = EmployeeSalaryMovement.filter(move => move.movement == m)
     console.log(filterm)
-    setfiltermovement(filterm)
     if (filterm.length > 0) {
       setoldAmount(filterm[filterm.length - 1].newAmount)
-      console.log(filterm[filterm.length - 1].newAmount)
     } else {
       setoldAmount(0)
     }
@@ -123,8 +109,6 @@ const EmployeesSalary = () => {
     console.log(filterEmp)
     console.log(listofsalarymovement)
     if (filterEmp.length > 0) {
-      const reset = listofsalarymovement.filter(m => m.movement == mov)
-      setfilterEmp(reset)
       const filterlist = filterEmp.filter(m => m.movement == mov)
       setfilterEmp(filterlist)
     } else {
@@ -371,7 +355,7 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" defaultValue={EmployeeName} required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value) }}>
+                          <select form="carform" defaultValue={EmployeeName} required  onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); filterEmployeeSalaryMovement(e.target.value) }}>
                             <option>اختر</option>
                             {listofemployee.map(employee => {
                               return (
@@ -382,25 +366,25 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>الحركه</label>
-                          <select form="carform" defaultValue={movement} required onChange={(e) => setmovement(e.target.value)}>
+                          <select form="carform" defaultValue={movement} required onChange={(e) => { filterSalaryMovement(e.target.value); setmovement(e.target.value) }}>
                             {listofmovement.map((movement, i) => {
                               return (
-                                <option value={movement}>{movement}</option>
+                                <option value={movement} key={i}>{movement}</option>
                               )
                             })}
                           </select>
                         </div>
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type="Number" className="form-control" defaultValue={Amount} required onChange={(e) => setAmount(e.target.value)} />
+                          <input type="Number" className="form-control" defaultValue={Amount} required onChange={(e) => { setAmount(e.target.value); setnewAmount(Number(oldAmount) + Number(e.target.value)) }} />
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" defaultValue={oldAmount > 0 ? oldAmount : 0} required readOnly />
+                          <input type="Number" className="form-control" Value={oldAmount > 0 ? oldAmount : 0} readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
-                          <input type="Number" className="form-control" defaultValue={newAmount} required onChange={(e) => setnewAmount(e.target.value)} />
+                          <input type="Number" className="form-control" readOnly defaultValue={newAmount} />
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
@@ -408,7 +392,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="date" className="form-control" readOnly defaultValue={actionAt} />
+                          <input type="text" className="form-control" readOnly defaultValue={actionAt} />
                         </div>
                       </div>
                       <div className="modal-footer">

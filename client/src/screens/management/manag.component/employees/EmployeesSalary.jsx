@@ -110,7 +110,7 @@ const EmployeesSalary = () => {
   const getSalaryMovementByemp = (id) => {
     if (filterEmp.length > 0) {
       const filterlist = filterEmp.filter(m => m.EmployeeId == id)
-      filterEmp(filterlist)
+      setfilterEmp(filterlist)
 
     } else {
       const FilterByEmployees = listofsalarymovement.filter(m => m.EmployeeId == id)
@@ -124,11 +124,11 @@ const EmployeesSalary = () => {
     console.log(listofsalarymovement)
     if (filterEmp.length > 0) {
       const filterlist = filterEmp.filter(m => m.movement == mov)
-      filterEmp(filterlist)
+      setfilterEmp(filterlist)
     } else {
       const filterlist = listofsalarymovement.filter(m => m.movement == mov)
       console.log(filterlist)
-      filterEmp(filterlist)
+      setfilterEmp(filterlist)
     }
   }
 

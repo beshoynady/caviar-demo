@@ -190,7 +190,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div class="filter-group">
                           <label>العملية</label>
-                          <select class="form-control" onChange={filterEmpSalaryMovement(e.target.value)} >
+                          <select class="form-control" onChange={(e)=>filterEmpSalaryMovement(e.target.value)} >
                             <option >الكل</option>
                             {listofmovement.map((m, i) => {
                               return (

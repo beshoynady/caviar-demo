@@ -37,13 +37,13 @@ const EmployeesSalary = () => {
   const [Predecessor, setPredecessor] = useState(0)
 
 
-  
+
   const addSalaryMovement = async (e) => {
     e.preventDefault()
     try {
       const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
       console.log(SalaryMovement)
-      
+
       getSalaryMovement()
     } catch (error) {
       console.log(error)
@@ -54,7 +54,7 @@ const EmployeesSalary = () => {
     try {
       const SalaryMovement = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
       console.log(SalaryMovement)
-      
+
       getSalaryMovement()
     } catch (error) {
       console.log(error)
@@ -74,7 +74,7 @@ const EmployeesSalary = () => {
       console.log(error)
     }
   }
-  
+
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
     const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
@@ -85,47 +85,49 @@ const EmployeesSalary = () => {
   const [EmployeeSalaryMovement, setEmployeeSalaryMovement] = useState([])
   const filterEmployeeSalaryMovement = async (id) => {
     console.log(listofsalarymovement)
-   const filterSalaryMovement =listofsalarymovement.length>0 ? listofsalarymovement.filter(move => move.EmployeeId == id): []
-   console.log(filterSalaryMovement)
-   if (filterSalaryMovement.length>0){
-   setEmployeeSalaryMovement(filterSalaryMovement)
-  }
+    const filterSalaryMovement = listofsalarymovement.length > 0 ? listofsalarymovement.filter(move => move.EmployeeId == id) : []
+    console.log(filterSalaryMovement)
+    if (filterSalaryMovement.length > 0) {
+      setEmployeeSalaryMovement(filterSalaryMovement)
+    }
   }
 
   const [filtermovement, setfiltermovement] = useState([])
-  
+
   const filterSalaryMovement = async (m) => {
-  const filterm= EmployeeSalaryMovement.filter(move => move.movement == m)
-  console.log(filterm)
-  setfiltermovement(filterm)
-  if(filterm.length>0){
-  setoldAmount(filterm[filterm.length-1].newAmount)
-  console.log(filterm[filterm.length-1].newAmount)
-}else{
-  setoldAmount(0)
-}
+    const filterm = EmployeeSalaryMovement.filter(move => move.movement == m)
+    console.log(filterm)
+    setfiltermovement(filterm)
+    if (filterm.length > 0) {
+      setoldAmount(filterm[filterm.length - 1].newAmount)
+      console.log(filterm[filterm.length - 1].newAmount)
+    } else {
+      setoldAmount(0)
+    }
   }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getSalaryMovementByemp = (id) => {
-    if (filterEmp.length>0) {
-      const filterlist= filterEmp.filter(m =>m.EmployeeId == id)
+    if (filterEmp.length > 0) {
+      const filterlist = filterEmp.filter(m => m.EmployeeId == id)
       filterEmp(filterlist)
- 
-      }else{
-    if (listofsalarymovement.length > 0) {
-      const FilterByEmployees = listofsalarymovement.filter(m =>m.EmployeeId == id)
+
+    } else {
+      const FilterByEmployees = listofsalarymovement.filter(m => m.EmployeeId == id)
       setfilterEmp(FilterByEmployees)
     }
   }
-  }
 
   const filterEmpSalaryMovement = (mov) => {
-    if (filterEmp.length>0) {
-     const filterlist= filterEmp.filter(m=>m.movement == mov)
-     filterEmp(filterlist)
+    console.log(mov)
+    console.log(filterEmp)
+    console.log(listofsalarymovement)
+    if (filterEmp.length > 0) {
+      const filterlist = filterEmp.filter(m => m.movement == mov)
+      filterEmp(filterlist)
     } else {
-      const filterlist= listofsalarymovement.filter(m=>m.movement == mov)
+      const filterlist = listofsalarymovement.filter(m => m.movement == mov)
+      console.log(filterlist)
       filterEmp(filterlist)
     }
   }
@@ -177,10 +179,10 @@ const EmployeesSalary = () => {
                         </div>
                         <div class="filter-group">
                           <label>الموظف</label>
-                          <select class="form-control" onChange={(e)=>getSalaryMovementByemp(e.target.value)} >
+                          <select class="form-control" onChange={(e) => getSalaryMovementByemp(e.target.value)} >
                             <option>الكل</option>
-                            {listofemployee.map((em, i)=>{
-                              return(
+                            {listofemployee.map((em, i) => {
+                              return (
                                 <option value={em._id} key={i}>{em.fullname}</option>
                               )
                             })}
@@ -188,10 +190,10 @@ const EmployeesSalary = () => {
                         </div>
                         <div class="filter-group">
                           <label>العملية</label>
-                          <select class="form-control" onChange={filterEmpSalaryMovement} >
+                          <select class="form-control" onChange={filterEmpSalaryMovement(e.target.value)} >
                             <option >الكل</option>
-                            {listofmovement.map((m,i) =>{
-                              return(
+                            {listofmovement.map((m, i) => {
+                              return (
                                 <option value={m} key={i}>{m}</option>
                               )
                             })}
@@ -319,7 +321,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>الحركه</label>
-                          <select form="carform" required onChange={(e) =>{filterSalaryMovement(e.target.value); setmovement(e.target.value)}}>
+                          <select form="carform" required onChange={(e) => { filterSalaryMovement(e.target.value); setmovement(e.target.value) }}>
                             {listofmovement.map((movement, i) => {
                               return (
                                 <option value={movement}>{movement}</option>
@@ -329,11 +331,11 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type="Number" min={0} className="form-control" required onChange={(e) =>{setAmount(e.target.value);setnewAmount(Number(oldAmount) + Number(e.target.value))}} />
+                          <input type="Number" min={0} className="form-control" required onChange={(e) => { setAmount(e.target.value); setnewAmount(Number(oldAmount) + Number(e.target.value)) }} />
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" Value={oldAmount>0?oldAmount:0}readOnly />
+                          <input type="Number" className="form-control" Value={oldAmount > 0 ? oldAmount : 0} readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
@@ -392,7 +394,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" defaultValue={oldAmount>0?oldAmount:0} required readOnly />
+                          <input type="Number" className="form-control" defaultValue={oldAmount > 0 ? oldAmount : 0} required readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>

@@ -347,7 +347,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" required defaultValue={oldAmount}readOnly />
+                          <input type="Number" className="form-control" required defaultValue={oldAmount>0?oldAmount:0}readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>
@@ -406,7 +406,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" defaultValue={oldAmount} required onChange={(e) => setoldAmount(e.target.value)} />
+                          <input type="Number" className="form-control" defaultValue={oldAmount>0?oldAmount:0} required readOnly />
                         </div>
                         <div className="form-group">
                           <label>الاجمالي</label>

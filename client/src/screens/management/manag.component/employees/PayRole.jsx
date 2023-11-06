@@ -42,12 +42,12 @@ const PayRole = () => {
   const addPayRoll = async () => {
     console.log(listofsalarymovement)
     console.log(listofemployee)
+    const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == "654545f6c10dbaed54e3f0ee")
+    const lastredecessor = listofmovement.find((mov) =>mov.movement == 'سلف')
+    console.log(lastredecessor)
+    console.log(listofmovement)
+    console.log(lastredecessor.newAmout)
     listofemployee.forEach((employee) => {
-      const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == employee._id)
-      console.log(listofmovement)
-      const lastredecessor = listofmovement.find((mov) =>mov.movement == 'سلف')
-      console.log(lastredecessor)
-      console.log(lastredecessor.newAmout)
     //   listofmovement.map((mov, i) => {
     //     if (mov.movement == 'سلف') {
     //       setPredecessor(mov.newAmout)

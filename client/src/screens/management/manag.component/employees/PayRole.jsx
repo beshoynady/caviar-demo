@@ -40,27 +40,12 @@ const PayRole = () => {
 
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = async () => {
-    console.log(listofsalarymovement)
-    console.log(listofemployee)
-    const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == "654545f6c10dbaed54e3f0ee")
-    const lastredecessor = listofmovement.find((mov) =>mov.movement == 'سلف')
-    console.log(lastredecessor)
-    console.log(listofmovement)
-    console.log(lastredecessor.newAmout)
-    listofemployee.forEach((employee) => {
-    //   listofmovement.map((mov, i) => {
-    //     if (mov.movement == 'سلف') {
-    //       setPredecessor(mov.newAmout)
-    //     } else if (mov.movement == 'خصم') {
-    //       setDeduction(mov.newAmout)
-    //     } else if (mov.movement == 'غياب') {
-    //       setAbsence(mov.newAmout)
-    //     } else if (mov.movement == 'اضافي') {
-    //       setAdditional(mov.newAmout)
-    //     } else if (mov.movement == 'مكافأة') {
-    //       setBonus(mov.newAmout)
-    //     }
-    //   })
+    listofemployee.map((employee,i) =>{
+      const employeemov= listofsalarymovement.filter(salarymovement=>salarymovement.EmployeeId == employee._id)
+      if(employeemov.length>0){
+        const employeeBonus = employeemov.find(mov=>mov.movement == 'مكافأة')
+        console.log(employeeBonus.newAmount)
+      }
     })
   }
 

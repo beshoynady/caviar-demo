@@ -45,7 +45,7 @@ const PayRole = () => {
     console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'')
     listofemployee.map((employee,i) =>{
       console.log(employee._id)
-      const employeemov =listofsalarymovement? listofsalarymovement.filter(m => m.EmployeeId == employee._id):'' 
+      const employeemov =listofsalarymovement? listofsalarymovement.filter(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'' 
       console.log(employeemov)
       if(employeemov.length>0){
         const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")

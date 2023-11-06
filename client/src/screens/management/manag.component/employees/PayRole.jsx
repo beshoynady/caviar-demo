@@ -44,25 +44,29 @@ const PayRoll = () => {
     console.log('ffff')
     listofemployee.map((employee, i) => {
       const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == employee._id)
-      listofmovement.map((mov, i) => {
-        if (mov.movement == 'سلف') {
-          setPredecessor(mov.newAmout)
-        } else if (mov.movement == 'خصم') {
-          setDeduction(mov.newAmout)
-        } else if (mov.movement == 'غياب') {
-          setAbsence(mov.newAmout)
-        } else if (mov.movement == 'اضافي') {
-          setAdditional(mov.newAmout)
-        } else if (mov.movement == 'مكافأة') {
-          setBonus(mov.newAmout)
-        }
-      })
-    })
-    console.log(Additional);
-    console.log(Bonus);
-    console.log(Deduction);
-    console.log(Absence)
-    console.log(Predecessor)
+      console.log(listofmovement)
+      const lastredecessor = listofmovement.find((mov) =>mov.movement == 'سلف')
+      console.log(lastredecessor)
+      console.log(lastredecessor.newAmout)
+    //   listofmovement.map((mov, i) => {
+    //     if (mov.movement == 'سلف') {
+    //       setPredecessor(mov.newAmout)
+    //     } else if (mov.movement == 'خصم') {
+    //       setDeduction(mov.newAmout)
+    //     } else if (mov.movement == 'غياب') {
+    //       setAbsence(mov.newAmout)
+    //     } else if (mov.movement == 'اضافي') {
+    //       setAdditional(mov.newAmout)
+    //     } else if (mov.movement == 'مكافأة') {
+    //       setBonus(mov.newAmout)
+    //     }
+    //   })
+    // })
+    // console.log(Additional);
+    // console.log(Bonus);
+    // console.log(Deduction);
+    // console.log(Absence)
+    // console.log(Predecessor)
   }
 
   // const deleteEmployee = async (e) => {

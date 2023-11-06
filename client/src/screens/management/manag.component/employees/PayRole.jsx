@@ -46,13 +46,13 @@ const PayRole = () => {
       console.log(listofemployee[i]._id)
       let id = listofemployee[i]._id
       console.log(id)
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.find((m) => m.EmployeeId == "64fede16f2008bbcfe588ab4"):'hhh';
+      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == "64fede16f2008bbcfe588ab4"):'hhh';
       console.log(employeemov)
-      if(employeemov.length>0){
-        const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")
-        console.log(employeeBonus)
-        console.log(employeeBonus.newAmount)
-      }
+      // if(employeemov.length>0){
+      //   const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")
+      //   console.log(employeeBonus)
+      //   console.log(employeeBonus.newAmount)
+      // }
     }
   }
 

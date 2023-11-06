@@ -57,12 +57,12 @@ const PayRoll = () => {
           setBonus(mov.newAmout)
         }
       })
-      console.log(Additional);
-      console.log(Bonus);
-      console.log(Deduction);
-      console.log(Absence)
-      console.log(Predecessor)
     })
+    console.log(Additional);
+    console.log(Bonus);
+    console.log(Deduction);
+    console.log(Absence)
+    console.log(Predecessor)
   }
 
   // const deleteEmployee = async (e) => {

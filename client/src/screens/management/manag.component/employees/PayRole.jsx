@@ -45,7 +45,8 @@ const PayRole = () => {
     console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'')
     for (let i = 0; i < listofemployee.length; i++) {
       console.log(listofemployee[i]._id)
-      const id = listofemployee[i]._id
+      let id = listofemployee[i]._id
+      console.log(id)
       const employeemov =listofsalarymovement.length>0? listofsalarymovement.find((m) => m.EmployeeId == `${id}`):'' 
       console.log(employeemov)
       if(employeemov.length>0){

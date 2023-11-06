@@ -41,8 +41,9 @@ const PayRoll = () => {
 
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = async () => {
-    console.log('ffff')
-    listofemployee.map((employee, i) => {
+    console.log(listofsalarymovement)
+    console.log(listofemployee)
+    listofemployee.forEach((employee) => {
       const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == employee._id)
       console.log(listofmovement)
       const lastredecessor = listofmovement.find((mov) =>mov.movement == 'سلف')

@@ -59,7 +59,7 @@ const PayRoll = () => {
       console.log(Additional);
       console.log(Bonus);
       console.log(Deduction);
-      Console.log(Absence)
+      console.log(Absence)
       console.log(Predecessor)
     })
   }

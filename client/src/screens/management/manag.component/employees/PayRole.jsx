@@ -43,9 +43,9 @@ const PayRole = () => {
     console.log(listofsalarymovement)
     console.log(listofemployee)
     console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'')
-    listofemployee.map((employee,i) =>{
-      console.log(employee._id)
-      const id = employee._id
+    for (let i = 0; i < listofemployee.length; i++) {
+      console.log(listofemployee[i]._id)
+      const id = listofemployee[i]._id
       const employeemov =listofsalarymovement? listofsalarymovement.filter(m => m.EmployeeId == id):'' 
       console.log(employeemov)
       if(employeemov.length>0){
@@ -53,7 +53,7 @@ const PayRole = () => {
         console.log(employeeBonus)
         console.log(employeeBonus.newAmount)
       }
-    })
+    }
   }
 
   const [filterEmp, setfilterEmp] = useState([])

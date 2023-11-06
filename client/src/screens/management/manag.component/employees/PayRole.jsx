@@ -40,14 +40,13 @@ const PayRole = () => {
 
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = () => {
-    console.log(listofsalarymovement)
-    console.log(listofemployee)
-    console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'')
     for (let i = 0; i < listofemployee.length; i++) {
+      console.log(listofsalarymovement)
+      console.log(listofemployee)
       console.log(listofemployee[i]._id)
       let id = listofemployee[i]._id
       console.log(id)
-      let employeemov =listofsalarymovement.length>0? listofsalarymovement.find((m) => m.EmployeeId == `${id}`):'' 
+      let employeemov = listofsalarymovement.length > 0? listofsalarymovement.find((m) => m.EmployeeId == `${id}`):'' 
       console.log(employeemov)
       if(employeemov.length>0){
         const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")

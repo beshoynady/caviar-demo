@@ -41,6 +41,7 @@ const PayRoll = () => {
 
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = async () => {
+    console.log('ffff')
     listofemployee.map((employee, i) => {
       const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == employee._id)
       listofmovement.map((mov, i) => {

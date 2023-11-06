@@ -42,7 +42,7 @@ const PayRole = () => {
   const addPayRoll = () => {
     console.log(listofsalarymovement)
     console.log(listofemployee)
-    console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "64fdfeec3d58b07acd46f330"):'')
+    console.log(listofsalarymovement?listofsalarymovement.find(m => m.EmployeeId == "654545f6c10dbaed54e3f0ee"):'')
     listofemployee.map((employee,i) =>{
       console.log(employee._id)
       const employeemov = listofsalarymovement.filter(m => m.EmployeeId == employee._id) 

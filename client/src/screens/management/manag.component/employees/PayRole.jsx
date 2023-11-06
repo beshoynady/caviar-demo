@@ -48,11 +48,11 @@ const PayRoll = () => {
           setPredecessor(mov.newAmout)
         } else if (mov.movement == 'خصم') {
           setDeduction(mov.newAmout)
-        } else if (movement.movement == 'غياب') {
+        } else if (mov.movement == 'غياب') {
           setAbsence(mov.newAmout)
-        } else if (movement.movement == 'اضافي') {
+        } else if (mov.movement == 'اضافي') {
           setAdditional(mov.newAmout)
-        } else if (movement.movement == 'مكافأة') {
+        } else if (mov.movement == 'مكافأة') {
           setBonus(mov.newAmout)
         }
       })
@@ -64,17 +64,17 @@ const PayRoll = () => {
     })
   }
 
-  const deleteEmployee = async (e) => {
-    e.preventDefault()
-    try {
-      console.log(userid)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/user/${userid}`)
-      console.log(deleted)
-      getemployees()
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const deleteEmployee = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     console.log(userid)
+  //     const deleted = await axios.delete(`https://caviar-api.vercel.app/api/user/${userid}`)
+  //     console.log(deleted)
+  //     getemployees()
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {
@@ -103,7 +103,7 @@ const PayRoll = () => {
     getemployees()
     getSalaryMovement()
   }, [])
-  
+
   return (
     <detacontext.Consumer>
       {

@@ -42,8 +42,10 @@ const PayRole = () => {
   const addPayRoll = async () => {
     listofemployee.map((employee,i) =>{
       const employeemov= listofsalarymovement.filter(salarymovement=>salarymovement.EmployeeId == employee._id)
+      console.log(employeemov)
       if(employeemov.length>0){
-        const employeeBonus = employeemov.find(mov=>mov.movement == 'مكافأة')
+        const employeeBonus = employeemov.find(mov=>mov.movement == مكافأة)
+        console.log(employeeBonus)
         console.log(employeeBonus.newAmount)
       }
     })

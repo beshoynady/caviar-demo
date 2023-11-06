@@ -41,12 +41,13 @@ const PayRole = () => {
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = () => {
     console.log(listofsalarymovement)
+    console.log(listofemployee)
     listofemployee.map((employee,i) =>{
       console.log(employee._id)
       const employeemov= listofsalarymovement.filter(salarymovement=>salarymovement.EmployeeId == employee._id)
       console.log(employeemov)
       if(employeemov.length>0){
-        const employeeBonus = employeemov.find(mov=>mov.movement == مكافأة)
+        const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")
         console.log(employeeBonus)
         console.log(employeeBonus.newAmount)
       }

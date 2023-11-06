@@ -296,11 +296,13 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); filterEmployeeSalaryMovement(e.target.value) }}>
+                          <select form="carform" required onChange={(e) => { 
+                            setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); 
+                            filterEmployeeSalaryMovement(e.target.value) }}>
                             <option>اختر</option>
-                            {listofemployee.map(employee => {
+                            {listofemployee.map((employee,i) => {
                               return (
-                                <option value={employee._id}>{employee.fullname}</option>
+                                <option value={employee._id} key={i}>{employee.fullname}</option>
                               )
                             })}
                           </select>

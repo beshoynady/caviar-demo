@@ -42,11 +42,11 @@ const PayRole = () => {
   const addPayRoll = () => {
     console.log(listofsalarymovement)
     console.log(listofemployee)
-    console.log(listofsalarymovement.filter(salarymovement => salarymovement.EmployeeId == "64fdfeec3d58b07acd46f330"))
+    console.log(listofsalarymovement.filter(m => m.EmployeeId == "64fdfeec3d58b07acd46f330"))
     listofemployee.map((employee,i) =>{
       console.log(employee._id)
-      const employeemov= listofsalarymovement.filter(salarymovement => salarymovement.EmployeeId == employee._id)
-      console.log(listofsalarymovement.filter(salarymovement => salarymovement.EmployeeId == employee._id))
+      const employeemov = listofsalarymovement.filter(m => m.EmployeeId == employee._id) 
+      console.log(employeemov)
       if(employeemov.length>0){
         const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")
         console.log(employeeBonus)

@@ -19,7 +19,7 @@ const createEmployee = async (req, res, next) => {
         const address = await req.body.address;
         const phone = await req.body.phone;
         const basicSalary = await req.body.basicSalary;
-        const payRole = await req.body.payRole;
+        const PayRoll = await req.body.PayRoll;
         const role = await req.body.role;
         const isActive = await req.body.isActive;
 
@@ -33,7 +33,7 @@ const createEmployee = async (req, res, next) => {
         if (isemployeefound) {
             return res.status(404).json({ message: 'this phone is already in use' })
         }
-        const newEmployee = await Employeemodel.create({ fullname, username, numberID, email, phone, address, password, basicSalary, payRole, role, isActive })
+        const newEmployee = await Employeemodel.create({ fullname, username, numberID, email, phone, address, password, basicSalary, PayRoll, role, isActive })
         newEmployee.save()
         const accessToken = jwt.sign({
             employeeinfo: {
@@ -129,7 +129,7 @@ const updateEmployee = async (req, res) => {
         const address = await req.body.address;
         const phone = await req.body.phone;
         const basicSalary = await req.body.basicSalary;
-        const payRole = await req.body.payRole;
+        const PayRoll = await req.body.PayRoll;
         const role = await req.body.role;
         const isActive = await req.body.isActive;
 
@@ -147,14 +147,14 @@ const updateEmployee = async (req, res) => {
         }
     } catch (err) { res.status(400).json(err) }
 }
-const payRoleEmployee = async (req, res) => {
+const PayRollEmployee = async (req, res) => {
     try {
         const id = await req.params.employeeid;
-        const payRole = await req.body.payRole;
+        const PayRoll = await req.body.PayRoll;
 
-        const updatepayRole = await Employeemodel.findByIdAndUpdate(id, { payRole }, { new: true });
-        updatepayRole.save()
-        res.status(200).json(updatepayRole)
+        const updatePayRoll = await Employeemodel.findByIdAndUpdate(id, { PayRoll }, { new: true });
+        updatePayRoll.save()
+        res.status(200).json(updatePayRoll)
     } catch (err) {
         res.status(400).json(err)
     }
@@ -172,4 +172,4 @@ const deleteEmployee = async (req, res) => {
     }
 }
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,payRoleEmployee, getallEmployees, updateEmployee, deleteEmployee };
+module.exports = { createEmployee, getoneEmployee, loginEmployee,PayRollEmployee, getallEmployees, updateEmployee, deleteEmployee };

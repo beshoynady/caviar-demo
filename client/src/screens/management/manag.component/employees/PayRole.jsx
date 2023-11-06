@@ -3,7 +3,7 @@ import axios from 'axios'
 import { detacontext } from '../../../../App';
 
 
-const PayRole = () => {
+const PayRoll = () => {
 
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
@@ -17,43 +17,51 @@ const PayRole = () => {
     }
   }
 
+
+  const [employeeid, setemployeeid] = useState("")
+  const [Month, setMonth] = useState()
+  const [salary, setsalary] = useState()
+  const [Additional, setAdditional] = useState()
+  const [Bonus, setBonus] = useState()
+  const [TotalDue, setTotalDue] = useState()
+  const [Absence, setAbsence] = useState()
+  const [Deduction, setDeduction] = useState()
+  const [Predecessor, setPredecessor] = useState()
+  const [Insurance, setInsurance] = useState()
+  const [Tax, setTax] = useState()
+  const [TotalDeductible, setTotalDeductible] = useState()
+  const [NetSalary, setNetSalary] = useState()
+
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
     const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    console.log(movement)
     setlistofsalarymovement(movement.data)
   }
 
-  const [userid, setuserid] = useState("")
-  const [username, setusername] = useState("")
-  const [password, setpassword] = useState("")
-  const [address, setaddress] = useState("")
-  const [phone, setphone] = useState("")
-  const [email, setemail] = useState("")
-  const [isAdmin, setisAdmin] = useState(true)
-  const [isActive, setisActive] = useState(true)
-  const [role, setrole] = useState("")
-  const [salary, setsalary] = useState()
-
-
-  const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (role) => {
-    if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
-      setfilterEmp(FilterEmployees)
-    }
-  }
-  const filterEmpByStatus = (status) => {
-    console.log(status)
-    if (status == true) {
-      console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    } else if (status == false) {
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    }
+  const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
+  const addPayRoll = async () => {
+    listofemployee.map((employee, i) => {
+      const listofmovement = listofsalarymovement.filter((movement) => movement.EmployeeId == employee._id)
+      listofmovement.map((mov, i) => {
+        if (mov.movement == 'سلف') {
+          setPredecessor(mov.newAmout)
+        } else if (mov.movement == 'خصم') {
+          setDeduction(mov.newAmout)
+        } else if (movement.movement == 'غياب') {
+          setAbsence(mov.newAmout)
+        } else if (movement.movement == 'اضافي') {
+          setAdditional(mov.newAmout)
+        } else if (movement.movement == 'مكافأة') {
+          setBonus(mov.newAmout)
+        }
+      })
+      console.log(Additional);
+      console.log(Bonus);
+      console.log(Deduction);
+      Console.log(Absence)
+      console.log(Predecessor)
+    })
   }
 
   const deleteEmployee = async (e) => {
@@ -68,14 +76,38 @@ const PayRole = () => {
     }
   }
 
+  const [filterEmp, setfilterEmp] = useState([])
+  const getemployeesByJob = (role) => {
+    if (listofemployee.length > 0) {
+      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+      setfilterEmp(FilterEmployees)
+    }
+  }
+  const filterEmpByStatus = (status) => {
+    console.log(status)
+    if (status == true) {
+      console.log(listofemployee)
+      const filteredEmployees = listofemployee.filter(employee => employee.Deduction == true)
+      console.log(filteredEmployees)
+      setfilterEmp(filteredEmployees)
+    } else if (status == false) {
+      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
+      console.log(filteredEmployees)
+      setfilterEmp(filteredEmployees)
+    }
+  }
+
+
 
   useEffect(() => {
     getemployees()
+    getSalaryMovement()
   }, [])
+  
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination}) => {
+        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -130,6 +162,10 @@ const PayRole = () => {
                             <option value={true}>متاح</option>
                             <option value={false}>غير متاح</option>
                           </select>
+                        </div>
+                        <div class="filter-group">
+                          <label>الحالة</label>
+                          <input type="button" value="add" onClick={addPayRoll}/>
                         </div>
                         {/* <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
@@ -392,4 +428,4 @@ const PayRole = () => {
   )
 }
 
-export default PayRole
+export default PayRoll

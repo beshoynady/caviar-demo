@@ -69,7 +69,7 @@ const employeeschema = new mongoose.Schema({
         required: true,
         min: 0,
     },
-    payRole: [
+    PayRoll: [
         {
             Month: {
                 type: Number,

@@ -61,7 +61,7 @@ const PayRoll = () => {
     //       setBonus(mov.newAmout)
     //     }
     //   })
-    // })
+    })
     // console.log(Additional);
     // console.log(Bonus);
     // console.log(Deduction);
@@ -81,26 +81,26 @@ const PayRoll = () => {
   //   }
   // }
 
-  const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (role) => {
-    if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
-      setfilterEmp(FilterEmployees)
-    }
-  }
-  const filterEmpByStatus = (status) => {
-    console.log(status)
-    if (status == true) {
-      console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.Deduction == true)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    } else if (status == false) {
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
-      console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
-    }
-  }
+  // const [filterEmp, setfilterEmp] = useState([])
+  // const getemployeesByJob = (role) => {
+  //   if (listofemployee.length > 0) {
+  //     const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+  //     setfilterEmp(FilterEmployees)
+  //   }
+  // }
+  // const filterEmpByStatus = (status) => {
+  //   console.log(status)
+  //   if (status == true) {
+  //     console.log(listofemployee)
+  //     const filteredEmployees = listofemployee.filter(employee => employee.Deduction == true)
+  //     console.log(filteredEmployees)
+  //     setfilterEmp(filteredEmployees)
+  //   } else if (status == false) {
+  //     const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
+  //     console.log(filteredEmployees)
+  //     setfilterEmp(filteredEmployees)
+  //   }
+  // }
 
 
 

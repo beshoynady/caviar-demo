@@ -54,14 +54,14 @@ const PayRole = () => {
   const addPayRoll =async () => {
     const payRole=[{}]
     for (let i = 0; i < listofemployee.length; i++) {
-      let employeeid = listofemployee[i]._id
+      let id = listofemployee[i]._id
       setemployeeid(employeeid)
-      const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
+      const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
       setsalary(employee.basicSalary)
       payRole[0].Month = new Date().getMonth + 1
       payRole[0].salary = employee.basicSalary
 
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == employeeid):'';
+      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
 
       console.log(employeemov)
 
@@ -103,7 +103,7 @@ const PayRole = () => {
         // console.log(filterBon[filterBon.length-1].newAmount)
       }else{setBonus(0)}
       
-     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${employeeid}`,{payRole})
+     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})
      console.log(result)
     }
   }

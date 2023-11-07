@@ -41,16 +41,16 @@ const PayRole = () => {
   }
 
 
-  const getEmployee = async (e, id) => {
-    e.preventDefault()
-    try {
-      console.log(employeeid)
-      const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
-      setsalary(employee.basicSalary)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const getEmployee = async (e, id) => {
+  //   e.preventDefault()
+  //   try {
+  //     console.log(employeeid)
+  //     const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
+  //     setsalary(employee.basicSalary)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
   // const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
 
   const addPayRoll =async () => {

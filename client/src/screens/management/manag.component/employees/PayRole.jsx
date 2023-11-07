@@ -8,9 +8,9 @@ const PayRole = () => {
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/user')
+      const response = await axios.get('https://caviar-api.vercel.app/api/employee')
       const data = await response.data
-      const employee = data.filter((em) => em.isAdmin == true)
+      const employee = data.filter((em) => em.isActive == true)
       setlistofemployee(employee)
     } catch (error) {
       console.log(error)

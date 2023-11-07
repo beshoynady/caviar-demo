@@ -54,31 +54,36 @@ const PayRole = () => {
       console.log(filterPre)
       if (filterPre.length>0){
         setPredecessor(filterPre[filterPre.length-1].newAmount)
+        console.log(filterPre[filterPre.length-1].newAmount)
       }else{setPredecessor(0)}
-
+      
       const filterDed = employeemov.filter((m) => m.movement == 'خصم')
       console.log(filterDed)
       if (filterDed.length>0){
         setDeduction(filterDed[filterDed.length-1].newAmount)
+        console.log(filterDed[filterDed.length-1].newAmount)
       }else{setDeduction(0)}
-
+      
       const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
       if (filterAbs.length>0){
         setAbsence(filterAbs[filterAbs.length-1].newAmount)
+        console.log(filterAbs[filterAbs.length-1].newAmount)
       }else{setAbsence(0)}
-
+      
       const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
       if (filterAdd.length>0){
         setAdditional(filterAdd[filterAdd.length-1].newAmount)
+        console.log(filterAdd[filterAdd.length-1].newAmount)
       }else{setAdditional(0)}
 
       const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
       if (filterBon.length>0){
         setBonus(filterBon[filterBon.length-1].newAmount)
+        console.log(filterBon[filterBon.length-1].newAmount)
       }else{setBonus(0)}
       
-      cons()
     }
+    cons()
   }
 }
 

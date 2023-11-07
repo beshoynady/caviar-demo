@@ -54,65 +54,65 @@ const PayRole = () => {
   // const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
 
   const addPayRoll =async () => {
-    const payRole=[{}]
-    for (let i = 0; i < listofemployee.length; i++) {
-      let id = listofemployee[i]._id
-      setemployeeid(id)
-      payRole[0].Month =new Date().getMonth() + 1
-      payRole[0].salary =listofemployee[i].basicSalary
+  //   const payRole=[{}]
+  //   for (let i = 0; i < listofemployee.length; i++) {
+  //     let id = listofemployee[i]._id
+  //     setemployeeid(id)
+  //     payRole[0].Month =new Date().getMonth() + 1
+  //     payRole[0].salary =listofemployee[i].basicSalary
 
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
-      console.log(employeemov)
-    //   if(employeemov.length>0){
-    //   const Predecessor=0
-    //   const Deduction=0
-    //   const Absence=0
-    //   const Additional=0
-    //   const Bonus= 0
+  //     const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
+  //     console.log(employeemov)
+  //   //   if(employeemov.length>0){
+  //   //   const Predecessor=0
+  //   //   const Deduction=0
+  //   //   const Absence=0
+  //   //   const Additional=0
+  //   //   const Bonus= 0
 
 
-    //   const filterPre = employeemov.filter((m) => m.movement == 'سلف')
-    //   if (filterPre.length>0){
-    //     Predecessor = filterPre[filterPre.length-1].newAmount
-    //     payRole[0].Predecessor = Predecessor
-    //   }
+  //   //   const filterPre = employeemov.filter((m) => m.movement == 'سلف')
+  //   //   if (filterPre.length>0){
+  //   //     Predecessor = filterPre[filterPre.length-1].newAmount
+  //   //     payRole[0].Predecessor = Predecessor
+  //   //   }
       
-    //   const filterDed = employeemov.filter((m) => m.movement == 'خصم')
-    //   console.log(filterDed)
-    //   if (filterDed.length>0){
-    //     Deduction = filterDed[filterDed.length-1].newAmount
-    //     payRole[0].Deduction = Deduction
-    //   }
+  //   //   const filterDed = employeemov.filter((m) => m.movement == 'خصم')
+  //   //   console.log(filterDed)
+  //   //   if (filterDed.length>0){
+  //   //     Deduction = filterDed[filterDed.length-1].newAmount
+  //   //     payRole[0].Deduction = Deduction
+  //   //   }
       
-    //   const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
-    //   if (filterAbs.length>0){
-    //     Absence=filterAbs[filterAbs.length-1].newAmount
-    //     payRole[0].Absence = Absence
-    //   }
+  //   //   const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
+  //   //   if (filterAbs.length>0){
+  //   //     Absence=filterAbs[filterAbs.length-1].newAmount
+  //   //     payRole[0].Absence = Absence
+  //   //   }
       
-    //   const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
-    //   if (filterAdd.length>0){
-    //     Additional=filterAdd[filterAdd.length-1].newAmount
-    //     payRole[0].Additional=Additional
-    //   }
+  //   //   const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+  //   //   if (filterAdd.length>0){
+  //   //     Additional=filterAdd[filterAdd.length-1].newAmount
+  //   //     payRole[0].Additional=Additional
+  //   //   }
 
-    //   const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
-    //   if (filterBon.length>0){
-    //     Bonus=filterBon[filterBon.length-1].newAmount
-    //     payRole[0].Bonus=Bonus
-    //   }
+  //   //   const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
+  //   //   if (filterBon.length>0){
+  //   //     Bonus=filterBon[filterBon.length-1].newAmount
+  //   //     payRole[0].Bonus=Bonus
+  //   //   }
 
-    //   payRole[0].TotalDue= Bonus + Additional 
-    //   // payRole[0].TotalDeductible= Absence + Deduction + Predecessor
-    //   // payRole[0].Insurance = TotalDue * .10
-    //   // payRole[0].Tax = TotalDue * 0.15
-    //   // payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance -Tax
+  //   //   payRole[0].TotalDue= Bonus + Additional 
+  //   //   // payRole[0].TotalDeductible= Absence + Deduction + Predecessor
+  //   //   // payRole[0].Insurance = TotalDue * .10
+  //   //   // payRole[0].Tax = TotalDue * 0.15
+  //   //   // payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance -Tax
       
-    //   console.log(payRole)
-    //  const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})
-    //  console.log(result)
-    // }
-  }
+  //   //   console.log(payRole)
+  //   //  const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})
+  //   //  console.log(result)
+  //   // }
+  // }
 }
 
 

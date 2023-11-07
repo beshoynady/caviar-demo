@@ -52,14 +52,14 @@ const PayRole = () => {
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
 
   const addPayRoll =async () => {
-    const PayRoll=[{}]
+    const payRole=[{}]
     for (let i = 0; i < listofemployee.length; i++) {
       let employeeid = listofemployee[i]._id
       setemployeeid(employeeid)
       const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
       setsalary(employee.basicSalary)
-      PayRoll[0].Month = new Date().getMonth + 1
-      PayRoll[0].salary = employee.basicSalary
+      payRole[0].Month = new Date().getMonth + 1
+      payRole[0].salary = employee.basicSalary
 
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == employeeid):'';
 
@@ -70,7 +70,7 @@ const PayRole = () => {
       // console.log(filterPre)
       if (filterPre.length>0){
         setPredecessor(filterPre[filterPre.length-1].newAmount)
-        PayRoll[0].Predecessor(filterPre[filterPre.length-1].newAmount)
+        payRole[0].Predecessor(filterPre[filterPre.length-1].newAmount)
         // console.log(filterPre[filterPre.length-1].newAmount)
       }else{setPredecessor(0)}
       
@@ -78,32 +78,32 @@ const PayRole = () => {
       console.log(filterDed)
       if (filterDed.length>0){
         setDeduction(filterDed[filterDed.length-1].newAmount)
-        PayRoll[0].Deduction(filterDed[filterDed.length-1].newAmount)
+        payRole[0].Deduction(filterDed[filterDed.length-1].newAmount)
         // console.log(filterDed[filterDed.length-1].newAmount)
       }else{setDeduction(0)}
       
       const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
       if (filterAbs.length>0){
         setAbsence(filterAbs[filterAbs.length-1].newAmount)
-        PayRoll[0].Absence(filterAbs[filterAbs.length-1].newAmount)
+        payRole[0].Absence(filterAbs[filterAbs.length-1].newAmount)
         // console.log(filterAbs[filterAbs.length-1].newAmount)
       }else{setAbsence(0)}
       
       const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
       if (filterAdd.length>0){
         setAdditional(filterAdd[filterAdd.length-1].newAmount)
-        PayRoll[0].Additional(filterAdd[filterAdd.length-1].newAmount)
+        payRole[0].Additional(filterAdd[filterAdd.length-1].newAmount)
         // console.log(filterAdd[filterAdd.length-1].newAmount)
       }else{setAdditional(0)}
 
       const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
       if (filterBon.length>0){
         setBonus(filterBon[filterBon.length-1].newAmount)
-        PayRoll[0].Bonus(filterBon[filterBon.length-1].newAmount)
+        payRole[0].Bonus(filterBon[filterBon.length-1].newAmount)
         // console.log(filterBon[filterBon.length-1].newAmount)
       }else{setBonus(0)}
       
-     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${employeeid}`,{PayRoll})
+     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${employeeid}`,{payRole})
      console.log(result)
     }
   }

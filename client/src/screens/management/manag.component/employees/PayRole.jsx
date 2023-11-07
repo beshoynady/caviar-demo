@@ -104,7 +104,7 @@ const PayRole = () => {
       }else{setBonus(0)}
       
       console.log(payRole)
-     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})
+     const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})
      console.log(result)
     }
   }

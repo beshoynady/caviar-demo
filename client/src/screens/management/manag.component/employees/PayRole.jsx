@@ -57,7 +57,7 @@ const PayRole = () => {
     const payRole=[{}]
     for (let i = 0; i < listofemployee.length; i++) {
       let id = listofemployee[i]._id
-      setemployeeid(employeeid)
+      setemployeeid(id)
       payRole[0].Month =new Date().getMonth() + 1
       payRole[0].salary =listofemployee[i].basicSalary
 

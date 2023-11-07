@@ -76,14 +76,18 @@ const PayRole = () => {
       if (filterBon.length>0){
         setBonus(filterBon[filterBon.length-1].newAmount)
       }else{setBonus(0)}
-
-      console.log(Absence)
-      console.log(Additional)
-      console.log(Bonus)
-      console.log(Predecessor)
-      console.log(Deduction)
-      }
+      
+      cons()
     }
+  }
+}
+
+  const cons = ()=>{
+    console.log(Absence)
+    console.log(Additional)
+    console.log(Bonus)
+    console.log(Predecessor)
+    console.log(Deduction)
   }
 
   const [filterEmp, setfilterEmp] = useState([])

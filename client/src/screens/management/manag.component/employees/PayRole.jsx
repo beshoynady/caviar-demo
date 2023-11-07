@@ -57,9 +57,9 @@ const PayRole = () => {
       let id = listofemployee[i]._id
       setemployeeid(employeeid)
       const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
-      setsalary(employee.basicSalary)
+      setsalary(await employee.basicSalary)
       payRole[0].Month =new Date().getMonth() + 1
-      payRole[0].salary = employee.basicSalary
+      payRole[0].salary =await employee.basicSalary
 
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
 

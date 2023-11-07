@@ -64,11 +64,11 @@ const PayRole = () => {
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
       console.log(employeemov)
       if(employeemov.length>0){
-      const Predecessor=0
-      const Deduction=0
-      const Absence=0
-      const Additional=0
-      const Bonus= 0
+      let Predecessor=0
+      let Deduction=0
+      let Absence=0
+      let Additional=0
+      let Bonus= 0
 
 
       const filterPre = employeemov.filter((m) => m.movement == 'سلف')
@@ -102,11 +102,11 @@ const PayRole = () => {
         payRole[0].Bonus=Bonus
       }
 
-      // payRole[0].TotalDue= Bonus + Additional 
-      // payRole[0].TotalDeductible= Absence + Deduction + Predecessor
-      // payRole[0].Insurance = TotalDue * .10
-      // payRole[0].Tax = TotalDue * 0.15
-      // payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance -Tax
+      payRole[0].TotalDue= Bonus + Additional 
+      payRole[0].TotalDeductible= Absence + Deduction + Predecessor
+      payRole[0].Insurance = TotalDue * .10
+      payRole[0].Tax = TotalDue * 0.15
+      payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance -Tax
       
       console.log(payRole)
      const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`,{payRole})

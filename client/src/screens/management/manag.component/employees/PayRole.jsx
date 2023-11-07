@@ -41,18 +41,48 @@ const PayRole = () => {
   const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
   const addPayRoll = () => {
     for (let i = 0; i < listofemployee.length; i++) {
-      console.log(listofsalarymovement)
-      console.log(listofemployee)
-      console.log(listofemployee[i]._id)
+      // console.log(listofsalarymovement)
+      // console.log(listofemployee)
+      // console.log(listofemployee[i]._id)
       let id = listofemployee[i]._id
-      console.log(id)
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == listofemployee[i]._id):'';
+      // console.log(id)
+      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
       console.log(employeemov)
-      // if(employeemov.length>0){
-      //   const employeeBonus = employeemov.find(mov=>mov.movement == "مكافأة")
-      //   console.log(employeeBonus)
-      //   console.log(employeeBonus.newAmount)
-      // }
+      if(employeemov.length>0){
+
+      const filterPre = employeemov.filter((m) => m.movement == 'سلف')
+      console.log(filterPre)
+      if (filterPre.length>0){
+        setPredecessor(filterPre[filterPre.length-1].newAmount)
+      }else{setPredecessor(0)}
+
+      const filterDed = employeemov.filter((m) => m.movement == 'خصم')
+      console.log(filterDed)
+      if (filterDed.length>0){
+        setDeduction(filterDed[filterDed.length-1].newAmount)
+      }else{setDeduction(0)}
+
+      const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
+      if (filterAbs.length>0){
+        setAbsence(filterAbs[filterAbs.length-1].newAmount)
+      }else{setAbsence(0)}
+
+      const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+      if (filterAdd.length>0){
+        setAdditional(filterAdd[filterAdd.length-1].newAmount)
+      }else{setAdditional(0)}
+
+      const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
+      if (filterBon.length>0){
+        setBonus(filterBon[filterBon.length-1].newAmount)
+      }else{setBonus(0)}
+
+      console.log(Absence)
+      console.log(Additional)
+      console.log(Bonus)
+      console.log(Predecessor)
+      console.log(Deduction)
+      }
     }
   }
 

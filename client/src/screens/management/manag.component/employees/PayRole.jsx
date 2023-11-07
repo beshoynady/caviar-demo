@@ -18,7 +18,7 @@ const PayRole = () => {
   }
 
   const [employeeid, setemployeeid] = useState("")
-  const [Month, setMonth] = useState()
+  const [Month, setMonth] = useState(Date().getMonth() + 1)
   const [salary, setsalary] = useState()
   const [Additional, setAdditional] = useState()
   const [Bonus, setBonus] = useState()
@@ -38,62 +38,77 @@ const PayRole = () => {
     setlistofsalarymovement(movement.data)
   }
 
-  const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
-  const addPayRoll = () => {
-    for (let i = 0; i < listofemployee.length; i++) {
-      // console.log(listofsalarymovement)
-      // console.log(listofemployee)
-      // console.log(listofemployee[i]._id)
-      let id = listofemployee[i]._id
-      // console.log(id)
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id):'';
-      console.log(employeemov)
-      if(employeemov.length>0){
 
+  const getEmployee = async (id) => {
+    e.preventDefault()
+    try {
+      console.log(employeeid)
+      const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
+      setsalary(employee.basicSalary)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
+
+  const addPayRoll =async () => {
+    const PayRoll=[{}]
+    for (let i = 0; i < listofemployee.length; i++) {
+      let employeeid = listofemployee[i]._id
+      setemployeeid(id)
+      const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
+      setsalary(employee.basicSalary)
+      PayRoll[0].Month = new Date().getMonth + 1
+      PayRoll[0].salary = employee.basicSalary
+
+      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == employeeid):'';
+
+      console.log(employeemov)
+
+      if(employeemov.length>0){
       const filterPre = employeemov.filter((m) => m.movement == 'سلف')
-      console.log(filterPre)
+      // console.log(filterPre)
       if (filterPre.length>0){
         setPredecessor(filterPre[filterPre.length-1].newAmount)
-        console.log(filterPre[filterPre.length-1].newAmount)
+        PayRoll[0].Predecessor(filterPre[filterPre.length-1].newAmount)
+        // console.log(filterPre[filterPre.length-1].newAmount)
       }else{setPredecessor(0)}
       
       const filterDed = employeemov.filter((m) => m.movement == 'خصم')
       console.log(filterDed)
       if (filterDed.length>0){
         setDeduction(filterDed[filterDed.length-1].newAmount)
-        console.log(filterDed[filterDed.length-1].newAmount)
+        PayRoll[0].Deduction(filterDed[filterDed.length-1].newAmount)
+        // console.log(filterDed[filterDed.length-1].newAmount)
       }else{setDeduction(0)}
       
       const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
       if (filterAbs.length>0){
         setAbsence(filterAbs[filterAbs.length-1].newAmount)
-        console.log(filterAbs[filterAbs.length-1].newAmount)
+        PayRoll[0].Absence(filterAbs[filterAbs.length-1].newAmount)
+        // console.log(filterAbs[filterAbs.length-1].newAmount)
       }else{setAbsence(0)}
       
       const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
       if (filterAdd.length>0){
         setAdditional(filterAdd[filterAdd.length-1].newAmount)
-        console.log(filterAdd[filterAdd.length-1].newAmount)
+        PayRoll[0].Additional(filterAdd[filterAdd.length-1].newAmount)
+        // console.log(filterAdd[filterAdd.length-1].newAmount)
       }else{setAdditional(0)}
 
       const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
       if (filterBon.length>0){
         setBonus(filterBon[filterBon.length-1].newAmount)
-        console.log(filterBon[filterBon.length-1].newAmount)
+        PayRoll[0].Bonus(filterBon[filterBon.length-1].newAmount)
+        // console.log(filterBon[filterBon.length-1].newAmount)
       }else{setBonus(0)}
       
+     const result = await axios.post(`https://caviar-api.vercel.app/api/employee/payrole/${employeeid}`,{PayRoll})
+     console.log(result)
     }
-    cons()
   }
 }
 
-  const cons = ()=>{
-    console.log(Absence)
-    console.log(Additional)
-    console.log(Bonus)
-    console.log(Predecessor)
-    console.log(Deduction)
-  }
 
   const [filterEmp, setfilterEmp] = useState([])
   const getemployeesByJob = (role) => {

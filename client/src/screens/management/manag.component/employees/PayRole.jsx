@@ -39,7 +39,7 @@ const PayRole = () => {
   }
 
 
-  const getEmployee = async (id) => {
+  const getEmployee = async (e, id) => {
     e.preventDefault()
     try {
       console.log(employeeid)
@@ -55,7 +55,7 @@ const PayRole = () => {
     const PayRoll=[{}]
     for (let i = 0; i < listofemployee.length; i++) {
       let employeeid = listofemployee[i]._id
-      setemployeeid(id)
+      setemployeeid(employeeid)
       const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${employeeid}`)
       setsalary(employee.basicSalary)
       PayRoll[0].Month = new Date().getMonth + 1

@@ -72,32 +72,32 @@ const PayRole = () => {
 
       const filterPre = employeemov.filter((m) => m.movement == 'سلف')
       if (filterPre.length>0){
-        Predecessor=(filterPre[filterPre.length-1].newAmount)
+        Predecessor=filterPre[filterPre.length-1].newAmount
         payRole[0].Predecessor = Predecessor
       }
       
       const filterDed = employeemov.filter((m) => m.movement == 'خصم')
       console.log(filterDed)
       if (filterDed.length>0){
-        Deduction = (filterDed[filterDed.length-1].newAmount)
+        Deduction = filterDed[filterDed.length-1].newAmount
         payRole[0].Deduction = Deduction
       }
       
       const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
       if (filterAbs.length>0){
-        Absence=(filterAbs[filterAbs.length-1].newAmount)
+        Absence=filterAbs[filterAbs.length-1].newAmount
         payRole[0].Absence = Absence
       }
       
       const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
       if (filterAdd.length>0){
-        Additional=(filterAdd[filterAdd.length-1].newAmount)
+        Additional=filterAdd[filterAdd.length-1].newAmount
         payRole[0].Additional=Additional
       }
 
       const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
       if (filterBon.length>0){
-        Bonus=(filterBon[filterBon.length-1].newAmount)
+        Bonus=filterBon[filterBon.length-1].newAmount
         payRole[0].Bonus=Bonus
       }
 

@@ -80,14 +80,17 @@ const PayRole = () => {
       let NetSalary = 0
 
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
-      console.log(employeemov)
+      console.log({employeemov:employeemov})
+
       if (employeemov.length > 0) {
+
         const filterPre = employeemov.filter((m) => m.movement == 'سلف')
         if (filterPre.length > 0) {
           Predecessor = filterPre[filterPre.length - 1].newAmount
           payRole[0].Predecessor = Predecessor
         }else{
-          payRole[0].Predecessor = 0          
+          Predecessor=0
+          payRole[0].Predecessor = Predecessor         
         }
 
         const filterDed = employeemov.filter((m) => m.movement == 'خصم')
@@ -96,7 +99,8 @@ const PayRole = () => {
           Deduction = filterDed[filterDed.length - 1].newAmount
           payRole[0].Deduction = Deduction
         }else{
-          payRole[0].Deduction = 0
+          Deduction = 0
+          payRole[0].Deduction = Deduction
         }
 
         const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
@@ -104,7 +108,8 @@ const PayRole = () => {
           Absence = filterAbs[filterAbs.length - 1].newAmount
           payRole[0].Absence = Absence
         }else{
-          payRole[0].Absence = 0
+          Absence=0
+          payRole[0].Absence = Absence
         }
 
         const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
@@ -112,7 +117,8 @@ const PayRole = () => {
           Additional = filterAdd[filterAdd.length - 1].newAmount
           payRole[0].Additional = Additional
         }else{
-          payRole[0].Additional = 0
+          Additional=0
+          payRole[0].Additional = Additional
         }
 
         const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
@@ -120,7 +126,8 @@ const PayRole = () => {
           Bonus = filterBon[filterBon.length - 1].newAmount
           payRole[0].Bonus = Bonus
         }else{
-          payRole[0].Bonus = 0
+          Bonus=0
+          payRole[0].Bonus = Bonus
 
         }
         // payRole[0].TotalDue = TotalDue

@@ -157,15 +157,16 @@ const PayRole = () => {
         console.log(result)
         if(result){
           payRole[0]={}
-          Predecessor = 0
-          Deduction = 0
-          Absence = 0
-          Additional = 0
-          Bonus = 0
-          TotalDue = 0
-          TotalDeductible = 0
-          Insurance = 0
-          Tax = 0 
+          getemployees()
+          // Predecessor = 0
+          // Deduction = 0
+          // Absence = 0
+          // Additional = 0
+          // Bonus = 0
+          // TotalDue = 0
+          // TotalDeductible = 0
+          // Insurance = 0
+          // Tax = 0 
         }
       }else{
         payRole[0].salary = salary
@@ -192,15 +193,16 @@ const PayRole = () => {
         console.log(result)
         if(result){
           payRole[0]={}
-          Predecessor = 0
-          Deduction = 0
-          Absence = 0
-          Additional = 0
-          Bonus = 0
-          TotalDue = 0
-          TotalDeductible = 0
-          Insurance = 0
-          Tax = 0
+          getemployees()
+          // Predecessor = 0
+          // Deduction = 0
+          // Absence = 0
+          // Additional = 0
+          // Bonus = 0
+          // TotalDue = 0
+          // TotalDeductible = 0
+          // Insurance = 0
+          // Tax = 0
         }
       }
     }

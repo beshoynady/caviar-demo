@@ -68,19 +68,20 @@ const PayRole = () => {
       let salary = listofemployee[i].basicSalary
       payRole[0].salary = salary
 
+      let Predecessor = 0
+      let Deduction = 0
+      let Absence = 0
+      let Additional = 0
+      let Bonus = 0
+      let TotalDue = 0
+      let TotalDeductible = 0
+      let Insurance = 0
+      let Tax = 0
+      let NetSalary = 0
+      
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
       console.log(employeemov)
       if (employeemov.length > 0) {
-        let Predecessor = 0
-        let Deduction = 0
-        let Absence = 0
-        let Additional = 0
-        let Bonus = 0
-        let TotalDue = 0
-        let TotalDeductible = 0
-        let Insurance = 0
-        let Tax = 0
-        let NetSalary = 0
 
 
         const filterPre = employeemov.filter((m) => m.movement == 'سلف')

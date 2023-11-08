@@ -165,6 +165,7 @@ const PayRole = () => {
           TotalDeductible = 0
           Insurance = 0
           Tax = 0
+          payRole = [{}]
         }
       }else{
         payRole[0].salary = salary
@@ -199,6 +200,7 @@ const PayRole = () => {
           TotalDeductible = 0
           Insurance = 0
           Tax = 0
+          payRole = [{}]
         }
       }
     }

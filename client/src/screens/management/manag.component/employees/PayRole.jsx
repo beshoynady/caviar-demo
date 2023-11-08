@@ -271,7 +271,7 @@ const PayRole = () => {
                     </thead>
                     <tbody>
                       {listofemployee&&listofemployee.map((em,i)=>{
-                        if(em.payRole[- 1].Month == thismonth){
+                        if(em.payRole[em.payRole.length - 1].Month == thismonth){
                           return (
                             <tr key={i}>
                               <td>

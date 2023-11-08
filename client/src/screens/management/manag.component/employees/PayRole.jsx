@@ -112,11 +112,11 @@ const PayRole = () => {
           Bonus = filterBon[filterBon.length - 1].newAmount
           payRole[0].Bonus = Bonus
         }
-        // TotalDue = Bonus + Additional
-        // TotalDeductible = Absence + Deduction + Predecessor
-        // Insurance = TotalDue * .10
-        // Tax = TotalDue * 0.15
-        // NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+        TotalDue = Bonus + Additional
+        TotalDeductible = Absence + Deduction + Predecessor
+        Insurance = TotalDue * .10
+        Tax = TotalDue * 0.15
+        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
         // payRole[0].TotalDue = TotalDue
         // payRole[0].TotalDeductible = TotalDeductible
         // payRole[0].Insurance = Insurance

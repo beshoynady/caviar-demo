@@ -283,13 +283,13 @@ const PayRole = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{em.fullname}</td>
-                                <td>{em.payRole[- 1].salary}</td>
+                                <td>{em.payRole[em.payRole.length - 1].salary}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>{em.payRole[- 1].Additional}</td>
-                                <td>{em.payRole[- 1].Bonus}</td>
-                                <td>{em.payRole[- 1].TotalDue}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Additional}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Bonus}</td>
+                                <td>{em.payRole[em.payRole.length - 1].TotalDue}</td>
                                 <td></td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"

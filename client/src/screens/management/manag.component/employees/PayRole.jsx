@@ -65,7 +65,8 @@ const PayRole = () => {
       let id = listofemployee[i]._id
       setemployeeid(id)
       payRole[0].Month = new Date().getMonth() + 1
-      payRole[0].salary = listofemployee[i].basicSalary
+      let salary = listofemployee[i].basicSalary
+      payRole[0].salary = salary
 
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
       console.log(employeemov)
@@ -127,7 +128,7 @@ const PayRole = () => {
         payRole[0].TotalDeductible = Absence + Deduction + Predecessor
         payRole[0].Insurance = TotalDue * .10
         payRole[0].Tax = TotalDue * 0.15
-        payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+        payRole[0].NetSalary = salary + TotalDue - TotalDeductible - Insurance - Tax
 
         console.log(payRole)
         const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })

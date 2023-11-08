@@ -111,11 +111,11 @@ const PayRole = () => {
         Insurance = TotalDue * .10
         Tax = TotalDue * 0.15
         NetSalary = TotalDue - TotalDeductible - Insurance - Tax
-        payRole[0].TotalDue = TotalDue
-        payRole[0].TotalDeductible = TotalDeductible
-        payRole[0].Insurance = Insurance
-        payRole[0].Tax = Tax
-        payRole[0].NetSalary = NetSalary
+        // payRole[0].TotalDue = TotalDue
+        // payRole[0].TotalDeductible = TotalDeductible
+        // payRole[0].Insurance = Insurance
+        // payRole[0].Tax = Tax
+        // payRole[0].NetSalary = NetSalary
 
         console.log(payRole)
         const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })

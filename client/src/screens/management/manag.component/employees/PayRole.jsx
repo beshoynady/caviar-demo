@@ -60,7 +60,7 @@ const PayRole = () => {
   // const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
 
   const addPayRoll = async () => {
-    const payRole = [{}]
+    let payRole = [{}]
     for (let i = 0; i < listofemployee.length; i++) {
       let id = listofemployee[i]._id
       setemployeeid(id)
@@ -156,6 +156,7 @@ const PayRole = () => {
         const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
         console.log(result)
         if(result){
+          payRole[0]={}
           Predecessor = 0
           Deduction = 0
           Absence = 0
@@ -165,7 +166,6 @@ const PayRole = () => {
           TotalDeductible = 0
           Insurance = 0
           Tax = 0
-          payRole = [{}]
         }
       }else{
         payRole[0].salary = salary
@@ -191,6 +191,7 @@ const PayRole = () => {
         const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
         console.log(result)
         if(result){
+          payRole[0]={}
           Predecessor = 0
           Deduction = 0
           Absence = 0
@@ -200,7 +201,6 @@ const PayRole = () => {
           TotalDeductible = 0
           Insurance = 0
           Tax = 0
-          payRole = [{}]
         }
       }
     }

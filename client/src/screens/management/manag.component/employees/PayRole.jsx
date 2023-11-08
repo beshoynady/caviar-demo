@@ -41,12 +41,12 @@ const PayRole = () => {
     setlistofsalarymovement(movement.data)
   }
 
-  const [showpayroll, setshowpayroll] = useState([])
-  const getPayRollEmployee = async () => {
-    const month = new Date().getMonth()+1
-    const p = {}
-    listofemployee
-  }
+  // const [showpayroll, setshowpayroll] = useState([])
+  // const getPayRollEmployee = async () => {
+  //   const month = new Date().getMonth()+1
+  //   const p = {}
+  //   listofemployee
+  // }
   // const getPayRollEmployee = async (id) => {
   //   e.preventDefault()
   //   try {

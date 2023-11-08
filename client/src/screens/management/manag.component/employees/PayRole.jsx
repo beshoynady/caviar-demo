@@ -6,6 +6,7 @@ import { detacontext } from '../../../../App';
 const PayRole = () => {
 
   const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const thismonth = new Date().getMonth() + 1
 
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
@@ -40,8 +41,13 @@ const PayRole = () => {
     setlistofsalarymovement(movement.data)
   }
 
-
-  // const getEmployee = async (e, id) => {
+  const [showpayroll, setshowpayroll] = useState([])
+  const getPayRollEmployee = async () => {
+    const month = new Date().getMonth()+1
+    const p = {}
+    listofemployee
+  }
+  // const getPayRollEmployee = async (id) => {
   //   e.preventDefault()
   //   try {
   //     console.log(employeeid)
@@ -264,6 +270,41 @@ const PayRole = () => {
                       </tr>
                     </thead>
                     <tbody>
+                      {listofemployee&&listofemployee.map((em,i)=>{
+                        if(em.payRole[- 1].Month == thismonth){
+                          return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{em.fullname}</td>
+                              <td>{em.payRole[- 1].salary}</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td>{em.payRole[- 1].Additional}</td>
+                              <td>{em.payRole[- 1].Bonus}</td>
+                              <td>{em.payRole[- 1].TotalDue}</td>
+                              <td></td>
+                              <td>
+                                <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" 
+                                // onClick={() => {
+                                //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                // }}
+                                >&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" 
+                                // onClick={() => setuserid(e._id)}
+                                >&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          )
+
+                        }
+                      })}
                       {/* {
                       filterEmp.length > 0 ? filterEmp.map((e, i) => {
                         if (i >= startpagination & i < endpagination) {

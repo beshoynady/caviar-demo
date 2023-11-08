@@ -81,6 +81,31 @@ const employeeschema = new mongoose.Schema({
                 min: 0,
                 default: 0
             },
+            // DaySalary: {
+            //     type: Number,
+            //     required: true,
+            //     min: 0,
+            //     default: 0
+            // },
+            // HourlySalary: {
+            //     type: Number,
+            //     required: true,
+            //     min: 0,
+            //     default: 0
+            // },
+            // workingDays: {
+            //     type: Number,
+            //     required: true,
+            //     min: 0,
+            //     max: 31,
+            //     default: 0
+            // },
+            //     absenceDay: {
+            //         type: Number,
+            //         required: true,
+            //         min: 0,
+            //         default: 0
+            //     },
             Additional: {
                 type: Number,
                 required: true,

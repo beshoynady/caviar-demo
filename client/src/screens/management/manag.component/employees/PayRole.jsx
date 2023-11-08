@@ -253,19 +253,19 @@ const PayRole = () => {
                         <th>م</th>
                         <th>الاسم</th>
                         <th>الاساسي</th>
-                        <th>اجر اليوم</th>
+                        {/* <th>اجر اليوم</th>
                         <th>اجر الساعه</th>
-                        <th>عدد ايام العمل</th>
+                        <th>عدد ايام العمل</th> */}
                         <th>اضافي</th>
                         <th>مكافاة</th>
                         <th>اجمالي المستحق</th>
-                        <th>عدد ايام الغياب</th>
+                        {/* <th>عدد ايام الغياب</th> */}
                         <th>خصم</th>
                         <th>غياب</th>
                         <th>سلف</th>
+                        <th>اجمالي المستقطع</th>
                         <th>تامين</th>
                         <th>ضريبه</th>
-                        <th>اجمالي المستقطع</th>
                         <th>المستحق عن الشهر</th>
                       </tr>
                     </thead>
@@ -284,13 +284,16 @@ const PayRole = () => {
                                 <td>{i + 1}</td>
                                 <td>{em.fullname}</td>
                                 <td>{em.payRole[em.payRole.length - 1].salary}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>{em.payRole[em.payRole.length - 1].Additional}</td>
                                 <td>{em.payRole[em.payRole.length - 1].Bonus}</td>
                                 <td>{em.payRole[em.payRole.length - 1].TotalDue}</td>
-                                <td></td>
+                                <td>{em.payRole[em.payRole.length - 1].Deduction}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Absence}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Predecessor}</td>
+                                <td>{em.payRole[em.payRole.length - 1].TotalDeductible}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Insurance}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Tax}</td>
+                                <td>{em.payRole[em.payRole.length - 1].NetSalary}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                   // onClick={() => {
@@ -307,65 +310,6 @@ const PayRole = () => {
                           }
                         }
                       })}
-                      {/* {
-                      filterEmp.length > 0 ? filterEmp.map((e, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{e.username}</td>
-                              <td>{e.address}</td>
-                              <td>{e.phone}</td>
-                              <td>{e.salary}</td>
-                              <td>{e.role}</td>
-                              <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
-                              <td>
-                                <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                  setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                }}>&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })
-                        : listofemployee.map((e, i) => {
-                          listofsalarymovement.filter(s=>s.EmployeeId==e._id).map((sal,i)=>{
-
-                            if (i >= startpagination & i < endpagination) {
-                              return (
-                                <tr key={i}>
-                                  <td>
-                                    <span className="custom-checkbox">
-                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                      <label htmlFor="checkbox1"></label>
-                                    </span>
-                                  </td>
-                                  <td>{i + 1}</td>
-                                  <td>{e.username}</td>
-                                  <td>{e.address}</td>
-                                  <td>{e.phone}</td>
-                                  <td>{e.salary}</td>
-                                  <td>{e.role}</td>
-                                  <td>{e.isActive ? 'متاح' : "غير متاح"}</td>
-                                  <td>
-                                    <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                      setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                    }}>&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserid(e._id)}>&#xE872;</i></a>
-                                  </td>
-                                </tr>
-                              )
-                            }
-                          })
-                        })
-                      } */}
                     </tbody>
                   </table>
                   <div className="clearfix">

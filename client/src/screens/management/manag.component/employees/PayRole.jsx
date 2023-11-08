@@ -133,6 +133,12 @@ const PayRole = () => {
         // payRole[0].TotalDeductible = Absence + Deduction + Predecessor
         // payRole[0].Insurance = TotalDue * .10
         // payRole[0].Tax = TotalDue * 0.15
+        TotalDue = salary + Bonus + Additional
+        TotalDeductible = Absence + Deduction + Predecessor
+        Insurance = TotalDue * .10
+        Tax = TotalDue * 0.15
+
+
         payRole[0].TotalDue = TotalDue
         payRole[0].TotalDeductible = TotalDeductible
         payRole[0].Insurance = Insurance
@@ -161,7 +167,7 @@ const PayRole = () => {
         payRole[0].Deduction = Deduction
         payRole[0].Predecessor = Predecessor
 
-        TotalDue =salary + Bonus + Additional
+        TotalDue = salary + Bonus + Additional
         TotalDeductible = Absence + Deduction + Predecessor
         Insurance = TotalDue * .10
         Tax = TotalDue * 0.15

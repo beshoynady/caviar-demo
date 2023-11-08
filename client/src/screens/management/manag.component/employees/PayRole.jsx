@@ -78,12 +78,10 @@ const PayRole = () => {
       let Insurance = 0
       let Tax = 0
       let NetSalary = 0
-      
+
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
       console.log(employeemov)
       if (employeemov.length > 0) {
-
-
         const filterPre = employeemov.filter((m) => m.movement == 'سلف')
         if (filterPre.length > 0) {
           Predecessor = filterPre[filterPre.length - 1].newAmount
@@ -114,11 +112,6 @@ const PayRole = () => {
           Bonus = filterBon[filterBon.length - 1].newAmount
           payRole[0].Bonus = Bonus
         }
-        TotalDue =salary + Bonus + Additional
-        TotalDeductible = Absence + Deduction + Predecessor
-        Insurance = TotalDue * .10
-        Tax = TotalDue * 0.15
-        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
         // payRole[0].TotalDue = TotalDue
         // payRole[0].TotalDeductible = TotalDeductible
         // payRole[0].Insurance = Insurance
@@ -126,15 +119,47 @@ const PayRole = () => {
         // payRole[0].NetSalary = NetSalary
 
         // payRole[0].TotalDue = salary + Bonus + Additional
-        payRole[0].TotalDue = TotalDue
         // payRole[0].TotalDeductible = Absence + Deduction + Predecessor
-        payRole[0].TotalDeductible = TotalDeductible
         // payRole[0].Insurance = TotalDue * .10
-        payRole[0].Insurance = Insurance
         // payRole[0].Tax = TotalDue * 0.15
+        payRole[0].TotalDue = TotalDue
+        payRole[0].TotalDeductible = TotalDeductible
+        payRole[0].Insurance = Insurance
         payRole[0].Tax =Tax 
         payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
 
+        console.log(payRole)
+        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
+        console.log(result)
+        if(result){
+          Predecessor = 0
+          Deduction = 0
+          Absence = 0
+          Additional = 0
+          Bonus = 0
+          TotalDue = 0
+          TotalDeductible = 0
+          Insurance = 0
+          Tax = 0
+        }
+      }else{
+        payRole[0].salary = salary
+        payRole[0].Bonus = Bonus
+        payRole[0].Additional = Additional
+        payRole[0].Absence = Absence
+        payRole[0].Deduction = Deduction
+        payRole[0].Predecessor = Predecessor
+
+        TotalDue =salary + Bonus + Additional
+        TotalDeductible = Absence + Deduction + Predecessor
+        Insurance = TotalDue * .10
+        Tax = TotalDue * 0.15
+        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+        
+        payRole[0].TotalDeductible = TotalDeductible
+        payRole[0].Insurance = Insurance
+        payRole[0].Tax =Tax 
+        payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
         console.log(payRole)
         const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
         console.log(result)

@@ -16,7 +16,7 @@ const NavBar = () => {
                 <nav className='manag-nav'>
                   <div className="profile">
                     <div className="info">
-                      <p>اهلا, <b>{userlogininfo?userlogininfo.username:''}</b></p>
+                      <p>اهلا, <b>{userlogininfo?userlogininfo.employeeinfo.username:''}</b></p>
                     </div>
                     <div className="logout-btn">
                       <a href='/login' onClick={employeelogout}>خروج</a>

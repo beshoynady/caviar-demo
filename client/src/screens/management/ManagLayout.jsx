@@ -10,9 +10,9 @@ import jwt_decode from "jwt-decode";
 
 const ManagLayout = () => {
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token_e')) {
       // console.log(localStorage.getItem('token'))
-      const tokenStorage = localStorage.getItem('token')
+      const tokenStorage = localStorage.getItem('token_e')
       if (tokenStorage) {
         const decodetoken = jwt_decode(tokenStorage)
         console.log(decodetoken)

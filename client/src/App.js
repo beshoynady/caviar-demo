@@ -700,12 +700,12 @@ function App() {
   }
 
   const logout = () => {
-    localStorage.clear('token_u');
+    localStorage.removeItem('token_u');
     window.location.href = `https://${window.location.hostname}`;
   }
 
   const employeelogout = () => {
-    localStorage.clear('token_e');
+    localStorage.removeItem('token_e');
     window.location.href = `https://${window.location.hostname}/login`;
   }
 

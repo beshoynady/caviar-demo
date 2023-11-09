@@ -106,6 +106,11 @@ function App() {
     const users = await axios.get('https://caviar-api.vercel.app/api/user');
     setallusers(users.data)
   }
+  const [allemployees, setallemployees] = useState([])
+  const getallemployees = async () => {
+    const employees = await axios.get('https://caviar-api.vercel.app/api/employee');
+    setallemployees(employees.data)
+  }
 
 
 

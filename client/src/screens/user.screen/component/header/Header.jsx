@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { detacontext } from '../../../../App'
-
-
-import './Header.css'
-import Cart from '../cart/Cart'
+import { detacontext } from '../../../../App';
+import './Header.css';
+import Cart from '../cart/Cart';
 import LoginRegistr from '../auth/LoginRegistr';
+
 
 
 const Header = () => {

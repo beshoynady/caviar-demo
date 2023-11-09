@@ -13,8 +13,8 @@ const Home = () => {
             <main className='main-home'> 
               <div className="container">
                 <div className="content">
-                  {userlogininfo==true & id == true ?<p className='main-title'>مرحبا {usertitle(userlogininfo.id)} علي طاولة {usertitle(id)}  <br/> في</p>
-                  : userlogininfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.id)} <br/> في</p>
+                  {userlogininfo==true & id == true ?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} علي طاولة {usertitle(id)}  <br/> في</p>
+                  : userlogininfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/> في</p>
                   : id?<p className='main-title'>مرحبا ضيوف طاولة {usertitle(id)} <br/> في</p>
                   :<p className='main-title'>مرحبا بكم  <br/> في</p>
                   }

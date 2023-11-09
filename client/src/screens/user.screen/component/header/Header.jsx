@@ -29,7 +29,6 @@ const Header = () => {
             <header className='header-client'>
               <div className="container-lg">
 {console.log({ss:userlogininfo})}
-{console.log({ss:userlogininfo.userinfo})}
                 <div className='logo'>
                   <div className="mob-menu" onClick={() => { openmobmenu() }}>
                     <span id='line-1'></span>

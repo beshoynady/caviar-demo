@@ -641,7 +641,10 @@ function App() {
       console.log(decodetoken)
       setuserlogininfo(decodetoken.employeeinfo)
       console.log(decodetoken.employeeinfo)
-    } setuserlogininfo({})
+    }else{
+      setuserlogininfo(null)
+    } 
+      
   }
 
   const [islogin, setislogin] = useState(false)

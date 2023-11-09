@@ -634,12 +634,12 @@ function App() {
     if (usertoken) {
       const decodetoken = jwt_decode(usertoken)
       console.log(decodetoken)
-      setuserlogininfo(decodetoken.userinfo)
+      setuserlogininfo(decodetoken)
       console.log(decodetoken.userinfo)
     } else if (employeetoken) {
       const decodetoken = jwt_decode(employeetoken)
       console.log(decodetoken)
-      setuserlogininfo(decodetoken.employeeinfo)
+      setuserlogininfo(decodetoken)
       console.log(decodetoken.employeeinfo)
     }else{
       setuserlogininfo(null)

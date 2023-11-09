@@ -703,6 +703,7 @@ function App() {
     localStorage.clear('token');
     window.location.href = `https://${window.location.hostname}`;
   }
+  
   const employeelogout = () => {
     localStorage.clear('token');
     window.location.href = `https://${window.location.hostname}/login`;

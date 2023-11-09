@@ -28,9 +28,9 @@ const Kitchen = () => {
 
   const [waiters, setwaiters] = useState([])
   const getAllWaiter = async () => {
-    const alluser = await axios.get('https://caviar-api.vercel.app/api/user')
-    console.log(alluser)
-    const allwaiter = await alluser.data.filter((user) => user.role == 'waiter')
+    const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee')
+    console.log(allemployee)
+    const allwaiter = await allemployee.data.filter((employee) => employee.role == 'waiter')
     console.log(allwaiter)
     const waiterActive = await allwaiter.filter((waiter) => waiter.isActive == true)
     console.log(waiterActive)

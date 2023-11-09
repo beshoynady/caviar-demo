@@ -52,9 +52,9 @@ const ManagerDash = () => {
   // ارسال ويتر 
   const [waiters, setwaiters] = useState([])
   const getAllWaiter = async () => {
-    const alluser = await axios.get('https://caviar-api.vercel.app/api/user')
-    console.log(alluser)
-    const allwaiter = await alluser.data.filter((user) => user.role == 'waiter')
+    const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee')
+    console.log(allemployee)
+    const allwaiter = await allemployee.data.filter((employee) => employee.role == 'waiter')
     console.log(allwaiter)
     const waiterActive = await allwaiter.filter((waiter)=> waiter.isActive == true)
     console.log(waiterActive)
@@ -78,10 +78,10 @@ const ManagerDash = () => {
 
     const indexoflastwaiter = lastwaiter!=''? waiters.indexOf(lastwaiter): 0
 
-    console.log(indexoflastwaiter)
-    console.log(indexoflastwaiter + 1)
-    console.log(waiters.length)
-    console.log(waiters)
+    // console.log(indexoflastwaiter)
+    // console.log(indexoflastwaiter + 1)
+    // console.log(waiters.length)
+    // console.log(waiters)
     // setwaiter(waiters[indexofwaiter+1])
     if (waiters.length == indexoflastwaiter + 1) {
       const waiter = waiters[0]

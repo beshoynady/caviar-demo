@@ -48,7 +48,7 @@ const Header = () => {
                 </nav>
                 <div className='right-nav'>
                   {id ? ''
-                    : userlogininfo.userinfo ? <div className="nav-logout" onClick={logout}> خروج
+                    : userlogininfo ? <div className="nav-logout" onClick={logout}> خروج
                       <span className="material-symbols-outlined">logout</span>
                     </div>
                       : <div className='nav-login' onClick={(e) => { e.preventDefault(); setopenlogin(!openlogin) }}>دخول<span className="material-symbols-outlined">

@@ -94,7 +94,7 @@ const Kitchen = () => {
     const t1 = new Date(t).getTime()
     const t2 = new Date().getTime()
     const Waiting_time = t2 - t1
-    console.log(Waiting_time)
+    // console.log(Waiting_time)
     const m = new Date(Waiting_time).getMinutes()
     // const s = new Date(Waiting_time).getSeconds()
     // const Waiting_time_m_s = `${m}:${s}`

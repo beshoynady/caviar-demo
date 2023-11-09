@@ -221,7 +221,7 @@ function App() {
         const total = costOrder + oldtotal
         const tax = total * 0.14
         const totalAfterTax = total + tax
-      console.log(itemsincart)
+        console.log(itemsincart)
 
         if (lasttableorder.status == 'جاري التحضير') {
           const additem = []
@@ -234,7 +234,7 @@ function App() {
           console.log(products)
           const status = 'انتظار'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total,totalAfterTax, status
+            products, total, totalAfterTax, status
           })
           setitemsincart([])
           getProducts()
@@ -243,7 +243,7 @@ function App() {
           console.log(products)
           const status = 'انتظار'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total,totalAfterTax, status
+            products, total, totalAfterTax, status
           })
         }
         setitemsincart([])
@@ -256,7 +256,7 @@ function App() {
         const total = costOrder + oldtotal;
         const tax = total * 0.14
         const totalAfterTax = total + tax
-      if (lastuserorder.status == 'جاري التحضير') {
+        if (lastuserorder.status == 'جاري التحضير') {
           const additem = []
           for (let i = 0; i < itemsincart.length; i++) {
             itemsincart[i].isAdd = true;
@@ -268,7 +268,7 @@ function App() {
           const status = 'انتظار'
           const order_type = 'ديلفري'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total,totalAfterTax, status, order_type
+            products, total, totalAfterTax, status, order_type
           })
           setitemsincart([])
           getProducts()
@@ -278,7 +278,7 @@ function App() {
           const status = 'انتظار'
           const order_type = 'ديلفري'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products, total,totalAfterTax, status, order_type
+            products, total, totalAfterTax, status, order_type
           })
         }
 
@@ -290,7 +290,7 @@ function App() {
           const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
           const table = alltable.find((t, i) => t._id == clientid) ? clientid : null;
           const finduser = allusers.find((u, i) => u._id == clientid);
-          console.log({findu : finduser})
+          console.log({ findu: finduser })
           const user = finduser ? clientid : null;
           const products = [...itemsincart]
           const total = costOrder;
@@ -353,10 +353,10 @@ function App() {
       const total = costOrder + oldtotal
       const tax = total * 0.14
       const totalAfterTax = total + tax
-  const status = 'انتظار'
+      const status = 'انتظار'
       const employee = waiterid
       const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        products, total,totalAfterTax, status, employee
+        products, total, totalAfterTax, status, employee
       })
       console.log(employee)
       console.log(neworder)
@@ -368,7 +368,7 @@ function App() {
         const total = costOrder;
         const tax = total * 0.14
         const totalAfterTax = total + tax
-      const table = await tableid
+        const table = await tableid
         const employee = await waiterid;
         const order_type = 'داخلي';
         console.log(table)
@@ -402,7 +402,7 @@ function App() {
       const total = costOrder;
       const tax = total * 0.14
       const totalAfterTax = total + tax
-  const name = await clientname;
+      const name = await clientname;
       const phone = await clientphone;
       const address = await clientaddress;
       const employee = await casherid;
@@ -460,7 +460,7 @@ function App() {
       } else if (lastuserorderactive) {
         const id = await lastuserorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-        const data =await myorder.data
+        const data = await myorder.data
         console.log(data)
         setmyorder(data)
         setmyorderid(data._id)
@@ -482,12 +482,12 @@ function App() {
     const isActive = false;
     const help = 'يطلب الفاتورة';
     const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      isActive,help
+      isActive, help
     })
     console.log(neworder)
     setTimeout(() => {
       window.location.href = `https://${window.location.hostname}`;
-    }, 60000*10);
+    }, 60000 * 10);
   }
 
 
@@ -495,7 +495,7 @@ function App() {
     // console.log(allorders)
     const tableorder = allorders.filter((o, i) => o.table == checkid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
-    const lasttableorderactive =await lasttableorder.isActive
+    const lasttableorderactive = await lasttableorder.isActive
     const employeeorder = allorders.filter((o, i) => o.employee == checkid);
     const lastemployeeorder = employeeorder.length > 0 ? employeeorder[employeeorder.length - 1] : [];
     const lastemployeeorderactive = await lastemployeeorder.isActive
@@ -503,7 +503,7 @@ function App() {
     if (lasttableorderactive) {
       const id = await lasttableorder._id
       const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-      const data =await myorder.data
+      const data = await myorder.data
       setmyorder(data)
       settotalinvoice(data.total)
       setmyorderid(data._id)
@@ -513,7 +513,7 @@ function App() {
     } else if (lastemployeeorderactive) {
       const id = await lastemployeeorder._id
       const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-      const data =await myorder.data
+      const data = await myorder.data
       console.log(data)
       setmyorder(data)
       setmyorderid(data._id)
@@ -618,7 +618,7 @@ function App() {
       console.log(newclient)
       if (newclient) {
         const token = newclient.accessToken
-        localStorage.setItem("token", token)
+        localStorage.setItem("token_u", token)
       }
       // navigate('/login')
 
@@ -629,18 +629,19 @@ function App() {
 
   const [userlogininfo, setuserlogininfo] = useState(null)
   const getdatafromtoken = () => {
-    const tokenStorage = localStorage.getItem('token')
-    if (tokenStorage) {
-      const decodetoken = jwt_decode(tokenStorage)
+    const usertoken = localStorage.getItem('token_u')
+    const employeetoken = localStorage.getItem('token_e')
+    if (usertoken) {
+      const decodetoken = jwt_decode(usertoken)
       console.log(decodetoken)
-      if(decodetoken.userinfo){
-        setuserlogininfo(decodetoken.userinfo)
-        console.log(decodetoken.userinfo)
-      }else{
-        setuserlogininfo(decodetoken.employeeinfo)
-        console.log(decodetoken.employeeinfo)
-      }
-    }
+      setuserlogininfo(decodetoken.userinfo)
+      console.log(decodetoken.userinfo)
+    } else if (employeetoken) {
+      const decodetoken = jwt_decode(employeetoken)
+      console.log(decodetoken)
+      setuserlogininfo(decodetoken.employeeinfo)
+      console.log(decodetoken.employeeinfo)
+    } setuserlogininfo({})
   }
 
   const [islogin, setislogin] = useState(false)
@@ -656,17 +657,13 @@ function App() {
         const token = client.data.accessToken;
         console.log(token)
         if (token) {
-          localStorage.setItem("token", token)
-          if (localStorage.getItem('token')) {
+          localStorage.setItem("token_u", token)
+          if (localStorage.getItem('token_u')) {
             getdatafromtoken()
           }
         }
         setislogin(!islogin)
-        // returnToMange()
       }
-      // if (client.data.finduser.isAdmin == true) {
-      //   window.location.href = `https://${window.location.hostname}/management`;
-      // }
     } catch (error) {
       console.log(error)
     }
@@ -683,15 +680,15 @@ function App() {
         const token = employee.data.accessToken;
         console.log(token)
         if (token) {
-          localStorage.setItem("token", token)
-          if (localStorage.getItem('token')) {
+          localStorage.setItem("token_e", token)
+          if (localStorage.getItem('token_e')) {
             getdatafromtoken()
           }
         }
         setislogin(!islogin)
         // returnToMange()
       }
-      if (employee.data.findEmployee.isAdmin == true) {
+      if (employee.data.findEmployee.isActive == true) {
         window.location.href = `https://${window.location.hostname}/management`;
       }
     } catch (error) {
@@ -700,12 +697,12 @@ function App() {
   }
 
   const logout = () => {
-    localStorage.clear('token');
+    localStorage.clear('token_u');
     window.location.href = `https://${window.location.hostname}`;
   }
-  
+
   const employeelogout = () => {
-    localStorage.clear('token');
+    localStorage.clear('token_e');
     window.location.href = `https://${window.location.hostname}/login`;
   }
 
@@ -716,9 +713,6 @@ function App() {
     getallorders()
     getalltable();
     getallusers();
-    // if (localStorage.getItem('token')) {
-    //   getdatafromtoken()
-    // }
   }, [])
 
 
@@ -748,7 +742,7 @@ function App() {
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
-      EditPagination, startpagination,endpagination,setstartpagination,setendpagination, itemid, setitemid
+      EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid
     }}>
       <BrowserRouter>
         <Routes>
@@ -760,16 +754,16 @@ function App() {
             <Route index element={<ManagerDash />} />
             <Route path='orders' element={<Orders />} />
             <Route path='products' element={<Products />} />
-            <Route path='productrecipe' element={<ProductRecipe/>} />
+            <Route path='productrecipe' element={<ProductRecipe />} />
             <Route path='tables' element={<Tables />} />
             <Route path='employees' element={<Employees />} />
-            <Route path='Employeessalary' element={<EmployeesSalary/>} />
-            <Route path='payrole' element={<PayRole/>} />
+            <Route path='Employeessalary' element={<EmployeesSalary />} />
+            <Route path='payrole' element={<PayRole />} />
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
             <Route path='pos' element={<POS />} />
-            <Route path='categoryStock' element={<CategoryStock/>} />
+            <Route path='categoryStock' element={<CategoryStock />} />
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
           </Route>

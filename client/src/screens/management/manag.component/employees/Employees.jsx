@@ -21,7 +21,7 @@ const Employees = () => {
   const [numberID, setnumberID] = useState("")
   const [username, setusername] = useState("")
   const [basicSalary, setbasicSalary] = useState()
-  const [payRole, setpayRole] = useState([])
+  const [payRoll, setpayRoll] = useState([])
   const [password, setpassword] = useState("")
   const [address, setaddress] = useState("")
   const [phone, setphone] = useState("")
@@ -43,7 +43,7 @@ const Employees = () => {
     console.log(basicSalary)
 
     try {
-      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRole, username, password, address, phone, email, isActive, role })
+      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', {fullname, basicSalary, numberID, payRoll, username, password, address, phone, email, isActive, role })
       console.log(newemployee)
       getemployees()
     } catch (error) {

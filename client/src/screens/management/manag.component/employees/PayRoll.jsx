@@ -44,6 +44,7 @@ const PayRoll = () => {
     setlistofsalarymovement(filterByMonth)
   }
 
+
   // const [showpayroll, setshowpayroll] = useState([])
   // const getPayRollEmployee = async () => {
   //   const month = new Date().getMonth()+1
@@ -156,7 +157,7 @@ const PayRoll = () => {
           payRoll[payRoll.length - 1].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
   
           console.log(payRoll)
-          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, { payRoll })
           console.log(result)
           if(result){
             payRoll=[]
@@ -192,7 +193,7 @@ const PayRoll = () => {
           payRoll[payRoll.length - 1].Tax =Tax 
           payRoll[payRoll.length - 1].NetSalary = NetSalary
           console.log(payRoll)
-          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, { payRoll })
           console.log(result)
           if(result){
             payRoll=[]
@@ -278,7 +279,7 @@ const PayRoll = () => {
           payrollopject.NetSalary = NetSalary 
           payRoll.push(payrollopject)
           console.log(payrollopject)
-          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, { payRoll })
           console.log(result)
           if(result){
             payrollopject={}
@@ -308,7 +309,7 @@ const PayRoll = () => {
           payrollopject.Tax =Tax 
           payrollopject.NetSalary = NetSalary
           console.log(payrollopject)
-          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, { payRoll })
           console.log(result)
           if(result){
             payrollopject={}
@@ -324,9 +325,9 @@ const PayRoll = () => {
 
 
   const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (Roll) => {
+  const getemployeesByJob = (role) => {
     if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.Roll == Roll)
+      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
       setfilterEmp(FilterEmployees)
     }
   }
@@ -457,8 +458,8 @@ const PayRoll = () => {
                     </thead>
                     <tbody>
                       {listofemployee && listofemployee.map((em, i) => {
-                        if (em.payRoll.length > 0) {
-                          if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                        if (em.payRole.length > 0) {
+                          if (em.payRole[em.payRole.length - 1].Month == thismonth) {
                             return (
                               <tr key={i}>
                                 <td>
@@ -469,21 +470,21 @@ const PayRoll = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{em.fullname}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
-                                <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                <td>{em.payRole[em.payRole.length - 1].salary}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Additional}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Bonus}</td>
+                                <td>{em.payRole[em.payRole.length - 1].TotalDue}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Deduction}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Absence}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Predecessor}</td>
+                                <td>{em.payRole[em.payRole.length - 1].TotalDeductible}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Insurance}</td>
+                                <td>{em.payRole[em.payRole.length - 1].Tax}</td>
+                                <td>{em.payRole[em.payRole.length - 1].NetSalary}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                   // onClick={() => {
-                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setRoll(e.Roll); setsalary(e.salary)
+                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
                                   // }}
                                   >&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
@@ -550,7 +551,7 @@ const PayRoll = () => {
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select name={Roll} form="carform" required onChange={(e) => setRoll(e.target.value)}>
+                          <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -616,7 +617,7 @@ const PayRoll = () => {
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select form="carform" required defaultValue={Roll} onChange={(e) => setRoll(e.target.value)}>
+                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>

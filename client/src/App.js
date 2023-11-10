@@ -24,7 +24,7 @@ import StockItem from './screens/management/manag.component/stock/StockItem'
 import StockManag from './screens/management/manag.component/stock/StockManag';
 import ProductRecipe from './screens/management/manag.component/products/ProductRecipe';
 import EmployeesSalary from './screens/management/manag.component/employees/EmployeesSalary';
-import PayRole from './screens/management/manag.component/employees/PayRole';
+import PayRoll from './screens/management/manag.component/employees/PayRoll';
 
 
 export const detacontext = createContext({})
@@ -761,7 +761,7 @@ function App() {
             <Route path='tables' element={<Tables />} />
             <Route path='employees' element={<Employees />} />
             <Route path='Employeessalary' element={<EmployeesSalary />} />
-            <Route path='payrole' element={<PayRole />} />
+            <Route path='payrole' element={<PayRoll/>} />
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />

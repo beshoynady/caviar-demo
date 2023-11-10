@@ -29,11 +29,11 @@ const SideBar = () => {
   //   sidebar.current.classList.toggle("toggle-width")
   //   menuicon.current.classList.toggle("rotate")
   // }
-  const opensidebar = () => {
-    sidebar.current.classList.toggle("toggle-width")
-    menuicon.current.classList.toggle("rotate")
+  const openarrow = () => {
+    arrow.current.classList.toggle("showMenu")
   }
 
+  const arrow = useRef()
   const sidebar = useRef()
   const menuicon = useRef()
 
@@ -57,7 +57,7 @@ const SideBar = () => {
           <li><a class="link_name" href="#">Category</a></li>
         </ul>
       </li>
-      <li class="active">
+      <li ref={arrow} class="active" onClick={openarrow}>
         <div class="iocn-link">
           <a href="#">
             <i class='bx bx-collection' ></i>

@@ -9,7 +9,7 @@
 .sidebar{
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100%;
   width: 260px;
   z-index: 100;
@@ -64,7 +64,7 @@
 .sidebar .nav-links > li.active:before,
 .sidebar .nav-links > li:before{
   position:absolute;
-  left:0;
+  right:0;
   top:0;
   content:'';
   width:4px;

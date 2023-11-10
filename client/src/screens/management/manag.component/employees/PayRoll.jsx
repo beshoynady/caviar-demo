@@ -44,10 +44,10 @@ const PayRoll = () => {
     movement.map((movement) => {
       console.log(new Date(movement.createdAt).getMonth())
     })
-    const filterByMonth = movement.filter((m)=>{Date(m.createdAt).getMonth() == date})
-    // const filterByMonth = movement.filter((m)=>{console.log(Date(m.createdAt)})
-    console.log(filterByMonth)
-    setlistofsalarymovement(filterByMonth)
+    // const filterByMonth = movement.filter((m)=>{Date(m.createdAt).getMonth() == date})
+    // // const filterByMonth = movement.filter((m)=>{console.log(Date(m.createdAt)})
+    // console.log(filterByMonth)
+    // setlistofsalarymovement(filterByMonth)
   }
 
 

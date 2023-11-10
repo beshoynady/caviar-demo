@@ -573,13 +573,13 @@ function App() {
 
 
   const usertitle = (id) => {
-    const istable =alltable?alltable.find((table, i) => table._id == id):[];
-    const isuser =allusers?allusers.find((user, i) => user._id == id):[]
+    const istable =alltable?alltable.find((table, i) => table._id == id):null;
+    const isuser =allusers?allusers.find((user, i) => user._id == id):null
     if (istable) {
       const table_num = alltable.find((table, i) => table._id == id).tablenum
       return table_num
     } else if (isuser) {
-      const user_name = allusers.find((user, i) => user._id == id).username
+      const user_name = isuser.username
       return user_name
     }
   }

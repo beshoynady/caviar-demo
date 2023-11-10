@@ -630,16 +630,16 @@ function App() {
   const getdatafromtoken = () => {
     const usertoken = localStorage.getItem('token_u')
     const employeetoken = localStorage.getItem('token_e')
-    if (usertoken) {
-      const decodetoken = jwt_decode(usertoken)
-      console.log(decodetoken)
-      setuserlogininfo(decodetoken)
-      console.log(decodetoken.userinfo)
-    } else if (employeetoken) {
+    if (employeetoken) {
       const decodetoken = jwt_decode(employeetoken)
       console.log(decodetoken)
       setuserlogininfo(decodetoken)
       console.log(decodetoken.employeeinfo)
+    } else if (usertoken) {
+      const decodetoken = jwt_decode(usertoken)
+      console.log(decodetoken)
+      setuserlogininfo(decodetoken)
+      console.log(decodetoken.userinfo)
     }else{
       setuserlogininfo(null)
     } 

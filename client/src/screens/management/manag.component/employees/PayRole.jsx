@@ -3,7 +3,7 @@ import axios from 'axios'
 import { detacontext } from '../../../../App';
 
 
-const PayRole = () => {
+const PayRoll = () => {
 
   const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   const thismonth = new Date().getMonth() + 1
@@ -36,9 +36,12 @@ const PayRole = () => {
 
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
-    const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    const getmovement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
+    const movement = getmovement.data
+    const date = new Date().getMonth()
+    const filterByMonth = movement.filter((m)=>Date(m.createAt) == date)
     console.log(movement)
-    setlistofsalarymovement(movement.data)
+    setlistofsalarymovement(filterByMonth)
   }
 
   // const [showpayroll, setshowpayroll] = useState([])
@@ -60,14 +63,7 @@ const PayRole = () => {
   // const movementArray = ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة']
 
   const addPayRoll = async () => {
-    let payRole = [{}]
     for (let i = 0; i < listofemployee.length; i++) {
-      let id = listofemployee[i]._id
-      setemployeeid(id)
-      payRole[0].Month = new Date().getMonth() + 1
-      let salary = listofemployee[i].basicSalary
-      payRole[0].salary = salary
-
       let Predecessor = 0
       let Deduction = 0
       let Absence = 0
@@ -78,141 +74,259 @@ const PayRole = () => {
       let Insurance = 0
       let Tax = 0
       let NetSalary = 0
-
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
-      console.log({employeemov:employeemov})
-
-      if (employeemov.length > 0) {
-
-        const filterPre = employeemov.filter((m) => m.movement == 'سلف')
-        if (filterPre.length > 0) {
-          Predecessor = filterPre[filterPre.length - 1].newAmount
-          payRole[0].Predecessor = Predecessor
+      let salary = listofemployee[i].basicSalary
+      let payRoll = listofemployee[i].payRoll
+      let lastpayroll = payRoll[payRoll.length - 1]
+      let thismonth = new Date().getMonth() + 1
+      let id = listofemployee[i]._id
+      setemployeeid(id)
+      if(lastpayroll.Month == thismonth){
+        payRoll[payRoll.length - 1].salary = salary
+        const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
+        console.log({employeemov:employeemov})
+  
+        if (employeemov.length > 0) {
+  
+          const filterPre = employeemov.filter((m) => m.movement == 'سلف')
+          if (filterPre.length > 0) {
+            Predecessor = filterPre[filterPre.length - 1].newAmount
+            payRoll[payRoll.length - 1].Predecessor = Predecessor
+          }else{
+            Predecessor=0
+            payRoll[payRoll.length - 1].Predecessor = Predecessor         
+          }
+  
+          const filterDed = employeemov.filter((m) => m.movement == 'خصم')
+          console.log(filterDed)
+          if (filterDed.length > 0) {
+            Deduction = filterDed[filterDed.length - 1].newAmount
+            payRoll[payRoll.length - 1].Deduction = Deduction
+          }else{
+            Deduction = 0
+            payRoll[payRoll.length - 1].Deduction = Deduction
+          }
+  
+          const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
+          if (filterAbs.length > 0) {
+            Absence = filterAbs[filterAbs.length - 1].newAmount
+            payRoll[payRoll.length - 1].Absence = Absence
+          }else{
+            Absence=0
+            payRoll[payRoll.length - 1].Absence = Absence
+          }
+  
+          const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+          if (filterAdd.length > 0) {
+            Additional = filterAdd[filterAdd.length - 1].newAmount
+            payRoll[payRoll.length - 1].Additional = Additional
+          }else{
+            Additional=0
+            payRoll[payRoll.length - 1].Additional = Additional
+          }
+  
+          const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
+          if (filterBon.length > 0) {
+            Bonus = filterBon[filterBon.length - 1].newAmount
+            payRoll[payRoll.length - 1].Bonus = Bonus
+          }else{
+            Bonus=0
+            payRoll[payRoll.length - 1].Bonus = Bonus
+  
+          }
+          // payRoll[0].TotalDue = TotalDue
+          // payRoll[0].TotalDeductible = TotalDeductible
+          // payRoll[0].Insurance = Insurance
+          // payRoll[0].Tax = Tax
+          // payRoll[0].NetSalary = NetSalary
+  
+          // payRoll[0].TotalDue = salary + Bonus + Additional
+          // payRoll[0].TotalDeductible = Absence + Deduction + Predecessor
+          // payRoll[0].Insurance = TotalDue * .10
+          // payRoll[0].Tax = TotalDue * 0.15
+          TotalDue = salary + Bonus + Additional
+          TotalDeductible = Absence + Deduction + Predecessor
+          Insurance = TotalDue * .10
+          Tax = TotalDue * 0.15
+  
+  
+          payRoll[payRoll.length - 1].TotalDue = TotalDue
+          payRoll[payRoll.length - 1].TotalDeductible = TotalDeductible
+          payRoll[payRoll.length - 1].Insurance = Insurance
+          payRoll[payRoll.length - 1].Tax =Tax 
+          payRoll[payRoll.length - 1].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+  
+          console.log(payRoll)
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          console.log(result)
+          if(result){
+            payRoll=[]
+            getemployees()
+            // Predecessor = 0
+            // Deduction = 0
+            // Absence = 0
+            // Additional = 0
+            // Bonus = 0
+            // TotalDue = 0
+            // TotalDeductible = 0
+            // Insurance = 0
+            // Tax = 0 
+          }
         }else{
-          Predecessor=0
-          payRole[0].Predecessor = Predecessor         
+          payRoll[payRoll.length - 1].salary = salary
+          payRoll[payRoll.length - 1].Bonus = Bonus
+          payRoll[payRoll.length - 1].Additional = Additional
+          payRoll[payRoll.length - 1].Absence = Absence
+          payRoll[payRoll.length - 1].Deduction = Deduction
+          payRoll[payRoll.length - 1].Predecessor = Predecessor
+  
+          TotalDue = salary + Bonus + Additional
+          TotalDeductible = Absence + Deduction + Predecessor
+          Insurance = TotalDue * .10
+          Tax = TotalDue * 0.15
+  
+          NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+          
+          payRoll[payRoll.length - 1].TotalDue = TotalDue
+          payRoll[payRoll.length - 1].TotalDeductible = TotalDeductible
+          payRoll[payRoll.length - 1].Insurance = Insurance
+          payRoll[payRoll.length - 1].Tax =Tax 
+          payRoll[payRoll.length - 1].NetSalary = NetSalary
+          console.log(payRoll)
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          console.log(result)
+          if(result){
+            payRoll=[]
+            getemployees()
+            // Predecessor = 0
+            // Deduction = 0
+            // Absence = 0
+            // Additional = 0
+            // Bonus = 0
+            // TotalDue = 0
+            // TotalDeductible = 0
+            // Insurance = 0
+            // Tax = 0
+          }
         }
-
-        const filterDed = employeemov.filter((m) => m.movement == 'خصم')
-        console.log(filterDed)
-        if (filterDed.length > 0) {
-          Deduction = filterDed[filterDed.length - 1].newAmount
-          payRole[0].Deduction = Deduction
-        }else{
-          Deduction = 0
-          payRole[0].Deduction = Deduction
-        }
-
-        const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
-        if (filterAbs.length > 0) {
-          Absence = filterAbs[filterAbs.length - 1].newAmount
-          payRole[0].Absence = Absence
-        }else{
-          Absence=0
-          payRole[0].Absence = Absence
-        }
-
-        const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
-        if (filterAdd.length > 0) {
-          Additional = filterAdd[filterAdd.length - 1].newAmount
-          payRole[0].Additional = Additional
-        }else{
-          Additional=0
-          payRole[0].Additional = Additional
-        }
-
-        const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
-        if (filterBon.length > 0) {
-          Bonus = filterBon[filterBon.length - 1].newAmount
-          payRole[0].Bonus = Bonus
-        }else{
-          Bonus=0
-          payRole[0].Bonus = Bonus
-
-        }
-        // payRole[0].TotalDue = TotalDue
-        // payRole[0].TotalDeductible = TotalDeductible
-        // payRole[0].Insurance = Insurance
-        // payRole[0].Tax = Tax
-        // payRole[0].NetSalary = NetSalary
-
-        // payRole[0].TotalDue = salary + Bonus + Additional
-        // payRole[0].TotalDeductible = Absence + Deduction + Predecessor
-        // payRole[0].Insurance = TotalDue * .10
-        // payRole[0].Tax = TotalDue * 0.15
-        TotalDue = salary + Bonus + Additional
-        TotalDeductible = Absence + Deduction + Predecessor
-        Insurance = TotalDue * .10
-        Tax = TotalDue * 0.15
-
-
-        payRole[0].TotalDue = TotalDue
-        payRole[0].TotalDeductible = TotalDeductible
-        payRole[0].Insurance = Insurance
-        payRole[0].Tax =Tax 
-        payRole[0].NetSalary = TotalDue - TotalDeductible - Insurance - Tax
-
-        console.log(payRole)
-        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
-        console.log(result)
-        if(result){
-          payRole[0]={}
-          getemployees()
-          // Predecessor = 0
-          // Deduction = 0
-          // Absence = 0
-          // Additional = 0
-          // Bonus = 0
-          // TotalDue = 0
-          // TotalDeductible = 0
-          // Insurance = 0
-          // Tax = 0 
-        }
-      }else{
-        payRole[0].salary = salary
-        payRole[0].Bonus = Bonus
-        payRole[0].Additional = Additional
-        payRole[0].Absence = Absence
-        payRole[0].Deduction = Deduction
-        payRole[0].Predecessor = Predecessor
-
-        TotalDue = salary + Bonus + Additional
-        TotalDeductible = Absence + Deduction + Predecessor
-        Insurance = TotalDue * .10
-        Tax = TotalDue * 0.15
-
-        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
         
-        payRole[0].TotalDue = TotalDue
-        payRole[0].TotalDeductible = TotalDeductible
-        payRole[0].Insurance = Insurance
-        payRole[0].Tax =Tax 
-        payRole[0].NetSalary = NetSalary
-        console.log(payRole)
-        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payrole/${id}`, { payRole })
-        console.log(result)
-        if(result){
-          payRole[0]={}
-          getemployees()
-          // Predecessor = 0
-          // Deduction = 0
-          // Absence = 0
-          // Additional = 0
-          // Bonus = 0
-          // TotalDue = 0
-          // TotalDeductible = 0
-          // Insurance = 0
-          // Tax = 0
+      }else{
+        let payrollopject = {}
+        payrollopject.Month = new Date().getMonth() + 1
+        payrollopject.salary = salary
+        const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
+        console.log({employeemov:employeemov})
+  
+        if (employeemov.length > 0) {
+  
+          const filterPre = employeemov.filter((m) => m.movement == 'سلف')
+          if (filterPre.length > 0) {
+            Predecessor = filterPre[filterPre.length - 1].newAmount
+            payrollopject.Predecessor = Predecessor
+          }else{
+            Predecessor=0
+            payrollopject.Predecessor = Predecessor         
+          }
+  
+          const filterDed = employeemov.filter((m) => m.movement == 'خصم')
+          console.log(filterDed)
+          if (filterDed.length > 0) {
+            Deduction = filterDed[filterDed.length - 1].newAmount
+            payrollopject.Deduction = Deduction
+          }else{
+            Deduction = 0
+            payrollopject.Deduction = Deduction
+          }
+  
+          const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
+          if (filterAbs.length > 0) {
+            Absence = filterAbs[filterAbs.length - 1].newAmount
+            payrollopject.Absence = Absence
+          }else{
+            Absence=0
+            payrollopject.Absence = Absence
+          }
+  
+          const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+          if (filterAdd.length > 0) {
+            Additional = filterAdd[filterAdd.length - 1].newAmount
+            payrollopject.Additional = Additional
+          }else{
+            Additional=0
+            payrollopject.Additional = Additional
+          }
+  
+          const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
+          if (filterBon.length > 0) {
+            Bonus = filterBon[filterBon.length - 1].newAmount
+            payrollopject.Bonus = Bonus
+          }else{
+            Bonus=0
+            payRoll[payRoll.length - 1].Bonus = Bonus
+  
+          }
+          TotalDue = salary + Bonus + Additional
+          TotalDeductible = Absence + Deduction + Predecessor
+          Insurance = TotalDue * .10
+          Tax = TotalDue * 0.15
+          NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+
+  
+          payrollopject.TotalDue = TotalDue
+          payrollopject.TotalDeductible = TotalDeductible
+          payrollopject.Insurance = Insurance
+          payrollopject.Tax =Tax 
+          payrollopject.NetSalary = NetSalary 
+          payRoll.push(payrollopject)
+          console.log(payrollopject)
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          console.log(result)
+          if(result){
+            payrollopject={}
+            getemployees()
+          }
+        }else{
+          let payrollopject = {}
+          payrollopject.Month = new Date().getMonth() + 1
+          payrollopject.salary = salary
+  
+          payrollopject.Bonus = Bonus
+          payrollopject.Additional = Additional
+          payrollopject.Absence = Absence
+          payrollopject.Deduction = Deduction
+          payrollopject.Predecessor = Predecessor
+  
+          TotalDue = salary + Bonus + Additional
+          TotalDeductible = Absence + Deduction + Predecessor
+          Insurance = TotalDue * .10
+          Tax = TotalDue * 0.15
+  
+          NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+          
+          payrollopject.TotalDue = TotalDue
+          payrollopject.TotalDeductible = TotalDeductible
+          payrollopject.Insurance = Insurance
+          payrollopject.Tax =Tax 
+          payrollopject.NetSalary = NetSalary
+          console.log(payrollopject)
+          const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payRoll/${id}`, { payRoll })
+          console.log(result)
+          if(result){
+            payrollopject={}
+            getemployees()
+          }
         }
+
       }
+
+
     }
   }
 
 
   const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (role) => {
+  const getemployeesByJob = (Roll) => {
     if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+      const FilterEmployees = listofemployee.filter(employee => employee.Roll == Roll)
       setfilterEmp(FilterEmployees)
     }
   }
@@ -343,8 +457,8 @@ const PayRole = () => {
                     </thead>
                     <tbody>
                       {listofemployee && listofemployee.map((em, i) => {
-                        if (em.payRole.length > 0) {
-                          if (em.payRole[em.payRole.length - 1].Month == thismonth) {
+                        if (em.payRoll.length > 0) {
+                          if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                             return (
                               <tr key={i}>
                                 <td>
@@ -355,21 +469,21 @@ const PayRole = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{em.fullname}</td>
-                                <td>{em.payRole[em.payRole.length - 1].salary}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Additional}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Bonus}</td>
-                                <td>{em.payRole[em.payRole.length - 1].TotalDue}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Deduction}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Absence}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Predecessor}</td>
-                                <td>{em.payRole[em.payRole.length - 1].TotalDeductible}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Insurance}</td>
-                                <td>{em.payRole[em.payRole.length - 1].Tax}</td>
-                                <td>{em.payRole[em.payRole.length - 1].NetSalary}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                   // onClick={() => {
-                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setRoll(e.Roll); setsalary(e.salary)
                                   // }}
                                   >&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
@@ -436,7 +550,7 @@ const PayRole = () => {
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
+                          <select name={Roll} form="carform" required onChange={(e) => setRoll(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -502,7 +616,7 @@ const PayRole = () => {
                         </div>
                         <div className="form-group">
                           <label>الوظيفه</label>
-                          <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
+                          <select form="carform" required defaultValue={Roll} onChange={(e) => setRoll(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
                             <option value="casher">كاشير</option>
@@ -551,4 +665,4 @@ const PayRole = () => {
   )
 }
 
-export default PayRole
+export default PayRoll

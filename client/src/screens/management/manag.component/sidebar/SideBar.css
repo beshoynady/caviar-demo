@@ -128,7 +128,7 @@
   pointer-events: none;
 }
 .sidebar .nav-links li .sub-menu{
-  padding: 6px 6px 14px 80px;
+  padding: 6px 80px 14px 6px;
   margin-top: -10px;
   background: #fff;
   display: none;
@@ -247,12 +247,12 @@
   position: relative;
   background: #E4E9F7;
   height: 100vh;
-  left: 260px;
+  right: 260px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
-  left: 78px;
+  right: 78px;
   width: calc(100% - 78px);
 }
 .home-section .home-content{

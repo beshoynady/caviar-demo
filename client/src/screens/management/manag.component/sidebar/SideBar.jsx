@@ -32,6 +32,9 @@ const SideBar = () => {
   const openarrow = () => {
     arrow.current.classList.toggle("showMenu")
   }
+  const opensidebar = () => {
+    sidebar.current.classList.toggle("close")
+  }
 
   const arrow = useRef()
   const sidebar = useRef()
@@ -42,7 +45,7 @@ const SideBar = () => {
 
   return (
     <>
-    <div class="sidebar close">
+    <div ref={sidebar} class="sidebar close">
     <div class="logo-details">
       <i class='bx bxl-c-plus-plus'></i>
       <span class="logo_name">CodingLab</span>
@@ -161,12 +164,12 @@ const SideBar = () => {
   </li>
 </ul>
   </div>
-  {/* <section class="home-section">
+  <section class="home-section" onClick={opensidebar}>
     <div class="home-content">
       <i class='bx bx-menu' ></i>
       <span class="text">Drop Down Sidebar</span>
     </div>
-  </section> */}
+  </section>
     </>
     // <div ref={sidebar} className='sidebar'>
     //   <div className='menu'>

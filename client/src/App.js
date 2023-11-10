@@ -204,7 +204,6 @@ function App() {
 
 
   const createclientorder = async (clientid) => {
-    console.log(clientid)
     const tableorder = allorders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
@@ -291,19 +290,17 @@ function App() {
           const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
           const table = alltable.find((t, i) => t._id == clientid) ? clientid : null;
           const finduser = allusers.find((u, i) => u._id == clientid);
-          console.log({ findu: finduser })
           const user = finduser ? clientid : null;
           const products = [...itemsincart]
           const total = costOrder;
           const tax = total * 0.14
-          const phone = finduser.phone
-          const address = finduser.address
+          const phone = finduser?finduser.phone:''
+          const address = finduser?finduser.address:''
           const totalAfterTax = total + tax
           if (user) {
             const order_type = 'ديلفري'
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
               serial,
-              table,
               user,
               phone,
               address,

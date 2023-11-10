@@ -9,19 +9,26 @@ const SideBar = () => {
     { title: 'الويتر', sideitem: 'waiter', icon: "directions_run" },
     { title: 'المطبخ', sideitem: 'kitchen', icon: "set_meal" },
     { title: 'الطلبات', sideitem: 'orders', icon: "list_alt" },
+    { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
+
     { title: 'التصنيفات', sideitem: 'category', icon: "category" },
     { title: 'المنتجات', sideitem: 'products', icon: "restaurant" },
     { title: 'التكاليف', sideitem: 'productrecipe', icon: "restaurant" },
-    { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
+
     { title: 'الموظفين', sideitem: 'employees', icon: "group_add" },
     { title: 'المرتبات', sideitem: 'employeessalary', icon: "group_add" },
     { title: 'payrole', sideitem: 'payrole', icon: "group_add" },
+
     { title: 'تصنيفات المخزون', sideitem: 'categoryStock', icon: "category" },
     { title: 'اصناف المخزن', sideitem: 'stockitem', icon: "inventory_2" },
     { title: 'ادارة المخزون', sideitem: 'stockmang', icon: "inventory" },
   ]
 
 
+  // const opensidebar = () => {
+  //   sidebar.current.classList.toggle("toggle-width")
+  //   menuicon.current.classList.toggle("rotate")
+  // }
   const opensidebar = () => {
     sidebar.current.classList.toggle("toggle-width")
     menuicon.current.classList.toggle("rotate")
@@ -154,12 +161,12 @@ const SideBar = () => {
   </li>
 </ul>
   </div>
-  <section class="home-section">
+  {/* <section class="home-section">
     <div class="home-content">
       <i class='bx bx-menu' ></i>
       <span class="text">Drop Down Sidebar</span>
     </div>
-  </section>
+  </section> */}
     </>
     // <div ref={sidebar} className='sidebar'>
     //   <div className='menu'>

@@ -574,7 +574,7 @@ function App() {
     const isuser =allusers?allusers.find((user, i) => user._id == id):null
     const isemployee = allemployees? allemployees.find((employee, i) => employee._id == id):null
     if (istable) {
-      const table_num = alltable.find((table, i) => table._id == id).tablenum
+      const table_num = istable.tablenum
       return table_num
     } else if (isuser) {
       const user_name = isuser.username
@@ -715,6 +715,7 @@ function App() {
     getallorders()
     getalltable();
     getallusers();
+    getallemployees()
   }, [])
 
 

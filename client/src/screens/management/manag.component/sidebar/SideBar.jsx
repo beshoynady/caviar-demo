@@ -164,12 +164,11 @@ const SideBar = () => {
   </li>
 </ul>
   </div>
-  <section class="home-section" onClick={opensidebar}>
-    <div class="home-content">
+  {/* <section class="home-section" > */}
+    <div class="home-content" onClick={opensidebar}>
       <i class='bx bx-menu' ></i>
-      <span class="text">Drop Down Sidebar</span>
     </div>
-  </section>
+  {/* </section> */}
     </>
     // <div ref={sidebar} className='sidebar'>
     //   <div className='menu'>

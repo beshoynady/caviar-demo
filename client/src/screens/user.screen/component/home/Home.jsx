@@ -13,7 +13,7 @@ const Home = () => {
             <main className='main-home'> 
               <div className="container">
                 <div className="content">
-                  {userlogininfo && id  ?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} علي طاولة {usertitle(id)} <br/> في</p>
+                  {userlogininfo && id  ?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/>علي طاولة {usertitle(id)} <br/> في</p>
                   : userlogininfo&&userlogininfo.userinfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/> في</p>
                   : id?<p className='main-title'>مرحبا ضيوف طاولة {usertitle(id)} <br/> في</p>
                   :<p className='main-title'>مرحبا بكم  <br/> في</p>

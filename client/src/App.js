@@ -569,18 +569,19 @@ function App() {
   }
 
 
-
-
-
   const usertitle = (id) => {
     const istable =alltable?alltable.find((table, i) => table._id == id):null;
     const isuser =allusers?allusers.find((user, i) => user._id == id):null
+    const isemployee = allemployees? allemployees.find((employee, i) => employee._id == id):null
     if (istable) {
       const table_num = alltable.find((table, i) => table._id == id).tablenum
       return table_num
     } else if (isuser) {
       const user_name = isuser.username
       return user_name
+    } else if (isemployee){
+      const employee_name = isemployee.username
+      return employee_name
     }
   }
 

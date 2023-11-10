@@ -4,7 +4,7 @@ import { detacontext } from '../../../../App'
 import { useParams } from 'react-router-dom';
 
 const Home = () => {
-  const { id } = useParams()
+  const {id} = useParams()
   return (
     <detacontext.Consumer>
       {
@@ -14,7 +14,7 @@ const Home = () => {
               <div className="container">
                 <div className="content">
                   {userlogininfo==true & id == true ?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} علي طاولة {usertitle(id)}  <br/> في</p>
-                  : userlogininfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/> في</p>
+                  : userlogininfo&&userlogininfo.userinfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/> في</p>
                   : id?<p className='main-title'>مرحبا ضيوف طاولة {usertitle(id)} <br/> في</p>
                   :<p className='main-title'>مرحبا بكم  <br/> في</p>
                   }

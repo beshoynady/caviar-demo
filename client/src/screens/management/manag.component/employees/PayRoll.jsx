@@ -38,18 +38,11 @@ const PayRoll = () => {
   const getSalaryMovement = async () => {
     const getmovement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
     const movement = getmovement.data
-    console.log({ movement: movement})
     const date = new Date().getMonth()
-    console.log({ date: date})
-    movement.map((movement) => {
-      console.log(new Date(movement.createdAt).getMonth())
-    })
     const filterByMonth = movement.filter((m)=>{if(new Date(m.createdAt).getMonth() == date){
       return m
     }
     })
-    // const filterByMonth = movement.filter((m)=>{console.log(Date(m.createdAt)})
-    console.log(filterByMonth)
     setlistofsalarymovement(filterByMonth)
   }
 

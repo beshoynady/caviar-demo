@@ -57,7 +57,7 @@ const SideBar = () => {
           <span class="link_name">Dashboard</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Category</a></li>
+          <li><a class="link_name" href="#">Dashboard</a></li>
         </ul>
       </li>
       <li ref={arrow} class="active" onClick={openarrow}>

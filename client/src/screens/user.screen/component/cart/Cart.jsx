@@ -11,13 +11,14 @@ const Cart = (props) => {
   const ordersText = useRef()
   const orderside = useRef()
   const printContainer = useRef()
+
   const handlePrint = useReactToPrint({
     content: () => printContainer.current,
     copyStyles: true,
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
-
+  
   const { id } = useParams()
   return (
     <detacontext.Consumer>
@@ -49,7 +50,7 @@ const Cart = (props) => {
                       ordersText.current.style.marginRight = "-50%";
                     }}>الفاتورة</label>
                       : userlogininfo ? <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                        invoice(userlogininfo.id);
+                        invoice(userlogininfo.userinfo.id);
                         orderside.current.style.marginRight = "-50%";
                         ordersText.current.style.marginRight = "-50%";
                       }}>الفاتورة</label>

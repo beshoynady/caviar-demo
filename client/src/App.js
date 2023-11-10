@@ -204,6 +204,7 @@ function App() {
 
 
   const createclientorder = async (clientid) => {
+    console.log(clientid)
     const tableorder = allorders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive

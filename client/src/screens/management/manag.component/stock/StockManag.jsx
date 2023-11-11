@@ -98,12 +98,12 @@ const StockManag = () => {
 
   const [AllStockactions, setAllStockactions] = useState([]);
 
-  const getallStockaction = async () => {
+  const getallStockaction = async()=> {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockmanag/');
       console.log(response.data)
-      setAllStockactions(response.data)
-
+      const Stockactions = await response.data;
+      setAllStockactions(Stockactions)
     } catch (error) {
       console.log(error)
     }
@@ -156,6 +156,10 @@ const searchByaction = (action) => {
   //   }
   // }
 
+  useEffect(() => {
+    getallStockaction()
+    getaStockItems()
+  }, [])
 
   useEffect(() => {
     if (movement == "منصرف" || movement == "هالك") {
@@ -169,10 +173,6 @@ const searchByaction = (action) => {
   
 
 
-  useEffect(() => {
-    getaStockItems()
-    getallStockaction()
-  }, [])
 
   return (
     <detacontext.Consumer>

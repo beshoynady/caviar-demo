@@ -140,7 +140,7 @@ const searchByitem = (item) => {
   setitemFilterd(items)
 }
 const searchByaction = (action) => {
-  const items = AllStockactions.filter((action) => action.movement== action)
+  const items = AllStockactions.filter((Stockactions) => Stockactions.movement== action)
   setitemFilterd(items)
 }
 

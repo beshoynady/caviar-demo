@@ -60,7 +60,7 @@ const SideBar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/">
+            <Link to="/management">
               <span class="material-symbols-outlined icon">
                 dashboard
               </span>

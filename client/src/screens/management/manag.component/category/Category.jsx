@@ -7,7 +7,7 @@ const Category = () => {
   const [categoryId, setcategoryId] = useState('')
 
   const [allCategory, setallCategory] = useState([])
-
+  
   const getallCategory = async () => {
     const res = await axios.get("https://caviar-api.vercel.app/api/category/");
     setallCategory(res.data)

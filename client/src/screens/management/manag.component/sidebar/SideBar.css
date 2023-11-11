@@ -93,11 +93,10 @@
   text-align: center;
   line-height: 50px;
   color: #11101d;
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .sidebar .nav-links li.active i,
 .sidebar .nav-links li:hover i{
   color: #93181a;  

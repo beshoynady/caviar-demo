@@ -61,10 +61,10 @@ const SideBar = () => {
         <ul className="nav-links">
           <li>
             <Link to="/">
-            <span class="material-symbols-outlined icon">
-dashboard
-</span>              
-<span className="link_name">Dashboard</span>
+              <span class="material-symbols-outlined icon">
+                dashboard
+              </span>
+              <span className="link_name">Dashboard</span>
             </Link>
             <ul className="sub-menu blank">
               <li><Link to="/" className="link_name">Dashboard</Link></li>

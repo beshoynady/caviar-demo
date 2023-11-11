@@ -30,13 +30,13 @@ const SideBar = () => {
   //   menuicon.current.classList.toggle("rotate")
   // }
   const openarrowmen = () => {
-    arrow.current.classList.toggle("showMenu")
+    arrowmen.current.classList.toggle("showMenu")
   }
   const openarrowemp = () => {
-    arrow.current.classList.toggle("showMenu")
+    arrowemp.current.classList.toggle("showMenu")
   }
   const openarrowsto = () => {
-    arrow.current.classList.toggle("showMenu")
+    rrowsto.current.classList.toggle("showMenu")
   }
   const opensidebar = () => {
     sidebar.current.classList.toggle("close")

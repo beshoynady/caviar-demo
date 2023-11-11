@@ -170,6 +170,9 @@ const SideBar = () => {
           <li ref={arrowsto} onClick={openarrowsto}>
             <div className="iocn-link">
               <a href="#">
+                <span class="material-symbols-outlined icon">
+                  receipt_long
+                </span>
                 <span className="link_name">المخزن</span>
               </a>
               <i className='bx bxs-chevron-down arrow' ></i>

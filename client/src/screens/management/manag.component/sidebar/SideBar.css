@@ -245,15 +245,14 @@
 }
 .home-section{
   position: absolute;
-  background: #E4E9F7;
   height: 60px;
-  right: 230px;
-  width: 65px;
+  right: 205px;
+  width: 60px;
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
   right: 78px;
-  width: 65px;
+  width: 60px;
 }
 .home-section .home-content{
   height: 60px;
@@ -263,10 +262,10 @@
 .home-section .home-content .bx-menu,
 .home-section .home-content .text{
   color: #11101d;
-  font-size: 35px;
+  font-size: 45px;
 }
 .home-section .home-content .bx-menu{
-  margin: 0 15px;
+  margin: 0 5px;
   cursor: pointer;
 }
 .home-section .home-content .text{

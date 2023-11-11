@@ -71,7 +71,9 @@ const SideBar = () => {
           <li>
             <Link to="pos">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <i className='bx bx-book-alt' ></i>
+              <span class="material-symbols-outlined">
+                point_of_sale
+              </span>
               <span className="link_name">POS</span>
             </Link>
             <ul className="sub-menu blank">
@@ -91,8 +93,9 @@ const SideBar = () => {
           <li>
             <Link to="kitchen">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <i className='bx bx-book-alt' ></i>
-              <span className="link_name">المطبخ</span>
+              <span class="material-symbols-outlined">
+                cooking
+              </span>              <span className="link_name">المطبخ</span>
             </Link>
             <ul className="sub-menu blank">
               <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
@@ -101,7 +104,9 @@ const SideBar = () => {
           <li>
             <Link to="orders">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <i className='bx bx-book-alt' ></i>
+              <span class="material-symbols-outlined">
+                list_alt
+              </span>
               <span className="link_name">الاوردرات</span>
             </Link>
             <ul className="sub-menu blank">
@@ -111,17 +116,40 @@ const SideBar = () => {
           <li>
             <Link to="tables">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <i className='bx bx-book-alt' ></i>
+              <span class="material-symbols-outlined">
+                table_restaurant
+              </span>
               <span className="link_name">الطاولة</span>
             </Link>
             <ul className="sub-menu blank">
               <li><Link to="tables" className="link_name">الطاولة</Link></li>
             </ul>
           </li>
+
+          <li ref={arrowmen} onClick={openarrowmen}>
+            <div className="iocn-link">
+              <a href="#">
+                <span class="material-symbols-outlined">
+                  restaurant_menu
+                </span>                
+                <span className="link_name">المنيو</span>
+              </a>
+              <i className='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul className="sub-menu">
+              <li><a className="link_name" href="#">المنيو</a></li>
+              <li><Link to="category">التصنيفات</Link></li>
+              <li><Link to="products">الاطباق</Link></li>
+              <li><Link to="productrecipe">التكاليف</Link></li>
+            </ul>
+          </li>
+
           <li ref={arrowemp} onClick={openarrowemp}>
             <div className="iocn-link">
               <a href="#">
-                <i className='bx bx-collection' ></i>
+                <span class="material-symbols-outlined">
+                  group_add
+                </span>                
                 <span className="link_name">الموظفون</span>
               </a>
               <i className='bx bxs-chevron-down arrow' ></i>
@@ -133,35 +161,19 @@ const SideBar = () => {
               <li><Link to="payroll">المرتبات</Link></li>
             </ul>
           </li>
+
           <li ref={arrowsto} onClick={openarrowsto}>
             <div className="iocn-link">
               <a href="#">
-                <i className='bx bx-collection' ></i>
                 <span className="link_name">المخزن</span>
               </a>
               <i className='bx bxs-chevron-down arrow' ></i>
             </div>
             <ul className="sub-menu">
               <li><a className="link_name" href="#">المخزن</a></li>
-              <li><Link to="employees">تصنيفات</Link></li>
-              <li><Link to="employeessalary">الاصناف</Link></li>
-              <li><Link to="payroll">حركه المخزن</Link></li>
-            </ul>
-          </li>
-          
-          <li ref={arrowmen} onClick={openarrowmen}>
-            <div className="iocn-link">
-              <a href="#">
-                <i className='bx bx-collection' ></i>
-                <span className="link_name">المنيو</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">المنيو</a></li>
-              <li><Link to="category">التصنيفات</Link></li>
-              <li><Link to="products">الاطباق</Link></li>
-              <li><Link to="productrecipe">التكاليف</Link></li>
+              <li><Link to="categoryStock">تصنيفات</Link></li>
+              <li><Link to="stockitem">الاصناف</Link></li>
+              <li><Link to="stockmang">حركه المخزن</Link></li>
             </ul>
           </li>
 

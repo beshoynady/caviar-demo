@@ -88,7 +88,6 @@ const Category = () => {
                         <div class="filter-group">
                           <label>اسم التصنيف</label>
                           <input type="text" class="form-control" onChange={(e) => searchByCategory(e.target.value)} />
-                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>                        
                         {/* <div class="filter-group">
                           <label>Location</label>

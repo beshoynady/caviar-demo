@@ -13,6 +13,21 @@ const CategoryStock = () => {
     setallCategoryStock(res.data)
   }
 
+  const [AllStockItems, setAllStockItems] = useState([]);
+
+  const getallStockItem = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+      const StockItems = await response.data;
+      console.log(response.data)
+      setAllStockItems(StockItems)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
 
   const createCategoryStock = async () => {
     try {
@@ -45,15 +60,22 @@ const CategoryStock = () => {
     }
   }
 
+  const [CategoryStockFilterd, setCategoryStockFilterd] = useState([])
+  const searchByCategoryStock = (CategoryStock) => {
+    const categories = allCategoryStock.filter((Category) => Category.name.startsWith(CategoryStock)== true)
+    setCategoryStockFilterd(categories)
+  }
+
 
   useEffect(() => {
     getallCategoryStock()
+    getallStockItem()
   }, [])
 
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, calcTotalSalesOfCategoryStock ,EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -73,23 +95,25 @@ const CategoryStock = () => {
                     <div class="row text-dark">
                       <div class="col-sm-3">
                         <div class="show-entries">
-                          <span>عرض</span>
-                          <select class="form-control">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
+                        <span>عرض</span>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
                           </select>
-                          <span>عنصر</span>
+                          <span>صفوف</span>
                         </div>
                       </div>
                       <div class="col-sm-9">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
-                          <label>Name</label>
-                          <input type="text" class="form-control" />
+                          <label>اسم الصنف</label>
+                          <input type="text" class="form-control" onChange={(e) => searchByCategoryStock(e.target.value)} />
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
-                        <div class="filter-group">
+                        {/* <div class="filter-group">
                           <label>Location</label>
                           <select class="form-control">
                             <option>All</option>
@@ -110,7 +134,7 @@ const CategoryStock = () => {
                             <option>Cancelled</option>
                           </select>
                         </div>
-                        <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
                     </div>
                   </div>
@@ -127,12 +151,33 @@ const CategoryStock = () => {
                         <th>م</th>
                         <th>الاسم</th>
                         <th>عدد المنتجات</th>
-                        <th>عدد المنتجات المباعه</th>
                         <th>اجراءات</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {allCategoryStock && allCategoryStock.map((categoryStock, i) => {
+                      {CategoryStockFilterd?CategoryStockFilterd.map((categoryStock, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{categoryStock.name}</td>
+                              <td>{AllStockItems ? AllStockItems.filter((Items) => Items.categoryId == categoryStock._id).length : 0}</td>
+                              <td>
+                                <a href="#editCategoryStockModal" className="edit" data-toggle="modal" onClick={() => setcategoryStockId(categoryStock._id)}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+                                <a href="#deleteCategoryStockModal" className="delete" data-toggle="modal" onClick={() => setcategoryStockId(categoryStock._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          )
+                        }
+                      })
+                      :allCategoryStock && allCategoryStock.map((categoryStock, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                             <tr key={i}>

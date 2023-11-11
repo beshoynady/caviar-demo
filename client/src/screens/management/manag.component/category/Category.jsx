@@ -38,6 +38,13 @@ const Category = () => {
     }
   }
 
+  const [CategoryFilterd, setCategoryFilterd] = useState([])
+  const searchByCategory = (category) => {
+    const categories = allCategory.filter((Category) => Category.name == category)
+    setCategoryFilterd(categories)
+  }
+
+
 
   useEffect(() => {
     getallCategory()
@@ -79,10 +86,11 @@ const Category = () => {
                       <div class="col-sm-9">
                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
-                          <label>Name</label>
-                          <input type="text" class="form-control" />
-                        </div>
-                        <div class="filter-group">
+                          <label>اسم التصنيف</label>
+                          <input type="text" class="form-control" onChange={(e) => searchByCategory(e.target.value)} />
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>                        
+                        {/* <div class="filter-group">
                           <label>Location</label>
                           <select class="form-control">
                             <option>All</option>
@@ -103,7 +111,7 @@ const Category = () => {
                             <option>Cancelled</option>
                           </select>
                         </div>
-                        <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
                     </div>
                   </div>
@@ -125,7 +133,8 @@ const Category = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allCategory && allCategory.map((category, i) => {
+                      {CategoryFilterd.length>0?
+                        CategoryFilterd.map((category, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                             <tr key={i}>
@@ -147,7 +156,31 @@ const Category = () => {
                             </tr>
                           )
                         }
-                      })}
+                      })
+                      :allCategory && allCategory.map((category, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{category.name}</td>
+                              <td>{allProducts ? allProducts.filter((pro) => pro.category == category._id).length : 0}</td>
+                              <td>{calcTotalSalesOfCategory(category._id)}</td>
+                              <td>
+                                <a href="#editCategoryModal" className="edit" data-toggle="modal" onClick={() => setcategoryId(category._id)}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+                                <a href="#deleteCategoryModal" className="delete" data-toggle="modal" onClick={() => setcategoryId(category._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          )
+                        }
+                      })
+                    }
 
                     </tbody>
                   </table>

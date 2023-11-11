@@ -187,7 +187,7 @@ const Orders = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dart">عرض <b>{listofoeders.length > endpagination ? endpagination : listofoeders.length}</b> من <b>{listofoeders.length}</b> عنصر</div>
+                    <div className="hint-text text-dark">عرض <b>{listofoeders.length > endpagination ? endpagination : listofoeders.length}</b> من <b>{listofoeders.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

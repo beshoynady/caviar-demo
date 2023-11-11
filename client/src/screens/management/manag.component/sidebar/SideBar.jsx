@@ -29,16 +29,20 @@ const SideBar = () => {
   //   sidebar.current.classList.toggle("toggle-width")
   //   menuicon.current.classList.toggle("rotate")
   // }
-  const openarrow = () => {
-    console.log(arrow)
+  const openarrowmen = () => {
+    arrow.current.classList.toggle("showMenu")
+  }
+  const openarrowemp = () => {
+    arrow.current.classList.toggle("showMenu")
+  }
+  const openarrowsto = () => {
     arrow.current.classList.toggle("showMenu")
   }
   const opensidebar = () => {
-
     sidebar.current.classList.toggle("close")
   }
 
-  const arrow = useRef()
+  const arrowmen = useRef()
   const arrowemp = useRef()
   const arrowsto = useRef()
   const sidebar = useRef()
@@ -114,7 +118,7 @@ const SideBar = () => {
               <li><Link to="tables" className="link_name">الطاولة</Link></li>
             </ul>
           </li>
-          <li ref={arrow} onClick={openarrow}>
+          <li ref={arrowemp} onClick={openarrowemp}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -129,7 +133,7 @@ const SideBar = () => {
               <li><Link to="payroll">المرتبات</Link></li>
             </ul>
           </li>
-          <li ref={arrow} onClick={openarrow}>
+          <li ref={arrowsto} onClick={openarrowsto}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -145,7 +149,7 @@ const SideBar = () => {
             </ul>
           </li>
           
-          <li ref={arrow} onClick={openarrow}>
+          <li ref={arrowmen} onClick={openarrowmen}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>

@@ -71,7 +71,7 @@ const SideBar = () => {
           <li>
             <Link to="pos">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined icon">
                 point_of_sale
               </span>
               <span className="link_name">POS</span>
@@ -83,7 +83,9 @@ const SideBar = () => {
           <li>
             <Link to="waiter">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <i className='bx bx-book-alt' ></i>
+              <span class="material-symbols-outlined icon">
+                concierge
+              </span>
               <span className="link_name">الويتر</span>
             </Link>
             <ul className="sub-menu blank">
@@ -93,9 +95,10 @@ const SideBar = () => {
           <li>
             <Link to="kitchen">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined icon">
                 cooking
-              </span>              <span className="link_name">المطبخ</span>
+              </span>
+              <span className="link_name">المطبخ</span>
             </Link>
             <ul className="sub-menu blank">
               <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
@@ -104,7 +107,7 @@ const SideBar = () => {
           <li>
             <Link to="orders">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined icon">
                 list_alt
               </span>
               <span className="link_name">الاوردرات</span>
@@ -116,7 +119,7 @@ const SideBar = () => {
           <li>
             <Link to="tables">
               {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined">
+              <span class="material-symbols-outlined icon">
                 table_restaurant
               </span>
               <span className="link_name">الطاولة</span>
@@ -129,9 +132,9 @@ const SideBar = () => {
           <li ref={arrowmen} onClick={openarrowmen}>
             <div className="iocn-link">
               <a href="#">
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined icon">
                   restaurant_menu
-                </span>                
+                </span>
                 <span className="link_name">المنيو</span>
               </a>
               <i className='bx bxs-chevron-down arrow' ></i>
@@ -147,9 +150,9 @@ const SideBar = () => {
           <li ref={arrowemp} onClick={openarrowemp}>
             <div className="iocn-link">
               <a href="#">
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined icon">
                   group_add
-                </span>                
+                </span>
                 <span className="link_name">الموظفون</span>
               </a>
               <i className='bx bxs-chevron-down arrow' ></i>
@@ -306,13 +309,13 @@ const SideBar = () => {
     //   <div className='menu'>
     //     <div className="logo">
     //       <h2>كافيار</h2>
-    //       <span ref={menuicon} className="material-symbols-outlined menu-icon" onClick={opensidebar}>menu_open</span>
+    //       <span ref={menuicon} className="material-symbols-outlined icon menu-icon" onClick={opensidebar}>menu_open</span>
     //     </div>
     //     <div className='sid-list'>
     //       {menuitem.map((item, i) => {
     //         return (
     //           <Link to={item.sideitem != 'dashboard' ? item.sideitem : ''} className='item' key={i}>
-    //             <span className="material-symbols-outlined icon-manag">{item.icon}</span>
+    //             <span className="material-symbols-outlined icon icon-manag">{item.icon}</span>
     //             <p className='menu-title'>{item.title}</p>
     //           </Link>
     //         )

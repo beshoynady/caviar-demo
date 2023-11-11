@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
 }
-.sidebar .logo-details i{
+.sidebar .logo-details .icon{
   font-size: 30px;
   color: #11101d;
   height: 50px;

@@ -5,7 +5,7 @@ import { detacontext } from '../../../../App'
 
 const StockItem = () => {
 
-  
+
   const [itemName, setitemName] = useState("");
   const [categoryId, setcategoryId] = useState("");
   const [largeUnit, setlargeUnit] = useState('');
@@ -18,7 +18,7 @@ const StockItem = () => {
   const createAt =new Date().toLocaleString()
 
   const createitem = async (e, userid) => {
-    console.log(createAt)
+    console.log(userid)
     e.preventDefault();
     try {
       const createBy = userid;

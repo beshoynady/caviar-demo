@@ -4,9 +4,7 @@ import { detacontext } from '../../../../App'
 
 
 const StockManag = () => {
-
   const [StockItems, setStockItems] = useState([]);
-
   const getaStockItems = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
@@ -134,14 +132,14 @@ const StockManag = () => {
   }
 }
 
-const [itemFilterd, setitemFilterd] = useState([])
+const [StockitemFilterd, setStockitemFilterd] = useState([])
 const searchByitem = (item) => {
   const items = AllStockactions.filter((action) => itemname(action.itemId).startsWith(item)== true)
-  setitemFilterd(items)
+  setStockitemFilterd(items)
 }
 const searchByaction = (action) => {
   const items = AllStockactions.filter((Stockactions) => Stockactions.movement== action)
-  setitemFilterd(items)
+  setStockitemFilterd(items)
 }
 
   // const calcBalance = (qu) => {
@@ -177,7 +175,6 @@ const searchByaction = (action) => {
   }, [])
 
   return (
-  AllStockactions?
     <detacontext.Consumer>
       {
         ({ userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
@@ -278,7 +275,7 @@ const searchByaction = (action) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {itemFilterd.length>0?itemFilterd.map((action, i) => {
+                      {StockitemFilterd.length>0?StockitemFilterd.map((action, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                             <tr key={i}>
@@ -505,7 +502,6 @@ const searchByaction = (action) => {
       }
     </detacontext.Consumer>
 
-    :''
     )
 }
 

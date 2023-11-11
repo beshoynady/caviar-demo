@@ -116,6 +116,7 @@ const ManagerDash = () => {
         ({ usertitle, list_day_order, total_day_salse,EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
+              <div className='container'>
               <div className="header">
                 <div className="left">
                   <h1>الصفحة الرئيسيه</h1>
@@ -262,6 +263,7 @@ const ManagerDash = () => {
                   </ul>
                 </div>
 
+              </div>
               </div>
             </section>
           )

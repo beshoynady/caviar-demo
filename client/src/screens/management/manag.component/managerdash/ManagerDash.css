@@ -4,35 +4,35 @@
   max-height: calc(100vh - 56px);
   overflow-y: auto;
 }
-.dashboard .header {
+.dashboard .container .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   grid-gap: 16px;
   flex-wrap: wrap;
 }
-.dashboard .header .left h1 {
+.dashboard .container .header .left h1 {
   font-size: 30px;
   font-weight: 600;
   color: var(--dark);
 }
-.dashboard .header .left .breadcrumb {
+.dashboard .container .header .left .breadcrumb {
   display: flex;
   align-items: center;
   grid-gap: 16px;
 }
-.dashboard .header .left .breadcrumb li {
+.dashboard .container .header .left .breadcrumb li {
   color: var(--dark);
 }
-.dashboard .header .left .breadcrumb li a {
+.dashboard .container .header .left .breadcrumb li a {
   color: var(--dark-grey);
   pointer-events: none;
 }
-.dashboard .header .left .breadcrumb li a.active {
+.dashboard .container .header .left .breadcrumb li a.active {
   color: var(--primary);
   pointer-events: none;
 }
-.dashboard .header .website {
+.dashboard .container .header .website {
   height: 40px;
   width: 126px;
   padding: 0 16px;
@@ -45,13 +45,13 @@
   grid-gap: 10px;
   font-weight: 500;
 }
-.dashboard .insights {
+.dashboard .container .insights {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 10px;
   margin-top: 20px;
 }
-.dashboard .insights li {
+.dashboard .container .insights li {
   padding: 10px;
   background: var(--light);
   border-radius: 20px;
@@ -61,7 +61,7 @@
   grid-gap: 24px;
   cursor: pointer;
 }
-.dashboard .insights li .bx {
+.dashboard .container .insights li .bx {
   width: 50px;
   height: 80px;
   border-radius: 10px;
@@ -70,35 +70,35 @@
   align-items: center;
   justify-content: center;
 }
-.dashboard .insights li:nth-child(1) .bx {
+.dashboard .container .insights li:nth-child(1) .bx {
   background: var(--light-primary);
   color: var(--primary);
 }
-.dashboard .insights li:nth-child(2) .bx {
+.dashboard .container .insights li:nth-child(2) .bx {
   background: var(--light-warning);
   color: var(--warning);
 }
-.dashboard .insights li:nth-child(3) .bx {
+.dashboard .container .insights li:nth-child(3) .bx {
   background: var(--light-success);
   color: var(--success);
 }
-.dashboard .insights li:nth-child(4) .bx {
+.dashboard .container .insights li:nth-child(4) .bx {
   background: var(--light-danger);
   color: var(--danger);
 }
-.dashboard .insights li .info {
+.dashboard .container .insights li .info {
   text-align: center;
 }
-.dashboard .insights li .info p {
+.dashboard .container .insights li .info p {
   font-size: 24px;
   color: var(--dark);
 }
-.dashboard .insights li .info h3 {
+.dashboard .container .insights li .info h3 {
   font-size: 20px;
   font-weight: 600;
   color: var(--dark);
 }
-.dashboard .bottom-data {
+.dashboard .container .bottom-data {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 24px;
@@ -106,87 +106,87 @@
   width: 100%;
   color: var(--dark);
 }
-.dashboard .bottom-data > div {
+.dashboard .container .bottom-data > div {
   border-radius: 20px;
   background: var(--light);
   padding: 24px;
   overflow-x: auto;
 }
-.dashboard .bottom-data .header {
+.dashboard .container .bottom-data .header {
   display: flex;
   align-items: center;
   grid-gap: 16px;
   margin-bottom: 24px;
 }
-.dashboard .bottom-data .header h3 {
+.dashboard .container .bottom-data .header h3 {
   margin-right: auto;
   font-size: 24px;
   font-weight: 600;
 }
-.dashboard .bottom-data .header .bx {
+.dashboard .container .bottom-data .header .bx {
   cursor: pointer;
 }
-.dashboard .bottom-data .orders {
+.dashboard .container .bottom-data .orders {
   flex-grow: 1;
   flex-basis: 500px;
 }
-.dashboard .bottom-data .orders table {
+.dashboard .container .bottom-data .orders table {
   width: 100%;
   border-collapse: collapse;
 }
-.dashboard .bottom-data .orders table th {
+.dashboard .container .bottom-data .orders table th {
   padding-bottom: 12px;
   font-size: 13px;
   text-align: left;
   border-bottom: 1px solid var(--grey);
 }
-.dashboard .bottom-data .orders table td {
+.dashboard .container .bottom-data .orders table td {
   padding: 16px 0;
 }
-.dashboard .bottom-data .orders table td img {
+.dashboard .container .bottom-data .orders table td img {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.dashboard .bottom-data .orders table tr td:first-child {
+.dashboard .container .bottom-data .orders table tr td:first-child {
   display: flex;
   align-items: center;
   grid-gap: 12px;
   padding-left: 6px;
 }
-.dashboard .bottom-data .orders table tr td .status {
+.dashboard .container .bottom-data .orders table tr td .status {
   font-size: 10px;
   padding: 6px 16px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;
 }
-.dashboard .bottom-data .orders table tr td .status.completed {
+.dashboard .container .bottom-data .orders table tr td .status.completed {
   background: var(--success);
 }
-.dashboard .bottom-data .orders table tr td .status.process {
+.dashboard .container .bottom-data .orders table tr td .status.process {
   background: var(--primary);
 }
-.dashboard .bottom-data .orders table tr td .status.pending {
+.dashboard .container .bottom-data .orders table tr td .status.pending {
   background: var(--warning);
 }
-.dashboard .bottom-data .orders table tbody tr {
+.dashboard .container .bottom-data .orders table tbody tr {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.dashboard .bottom-data .orders table tbody tr:hover {
+.dashboard .container .bottom-data .orders table tbody tr:hover {
   background: var(--grey);
 }
-.dashboard .bottom-data .reminders {
+.dashboard .container .bottom-data .reminders {
   flex-grow: 1;
   flex-basis: 300px;
 }
-.dashboard .bottom-data .reminders .task-list {
+.dashboard .container .bottom-data .reminders .task-list {
   width: 100%;
 }
-.dashboard .bottom-data .reminders .task-list li {
+.dashboard .container .bottom-data .reminders .task-list li {
   width: 100%;
   margin-bottom: 16px;
   background: var(--grey);
@@ -196,26 +196,26 @@
   align-items: center;
   justify-content: space-between;
 }
-.dashboard .bottom-data .reminders .task-list li .task-title {
+.dashboard .container .bottom-data .reminders .task-list li .task-title {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.dashboard .bottom-data .reminders .task-list li .task-title > p {
+.dashboard .container .bottom-data .reminders .task-list li .task-title > p {
   margin-left: 6px;
   margin-bottom: 0 !important;
 }
-.dashboard .bottom-data .reminders .task-list li .bx {
+.dashboard .container .bottom-data .reminders .task-list li .bx {
   cursor: pointer;
 }
-.dashboard .bottom-data .reminders .task-list li:last-child {
+.dashboard .container .bottom-data .reminders .task-list li:last-child {
   margin-bottom: 0;
 }
-.dashboard .bottom-data .reminders .task-list li.completed {
+.dashboard .container .bottom-data .reminders .task-list li.completed {
   border-left: 10px solid var(--success);
 }
-.dashboard .bottom-data .reminders .task-list li.not-completed {
+.dashboard .container .bottom-data .reminders .task-list li.not-completed {
   border-left: 10px solid var(--danger);
 }
 

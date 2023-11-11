@@ -40,7 +40,7 @@ const Category = () => {
 
   const [CategoryFilterd, setCategoryFilterd] = useState([])
   const searchByCategory = (category) => {
-    const categories = allCategory.filter((Category) => Category.name == category)
+    const categories = allCategory.filter((Category) => Category.name.startsWith(category)== true)
     setCategoryFilterd(categories)
   }
 

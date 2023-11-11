@@ -84,9 +84,9 @@ const Orders = () => {
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => getemployeesByOrderType(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="داخلي" key={i} >داخلي</option>
-                            <option value="ديلفري" key={i} >ديلفري</option>
-                            <option value="تيك اوي" key={i} >تيك اوي</option>
+                            <option value="داخلي" >داخلي</option>
+                            <option value="ديلفري" >ديلفري</option>
+                            <option value="تيك اوي" >تيك اوي</option>
                           </select>
                         </div>
                         {/* <div class="filter-group">

@@ -153,6 +153,7 @@ const CategoryStock = () => {
                         <th>عدد المنتجات</th>
                         <th>اجراءات</th>
                       </tr>
+                      
                     </thead>
                     <tbody>
                       {CategoryStockFilterd.length>0? CategoryStockFilterd.map((categoryStock, i) => {

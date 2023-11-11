@@ -57,7 +57,16 @@ const SideBar = () => {
           <span className="link_name">Dashboard</span>
         </Link>
         <ul className="sub-menu blank">
-          <li><a className="link_name" href="#">Dashboard</a></li>
+          <li><Link to="#" className="link_name">Dashboard</Link></li>
+        </ul>
+      </li>
+      <li>
+        <Link to="pos">
+          <i className='bx bx-grid-alt' ></i>
+          <span className="link_name">POS</span>
+        </Link>
+        <ul className="sub-menu blank">
+          <li><Link to="pos" className="link_name">POS</Link></li>
         </ul>
       </li>
       <li ref={arrow} onClick={openarrow}>

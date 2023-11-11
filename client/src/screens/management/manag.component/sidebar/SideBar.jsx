@@ -60,12 +60,12 @@ const SideBar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="#">
+            <Link to="/">
               <i className='bx bx-grid-alt' ></i>
               <span className="link_name">Dashboard</span>
             </Link>
             <ul className="sub-menu blank">
-              <li><Link to="#" className="link_name">Dashboard</Link></li>
+              <li><Link to="/" className="link_name">Dashboard</Link></li>
             </ul>
           </li>
           <li>

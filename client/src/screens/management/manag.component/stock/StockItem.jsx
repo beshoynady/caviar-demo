@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App'
+
+
 const StockItem = () => {
 
-
-
+  
   const [itemName, setitemName] = useState("");
   const [categoryId, setcategoryId] = useState("");
   const [largeUnit, setlargeUnit] = useState('');

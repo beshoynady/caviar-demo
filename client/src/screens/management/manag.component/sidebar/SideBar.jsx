@@ -186,7 +186,7 @@ const SideBar = () => {
             </ul>
           </li>
           <li>
-            <div className="iocn-link">
+            <div className="iocn-link" ref={arrow} onClick={openarrow}>
               <a href="#">
                 <i className='bx bx-book-alt' ></i>
                 <span className="link_name">Posts</span>

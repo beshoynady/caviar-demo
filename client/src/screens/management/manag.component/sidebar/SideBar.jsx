@@ -125,7 +125,7 @@ const SideBar = () => {
               <li><Link to="payroll">المرتبات</Link></li>
             </ul>
           </li>
-          <li ref={arrow} onClick={openarrow}>
+          {/* <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -154,8 +154,9 @@ const SideBar = () => {
               <li><Link to="products">الاطباق</Link></li>
               <li><Link to="productrecipe">التكاليف</Link></li>
             </ul>
-          </li>
-          <li ref={arrow} onClick={openarrow}>
+          </li> */}
+
+          {/* <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -259,7 +260,7 @@ const SideBar = () => {
             <ul className="sub-menu blank">
               <li><a className="link_name" href="#">Setting</a></li>
             </ul>
-          </li>
+          </li> */}
           <li>
             <div className="profile-details">
               <div className="profile-content">

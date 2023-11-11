@@ -38,7 +38,7 @@ const SideBar = () => {
     sidebar.current.classList.toggle("close")
   }
 
-  const arrowmen = useRef()
+  const arrow = useRef()
   const arrowemp = useRef()
   const arrowsto = useRef()
   const sidebar = useRef()

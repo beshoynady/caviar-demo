@@ -19,7 +19,7 @@ const StockManag = () => {
 
   }
 
-  const Stockmovement = ["مشتريات", "منصرف", "راجع"];
+  const Stockmovement = ["مشتريات", "منصرف", "راجع","هالك"];
   const [movement, setmovement] = useState('');
   const [itemId, setitemId] = useState("");
   const [unit, setunit] = useState('')
@@ -133,6 +133,17 @@ const StockManag = () => {
    return 'غير متوفر'
   }
 }
+
+const [itemFilterd, setitemFilterd] = useState([])
+const searchByitem = (item) => {
+  const items = AllStockactions.filter((action) => itemname(action.itemId).startsWith(item)== true)
+  setitemFilterd(items)
+}
+const searchByaction = (action) => {
+  const items = AllStockactions.filter((action) => action.movement== action)
+  setitemFilterd(items)
+}
+
   // const calcBalance = (qu) => {
   //   console.log('+++++++++')
   //   console.log(quantity)
@@ -149,7 +160,7 @@ const StockManag = () => {
 
 
   useEffect(() => {
-    if (movement == "منصرف") {
+    if (movement == "منصرف" || movement == "هالك") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
       setnewcost(oldCost - cost)
     } else {
@@ -172,8 +183,8 @@ const StockManag = () => {
         ({ userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
-              <div className="table-responsive mt-1">
-                <div className="table-wrapper p-3 mw-100">
+              <div className="table-responsive">
+                <div className="table-wrapper">
                   <div className="table-title">
                     <div className="row">
                       <div className="col-sm-6">
@@ -183,6 +194,63 @@ const StockManag = () => {
                         <a href="#addStockactionModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
                         <a href="#deleteStockactionModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-filter">
+                    <div class="row text-dark">
+                      <div class="col-sm-3">
+                        <div class="show-entries">
+                        <span>عرض</span>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
+                          </select>
+                          <span>صفوف</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <div class="filter-group">
+                          <label>اسم الصنف</label>
+                          <input type="text" class="form-control" onChange={(e) => searchByitem(e.target.value)} />
+                        </div>    
+                        <div class="filter-group">
+                          <label>نوع الاوردر</label>
+                          <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
+                            <option value={""}>الكل</option>
+                            <option value="مشتريات" >مشتريات</option>
+                            <option value="راجع" >راجع</option>
+                            <option value="منصرف" >منصرف</option>
+                            <option value="هالك" >هالك</option>
+                          </select>
+                        </div>                                           
+                        {/* <div class="filter-group">
+                          <label>Location</label>
+                          <select class="form-control">
+                            <option>All</option>
+                            <option>Berlin</option>
+                            <option>London</option>
+                            <option>Madrid</option>
+                            <option>New York</option>
+                            <option>Paris</option>
+                          </select>
+                        </div>
+                        <div class="filter-group">
+                          <label>Status</label>
+                          <select class="form-control">
+                            <option>Any</option>
+                            <option>Delivered</option>
+                            <option>Shipped</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
+                          </select>
+                        </div>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
                     </div>
                   </div>
@@ -210,7 +278,7 @@ const StockManag = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {StockItems && AllStockactions.map((action, i) => {
+                      {itemFilterd.length>0?itemFilterd.map((action, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                             <tr key={i}>
@@ -238,7 +306,37 @@ const StockManag = () => {
                             </tr>
                           )
                         }
-                      })}
+                      })
+                     :AllStockactions.map((action, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{itemname(action.itemId)}</td>
+                              <td>{action.movement}</td>
+                              <td>{action.Quantity}</td>
+                              <td>{action.unit}</td>
+                              <td>{action.price}</td>
+                              <td>{action.cost}</td>
+                              <td>{action.oldBalance}</td>
+                              <td>{action.Balance}</td>
+                              <td>{Date(action.actionAt).toLocaleString}</td>
+                              <td>{usertitle(action.actionBy)}</td>
+                              <td>
+                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          )
+                        }
+                      })
+                      }
                     </tbody>
                   </table>
                   <div className="clearfix">
@@ -268,8 +366,8 @@ const StockManag = () => {
                           <label>نوع الحركه</label>
                           <select name="" id="" onChange={(e) => setmovement(e.target.value)}>
                             <option >اختر الاجراء</option>
-                            {Stockmovement.map((statu, i) => {
-                              return <option key={i} defaultValue={statu}>{statu}</option>
+                            {Stockmovement.map((status, i) => {
+                              return <option key={i} defaultValue={status}>{status}</option>
                             })}
                           </select>
                         </div>

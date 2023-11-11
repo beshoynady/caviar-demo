@@ -14,7 +14,7 @@ const StockManagSchema = new mongoose.Schema(
     },
     movement: {
       type: String,
-      enum: ['مشتريات', 'منصرف', 'راجع'],
+      enum: ['مشتريات', 'منصرف', 'راجع','هالك'],
       require: true
     },
     Quantity: {

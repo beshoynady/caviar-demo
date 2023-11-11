@@ -11,7 +11,7 @@ const Orders = () => {
     let form_dt = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     return form_dt;
   }
-
+  
   const [listofoeders, setlistofoeders] = useState([])
   const getorders = async () => {
     const res = await axios.get('https://caviar-api.vercel.app/api/order')
@@ -24,6 +24,15 @@ const Orders = () => {
     await axios.delete('https://caviar-api.vercel.app/api/order/' + id).then((res) => console.log(res.data))
     getorders()
   }
+  const [OrdersFilterd, setOrdersFilterd] = useState([])
+  const searchBySerial = (serial) => {
+    const orders = listofoeders.filter((order) => order.serial.startsWith(serial) == true)
+    setOrdersFilterd(orders)
+  }
+  const getemployeesByOrderType = (Type) => {
+    const orders = listofoeders.filter((order) => order.order_type == Type)
+    setOrdersFilterd(orders)
+  }
 
 
 
@@ -33,7 +42,7 @@ const Orders = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ askingForHelp, userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination}) => {
+        ({ usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -49,6 +58,52 @@ const Orders = () => {
                       </div>
                     </div>
                   </div>
+                  <div class="table-filter">
+                    <div class="row text-dark">
+                      <div class="col-sm-3">
+                        <div class="show-entries">
+                          <span>عرض</span>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
+                          </select>
+                          <span>صفوف</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="filter-group">
+                          <label>رقم الفاتورة</label>
+                          <input type="text" class="form-control" onChange={(e) => searchBySerial(e.target.value)} />
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="filter-group">
+                          <label>نوع الاوردر</label>
+                          <select class="form-control" onChange={(e) => getemployeesByOrderType(e.target.value)} >
+                            <option value={""}>الكل</option>
+                            <option value="داخلي" key={i} >داخلي</option>
+                            <option value="ديلفري" key={i} >ديلفري</option>
+                            <option value="تيك اوي" key={i} >تيك اوي</option>
+                          </select>
+                        </div>
+                        {/* <div class="filter-group">
+                  <label>Status</label>
+                  <select class="form-control">
+                    <option>Any</option>
+                    <option>Delivered</option>
+                    <option>Shipped</option>
+                    <option>Pending</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+                <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
+                      </div>
+                    </div>
+                  </div>
+
                   <table className="table table-striped table-hover">
                     <thead>
                       <tr>
@@ -61,6 +116,7 @@ const Orders = () => {
                         <th>م</th>
                         <th>رقم الاوردر</th>
                         <th>العميل</th>
+                        <th>المكان</th>
                         <th>الاجمالي</th>
                         <th>حالة الطلب</th>
                         <th>حالة الدفع</th>
@@ -69,36 +125,69 @@ const Orders = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {listofoeders.map((o, i) => {
+                      {OrdersFilterd.length > 0 ?
+                        OrdersFilterd.map((o, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{o.serial}</td>
-                              <td>{o.table != null ? usertitle(o.table) : usertitle(o.customer)}</td>
-                              <td>{o.total}</td>
-                              <td>{o.status}</td>
-                              <td>{o.payment_status}</td>
-                              <td>{formatdate(o.payment_date)}</td>
-                              <td>
-                                <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })}
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{o.serial}</td>
+                                <td>{o.table != null ? usertitle(o.table)
+                                  : o.user ? usertitle(o.user)
+                                    : o.employee ? usertitle(o.employee) : ''}</td>
+                                <td>{o.order_type == 'داخلي' ? usertitle(o.table) : o.order_type}</td>
+                                <td>{o.total}</td>
+                                <td>{o.status}</td>
+                                <td>{o.payment_status}</td>
+                                <td>{formatdate(o.payment_date)}</td>
+                                <td>
+                                  <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+                          }
+                        })
+                        : listofoeders.map((o, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{o.serial}</td>
+                                <td>{o.table != null ? usertitle(o.table)
+                                  : o.user ? usertitle(o.user)
+                                    : o.employee ? usertitle(o.employee) : ''}</td>
+                                <td>{o.order_type == 'داخلي' ? usertitle(o.table) : o.order_type}</td>
+                                <td>{o.total}</td>
+                                <td>{o.status}</td>
+                                <td>{o.payment_status}</td>
+                                <td>{formatdate(o.payment_date)}</td>
+                                <td>
+                                  <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+                          }
+                        })
+                      }
 
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dart">عرض <b>{listofoeders.length >  endpagination ? endpagination : listofoeders.length}</b> من <b>{listofoeders.length}</b> عنصر</div>
+                    <div className="hint-text text-dart">عرض <b>{listofoeders.length > endpagination ? endpagination : listofoeders.length}</b> من <b>{listofoeders.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

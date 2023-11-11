@@ -30,13 +30,17 @@ const SideBar = () => {
   //   menuicon.current.classList.toggle("rotate")
   // }
   const openarrow = () => {
+    console.log(arrow)
     arrow.current.classList.toggle("showMenu")
   }
   const opensidebar = () => {
+
     sidebar.current.classList.toggle("close")
   }
 
-  const arrow = useRef()
+  const arrowmen = useRef()
+  const arrowemp = useRef()
+  const arrowsto = useRef()
   const sidebar = useRef()
   const menuicon = useRef()
 
@@ -140,7 +144,7 @@ const SideBar = () => {
               <li><Link to="payroll">حركه المخزن</Link></li>
             </ul>
           </li>
-          {/* 
+          
           <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">
@@ -155,7 +159,7 @@ const SideBar = () => {
               <li><Link to="products">الاطباق</Link></li>
               <li><Link to="productrecipe">التكاليف</Link></li>
             </ul>
-          </li> */}
+          </li>
 
           {/* <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">

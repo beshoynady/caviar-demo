@@ -125,7 +125,7 @@ const SideBar = () => {
               <li><Link to="payroll">المرتبات</Link></li>
             </ul>
           </li>
-          {/* <li ref={arrow} onClick={openarrow}>
+          <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -140,6 +140,7 @@ const SideBar = () => {
               <li><Link to="payroll">حركه المخزن</Link></li>
             </ul>
           </li>
+          {/* 
           <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">

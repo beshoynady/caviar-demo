@@ -155,7 +155,7 @@ const CategoryStock = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {CategoryStockFilterd?CategoryStockFilterd.map((categoryStock, i) => {
+                      {CategoryStockFilterd.length>0? CategoryStockFilterd.map((categoryStock, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                             <tr key={i}>

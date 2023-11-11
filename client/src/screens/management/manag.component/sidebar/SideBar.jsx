@@ -155,6 +155,36 @@ const SideBar = () => {
               <li><Link to="productrecipe">التكاليف</Link></li>
             </ul>
           </li>
+          <li ref={arrow} onClick={openarrow}>
+            <div className="iocn-link">
+              <a href="#">
+                <i className='bx bx-collection' ></i>
+                <span className="link_name">المنيو</span>
+              </a>
+              <i className='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul className="sub-menu">
+              <li><a className="link_name" href="#">المنيو</a></li>
+              <li><Link to="category">التصنيفات</Link></li>
+              <li><Link to="products">الاطباق</Link></li>
+              <li><Link to="productrecipe">التكاليف</Link></li>
+            </ul>
+          </li>
+          <li ref={arrow} onClick={openarrow}>
+            <div className="iocn-link">
+              <a href="#">
+                <i className='bx bx-collection' ></i>
+                <span className="link_name">المنيو</span>
+              </a>
+              <i className='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul className="sub-menu">
+              <li><a className="link_name" href="#">المنيو</a></li>
+              <li><Link to="category">التصنيفات</Link></li>
+              <li><Link to="products">الاطباق</Link></li>
+              <li><Link to="productrecipe">التكاليف</Link></li>
+            </ul>
+          </li>
           <li>
             <div className="iocn-link">
               <a href="#">

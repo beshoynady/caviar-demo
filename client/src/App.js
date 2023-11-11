@@ -761,7 +761,7 @@ function App() {
             <Route path='tables' element={<Tables />} />
             <Route path='employees' element={<Employees />} />
             <Route path='Employeessalary' element={<EmployeesSalary />} />
-            <Route path='payrole' element={<PayRoll/>} />
+            <Route path='payroll' element={<PayRoll/>} />
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />

@@ -151,22 +151,9 @@ const StockManag = () => {
   useEffect(() => {
     if (movement == "منصرف") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
-      console.log("newcost")
-      console.log(oldCost - cost)
-      console.log("cost")
-      console.log(cost)
-      console.log("oldCost")
-      console.log(oldCost)
       setnewcost(oldCost - cost)
     } else {
-      console.log(Number(oldBalance) + Number(Quantity))
       setnewBalance(Number(oldBalance) + Number(Quantity))
-      console.log("cost")
-      console.log(cost)
-      console.log("oldCost")
-      console.log(oldCost)
-      console.log("newcost")
-      console.log(oldCost + cost)
       setnewcost(oldCost + cost)
     }
   }, [Quantity,price])
@@ -192,7 +179,7 @@ const StockManag = () => {
                       <div className="col-sm-6">
                         <h2>ادارة <b>المخزون</b></h2>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addStockactionModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
                         <a href="#deleteStockactionModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
@@ -271,7 +258,7 @@ const StockManag = () => {
               <div id="addStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createStockaction(e, userlogininfo.id)}>
+                    <form onSubmit={(e) => createStockaction(e, userlogininfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -335,7 +322,7 @@ const StockManag = () => {
               <div id="editStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => updateStockaction(e, userlogininfo.id)}>
+                    <form onSubmit={(e) => updateStockaction(e, userlogininfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -98,10 +98,10 @@ const StockItem = () => {
                 <div className="table-wrapper p-3 mw-100">
                   <div className="table-title">
                     <div className="row">
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 text-right">
                         <h2>ادارة <b>المنتجات</b></h2>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addStockItemModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
                         <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>

@@ -26,7 +26,7 @@ const Orders = () => {
   }
   const [OrdersFilterd, setOrdersFilterd] = useState([])
   const searchBySerial = (serial) => {
-    const orders = listofoeders.filter((order) => order.serial.startsWith(serial) == true)
+    const orders = listofoeders.filter((order) => order.serial.toString().startsWith(serial) == true)
     setOrdersFilterd(orders)
   }
   const getemployeesByOrderType = (Type) => {

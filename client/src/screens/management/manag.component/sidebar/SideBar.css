@@ -11,7 +11,7 @@
   top: 0;
   right: 0;
   height: 100vh;
-  width: 230px;
+  width: 230px !important;
   z-index: 100;
   transition: all 0.5s ease;
   background: #fff;
@@ -181,12 +181,12 @@
 }
 .sidebar .nav-links li:hover .sub-menu.blank{
   top: 50%;
-  transform: translateY(50%);
+  transform: translateY(30%);
 }
 .sidebar .profile-details{
   position: fixed;
   bottom: 0;
-  width: 230px;
+  width: 180px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -203,8 +203,7 @@
 .sidebar .profile-details .name-job{
   height: 52px;
   width: 120px;
-  margin: 0 14px 0 12px;
-
+  margin: 0 14px 0 12px
 }
 .sidebar .profile-details .profile-content{
   display: flex;
@@ -212,7 +211,7 @@
 }
 .sidebar .profile-details .profile-content i.bx{
   height: 52px;
-  width: 52px;
+  width: 40px;
   font-size: 40px;
   color: #93181a;
   border-radius: 16px;
@@ -225,7 +224,7 @@
 }
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job{
-  /* color: #fff; */
+  color: gold;
   font-size: 16px;
   font-weight: 400;
   white-space: nowrap;
@@ -252,8 +251,8 @@
 .home-section{
   position: absolute;
   height: 60px;
-  right: 230px;
-  width: 60px;
+  right: 170px;
+  width: 40px;
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
@@ -261,7 +260,7 @@
   width: 60px;
 }
 .home-section .home-content{
-  height: 60px;
+  height: 30px;
   display: flex;
   align-items: center;
 }

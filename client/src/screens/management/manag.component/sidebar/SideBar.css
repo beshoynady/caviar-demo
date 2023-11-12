@@ -186,7 +186,7 @@
 .sidebar .profile-details{
   position: fixed;
   bottom: 0;
-  width: 230px;
+  width: 170px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -212,7 +212,7 @@
 }
 .sidebar .profile-details .profile-content i.bx{
   height: 52px;
-  width: 52px;
+  width: 40px;
   font-size: 40px;
   color: #93181a;
   border-radius: 16px;
@@ -251,17 +251,17 @@
 }
 .home-section{
   position: absolute;
-  height: 60px;
-  right: 230px;
+  height: 40px;
+  right: 170px;
   width: 60px;
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
-  right: 78px;
+  right: 70px;
   width: 60px;
 }
 .home-section .home-content{
-  height: 60px;
+  height: 32px;
   display: flex;
   align-items: center;
 }

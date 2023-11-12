@@ -55,7 +55,7 @@ const SideBar = () => {
   return (
     <detacontext.Consumer>
       {
-        ({employeelogout }) => {
+        ({userlogininfo, employeelogout }) => {
           return (
             <>
               <div ref={sidebar} className="sidebar close">
@@ -298,12 +298,12 @@ const SideBar = () => {
                   <li>
                     <div className="profile-details">
                       <div className="profile-content">
-                        <i className='bx bx-log-out' ></i>
+                        <i className='bx bx-log-out' onClick={employeelogout}></i>
                         {/* <img src="https://gravatar.com/avatar/f57bddebd1edf91412d5d68702530099" alt="profileImg" /> */}
                       </div>
                       <div className="name-job">
-                        <div className="profile_name">{employeelogout.employeeinfo.username}</div>
-                        <div className="job">{employeelogout.employeeinfo.role}</div>
+                        <div className="profile_name">{userlogininfo?userlogininfo.employeeinfo.username:''}</div>
+                        <div className="job">{userlogininfo?userlogininfo.employeeinfo.role:''}</div>
                       </div>
                     </div>
                   </li>

@@ -387,7 +387,10 @@ const searchByaction = (action) => {
 
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                          {movement == "منصرف" || movement == "هالك" ?
+                          <input type='Number' className="form-control"readOnly required defaultValue={price} />
+                         : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                        }
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
@@ -443,13 +446,16 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => {setQuantity(e.target.value);  }} />
+                          <input type='Number' className="form-control" required onChange={(e) => {setQuantity(e.target.value); setcost(e.target.value * price )}} />
                           <input type='text' className="form-control" defaultValue={unit} readOnly />
                         </div>
 
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                          {movement == "منصرف" || movement == "هالك" ?
+                          <input type='Number' className="form-control"readOnly required defaultValue={price} />
+                         : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                        }
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>

@@ -251,17 +251,17 @@
 }
 .home-section{
   position: absolute;
-  height: 60px;
-  right: 230px;
-  width: 60px;
+  height: 33px;
+  right: 170px;
+  width: 45px;
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{
-  right: 78px;
-  width: 60px;
+  right: 70px;
+  width: 45px;
 }
 .home-section .home-content{
-  height: 60px;
+  height: 33px;
   display: flex;
   align-items: center;
 }

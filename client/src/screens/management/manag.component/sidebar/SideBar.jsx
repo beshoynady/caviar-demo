@@ -52,140 +52,144 @@ const SideBar = () => {
   }, [])
 
   return (
-    <>
-      <div ref={sidebar} className="sidebar close">
-        <div className="logo-details">
-          <i className='bx bxl-c-plus-plus'></i>
-          <span className="logo_name">CodingLab</span>
-        </div>
-        <ul className="nav-links">
-          <li>
-            <Link to="/management">
-              <span class="material-symbols-outlined icon">
-                dashboard
-              </span>
-              <span className="link_name">Dashboard</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="/" className="link_name">Dashboard</Link></li>
-            </ul>
-          </li>
-          <li>
-            <Link to="pos">
-              {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined icon">
-                point_of_sale
-              </span>
-              <span className="link_name">POS</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="pos" className="link_name">POS</Link></li>
-            </ul>
-          </li>
-          <li>
-            <Link to="waiter">
-              {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined icon">
-                concierge
-              </span>
-              <span className="link_name">الويتر</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="waiter" className="link_name">الويتر</Link></li>
-            </ul>
-          </li>
-          <li>
-            <Link to="kitchen">
-              {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined icon">
-                cooking
-              </span>
-              <span className="link_name">المطبخ</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
-            </ul>
-          </li>
-          <li>
-            <Link to="orders">
-              {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined icon">
-                list_alt
-              </span>
-              <span className="link_name">الاوردرات</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="orders" className="link_name">الاوردرات</Link></li>
-            </ul>
-          </li>
-          <li>
-            <Link to="tables">
-              {/* <i className='bx bx-grid-alt' ></i> */}
-              <span class="material-symbols-outlined icon">
-                table_restaurant
-              </span>
-              <span className="link_name">الطاولة</span>
-            </Link>
-            <ul className="sub-menu blank">
-              <li><Link to="tables" className="link_name">الطاولة</Link></li>
-            </ul>
-          </li>
+    <detacontext.Consumer>
+      {
+        ({employeelogout }) => {
+          return (
+            <>
+              <div ref={sidebar} className="sidebar close">
+                <div className="logo-details">
+                  <i className='bx bxl-c-plus-plus'></i>
+                  <span className="logo_name">CodingLab</span>
+                </div>
+                <ul className="nav-links">
+                  <li>
+                    <Link to="/management">
+                      <span class="material-symbols-outlined icon">
+                        dashboard
+                      </span>
+                      <span className="link_name">Dashboard</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="/" className="link_name">Dashboard</Link></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="pos">
+                      {/* <i className='bx bx-grid-alt' ></i> */}
+                      <span class="material-symbols-outlined icon">
+                        point_of_sale
+                      </span>
+                      <span className="link_name">POS</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="pos" className="link_name">POS</Link></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="waiter">
+                      {/* <i className='bx bx-grid-alt' ></i> */}
+                      <span class="material-symbols-outlined icon">
+                        concierge
+                      </span>
+                      <span className="link_name">الويتر</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="waiter" className="link_name">الويتر</Link></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="kitchen">
+                      {/* <i className='bx bx-grid-alt' ></i> */}
+                      <span class="material-symbols-outlined icon">
+                        cooking
+                      </span>
+                      <span className="link_name">المطبخ</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="orders">
+                      {/* <i className='bx bx-grid-alt' ></i> */}
+                      <span class="material-symbols-outlined icon">
+                        list_alt
+                      </span>
+                      <span className="link_name">الاوردرات</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="orders" className="link_name">الاوردرات</Link></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="tables">
+                      {/* <i className='bx bx-grid-alt' ></i> */}
+                      <span class="material-symbols-outlined icon">
+                        table_restaurant
+                      </span>
+                      <span className="link_name">الطاولة</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="tables" className="link_name">الطاولة</Link></li>
+                    </ul>
+                  </li>
 
-          <li ref={arrowmen} onClick={openarrowmen}>
-            <div className="iocn-link">
-              <a href="#">
-                <span class="material-symbols-outlined icon">
-                  restaurant_menu
-                </span>
-                <span className="link_name">المنيو</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">المنيو</a></li>
-              <li><Link to="category">التصنيفات</Link></li>
-              <li><Link to="products">الاطباق</Link></li>
-              <li><Link to="productrecipe">التكاليف</Link></li>
-            </ul>
-          </li>
+                  <li ref={arrowmen} onClick={openarrowmen}>
+                    <div className="iocn-link">
+                      <a href="#">
+                        <span class="material-symbols-outlined icon">
+                          restaurant_menu
+                        </span>
+                        <span className="link_name">المنيو</span>
+                      </a>
+                      <i className='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul className="sub-menu">
+                      <li><a className="link_name" href="#">المنيو</a></li>
+                      <li><Link to="category">التصنيفات</Link></li>
+                      <li><Link to="products">الاطباق</Link></li>
+                      <li><Link to="productrecipe">التكاليف</Link></li>
+                    </ul>
+                  </li>
 
-          <li ref={arrowemp} onClick={openarrowemp}>
-            <div className="iocn-link">
-              <a href="#">
-                <span class="material-symbols-outlined icon">
-                  group_add
-                </span>
-                <span className="link_name">الموظفون</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">الموظفون</a></li>
-              <li><Link to="employees">البيانات</Link></li>
-              <li><Link to="employeessalary">تعاملات</Link></li>
-              <li><Link to="payroll">المرتبات</Link></li>
-            </ul>
-          </li>
+                  <li ref={arrowemp} onClick={openarrowemp}>
+                    <div className="iocn-link">
+                      <a href="#">
+                        <span class="material-symbols-outlined icon">
+                          group_add
+                        </span>
+                        <span className="link_name">الموظفون</span>
+                      </a>
+                      <i className='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul className="sub-menu">
+                      <li><a className="link_name" href="#">الموظفون</a></li>
+                      <li><Link to="employees">البيانات</Link></li>
+                      <li><Link to="employeessalary">تعاملات</Link></li>
+                      <li><Link to="payroll">المرتبات</Link></li>
+                    </ul>
+                  </li>
 
-          <li ref={arrowsto} onClick={openarrowsto}>
-            <div className="iocn-link">
-              <a href="#">
-                <span class="material-symbols-outlined icon">
-                  receipt_long
-                </span>
-                <span className="link_name">المخزن</span>
-              </a>
-              <i className='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul className="sub-menu">
-              <li><a className="link_name" href="#">المخزن</a></li>
-              <li><Link to="categoryStock">تصنيفات</Link></li>
-              <li><Link to="stockitem">الاصناف</Link></li>
-              <li><Link to="stockmang">حركه المخزن</Link></li>
-            </ul>
-          </li>
+                  <li ref={arrowsto} onClick={openarrowsto}>
+                    <div className="iocn-link">
+                      <a href="#">
+                        <span class="material-symbols-outlined icon">
+                          receipt_long
+                        </span>
+                        <span className="link_name">المخزن</span>
+                      </a>
+                      <i className='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul className="sub-menu">
+                      <li><a className="link_name" href="#">المخزن</a></li>
+                      <li><Link to="categoryStock">تصنيفات</Link></li>
+                      <li><Link to="stockitem">الاصناف</Link></li>
+                      <li><Link to="stockmang">حركه المخزن</Link></li>
+                    </ul>
+                  </li>
 
-          {/* <li ref={arrow} onClick={openarrow}>
+                  {/* <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">
               <a href="#">
                 <i className='bx bx-collection' ></i>
@@ -290,46 +294,51 @@ const SideBar = () => {
               <li><a className="link_name" href="#">Setting</a></li>
             </ul>
           </li> */}
-          <li>
-            <div className="profile-details">
-              <div className="profile-content">
-                <img src="https://gravatar.com/avatar/f57bddebd1edf91412d5d68702530099" alt="profileImg" />
+                  <li>
+                    <div className="profile-details">
+                      <div className="profile-content">
+                        <i className='bx bx-log-out' ></i>
+                        {/* <img src="https://gravatar.com/avatar/f57bddebd1edf91412d5d68702530099" alt="profileImg" /> */}
+                      </div>
+                      <div className="name-job">
+                        <div className="profile_name">{employeelogout.username}</div>
+                        <div className="job">{employeelogout.role}</div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
-              <div className="name-job">
-                <div className="profile_name">Dumitru Chirutac</div>
-                <div className="job">Web Desginer</div>
-              </div>
-              <i className='bx bx-log-out' ></i>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <section className="home-section" onClick={opensidebar}>
-        <div className="home-content">
-          <i className='bx bx-menu' ></i>
-        </div>
-      </section>
-    </>
-    // <div ref={sidebar} className='sidebar'>
-    //   <div className='menu'>
-    //     <div className="logo">
-    //       <h2>كافيار</h2>
-    //       <span ref={menuicon} className="material-symbols-outlined icon menu-icon" onClick={opensidebar}>menu_open</span>
-    //     </div>
-    //     <div className='sid-list'>
-    //       {menuitem.map((item, i) => {
-    //         return (
-    //           <Link to={item.sideitem != 'dashboard' ? item.sideitem : ''} className='item' key={i}>
-    //             <span className="material-symbols-outlined icon icon-manag">{item.icon}</span>
-    //             <p className='menu-title'>{item.title}</p>
-    //           </Link>
-    //         )
-    //       })
-    //       }
-    //     </div>
-    //   </div>
-    // </div>
+              <section className="home-section" onClick={opensidebar}>
+                <div className="home-content">
+                  <i className='bx bx-menu' ></i>
+                </div>
+              </section>
+            </>
+            // <div ref={sidebar} className='sidebar'>
+            //   <div className='menu'>
+            //     <div className="logo">
+            //       <h2>كافيار</h2>
+            //       <span ref={menuicon} className="material-symbols-outlined icon menu-icon" onClick={opensidebar}>menu_open</span>
+            //     </div>
+            //     <div className='sid-list'>
+            //       {menuitem.map((item, i) => {
+            //         return (
+            //           <Link to={item.sideitem != 'dashboard' ? item.sideitem : ''} className='item' key={i}>
+            //             <span className="material-symbols-outlined icon icon-manag">{item.icon}</span>
+            //             <p className='menu-title'>{item.title}</p>
+            //           </Link>
+            //         )
+            //       })
+            //       }
+            //     </div>
+            //   </div>
+            // </div>
+          )
+        }
+      }
+    </detacontext.Consumer>
   )
+
 }
 
 export default SideBar

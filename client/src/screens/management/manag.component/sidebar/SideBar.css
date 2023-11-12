@@ -10,11 +10,11 @@
   position: relative;
   top: 0;
   right: 0;
-  height: 100%;
-  width: 200px;
+  height: 100vh;
+  width: 230px;
   z-index: 100;
   transition: all 0.5s ease;
-   background: #fff;
+  background: #fff;
 }
 .sidebar.close{
   width: 78px;
@@ -36,7 +36,7 @@
 .sidebar .logo-details .logo_name{
   font-size: 22px;
   color: yellowgreen;
-  font-weight: 600;
+  font-weight: 800;
   transition: 0.3s ease;
   transition-delay: 0.1s;
 }
@@ -47,7 +47,7 @@
 }
 .sidebar .nav-links{
   height: 100%;
-  padding: 30px 0 150px 0;
+  padding: 10px 0 100px 0;
   overflow: auto;
 }
 .sidebar.close .nav-links{
@@ -114,7 +114,7 @@
 }
 .sidebar .nav-links li a .link_name{
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   color: #11101d;
   transition: all 0.4s ease;
 }
@@ -186,12 +186,12 @@
 .sidebar .profile-details{
   position: fixed;
   bottom: 0;
-  width: 200px;
+  width: 230px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   /* background: #1d1b31; */
-  padding: 12px 0;
+  padding: 12px 10px;
   transition: all 0.5s ease;
 }
 .sidebar.close .profile-details{
@@ -202,7 +202,7 @@
 }
 .sidebar .profile-details .name-job{
   height: 52px;
-  width: 60%;
+  width: 120px;
   margin: 0 14px 0 12px;
 
 }
@@ -233,7 +233,7 @@
 .sidebar .profile-details .job{
   /* color: #fff; */
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   opacity:.5;
   white-space: nowrap;
 }
@@ -252,7 +252,7 @@
 .home-section{
   position: absolute;
   height: 60px;
-  right: 205px;
+  right: 230px;
   width: 60px;
   transition: all 0.5s ease;
 }

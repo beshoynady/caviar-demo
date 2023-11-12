@@ -302,8 +302,8 @@ const SideBar = () => {
                         {/* <img src="https://gravatar.com/avatar/f57bddebd1edf91412d5d68702530099" alt="profileImg" /> */}
                       </div>
                       <div className="name-job">
-                        <div className="profile_name">{employeelogout.username}</div>
-                        <div className="job">{employeelogout.role}</div>
+                        <div className="profile_name">{employeelogout.employeeinfo.username}</div>
+                        <div className="job">{employeelogout.employeeinfo.role}</div>
                       </div>
                     </div>
                   </li>

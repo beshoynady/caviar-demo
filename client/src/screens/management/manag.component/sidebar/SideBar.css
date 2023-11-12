@@ -11,7 +11,7 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 230px;
+  width: 200px;
   z-index: 100;
   transition: all 0.5s ease;
    background: #fff;
@@ -35,7 +35,7 @@
 }
 .sidebar .logo-details .logo_name{
   font-size: 22px;
-  color: #fff;
+  color: yellowgreen;
   font-weight: 600;
   transition: 0.3s ease;
   transition-delay: 0.1s;

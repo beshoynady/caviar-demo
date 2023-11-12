@@ -37,17 +37,6 @@ const StockManag = () => {
   const createStockaction = async (e, userid) => {
     e.preventDefault();
     try {
-      console.log(itemId)
-      console.log(movement)
-      console.log(Quantity)
-      console.log('oldCost')
-      console.log(oldCost)
-      console.log(cost)
-      console.log(unit)
-      console.log(newBalance)
-      console.log(oldBalance)
-      console.log(typeof(price))
-      console.log(actionAt)
       const actionBy = userid;
 
       console.log(actionBy)
@@ -69,16 +58,6 @@ const StockManag = () => {
   const updateStockaction = async (e, userid) => {
     e.preventDefault();
     try {
-      console.log(itemId)
-      console.log(movement)
-      console.log(Quantity)
-      console.log('oldCost')
-      console.log(oldCost)
-      console.log(cost)
-      console.log(unit)
-      console.log(newBalance)
-      console.log(oldBalance)
-      console.log(typeof(price))
       const actionBy = userid;
 
       console.log(actionBy)
@@ -297,7 +276,7 @@ const searchByaction = (action) => {
                               <td>{Date(action.actionAt).toLocaleString}</td>
                               <td>{usertitle(action.actionBy)}</td>
                               <td>
-                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -326,7 +305,7 @@ const searchByaction = (action) => {
                               <td>{Date(action.actionAt).toLocaleString}</td>
                               <td>{usertitle(action.actionBy)}</td>
                               <td>
-                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost) ; setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -370,7 +349,7 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); 
+                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); ; setprice(e.price) 
                           setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
                           setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost) }}>
                             <option >اختر الصنف</option>

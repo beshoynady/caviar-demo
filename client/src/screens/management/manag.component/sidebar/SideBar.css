@@ -20,7 +20,7 @@
   width: 78px;
 }
 .sidebar .logo-details{
-  height: 60px;
+  height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
 }
 .sidebar .nav-links{
   height: 100%;
-  padding: 10px 0 100px 0;
+  padding:0 5px 0;
   overflow: auto;
 }
 .sidebar.close .nav-links{
@@ -184,21 +184,23 @@
   transform: translateY(50%);
 }
 .sidebar .profile-details{
-  position: fixed;
-  bottom: 0;
-  width: 170px;
-  display: flex;
   align-items: center;
+  bottom: 0;
+  display: flex;
   justify-content: space-between;
-  /* background: #1d1b31; */
   padding: 12px 10px;
-  transition: all 0.5s ease;
+  position: fixed;
+  transition: all .5s ease;
+  width: 183px;
+  background: cyan;
 }
 .sidebar.close .profile-details{
   background: none;
 }
 .sidebar.close .profile-details{
   width: 78px;
+  background: cyan;
+
 }
 .sidebar .profile-details .name-job{
   height: 52px;
@@ -216,7 +218,7 @@
   font-size: 40px;
   color: #93181a;
   border-radius: 16px;
-  margin: 0 14px 0 12px;
+  margin: 0 5px 0 12px;
   /* background: #1d1b31; */
   transition: all 0.5s ease;
 }

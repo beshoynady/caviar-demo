@@ -349,7 +349,7 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); ; setprice(e.price) 
+                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); ; setprice(StockItems.filter(i => i._id == e.target.value)[0].price) 
                           setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
                           setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost) }}>
                             <option >اختر الصنف</option>
@@ -366,7 +366,7 @@ const searchByaction = (action) => {
 
                         <div className="form-group">
                           <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" ?
+                          {movement == "منصرف" || movement == "هالك" || movement == "راجع"?
                           <input type='Number' className="form-control"readOnly required defaultValue={price} />
                          : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
                         }

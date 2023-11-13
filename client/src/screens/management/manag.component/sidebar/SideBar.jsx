@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import './SideBar.css';
 import { detacontext } from '../../../../App'
 import { Link } from 'react-router-dom'
+import { getAllExpenses } from '../../../../../../server/controllers/Expense.controller';
+import { getAllDailyExpenses } from '../../../../../../server/controllers/DailyExpense.controller';
 
 const SideBar = () => {
   // const menuitem = [
@@ -39,6 +41,9 @@ const SideBar = () => {
   const openarrowsto = () => {
     arrowsto.current.classList.toggle("showMenu")
   }
+  const openarrowsexp = () => {
+    arrowsexp.current.classList.toggle("close")
+  }
   const opensidebar = () => {
     sidebar.current.classList.toggle("close")
   }
@@ -46,11 +51,9 @@ const SideBar = () => {
   const arrowmen = useRef()
   const arrowemp = useRef()
   const arrowsto = useRef()
+  const arrowsexp = useRef()
   const sidebar = useRef()
   const menuicon = useRef()
-
-  useEffect(() => {
-  }, [])
 
   return (
     <detacontext.Consumer>
@@ -189,10 +192,10 @@ const SideBar = () => {
                       <li><Link to="stockmang">حركه المخزن</Link></li>
                     </ul>
                   </li>
-                  <li ref={arrowsto} onClick={openarrowsto}>
+                  <li ref={arrowsto} onClick={openarrowsexp}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined arrow">
                           request_page
                         </span>
                         <span className="link_name">المصروفات</span>

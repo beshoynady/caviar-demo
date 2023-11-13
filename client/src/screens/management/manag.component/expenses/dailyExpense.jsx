@@ -97,7 +97,8 @@ const DailyExpense = () => {
 
   useEffect(() => {
     getAllExpenses();
-  }, []);
+    getAllDailyExpenses()
+  }, [])
 
   return (
     <detacontext.Consumer>

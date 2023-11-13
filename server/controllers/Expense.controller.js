@@ -26,7 +26,7 @@ exports.getExpenseById = async (req, res) => {
 
 // Add a new expense
 exports.addExpense = async (req, res) => {
-  const expense = new Expense({
+  const expense = new ExpenseModel.create({
     description: req.body.description,
     amount: req.body.amount
   });

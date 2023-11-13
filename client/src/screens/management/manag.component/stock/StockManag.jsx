@@ -17,7 +17,7 @@ const StockManag = () => {
 
   }
 
-  const Stockmovement = ["مشتريات", "منصرف", "راجع","هالك"];
+  const Stockmovement = ["مشتريات", "منصرف", "راجع", "هالك"];
   const [movement, setmovement] = useState('');
   const [itemId, setitemId] = useState("");
   const [unit, setunit] = useState('')
@@ -40,15 +40,15 @@ const StockManag = () => {
       const actionBy = userid;
 
       console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
       console.log(changeItem)
 
-      if(changeItem.status == 200){
-      const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost ,unit,newBalance, oldBalance, price, actionBy, actionAt });
-      console.log(response.data);
-      getallStockaction()
-      getaStockItems()
-    }
+      if (changeItem.status == 200) {
+        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
+        console.log(response.data);
+        getallStockaction()
+        getaStockItems()
+      }
     } catch (error) {
       console.log(error)
     }
@@ -61,15 +61,15 @@ const StockManag = () => {
       const actionBy = userid;
 
       console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`,{newBalance,newcost,price})
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
       console.log(changeItem)
 
-      if(changeItem.status == 200){
-      const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit,newBalance, oldBalance, price, actionBy });
-      console.log(response.data);
-      getallStockaction()
-      getaStockItems()
-    }
+      if (changeItem.status == 200) {
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
+        console.log(response.data);
+        getallStockaction()
+        getaStockItems()
+      }
     } catch (error) {
       console.log(error)
     }
@@ -77,7 +77,7 @@ const StockManag = () => {
 
   const [AllStockactions, setAllStockactions] = useState([]);
 
-  const getallStockaction = async()=> {
+  const getallStockaction = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockmanag/');
       console.log(response.data)
@@ -96,30 +96,30 @@ const StockManag = () => {
       console.log(response);
       if (response) {
         getallStockaction();
-        }
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const itemname =(id)=>{
-   const item = StockItems.filter(item=>item._id == id)[0]
-   if(item){
-    return item.itemName
-   }else{
-   return 'غير متوفر'
+  const itemname = (id) => {
+    const item = StockItems.filter(item => item._id == id)[0]
+    if (item) {
+      return item.itemName
+    } else {
+      return 'غير متوفر'
+    }
   }
-}
 
-const [StockitemFilterd, setStockitemFilterd] = useState([])
-const searchByitem = (item) => {
-  const items = AllStockactions.filter((action) => itemname(action.itemId).startsWith(item)== true)
-  setStockitemFilterd(items)
-}
-const searchByaction = (action) => {
-  const items = AllStockactions.filter((Stockactions) => Stockactions.movement== action)
-  setStockitemFilterd(items)
-}
+  const [StockitemFilterd, setStockitemFilterd] = useState([])
+  const searchByitem = (item) => {
+    const items = AllStockactions.filter((action) => itemname(action.itemId).startsWith(item) == true)
+    setStockitemFilterd(items)
+  }
+  const searchByaction = (action) => {
+    const items = AllStockactions.filter((Stockactions) => Stockactions.movement == action)
+    setStockitemFilterd(items)
+  }
 
   // const calcBalance = (qu) => {
   //   console.log('+++++++++')
@@ -148,15 +148,15 @@ const searchByaction = (action) => {
       setnewBalance(Number(oldBalance) + Number(Quantity))
       setnewcost(oldCost + cost)
     }
-  }, [Quantity,price])
-  
+  }, [Quantity, price])
+
 
 
 
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -177,7 +177,7 @@ const searchByaction = (action) => {
                     <div class="row text-dark">
                       <div class="col-sm-3">
                         <div class="show-entries">
-                        <span>عرض</span>
+                          <span>عرض</span>
                           <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
@@ -194,7 +194,7 @@ const searchByaction = (action) => {
                         <div class="filter-group">
                           <label>اسم الصنف</label>
                           <input type="text" class="form-control" onChange={(e) => searchByitem(e.target.value)} />
-                        </div>    
+                        </div>
                         <div class="filter-group">
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
@@ -204,7 +204,7 @@ const searchByaction = (action) => {
                             <option value="منصرف" >منصرف</option>
                             <option value="هالك" >هالك</option>
                           </select>
-                        </div>                                           
+                        </div>
                         {/* <div class="filter-group">
                           <label>Location</label>
                           <select class="form-control">
@@ -254,9 +254,9 @@ const searchByaction = (action) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {StockitemFilterd.length>0?StockitemFilterd.map((action, i) => {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
+                      {StockitemFilterd.length > 0 ? StockitemFilterd.map((action, i) => {
+                        if (i >= startpagination & i < endpagination) {
+                          return (
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
@@ -276,42 +276,42 @@ const searchByaction = (action) => {
                               <td>{Date(action.actionAt).toLocaleString}</td>
                               <td>{usertitle(action.actionBy)}</td>
                               <td>
-                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )
                         }
                       })
-                     :AllStockactions.map((action, i) => {
+                        : AllStockactions.map((action, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{itemname(action.itemId)}</td>
-                              <td>{action.movement}</td>
-                              <td>{action.Quantity}</td>
-                              <td>{action.unit}</td>
-                              <td>{action.price}</td>
-                              <td>{action.cost}</td>
-                              <td>{action.oldBalance}</td>
-                              <td>{action.Balance}</td>
-                              <td>{Date(action.actionAt).toLocaleString}</td>
-                              <td>{usertitle(action.actionBy)}</td>
-                              <td>
-                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id);setoldBalance(action.oldBalance);setoldCost(action.oldCost) ; setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{itemname(action.itemId)}</td>
+                                <td>{action.movement}</td>
+                                <td>{action.Quantity}</td>
+                                <td>{action.unit}</td>
+                                <td>{action.price}</td>
+                                <td>{action.cost}</td>
+                                <td>{action.oldBalance}</td>
+                                <td>{action.Balance}</td>
+                                <td>{Date(action.actionAt).toLocaleString}</td>
+                                <td>{usertitle(action.actionBy)}</td>
+                                <td>
+                                  <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+                          }
+                        })
                       }
                     </tbody>
                   </table>
@@ -349,9 +349,11 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit); ; setprice(StockItems.filter(i => i._id == e.target.value)[0].price) 
-                          setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
-                          setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost) }}>
+                          <select name="" id="" onChange={(e) => {
+                            setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);; setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
+                            setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
+                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost)
+                          }}>
                             <option >اختر الصنف</option>
                             {StockItems.map((item, i) => {
                               return <option key={i} value={item._id}>{item.itemName}</option>
@@ -360,16 +362,16 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => {setQuantity(e.target.value);  }} />
+                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); }} />
                           <input type='text' className="form-control" defaultValue={unit} readOnly />
                         </div>
 
                         <div className="form-group">
                           <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" || movement == "راجع"?
-                          <input type='Number' className="form-control"readOnly required defaultValue={price} />
-                         : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
-                        }
+                          {movement == "منصرف" || movement == "هالك" || movement == "راجع" ?
+                            <input type='Number' className="form-control" readOnly required defaultValue={price} />
+                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                          }
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
@@ -425,16 +427,16 @@ const searchByaction = (action) => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => {setQuantity(e.target.value); setcost(e.target.value * price )}} />
+                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); setcost(e.target.value * price) }} />
                           <input type='text' className="form-control" defaultValue={unit} readOnly />
                         </div>
 
                         <div className="form-group">
                           <label>السعر</label>
                           {movement == "منصرف" || movement == "هالك" ?
-                          <input type='Number' className="form-control"readOnly required defaultValue={price} />
-                         : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
-                        }
+                            <input type='Number' className="form-control" readOnly required defaultValue={price} />
+                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                          }
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
@@ -487,7 +489,7 @@ const searchByaction = (action) => {
       }
     </detacontext.Consumer>
 
-    )
+  )
 }
 
 export default StockManag

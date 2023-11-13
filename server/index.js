@@ -66,7 +66,7 @@ app.use('/api/auth', routeauth);
 app.use('/api/categoryStock', routecategoryStock);
 app.use('/api/stockitem', routestockitems);
 app.use('/api/stockmanag', routestockmanag);
-app.use('/api/expense', routeexpense);
+app.use('/api/expenses', routeexpense);
 app.use('/api/expensedaily', routeexpensedaily);
 
 

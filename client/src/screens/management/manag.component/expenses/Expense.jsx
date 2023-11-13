@@ -191,7 +191,7 @@ const ExpenseItem = () => {
                         <div id="addStockItemModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
-                                    <form onSubmit={(e) => createExpense(e)}>
+                                    <form onSubmit={createExpense}>
                                         <div className="modal-header">
                                             <h4 className="modal-title">اضافه مصروف</h4>
                                             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

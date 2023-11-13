@@ -12,7 +12,7 @@ const dailyExpenseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    quantity: { type: Number, required: true, min: 0 },
+    quantity: { type: Number, required: true },
     
     totalAmount: { type: Number, required: true, min: 0 },
     notes: String,

@@ -189,6 +189,23 @@ const SideBar = () => {
                       <li><Link to="stockmang">حركه المخزن</Link></li>
                     </ul>
                   </li>
+                  <li ref={arrowsto} onClick={openarrowsto}>
+                    <div className="iocn-link">
+                      <a href="#">
+                        <span class="material-symbols-outlined icon">
+                          receipt_long
+                        </span>
+                        <span className="link_name">المصروفات</span>
+                      </a>
+                      <i className='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul className="sub-menu">
+                      <li><a className="link_name" href="#">المصروفات</a></li>
+                      <li><Link to="expense">المصروفات</Link></li>
+                      {/* <li><Link to="stockitem">الاصناف</Link></li>
+                      <li><Link to="stockmang">حركه المخزن</Link></li> */}
+                    </ul>
+                  </li>
 
                   {/* <li ref={arrow} onClick={openarrow}>
             <div className="iocn-link">

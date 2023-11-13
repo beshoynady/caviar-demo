@@ -62,7 +62,7 @@ console.log(error)
       }
       
     } catch (error) {
-      confirm(error.message)
+      console.log(error.message)
     }
   }
 

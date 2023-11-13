@@ -187,7 +187,7 @@ const DailyExpense = () => {
                             <td>{expense.notes}</td>
                             <td>
                               <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                setexpenseId(expense._id); setDescription(expense.expenseDescription)
+                                setexpenseId(expense._id); setDescription(expense.expenseDescription);setdailyExpenseId(expense._id)
                               }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                               <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
@@ -213,7 +213,7 @@ const DailyExpense = () => {
                               <td>{expense.notes}</td>
                               <td>
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);
-                                setamount(expense.totalAmount - expense.quantity) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                setamount(expense.totalAmount - expense.quantity);setdailyExpenseId(expense._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>

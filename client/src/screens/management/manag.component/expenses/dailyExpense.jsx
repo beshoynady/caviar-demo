@@ -37,7 +37,7 @@ const DailyExpense = () => {
         notes: notes,
       });
       console.log(response.data);
-      const updateexpense = await axios.put('https://caviar-api.vercel.app/api/expenses/',{amount : totalAmount})
+      const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseId}`,{amount : totalAmount})
       getAllDailyExpenses();
     } catch (error) {
       console.log(error);
@@ -57,7 +57,7 @@ const DailyExpense = () => {
       const data = response.data
       console.log(response.data);
       if(data){
-        const updateexpense = await axios.put('https://caviar-api.vercel.app/api/expenses/',{amount : totalAmount})
+        const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseId}`,{amount : totalAmount})
         if (updateexpense) {
           getAllDailyExpenses();
         }

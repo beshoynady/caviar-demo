@@ -17,7 +17,7 @@ const DailyExpense = () => {
 
   const getAllExpenses = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/expense/');
+      const response = await axios.get('https://caviar-api.vercel.app/api/expenses/');
       const expenses = await response.data;
       console.log(response.data);
       setAllExpenses(expenses);

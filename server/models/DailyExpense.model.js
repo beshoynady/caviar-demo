@@ -14,7 +14,7 @@ const dailyExpenseSchema = new mongoose.Schema({
     },
     quantity: { type: Number, required: true, min: 0 },
 
-    totalAmount: { type: Number, default: 0, min: 0 },
+    totalAmount: { type: Number, required: true, min: 0 },
     notes: String,
 });
 

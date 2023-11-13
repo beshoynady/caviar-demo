@@ -186,11 +186,11 @@ const DailyExpense = () => {
                             <td>{expense.date}</td>
                             <td>{expense.notes}</td>
                             <td>
-                              <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                setexpenseId(expense._id); setDescription(expense.expenseDescription);setdailyExpenseId(expense._id)
-                              }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                              <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                            </td>
+                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);setQuantity(expense.quantity)
+                                setamount(expense.totalAmount - expense.quantity);setdailyExpenseId(expense._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+
                           </tr>
                         )
                       }
@@ -212,7 +212,7 @@ const DailyExpense = () => {
                               <td>{expense.date}</td>
                               <td>{expense.notes}</td>
                               <td>
-                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);
+                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);setQuantity(expense.quantity)
                                 setamount(expense.totalAmount - expense.quantity);setdailyExpenseId(expense._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
@@ -303,7 +303,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" value={quantity} required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" defaultValue={quantity} required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
                       </div>
                       <div className="form-group">
                         <label>الاجمالي </label>
@@ -311,7 +311,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
-                        <textarea className="form-control" required rows={2} cols={100} onChange={(e) => { setNotes(e.target.value) }} />
+                        <textarea className="form-control" rows={2} cols={100} onChange={(e) => { setNotes(e.target.value) }} />
                       </div>
                     </div>
                     <div className="modal-footer">

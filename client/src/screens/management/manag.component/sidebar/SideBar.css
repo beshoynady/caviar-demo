@@ -47,6 +47,7 @@
 }
 .sidebar .nav-links{
   height: 100%;
+  width: 190px;
   padding: 0 0 130px;
   overflow: auto;
 }
@@ -191,7 +192,7 @@
   padding: 12px 10px;
   position: fixed;
   transition: all .5s ease;
-  width: 183px;
+  width: 190px;
   background: cyan;
 }
 .sidebar.close .profile-details{
@@ -226,8 +227,8 @@
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job{
   /* color: #fff; */
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 600;
   white-space: nowrap;
 }
 .sidebar .profile-details .job{
@@ -247,13 +248,13 @@
   display: none;
 }
 .sidebar .profile-details .job{
-  font-size: 12px;
+  font-size: 14px;
 }
 .home-section{
-  position: absolute;
   height: 33px;
-  right: 170px;
   width: 45px;
+  position: absolute;
+  right: 180px;
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section{

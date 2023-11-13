@@ -2,8 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import './SideBar.css';
 import { detacontext } from '../../../../App'
 import { Link } from 'react-router-dom'
-import { getAllExpenses } from '../../../../../../server/controllers/Expense.controller';
-import { getAllDailyExpenses } from '../../../../../../server/controllers/DailyExpense.controller';
 
 const SideBar = () => {
   // const menuitem = [

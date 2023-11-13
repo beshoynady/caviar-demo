@@ -40,7 +40,7 @@ const SideBar = () => {
     arrowsto.current.classList.toggle("showMenu")
   }
   const openarrowsexp = () => {
-    arrowsexp.current.classList.toggle("close")
+    arrowsexp.current.classList.toggle("showMenu")
   }
   const opensidebar = () => {
     sidebar.current.classList.toggle("close")

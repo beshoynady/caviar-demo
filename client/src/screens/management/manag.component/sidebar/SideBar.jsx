@@ -193,7 +193,7 @@ const SideBar = () => {
                   <li ref={arrowsto} onClick={openarrowsexp}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span class="material-symbols-outlined arrow">
+                        <span class="material-symbols-outlined arrow icon">
                           request_page
                         </span>
                         <span className="link_name">المصروفات</span>

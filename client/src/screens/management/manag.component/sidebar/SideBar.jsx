@@ -190,7 +190,7 @@ const SideBar = () => {
                       <li><Link to="stockmang">حركه المخزن</Link></li>
                     </ul>
                   </li>
-                  <li ref={arrowsto} onClick={openarrowsexp}>
+                  <li ref={arrowsexp} onClick={openarrowsexp}>
                     <div className="iocn-link">
                       <a href="#">
                         <span class="material-symbols-outlined arrow icon">

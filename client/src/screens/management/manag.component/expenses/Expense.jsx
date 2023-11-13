@@ -79,9 +79,9 @@ const ExpenseItem = () => {
                                             <h2>ادارة <b>المصروفات</b></h2>
                                         </div>
                                         <div className="col-sm-6 d-flex justify-content-end">
-                                            <a href="#addStockItemModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
+                                            <a href="#addExpensesModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
 
-                                            <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                                            <a href="#deleteExpensesModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -142,9 +142,9 @@ const ExpenseItem = () => {
                                                         <td>{expense.amount}</td>
                                                         <td>{expense.data}</td>
                                                         <td>
-                                                            <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)
+                                                            <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)
                                                             }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                                            <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                                            <a href="#deleteExpensesModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                                         </td>
                                                     </tr>
                                                 )
@@ -165,8 +165,8 @@ const ExpenseItem = () => {
                                                             <td>{expense.amount}</td>
                                                             <td>{expense.data}</td>
                                                             <td>
-                                                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                                                <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                                                <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                                                <a href="#deleteExpensesModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                                             </td>
                                                         </tr>
                                                     )
@@ -188,7 +188,7 @@ const ExpenseItem = () => {
                                 </div>
                             </div>
                         </div>
-                        <div id="addStockItemModal" className="modal fade">
+                        <div id="addExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <form onSubmit={createExpense}>
@@ -210,7 +210,7 @@ const ExpenseItem = () => {
                                 </div>
                             </div>
                         </div>
-                        <div id="editStockItemModal" className="modal fade">
+                        <div id="editExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <form onSubmit={(e) => editExpense(expenseId)}>
@@ -233,7 +233,7 @@ const ExpenseItem = () => {
                             </div>
                         </div>
 
-                        <div id="deleteStockItemModal" className="modal fade">
+                        <div id="deleteExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <form onSubmit={deleteExpense(expenseId)}>

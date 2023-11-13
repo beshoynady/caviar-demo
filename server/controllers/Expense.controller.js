@@ -26,13 +26,12 @@ exports.getExpenseById = async (req, res) => {
 
 // Add a new expense
 exports.addExpense = async (req, res) => {
-  const expense = new ExpenseModel.create({
+  const expense = new ExpenseModel({
     description: req.body.description,
-    amount: req.body.amount
   });
 
   try {
-    const savedExpense = await ExpenseModel.save();
+    const savedExpense = await expense.save(); // Corrected this line
     res.status(201).json(savedExpense);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -59,8 +58,8 @@ exports.updateExpense = async (req, res) => {
 // Delete an expense by ID
 exports.deleteExpense = async (req, res) => {
   try {
-    const removedExpense = await ExpenseModel.remove({ _id: req.params.expenseId });
-    if (removedExpense.deletedCount > 0) {
+    const removedExpense = await ExpenseModel.findByIdAndDelete(req.params.expenseId); // Corrected this line
+    if (removedExpense) { // Changed condition to check if the document was found
       res.status(200).json(removedExpense);
     } else {
       res.status(404).json({ message: 'Expense not found' });

@@ -178,7 +178,7 @@ const SideBar = () => {
                   </li>
                 </ul>
               </div>
-              <section className="home-section" onClick={opensidebar}>
+              <section className="home-section" onClick={openSidebar}>
                 <div className="home-content">
                   <i className='bx bx-menu' ></i>
                 </div>

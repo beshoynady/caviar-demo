@@ -26,6 +26,7 @@ import ProductRecipe from './screens/management/manag.component/products/Product
 import EmployeesSalary from './screens/management/manag.component/employees/EmployeesSalary';
 import PayRoll from './screens/management/manag.component/employees/PayRoll';
 import ExpenseItem from './screens/management/manag.component/expenses/Expense';
+import DailyExpense from './screens/management/manag.component/expenses/dailyExpense';
 
 
 export const detacontext = createContext({})
@@ -771,6 +772,7 @@ function App() {
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
             <Route path='expense' element={<ExpenseItem/>} />
+            <Route path='dailyexpense' element={<DailyExpense/>} />
           </Route>
 
         </Routes>

@@ -28,13 +28,15 @@ exports.getDailyExpenseById = async (req, res) => {
 
 // Add a new daily expense
 exports.addDailyExpense = async (req, res) => {
-  const { expense, quantity, notes } = req.body;
+  const { expenseID,expenseDescription, quantity,totalAmount, notes } =await req.body;
 
   try {
     const newDailyExpense = await DailyExpenseModel.create({
-      expense,
+      expenseID,
+      expenseDescription,
       quantity,
       notes,
+      totalAmount
     });
 
     res.status(201).json(newDailyExpense);
@@ -45,10 +47,17 @@ exports.addDailyExpense = async (req, res) => {
 
 // Update a daily expense by ID
 exports.updateDailyExpense = async (req, res) => {
+  const { expenseID,expenseDescription, quantity,totalAmount, notes } =await req.body;
   try {
     const updatedDailyExpense = await DailyExpenseModel.findByIdAndUpdate(
       req.params.dailyExpenseId,
-      { $set: req.body },
+      {
+        expenseID,
+        expenseDescription,
+        quantity,
+        notes,
+        totalAmount
+      },
       { new: true }
     );
 

@@ -4,26 +4,26 @@ import { detacontext } from '../../../../App'
 import { Link } from 'react-router-dom'
 
 const SideBar = () => {
-  const menuitem = [
-    { title: 'الرئسيه', sideitem: 'dashboard', icon: "dashboard" },
-    { title: 'POS', sideitem: 'pos', icon: "point_of_sale" },
-    { title: 'الويتر', sideitem: 'waiter', icon: "directions_run" },
-    { title: 'المطبخ', sideitem: 'kitchen', icon: "set_meal" },
-    { title: 'الطلبات', sideitem: 'orders', icon: "list_alt" },
-    { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
+  // const menuitem = [
+  //   { title: 'الرئسيه', sideitem: 'dashboard', icon: "dashboard" },
+  //   { title: 'POS', sideitem: 'pos', icon: "point_of_sale" },
+  //   { title: 'الويتر', sideitem: 'waiter', icon: "directions_run" },
+  //   { title: 'المطبخ', sideitem: 'kitchen', icon: "set_meal" },
+  //   { title: 'الطلبات', sideitem: 'orders', icon: "list_alt" },
+  //   { title: 'الطاولة', sideitem: 'tables', icon: "table_restaurant" },
 
-    { title: 'التصنيفات', sideitem: 'category', icon: "category" },
-    { title: 'المنتجات', sideitem: 'products', icon: "restaurant" },
-    { title: 'التكاليف', sideitem: 'productrecipe', icon: "restaurant" },
+  //   { title: 'التصنيفات', sideitem: 'category', icon: "category" },
+  //   { title: 'المنتجات', sideitem: 'products', icon: "restaurant" },
+  //   { title: 'التكاليف', sideitem: 'productrecipe', icon: "restaurant" },
 
-    { title: 'الموظفين', sideitem: 'employees', icon: "group_add" },
-    { title: 'المرتبات', sideitem: 'employeessalary', icon: "group_add" },
-    { title: 'payrole', sideitem: 'payrole', icon: "group_add" },
+  //   { title: 'الموظفين', sideitem: 'employees', icon: "group_add" },
+  //   { title: 'المرتبات', sideitem: 'employeessalary', icon: "group_add" },
+  //   { title: 'payrole', sideitem: 'payrole', icon: "group_add" },
 
-    { title: 'تصنيفات المخزون', sideitem: 'categoryStock', icon: "category" },
-    { title: 'اصناف المخزن', sideitem: 'stockitem', icon: "inventory_2" },
-    { title: 'ادارة المخزون', sideitem: 'stockmang', icon: "inventory" },
-  ]
+  //   { title: 'تصنيفات المخزون', sideitem: 'categoryStock', icon: "category" },
+  //   { title: 'اصناف المخزن', sideitem: 'stockitem', icon: "inventory_2" },
+  //   { title: 'ادارة المخزون', sideitem: 'stockmang', icon: "inventory" },
+  // ]
 
 
   // const opensidebar = () => {
@@ -55,7 +55,7 @@ const SideBar = () => {
   return (
     <detacontext.Consumer>
       {
-        ({userlogininfo, employeelogout }) => {
+        ({ userlogininfo, employeelogout }) => {
           return (
             <>
               <div ref={sidebar} className="sidebar close">
@@ -192,8 +192,8 @@ const SideBar = () => {
                   <li ref={arrowsto} onClick={openarrowsto}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span class="material-symbols-outlined icon">
-                          receipt_long
+                        <span class="material-symbols-outlined">
+                          request_page
                         </span>
                         <span className="link_name">المصروفات</span>
                       </a>
@@ -202,8 +202,8 @@ const SideBar = () => {
                     <ul className="sub-menu">
                       <li><a className="link_name" href="#">المصروفات</a></li>
                       <li><Link to="expense">المصروفات</Link></li>
-                      {/* <li><Link to="stockitem">الاصناف</Link></li>
-                      <li><Link to="stockmang">حركه المخزن</Link></li> */}
+                      <li><Link to="dailyexpense">تسجيل مصروف</Link></li>
+                      {/* {/* <li><Link to="stockitem"></Link></li> */}
                     </ul>
                   </li>
 
@@ -319,8 +319,8 @@ const SideBar = () => {
                         {/* <img src="https://gravatar.com/avatar/f57bddebd1edf91412d5d68702530099" alt="profileImg" /> */}
                       </div>
                       <div className="name-job">
-                        <div className="profile_name">{userlogininfo?userlogininfo.employeeinfo.username:''}</div>
-                        <div className="job">{userlogininfo?userlogininfo.employeeinfo.role:''}</div>
+                        <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
+                        <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
                       </div>
                     </div>
                   </li>

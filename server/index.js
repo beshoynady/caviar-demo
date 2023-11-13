@@ -16,8 +16,6 @@ const routeorder = require('./router/Order.router.js');
 const routeauth = require('./router/Auth.router.js');
 const routestockitems = require('./router/StockItem.router.js');
 const routestockmanag = require('./router/StockMang.router.js');
-const routeexpenses = require('./router/Expense.router.js');
-const routedailyExpense = require('./router/DaiyExpense.router.js');
 
 
 dotenv.config();
@@ -66,7 +64,5 @@ app.use('/api/auth', routeauth);
 app.use('/api/categoryStock', routecategoryStock);
 app.use('/api/stockitem', routestockitems);
 app.use('/api/stockmanag', routestockmanag);
-app.use('/api/expenses', routeexpenses);
-app.use('/api/dailyExpense', routedailyExpense);
 
 

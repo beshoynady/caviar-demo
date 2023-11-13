@@ -142,7 +142,7 @@ const ExpenseItem = () => {
                                                         <td>{i + 1}</td>
                                                         <td>{expense.description}</td>
                                                         <td>{expense.amount}</td>
-                                                        <td>{expense.data}</td>
+                                                        <td>{expense.date}</td>
                                                         <td>
                                                             <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)
                                                             }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -165,7 +165,7 @@ const ExpenseItem = () => {
                                                             <td>{i + 1}</td>
                                                             <td>{expense.description}</td>
                                                             <td>{expense.amount}</td>
-                                                            <td>{expense.data}</td>
+                                                            <td>{expense.date}</td>
                                                             <td>
                                                                 <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                                                 <a href="#deleteExpensesModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

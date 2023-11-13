@@ -37,6 +37,7 @@ const DailyExpense = () => {
         notes: notes,
       });
       console.log(response.data);
+      const updateexpense = await axios.put('https://caviar-api.vercel.app/api/expenses/',{amount : totalAmount})
       getAllDailyExpenses();
     } catch (error) {
       console.log(error);
@@ -53,10 +54,15 @@ const DailyExpense = () => {
         totalAmount: totalAmount,
         notes: notes,
       });
+      const data = response.data
       console.log(response.data);
-      if (response.status === 200) {
-        getAllDailyExpenses();
+      if(data){
+        const updateexpense = await axios.put('https://caviar-api.vercel.app/api/expenses/',{amount : totalAmount})
+        if (updateexpense.status === 200) {
+          getAllDailyExpenses();
+        }
       }
+
     } catch (error) {
       console.log(error);
     }
@@ -205,10 +211,12 @@ const DailyExpense = () => {
                               <td>{expense.totalAmount}</td>
                               <td>{expense.date}</td>
                               <td>{expense.notes}</td>
+                              {allDailyExpenses[allDailyExpenses.length-1]._id == expense._id ?
                               <td>
-                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);
+                                setamount(expense.totalAmount - expense.quantity) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
+                              </td> : ''}
                             </tr>
                           )
                         }
@@ -272,7 +280,7 @@ const DailyExpense = () => {
                 </div>
               </div>
             </div>
-            {/* <div id="editDailyExpensesModal" className="modal fade">
+            <div id="editDailyExpensesModal" className="modal fade">
               <div className="modal-dialog">
                 <div className="modal-content">
                   <form onSubmit={editDailyExpense}>
@@ -282,8 +290,29 @@ const DailyExpense = () => {
                     </div>
                     <div className="modal-body">
                       <div className="form-group">
-                        <label>اسم المصروف</label>
-                        <input type="text" className="form-control" defaultValue={description} required onChange={(e) => setDescription(e.target.value)} />
+                        <label>المصروف</label>
+                        <select name="category" id="category" defaultValue={expenseId} form="carform" onChange={(e) => {
+                          setexpenseId(e.target.value);
+                          setDescription(allExpenses.find(ex => ex._id == e.target.value).description);
+                          
+                        }}>
+                          {allExpenses.map((expense, i) => {
+                            return <option value={expense._id} key={i} >{expense.description}</option>
+                          })
+                          }
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        <label>المبلغ</label>
+                        <input type="Number" className="form-control" required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                      </div>
+                      <div className="form-group">
+                        <label>الاجمالي </label>
+                        <input type="Number" className="form-control" value={totalAmount} readOnly />
+                      </div>
+                      <div className="form-group w-100">
+                        <label>ملاحظات</label>
+                        <textarea className="form-control" required rows={2} cols={100} onChange={(e) => { setNotes(e.target.value) }} />
                       </div>
                     </div>
                     <div className="modal-footer">
@@ -293,7 +322,7 @@ const DailyExpense = () => {
                   </form>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             <div id="deleteDailyExpensesModal" className="modal fade">
               <div className="modal-dialog">

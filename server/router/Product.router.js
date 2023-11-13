@@ -3,14 +3,14 @@ const path = require("path");
 // const verifyJWT = require('../middleware/verifyjwt');
 
 const {
-  createproduct,
-  getAllproducts,
+  createProduct,
   addRecipe,
-  getproductbycategory,
-  getoneproduct,
-  updateproduct,
-  deleteproduct,
-  updateproductwithoutimage
+  getAllProducts,
+  getProductByCategory,
+  getOneProduct,
+  updateProduct,
+  updateProductWithoutImage,
+  deleteProduct
 } = require("../controllers/product.controller");
 
 const multer = require("multer");

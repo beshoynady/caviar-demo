@@ -138,7 +138,7 @@ const DailyExpense = () => {
                       <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                       <div class="filter-group">
                         <label>اسم المصروف</label>
-                        <input type="text" class="form-control" onChange={(e) => searchByExpense(e.target.value)} />
+                        <input type="text" class="form-control" onChange={(e) => searchByDailyExpense(e.target.value)} />
                       </div>
                     </div>
                   </div>

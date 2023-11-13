@@ -19,7 +19,8 @@ const ExpenseItem = () => {
         }
     };
 
-    const editExpense = async (expenseId) => {
+    const editExpense = async (e,expenseId) => {
+      e.preventDefault();
         try {
             const response = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseId}`, {
                 description
@@ -33,7 +34,8 @@ const ExpenseItem = () => {
         }
     };
 
-    const deleteExpense = async (expenseId) => {
+    const deleteExpense = async (e, expenseId) => {
+      e.preventDefault();
         try {
             const response = await axios.delete(`https://caviar-api.vercel.app/api/expenses/${expenseId}`);
             if (response.status === 200) {

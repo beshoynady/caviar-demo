@@ -38,14 +38,14 @@ exports.addExpense = async (req, res) => {
   }
 };
 
-// Update an expense by ID
+// Update an expense  by ID
 exports.updateExpense = async (req, res) => {
   try {
-    const updatedExpense = await ExpenseModel.updateOne(
-      { _id: req.params.expenseId },
-      { $set: { description: req.body.description, amount: req.body.amount } }
-    );
-    if (updatedExpense.nModified > 0) {
+    const id = await req.params.expenseId
+    const description = req.body.description
+    const amount = req.body.amount
+    const updatedExpense = await ExpenseModel.findByIdAndUpdate(id, { description, amount });
+    if (updatedExpense) {
       res.status(200).json(updatedExpense);
     } else {
       res.status(404).json({ message: 'Expense not found' });

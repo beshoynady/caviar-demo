@@ -60,8 +60,8 @@ const ExpenseItem = () => {
 
     const [fielterlist, setfielterlist] = useState([])
     const searchByExpense = (expense) => {
-        allExpenses.filter(exp => exp.description.startsWith(expense) == true)
-        setfielterlist(allExpenses)
+      const filter =  allExpenses.filter(exp => exp.description.startsWith(expense) == true)
+        setfielterlist(filter)
     }
 
     useEffect(() => {

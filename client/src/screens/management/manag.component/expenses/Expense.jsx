@@ -68,7 +68,7 @@ const ExpenseItem = () => {
 
     return (
         <detacontext.Consumer>
-            {({ userlogininfo }) => {
+            {({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination  }) => {
                 return (
                     <div className="container-xl mlr-auto">
                         <div className="table-responsive mt-1">

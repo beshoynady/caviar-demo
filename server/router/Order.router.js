@@ -7,7 +7,7 @@ const {
     getorder,
     getorders,
     updateorder,
-    deleteorder}=
+    deleteorder,}=
     require("../controllers/Order.controller");
 
     router.route("/").post(createorder).get(getorders);

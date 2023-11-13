@@ -1,5 +1,13 @@
 const express = require("express");
-const { createEmployee, getoneEmployee, payRollEmployee, loginEmployee, getallEmployees, updateEmployee, deleteEmployee } = require('../controllers/Employee.controller.js')
+const {
+    createEmployee,
+    getoneEmployee,
+    loginEmployee,
+    payRollEmployee,
+    getallEmployees,
+    updateEmployee,
+    deleteEmployee
+} = require('../controllers/Employee.controller.js')
 // const verifyJWT = require('../middleware/verifyjwt');
 
 

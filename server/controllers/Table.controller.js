@@ -1,126 +1,98 @@
-const QRCode = require('qrcode');
+const QRCode = require('qrcode')
+
 const TableModel = require('../models/Table.model');
 
-// Create a new table
 const createTable = async (req, res) => {
-    const { tablenum, description, chairs } = req.body;
-
+    const tablenum = req.body.tablenum;
+    const description = req.body.description;
+    const chairs = req.body.chairs;
     try {
-        // Validate the request body if needed
+        const tablecreated = await TableModel.create({ tablenum, description, chairs });
 
-        // Create a new table in the database
-        const tableCreated = await TableModel.create({ tablenum, description, chairs });
+        return res.json({ "message": "table created successfully", "data": tablecreated }).status(200)
 
-        // Return the success response
-        return res.status(201).json({ message: "Table created successfully", data: tableCreated });
     } catch (err) {
-        console.error("Error creating table:", err);
-        // Return an error response with details
-        return res.status(400).json({ message: "Error creating table", error: err.message });
+        res.status(400).json(err.Message)
     }
-};
+}
 
-// Create a QR code based on the provided URL
 const createQR = async (req, res) => {
-    const { URL } = req.body;
-
+    const URL = req.body.URL;
     try {
-        // Generate a QR code from the URL
         const QR = await QRCode.toDataURL(URL);
-
-        // Return the generated QR code
-        return res.status(200).json(QR);
+        res.json(QR).status(200);
     } catch (err) {
-        console.error("Error creating QR code:", err);
-        // Return an error response with details
-        return res.status(400).json({ message: "Error creating QR code", error: err.message });
+        res.status(400).json(err)
     }
-};
+}
 
-// Retrieve all tables
 const showAllTables = async (_req, res) => {
     try {
-        // Retrieve all tables from the database
-        const allTables = await TableModel.find();
-
-        // Return the list of tables
-        return res.status(200).json(allTables);
-    } catch (error) {
-        console.error("Error getting all tables:", error);
-        // Return an error response with details
-        return res.status(400).json({ message: "Error getting all tables", error: error.message });
+        const allTable = await TableModel.find();
+        return res.status(200).json(allTable)
     }
-};
+    catch (error) {
+        console.log("Error in getting all tables", error);
+        res.status(400).json(error)
+    };
+}
 
-// Retrieve a single table by ID
 const showOneTable = async (req, res) => {
-    const id = req.params.tableid;
-
+    const id = req.params.tableid
     try {
-        // Retrieve a table by ID from the database
         const oneTable = await TableModel.findById(id);
-
-        // Check if the table exists
-        if (!oneTable) {
-            return res.status(404).json({ message: "No such table exists" });
-        }
-
-        // Return the found table
-        return res.status(200).json(oneTable);
-    } catch (e) {
-        console.error("Error getting one table:", e);
-        // Return an error response with details
-        return res.status(500).json({ message: "Internal Server Error" });
+        if (!oneTable) return res.status(404).json({ "Message": "No such a table exist" });
+        else return res.status(200).json(oneTable)
     }
-};
+    catch (e) {
+        console.log(e, " Something Went Wrong")
+        return res.status(500).json({ "Mesage": "Internal Server Error " });
+    }
+}
 
-// Update a table by ID
 const updateTable = async (req, res) => {
-    const id = req.params.tableid;
-    const { tablenum, description, chairs, isValid } = req.body;
-
+    const id = req.params.tableid
+    const tablenum = req.body.tablenum;
+    const description = req.body.description;
+    const chairs = req.body.chairs;
+    const isValid = req.body.isValid;
     try {
-        // Update the table in the database
-        const updatedTable = await TableModel.findByIdAndUpdate(
-            { _id: id },
-            { $set: { tablenum, description, chairs, isValid } },
-            { new: true }
-        );
-
-        // Check if the table exists
+        const updatedTable = await TableModel.findByIdAndUpdate({ _id: id }, {
+            $set: {
+                tablenum,
+                description,
+                chairs,
+                isValid
+            }
+        },
+            { new: true }).exec()
         if (!updatedTable) {
-            return res.status(404).json({ message: "No such table exists" });
+            return res.status(404).json({ "Message": "no Such A Table Exist" });
         }
-
-        // Return the updated table
-        return res.status(200).json(updatedTable);
+        else {
+            return res.status(201).json(updatedTable);
+        }
     } catch (err) {
-        console.error("Error updating table:", err);
-        // Return an error response with details
-        return res.status(400).json({ message: "Error updating table", error: err.message });
-    }
-};
+        console.log({ message: "Invalid Request Body" }, err);
+        return res.status(400).json({ "Message": 'Invalid request body' });
 
-// Delete a table by ID
+    }
+}
+
 const deleteTable = async (req, res) => {
-    const id = req.params.tableid;
-
+    const id =await req.params.tableid
     try {
-        // Delete the table from the database
-        const deletedTable = await TableModel.findByIdAndDelete(id);
-
-        // Check if the table was deleted
+        const deletedTable = await TableModel.findByIdAndDelete(id).exec();
         if (deletedTable) {
-            return res.status(200).json({ message: "Table successfully deleted" });
+            return res.status(200).json({ "Deleted Message": "The requested table has been successfully Deleted." });
         } else {
-            return res.status(404).json({ message: "Table not found or already deleted" });
-        }
+            return res.status(404).json({ "Error message": "Requested table not found or already deleted!" })
+        };
     } catch (error) {
-        console.error("Error deleting table:", error);
-        // Return an error response with details
-        return res.status(500).json({ message: "Server Error", error: error.message });
+        console.log("Something went wrong", error);
+        return res.status(500).json({ "Server Error ": "Unable to process your request at this time please contact support" })
     }
-};
+}
 
 module.exports = {
     createTable,
@@ -129,4 +101,4 @@ module.exports = {
     showOneTable,
     updateTable,
     deleteTable
-};
+}

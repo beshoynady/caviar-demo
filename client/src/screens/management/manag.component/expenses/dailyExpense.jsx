@@ -211,7 +211,7 @@ const DailyExpense = () => {
                               <td>{expense.totalAmount}</td>
                               <td>{expense.date}</td>
                               <td>{expense.notes}</td>
-                              {allDailyExpenses[allDailyExpenses.length-1]._id == expense._id ?
+                              {allDailyExpenses.filter(ex=>ex.description == expense.expenseDescription)[allDailyExpenses.length-1]._id == expense._id ?
                               <td>
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);
                                 setamount(expense.totalAmount - expense.quantity) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

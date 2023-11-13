@@ -1,104 +1,137 @@
-const Productmodel = require('../models/Product.model.js')
+const Productmodel = require('../models/Product.model.js');
 
-
-const createproduct = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
-        const productname = await req.body.productname;
-        const productprice = await req.body.productprice;
-        const productdescription = await req.body.productdescription;
-        const image = await req.file.filename;
-        const categoryid = await req.body.productcategoryid;
+        const { productname, productprice, productdescription, productcategoryid } = req.body;
+        const image = req.file ? req.file.filename : null;
 
-        const newproduct = await Productmodel.create({ name: productname, description: productdescription, price: productprice, image: image, category: categoryid });
-        newproduct.save();
-        res.status(200).json(newproduct);
+        const newProduct = await Productmodel.create({
+            name: productname,
+            description: productdescription,
+            price: productprice,
+            image: image,
+            category: productcategoryid
+        });
+
+        res.status(201).json(newProduct);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message });
     }
-}
+};
 
 const addRecipe = async (req, res) => {
     try {
-        const productId =await req.params.productid
-        const Recipe = await req.body.Recipe
-        const totalcost = await req.body.totalcost
-        const productRecipe = await Productmodel.findByIdAndUpdate({_id: productId}, {Recipe,totalcost})
-        res.status(200).json({Recipe : productRecipe})
+        const productId = req.params.productid;
+        const { Recipe, totalcost } = req.body;
+
+        const productRecipe = await Productmodel.findByIdAndUpdate(
+            { _id: productId },
+            { Recipe, totalcost },
+            { new: true }
+        );
+
+        res.status(200).json({ Recipe: productRecipe });
     } catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-
-const getAllproducts = async (req, res) => {
+const getAllProducts = async (_req, res) => {
     try {
-        const allproducts = await Productmodel.find({});
-        res.status(200).json(allproducts);
+        const allProducts = await Productmodel.find({});
+        res.status(200).json(allProducts);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message });
     }
-}
+};
 
-const getproductbycategory = async (req, res) => {
+const getProductByCategory = async (req, res) => {
     try {
-        const categoryid = await req.params.categoryid;
+        const categoryid = req.params.categoryid;
         const products = await Productmodel.find({ category: categoryid });
-        res.status(200).json(products)
+        res.status(200).json(products);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message });
     }
-}
+};
 
-const getoneproduct = async (req, res) => {
+const getOneProduct = async (req, res) => {
     try {
-        const productid = await req.params.productid;
-        const oneproduct = await Productmodel.findById(productid);
-        res.status(200).json(oneproduct);
+        const productid = req.params.productid;
+        const oneProduct = await Productmodel.findById(productid);
+        res.status(200).json(oneProduct);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message });
     }
-}
+};
 
-const updateproduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     try {
-        const productid = await req.params.productid;
-        const name = await req.body.productname;
-        const price = await req.body.productprice;
-        const description = await req.body.productdescription;
-        const category = await req.body.productcategoryid;
-        const discount = await req.body.productdiscount;
-        const sales = await req.body.sales;
-        const image = await req.file.filename;
-        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description, price, category, discount, sales, image }, { new: true })
-        res.status(200).json(product)
-    } catch (err) {
-        res.status(400).json(err)
-    }
-}
-const updateproductwithoutimage = async (req, res) => {
-    try {
-        const productid = await req.params.productid;
-        const name = await req.body.productname;
-        const price = await req.body.productprice;
-        const description = await req.body.productdescription;
-        const category = await req.body.productcategoryid;
-        const discount = await req.body.productdiscount;
-        const sales = await req.body.sales;
-        const product = await Productmodel.findByIdAndUpdate({ _id: productid }, { name, description, price, category, discount, sales }, { new: true })
-        res.status(200).json(product)
-    } catch (err) {
-        res.status(400).json(err)
-    }
-}
+        const productid = req.params.productid;
+        const { productname, productprice, productdescription, productcategoryid, productdiscount, sales } = req.body;
+        const image = req.file ? req.file.filename : null;
 
-const deleteproduct = async (req, res) => {
+        const updatedProduct = await Productmodel.findByIdAndUpdate(
+            { _id: productid },
+            {
+                name: productname,
+                description: productdescription,
+                price: productprice,
+                category: productcategoryid,
+                discount: productdiscount,
+                sales: sales,
+                image: image
+            },
+            { new: true }
+        );
+
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+const updateProductWithoutImage = async (req, res) => {
     try {
-        const productid = await req.params.productid;
+        const productid = req.params.productid;
+        const { productname, productprice, productdescription, productcategoryid, productdiscount, sales } = req.body;
+
+        const updatedProduct = await Productmodel.findByIdAndUpdate(
+            { _id: productid },
+            {
+                name: productname,
+                description: productdescription,
+                price: productprice,
+                category: productcategoryid,
+                discount: productdiscount,
+                sales: sales
+            },
+            { new: true }
+        );
+
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    try {
+        const productid = req.params.productid;
         const productdelete = await Productmodel.findByIdAndDelete(productid);
-        res.status(200).send("product deleted successfully").json(productdelete);
+        res.status(200).json({ message: 'Product deleted successfully', deletedProduct: productdelete });
     } catch (err) {
-        res.status(400)
+        res.status(400).json({ message: err.message });
     }
-}
+};
 
-module.exports = { createproduct,addRecipe, getAllproducts, getproductbycategory, getoneproduct, updateproduct, updateproductwithoutimage, deleteproduct }
+module.exports = {
+    createProduct,
+    addRecipe,
+    getAllProducts,
+    getProductByCategory,
+    getOneProduct,
+    updateProduct,
+    updateProductWithoutImage,
+    deleteProduct
+};

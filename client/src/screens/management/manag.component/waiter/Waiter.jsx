@@ -35,28 +35,51 @@ const Waiter = () => {
 
   const orderOnWay = async (id) => {
     // const waiter = waiterid;
-    const status = 'في الطريق'
-    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      status
-    })
-    GetPrductstowaiter()
-    console.log(done)
+    try {
+      const status = 'في الطريق'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        status
+      })
+      if(done){
+        GetPrductstowaiter()
+        PendingOrder()
+      }
+      
+    } catch (error) {
+console.log(error)
+    }
   }
   const helpOnWay = async (id) => {
-    const help = 'في الطريق'
-    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      help
-    })
-    GetPrductstowaiter()
-    console.log(done)
+    try {
+      const help = 'في الطريق'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        help
+      })
+      if (done){
+        console.log(done)
+        GetPrductstowaiter()
+        PendingOrder()
+      }
+      
+    } catch (error) {
+      confirm(error.message)
+    }
   }
 
   const helpDone = async (id) => {
-    const help = 'تمت المساعدة'
-    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      help
-    })
-    GetPrductstowaiter()
+    try {
+      const help = 'تمت المساعدة'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        help
+      })
+      if(done){
+        PendingOrder()
+        GetPrductstowaiter()
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -71,12 +94,17 @@ const Waiter = () => {
       products.push(cloneproduct[i])
     }
     console.log(products)
-    const status = 'تم التوصيل'
-    const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      products,
-      status
-    })
-    GetPrductstowaiter()
+    if(products.length == cloneproduct.length){
+      const status = 'تم التوصيل'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        products,
+        status
+      })
+      if(done){
+        GetPrductstowaiter()
+        PendingOrder()
+      }
+    }
   }
 
 

@@ -33,17 +33,17 @@ const ExpenseItem = () => {
         }
     };
 
-    // const deleteExpense = async (expenseId) => {
-    //     try {
-    //         const response = await axios.delete(`https://caviar-api.vercel.app/api/expenses/${expenseId}`);
-    //         if (response.status === 200) {
-    //             console.log(response);
-    //             getAllExpenses();
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const deleteExpense = async (expenseId) => {
+        try {
+            const response = await axios.delete(`https://caviar-api.vercel.app/api/expenses/${expenseId}`);
+            if (response.status === 200) {
+                console.log(response);
+                getAllExpenses();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const getAllExpenses = async () => {
         try {
@@ -233,7 +233,7 @@ const ExpenseItem = () => {
                             </div>
                         </div>
 
-                        {/* <div id="deleteExpensesModal" className="modal fade">
+                        <div id="deleteExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <form onSubmit={deleteExpense(expenseId)}>
@@ -252,7 +252,7 @@ const ExpenseItem = () => {
                                     </form>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 );
             }}

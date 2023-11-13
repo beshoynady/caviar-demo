@@ -142,7 +142,8 @@ const ExpenseItem = () => {
                                                         <td>{expense.amount}</td>
                                                         <td>{expense.data}</td>
                                                         <td>
-                                                            <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description); setAmount(expense.amount) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                                            <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)
+                                                            }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                                             <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                                         </td>
                                                     </tr>
@@ -164,7 +165,7 @@ const ExpenseItem = () => {
                                                             <td>{expense.amount}</td>
                                                             <td>{expense.data}</td>
                                                             <td>
-                                                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description); setAmount(expense.amount) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                                             </td>
                                                         </tr>
@@ -198,7 +199,7 @@ const ExpenseItem = () => {
                                         <div className="modal-body">
                                             <div className="form-group">
                                                 <label>اسم المصروف</label>
-                                                <input type="text" className="form-control" required onChange={(e) => setitemName(e.target.value)} />
+                                                <input type="text" className="form-control" required onChange={(e) => setDescription(e.target.value)} />
                                             </div>
                                         </div>
                                         <div className="modal-footer">
@@ -220,7 +221,7 @@ const ExpenseItem = () => {
                                         <div className="modal-body">
                                             <div className="form-group">
                                                 <label>اسم المصروف</label>
-                                                <input type="text" className="form-control" defaultValue={description} required onChange={(e) => setitemName(e.target.value)} />
+                                                <input type="text" className="form-control" defaultValue={description} required onChange={(e) => setDescription(e.target.value)} />
                                             </div>
                                         </div>
                                         <div className="modal-footer">

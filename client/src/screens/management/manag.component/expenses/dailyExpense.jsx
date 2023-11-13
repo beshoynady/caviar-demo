@@ -48,7 +48,7 @@ const DailyExpense = () => {
     e.preventDefault();
     try {
       const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyExpenseId}`, {
-        dailyExpenseId: dailyExpenseId,
+        expenseID: expenseId,
         expenseDescription: description,
         quantity: quantity,
         totalAmount: totalAmount,
@@ -58,7 +58,7 @@ const DailyExpense = () => {
       console.log(response.data);
       if(data){
         const updateexpense = await axios.put('https://caviar-api.vercel.app/api/expenses/',{amount : totalAmount})
-        if (updateexpense.status === 200) {
+        if (updateexpense) {
           getAllDailyExpenses();
         }
       }
@@ -303,7 +303,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" value={quantity} required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
                       </div>
                       <div className="form-group">
                         <label>الاجمالي </label>

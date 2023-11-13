@@ -215,7 +215,7 @@ const ExpenseItem = () => {
                         <div id="editExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
-                                    <form onSubmit={(e) => editExpense(expenseId)}>
+                                    <form onSubmit={(e) => editExpense(e,expenseId)}>
                                         <div className="modal-header">
                                             <h4 className="modal-title">تعديل صنف بالمخزن</h4>
                                             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -238,7 +238,7 @@ const ExpenseItem = () => {
                         <div id="deleteExpensesModal" className="modal fade">
                             <div className="modal-dialog">
                                 <div className="modal-content">
-                                    <form onSubmit={deleteExpense(expenseId)}>
+                                    <form onSubmit={deleteExpense(e,expenseId)}>
                                         <div className="modal-header">
                                             <h4 className="modal-title">حذف منتج</h4>
                                             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

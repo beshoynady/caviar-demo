@@ -38,13 +38,3 @@ router.route('/addrecipe/:productid').put(addRecipe)
 // router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
 
 module.exports = router;
-
-
-// route.post("/create", upload.single("image"), createproduct);
-// route.get("/allproducts", getAllproducts);
-// route.get("/prouctsbycategory", getproductbycategory);
-// route.get("/oneproduct/:productid", getoneproduct);
-// route.put("/update/:productid",upload.single("image"), updateproduct);
-// route.delete("/delete/:productid", deleteproduct);
-
-// module.exports = route;

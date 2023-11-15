@@ -748,31 +748,6 @@ function App() {
 
 
 
-  const [orders, setOrders] = useState([]);
-  const [newOrder, setNewOrder] = useState(null);
-
-  useEffect(() => {
-    // Listen for new orders from the server
-    socket.on('newOrder', (order) => {
-      setNewOrder(order);
-    });
-
-    // Clean up the socket connection on unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (newOrder) {
-      setOrders((prevOrders) => [...prevOrders, newOrder]);
-      showToast(`New order received: ${newOrder.id}`);
-    }
-  }, [newOrder]);
-
-  const showToast = (message) => {
-    toast.success(message);
-  };
 
 
 
@@ -789,7 +764,7 @@ function App() {
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
       EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid
     }}>
-            <ToastContainer />
+           
 
       <BrowserRouter>
         <Routes>

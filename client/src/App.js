@@ -704,8 +704,6 @@ function App() {
       }
     } catch (error) {
       console.log(error)
-      toast('حدث خطأ اثناء تسجيل الدخول')
-
     }
   }
 

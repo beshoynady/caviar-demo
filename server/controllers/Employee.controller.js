@@ -97,7 +97,7 @@ const loginEmployee = async (req, res) => {
             return res.status(401).json({ message: 'accessToken not sign' });
         }
 
-        res.status(200).json({ findEmployee, accessToken }).json({ message: 'login success'  });
+        res.status(200).json({ findEmployee, accessToken , message:"login success"});
     } catch (error) {
         res.status(404).send('error');
     }

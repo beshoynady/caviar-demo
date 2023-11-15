@@ -64,49 +64,44 @@ const getoneEmployee = async (req, res) => {
 
 const loginEmployee = async (req, res) => {
     try {
-        const phone = await req.body.phone;
-        const password = await req.body.password;
+        const phone = req.body.phone;
+        const password = req.body.password;
 
         if (!phone || !password) {
             return res.status(404).json({ message: 'phone or password is required' });
         }
 
-
         const findEmployee = await Employeemodel.findOne({ phone: phone });
         if (!findEmployee) {
-            return res.status(400).json({ message: 'this Employee not founded' })
-        } else {
-            const match = bcrypt.compare(password, findEmployee.password, function (err, result) {
-                if (!result) {
-                    return res.status(401).json({ message: "Wrong Password" })
-                } else {
-                    const accessToken = jwt.sign({
-                        employeeinfo: {
-                            id: findEmployee._id,
-                            username: findEmployee.username,
-                            isAdmin: findEmployee.isAdmin,
-                            isActive: findEmployee.isActive,
-                            role: findEmployee.role
-                        }
-
-                    }, process.env.jwt_secret_key,
-                        { expiresIn: process.env.jwt_expire }
-                    )
-                    if (!accessToken) {
-                        return res.status(401).json({ message: "accessToken not sign" })
-                    }
-
-                    res.status(200).json({ findEmployee, accessToken })
-
-                }
-            });
-
+            return res.status(400).json({ message: 'this Employee not founded' });
         }
-        // res.status(200).json(findEmployee)
+
+        const match = await bcrypt.compare(password, findEmployee.password);
+        if (!match) {
+            return res.status(401).json({ message: 'Wrong Password' });
+        }
+
+        const accessToken = jwt.sign({
+            employeeinfo: {
+                id: findEmployee._id,
+                username: findEmployee.username,
+                isAdmin: findEmployee.isAdmin,
+                isActive: findEmployee.isActive,
+                role: findEmployee.role
+            }
+        }, process.env.jwt_secret_key, {
+            expiresIn: process.env.jwt_expire
+        });
+
+        if (!accessToken) {
+            return res.status(401).json({ message: 'accessToken not sign' });
+        }
+
+        res.status(200).json({ findEmployee, accessToken }).json({ message: 'login success'  });
     } catch (error) {
         res.status(404).send('error');
     }
-}
+};
 
 
 

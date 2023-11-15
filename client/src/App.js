@@ -3,10 +3,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from 'axios';
 import './App.css';
 import jwt_decode from "jwt-decode";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 import Userscreen from './screens/user.screen/Userscreen';
-
 
 import ManagLayout from './screens/management/ManagLayout';
 import ManagerDash from './screens/management/manag.component/managerdash/ManagerDash';
@@ -679,6 +682,8 @@ function App() {
     try {
       const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
       console.log(employee.data)
+      toast(employee.data.message)
+
       if (employee) {
         setislogin(!islogin)
         const token = employee.data.accessToken;
@@ -694,9 +699,13 @@ function App() {
       }
       if (employee.data.findEmployee.isActive == true) {
         window.location.href = `https://${window.location.hostname}/management`;
+      }else{
+        toast('هذا المستخدم غير مصرح له بالدخول')
       }
     } catch (error) {
       console.log(error)
+      toast('حدث خطأ اثناء تسجيل الدخول')
+
     }
   }
 

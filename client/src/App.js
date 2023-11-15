@@ -704,7 +704,9 @@ function App() {
       }
     } catch (error) {
       console.log(error)
+      if(error){
       toast(error.response.data.message)
+    }
 
     }
   }

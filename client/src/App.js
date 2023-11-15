@@ -704,7 +704,7 @@ function App() {
       }
     } catch (error) {
       console.log(error.data)
-      toast(error.data.massage)
+      toast(error)
 
     }
   }

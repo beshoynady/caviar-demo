@@ -681,7 +681,7 @@ function App() {
     console.log(password);
     try {
       const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
-      console.log(employee.data)
+      console.log(employee.data.message)
       toast(employee.data.message)
 
       if (employee) {

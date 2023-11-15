@@ -3,10 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from 'axios';
 import './App.css';
 import jwt_decode from "jwt-decode";
-import io from 'socket.io-client';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 
 import Userscreen from './screens/user.screen/Userscreen';
@@ -36,9 +32,6 @@ import DailyExpense from './screens/management/manag.component/expenses/dailyExp
 export const detacontext = createContext({})
 
 function App() {
-
-
-  const socket = io('https://caviar-api.vercel.app');
   //++++++++++++++++++++ pagination ++++++++++
 
   const [startpagination, setstartpagination] = useState(0)
@@ -212,16 +205,16 @@ function App() {
 
 
 
-  const createclientorder = async (id) => {
-    const tableorder = allorders.filter((o, i) => o.table == id);
+  const createclientorder = async (clientid) => {
+    const tableorder = allorders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
 
-    const userorder = allorders.filter((o, i) => o.user == id);
+    const userorder = allorders.filter((o, i) => o.user == clientid);
     const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
     const lastuserorderactive = lastuserorder.isActive
 
-    if (id) {
+    if (clientid) {
       if (lasttableorderactive) {
         const id = await lasttableorder._id
         const oldproducts = await allorders.find((order) => order._id == id).products;
@@ -245,9 +238,6 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, totalAfterTax, status
           })
-          if(neworder){
-            socket.emit('createOrder', neworder);
-          }
           setitemsincart([])
           getProducts()
         } else {
@@ -257,9 +247,6 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, totalAfterTax, status
           })
-          if(neworder){
-            socket.emit('createOrder', neworder);
-          }
         }
         setitemsincart([])
         getProducts()
@@ -303,9 +290,9 @@ function App() {
       } else {
         try {
           const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
-          const table = alltable.find((t, i) => t._id == id) ? id : null;
-          const finduser = allusers.find((u, i) => u._id == id);
-          const user = finduser ? id : null;
+          const table = alltable.find((t, i) => t._id == clientid) ? clientid : null;
+          const finduser = allusers.find((u, i) => u._id == clientid);
+          const user = finduser ? clientid : null;
           const products = [...itemsincart]
           const total = costOrder;
           const tax = total * 0.14
@@ -337,9 +324,6 @@ function App() {
               totalAfterTax,
               order_type
             })
-            if(neworder){
-              socket.emit('createOrder', neworder);
-            }
           }
           // console.log(await neworder.data);
           setitemsincart([])
@@ -449,17 +433,17 @@ function App() {
   const [orderupdate_date, setorderupdate_date] = useState('')
   const [myorderid, setmyorderid] = useState()
 
-  const invoice = async (id) => {
-    console.log(id)
+  const invoice = async (clientid) => {
+    console.log(clientid)
     // console.log(allorders)
-    const tableorder = allorders.filter((o, i) => o.table == id);
+    const tableorder = allorders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
-    const userorder = allorders.filter((o, i) => o.user == id);
+    const userorder = allorders.filter((o, i) => o.user == clientid);
     const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
     const lastuserorderactive = lastuserorder.isActive
 
-    if (id) {
+    if (clientid) {
       if (lasttableorderactive) {
         const id = await lasttableorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
@@ -752,11 +736,6 @@ function App() {
 
   }, [count, itemsincart, islogin])
 
-
-
-
-
-
   return (
     <detacontext.Provider value={{
       userlogininfo, getdatafromtoken, login, signup, logout, employeelogin, employeelogout,
@@ -770,8 +749,6 @@ function App() {
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
       EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid
     }}>
-           
-
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Userscreen />} />

@@ -45,7 +45,7 @@ const POS = () => {
                             orderside.current.style.marginRight = "-50%";
                           }}>الفاتورة</label> :
                           <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                            POSinvoice(userlogininfo.id);
+                            POSinvoice(userlogininfo.employeeinfo.id);
                             orderside.current.style.marginRight = "-50%";
                             ordersText.current.style.marginRight = "-50%";
                           }}>الفاتورة</label>}
@@ -87,9 +87,9 @@ const POS = () => {
                             }
                           </div>
                           <div className="total-order">
-                            {userlogininfo.role === 'waiter' ?
-                              <button className='total-order-btn' onClick={() => CreateWaiterOrder(tableID, userlogininfo.id)}>تاكيد الطلب</button>
-                              : <button className='total-order-btn' onClick={() => CreateCasherOrder(userlogininfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
+                            {userlogininfo.employeeinfo.role === 'waiter' ?
+                              <button className='total-order-btn' onClick={() => CreateWaiterOrder(tableID, userlogininfo.employeeinfo.id)}>تاكيد الطلب</button>
+                              : <button className='total-order-btn' onClick={() => CreateCasherOrder(userlogininfo.employeeinfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
                             }
 
                             <div className='total-order-details'>
@@ -256,7 +256,7 @@ const POS = () => {
                 </div>
                 <div className='pos-content'>
                   <div className='client-formgroup'>
-                    {userlogininfo.role == 'waiter' ?
+                    {userlogininfo.employeeinfo.role == 'waiter' ?
                       <form className="form-info">
                         <div className='formgroup'>
                           <label htmlFor='table'>رقم الطاولة:</label>

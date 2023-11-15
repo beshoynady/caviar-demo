@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import './Login.css'
 import { detacontext } from '../../../../App'
+import { ToastContainer, toast } from 'react-toastify';
 
 const Login = () => {
 const [phone, setphone] = useState('')
@@ -11,6 +12,7 @@ const [password, setpassword] = useState('')
                 ({ employeelogin }) => {
                     return (
                         <div className="login-container">
+                            <ToastContainer/>
                             <div className="screen">
                                 <div className="screen__content">
                                     <form className="login-dash" onSubmit={(e)=>employeelogin(e,phone, password)} >

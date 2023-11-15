@@ -6,9 +6,12 @@ import NavBar from './manag.component/navbar/NavBar';
 import SideBar from './manag.component/sidebar/SideBar';
 import jwt_decode from "jwt-decode";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ManagLayout = () => {
+  const notify = () => toast("Wow so easy!");
 
     if (localStorage.getItem('token_e')) {
       // console.log(localStorage.getItem('token'))
@@ -19,6 +22,8 @@ const ManagLayout = () => {
        if(decodetoken.employeeinfo.isActive){
         return(
           <div className='manag-screen'>
+                    <button onClick={notify}>Notify!</button>
+        <ToastContainer />
             <SideBar />
             <main className='manag_main'>
               {/* <NavBar /> */}

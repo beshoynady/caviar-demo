@@ -703,7 +703,9 @@ function App() {
         toast('هذا المستخدم غير مصرح له بالدخول')
       }
     } catch (error) {
-      console.log(error)
+      console.log(error.data.massage)
+      toast(error.data.massage)
+
     }
   }
 

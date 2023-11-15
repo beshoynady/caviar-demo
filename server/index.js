@@ -36,8 +36,9 @@ io.on('connection', (socket) => {
 
 // Middleware setup
 app.use(express.urlencoded({ extended: true }));
+
 app.use(cors({
-  origin: 'https://caviar-demo.vercel.app',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'UPDATE', 'DELETE'],
   credentials: true,
 }));

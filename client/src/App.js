@@ -245,6 +245,9 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, totalAfterTax, status
           })
+          if(neworder){
+            socket.emit('createOrder', neworder);
+          }
           setitemsincart([])
           getProducts()
         } else {
@@ -254,6 +257,9 @@ function App() {
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, total, totalAfterTax, status
           })
+          if(neworder){
+            socket.emit('createOrder', neworder);
+          }
         }
         setitemsincart([])
         getProducts()

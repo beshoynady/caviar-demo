@@ -789,6 +789,8 @@ function App() {
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
       EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid
     }}>
+            <ToastContainer />
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Userscreen />} />

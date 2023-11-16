@@ -224,7 +224,7 @@
   display: flex;
   justify-content: space-between;
   padding: 12px 10px;
-  position: fixed;
+  position: absolute;
   transition: all .5s ease;
   height: 60px;
   width: 100%;

@@ -165,16 +165,18 @@ const SideBar = () => {
                       <li><Link to="dailyexpense">تسجيل مصروف</Link></li>
                     </ul>
                   </li>
+                  <li>
+                    <div className="profile-details">
+                      <div className="profile-content">
+                        <i className='bx bx-log-out' onClick={employeelogout}></i>
+                      </div>
+                      <div className="name-job">
+                        <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
+                        <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
+                      </div>
+                    </div>
+                  </li>
                 </ul>
-                <div className="profile-details">
-                  <div className="profile-content">
-                    <i className='bx bx-log-out' onClick={employeelogout}></i>
-                  </div>
-                  <div className="name-job">
-                    <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
-                    <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
-                  </div>
-                </div>
               </div>
               <section className="home-section" onClick={openSidebar}>
                 <div className="home-content">

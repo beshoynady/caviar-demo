@@ -218,7 +218,7 @@
   transform: translateY(50%);
 }
 
-.sidebar .nav-links li .profile-details {
+.sidebar .nav-links .profile-details {
   align-items: center;
   bottom: 0;
   display: flex;
@@ -231,27 +231,27 @@
   background: cyan;
 }
 
-.sidebar.close .nav-links li .profile-details  {
+.sidebar.close .nav-links .profile-details  {
   background: none;
 }
 
-.sidebar.close .nav-links li .profile-details  {
+.sidebar.close .nav-links .profile-details  {
   width: 78px;
 }
 
-.sidebar .nav-links li .profile-details  .name-job {
+.sidebar .nav-links .profile-details  .name-job {
   height: 52px;
   width: 120px;
   margin: 0 14px 0 12px;
 
 }
 
-.sidebar .nav-links li .profile-details  .profile-content {
+.sidebar .nav-links .profile-details  .profile-content {
   display: flex;
   align-items: center;
 }
 
-.sidebar .nav-links li .profile-details  .profile-content i.bx {
+.sidebar .nav-links .profile-details  .profile-content i.bx {
   border-radius: 16px;
   color: #93181a;
   font-size: 40px;
@@ -261,20 +261,20 @@
   width: 40px;
 }
 
-.sidebar.close .nav-links li .profile-details  .profile-content i.bx {
+.sidebar.close .nav-links .profile-details  .profile-content i.bx {
   padding: 5px;
   background: cyan;
 }
 
-.sidebar .nav-links li .profile-details  .profile_name,
-.sidebar .nav-links li .profile-details  .job {
+.sidebar .nav-links .profile-details  .profile_name,
+.sidebar .nav-links .profile-details  .job {
   /* color: #fff; */
   font-size: 18px;
   font-weight: 600;
   white-space: nowrap;
 }
 
-.sidebar .nav-links li .profile-details  .job {
+.sidebar .nav-links .profile-details  .job {
   /* color: #fff; */
   font-size: 14px;
   font-weight: 400;

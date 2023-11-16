@@ -165,8 +165,8 @@ const SideBar = () => {
                       <li><Link to="dailyexpense">تسجيل مصروف</Link></li>
                     </ul>
                   </li>
-                  <li>
-                    <div className="profile-details">
+                  <li className="profile-details">
+                    {/* <div className="profile-details"> */}
                       <div className="profile-content">
                         <i className='bx bx-log-out' onClick={employeelogout}></i>
                       </div>
@@ -174,7 +174,7 @@ const SideBar = () => {
                         <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
                         <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
                       </div>
-                    </div>
+                    {/* </div> */}
                   </li>
                 </ul>
               </div>

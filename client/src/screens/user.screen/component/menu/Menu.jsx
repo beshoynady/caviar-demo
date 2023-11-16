@@ -5,6 +5,7 @@ import { detacontext } from '../../../../App'
 
 
 const Menu = () => {
+  const [activeItem, setActiveItem] = useState(null);
   return (
     <section id='menu'>
       <detacontext.Consumer>
@@ -18,8 +19,8 @@ const Menu = () => {
                 <div className='section-content'>
                   <nav className="menu-nav">
                     <ul className='menu-ul'>
-                      {allcategories.map((c, i) => <li key={i} className='menu-nav-li'>
-                        <a className='category-btn' onClick={()=>setcategoryid(c._id)}>{c.name}</a> 
+                      {allcategories.map((c, i) => <li key={i} className={`menu-nav-li ${activeItem === i ? 'active' : ''}`}>
+                        <a className='category-btn' onClick={()=>{setcategoryid(c._id);setActiveItem(i)}}>{c.name}</a> 
                         </li>)}
                     </ul>
                   </nav>

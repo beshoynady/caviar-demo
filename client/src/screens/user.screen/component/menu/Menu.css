@@ -126,4 +126,7 @@
     cursor: pointer;
     padding: 5px 10px;
   }
+  #menu .container-lg .section-content .menu-nav .menu-ul .menu-nav-li .category-btn.active {
+    background-color: rgb(0, 130, 134);
+  }
 }/*# sourceMappingURL=Menu.css.map */

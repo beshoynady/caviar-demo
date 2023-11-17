@@ -12,7 +12,7 @@ router.route('/:employeeId')
     .delete(employeesController.deleteEmployee);
 
 router.route('/login').post(employeesController.loginEmployee);
-router.route('/payroll/:employeeid')
+router.route('/payroll/:employeeId')
     .post(employeesController.updateOrAddPayrollForMonth);
 
 module.exports = router;

@@ -84,8 +84,8 @@ const createEmployee = async (req, res, next) => {
 
 const getoneEmployee = async (req, res) => {
     try {
-        const employeeid = await req.params.employeeid;
-        const employee = await Employeemodel.findById(employeeid);
+        const employeeId = await req.params.employeeId;
+        const employee = await Employeemodel.findById(employeeId);
         res.status(200).json(employee);
     } catch (err) {
         res.status(400).json(err)
@@ -150,7 +150,7 @@ const updateEmployee = async (req, res) => {
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         }
-        const id = req.params.employeeid;
+        const id = req.params.employeeId;
         const { fullname, numberID, username, email, address, phone, basicSalary, role, isActive, password } = req.body;
 
         const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
@@ -169,7 +169,7 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
     try {
-        const id = await req.params.employeeid;
+        const id = await req.params.employeeId;
         const employeedeleted = await Employeemodel.findByIdAndDelete(id).exec();
 
     } catch (error) {

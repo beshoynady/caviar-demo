@@ -134,7 +134,7 @@ const CashRegister = () => {
                           <label>الموظف</label>
                           <select class="form-control" onChange={(e) => filterCashRegistersByEmployee(e.target.value)}>
                           {allEmployee.map((Employee, i) => {
-                            return <option value={Employee._id} key={i} >{Employee.name}</option>
+                            return <option value={Employee._id} key={i} >{Employee.username}</option>
                           })
                           }
                           </select>
@@ -229,10 +229,10 @@ const CashRegister = () => {
                       </div>
                       <div className="form-group">
                         <label>المسؤل</label>
-                        <select name="category" id="category" form="carform" onChange={(e) => setemployee(e.target.value)}>
+                        <select name="Employee" id="Employee" form="carform" onChange={(e) => setemployee(e.target.value)}>
                           <option>احتر الموظف</option>
                           {allEmployee.map((Employee, i) => {
-                            return <option value={Employee._id} key={i} >{Employee.name}</option>
+                            return <option value={Employee._id} key={i} >{Employee.username}</option>
                           })
                           }
                         </select>
@@ -265,7 +265,7 @@ const CashRegister = () => {
                         <select name="category" id="category" form="carform" defaultValue={employee} onChange={(e) => setemployee(e.target.value)}>
                           <option>احتر الموظف</option>
                           {allEmployee.map((Employee, i) => {
-                            return <option value={Employee._id} key={i} >{Employee.name}</option>
+                            return <option value={Employee._id} key={i} >{Employee.username}</option>
                           })
                           }
                         </select>

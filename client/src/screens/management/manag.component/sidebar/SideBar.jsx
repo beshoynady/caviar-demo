@@ -165,16 +165,28 @@ const SideBar = () => {
                       <li><Link to="dailyexpense">تسجيل مصروف</Link></li>
                     </ul>
                   </li>
+                  <li ref={arrowRefs.arrowsexp} onClick={() => openSubMenu(arrowRefs.arrowsexp)}>
+                    <div className="iocn-link">
+                      <a href="#">
+                        <span class="material-symbols-outlined">monetization_on</span>                        
+                        <span className="link_name">الخزينة</span>
+                      </a>
+                      <i className='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul className="sub-menu">
+                      <li><a className="link_name" href="#">الخزينة</a></li>
+                      <li><Link to="cashregister">الرصيد</Link></li>
+                      <li><Link to="dailyexpense">تسجيل حركه</Link></li>
+                    </ul>
+                  </li>
                   <li className="profile-details">
-                    {/* <div className="profile-details"> */}
-                      <div className="profile-content">
-                        <i className='bx bx-log-out' onClick={employeelogout}></i>
-                      </div>
-                      <div className="name-job">
-                        <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
-                        <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
-                      </div>
-                    {/* </div> */}
+                    <div className="profile-content">
+                      <i className='bx bx-log-out' onClick={employeelogout}></i>
+                    </div>
+                    <div className="name-job">
+                      <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
+                      <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -184,25 +196,6 @@ const SideBar = () => {
                 </div>
               </section>
             </>
-            // <div ref={sidebar} className='sidebar'>
-            //   <div className='menu'>
-            //     <div className="logo">
-            //       <h2>كافيار</h2>
-            //       <span ref={menuicon} className="material-symbols-outlined icon menu-icon" onClick={opensidebar}>menu_open</span>
-            //     </div>
-            //     <div className='sid-list'>
-            //       {menuitem.map((item, i) => {
-            //         return (
-            //           <Link to={item.sideitem != 'dashboard' ? item.sideitem : ''} className='item' key={i}>
-            //             <span className="material-symbols-outlined icon icon-manag">{item.icon}</span>
-            //             <p className='menu-title'>{item.title}</p>
-            //           </Link>
-            //         )
-            //       })
-            //       }
-            //     </div>
-            //   </div>
-            // </div>
           )
         }
       }

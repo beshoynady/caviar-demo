@@ -70,7 +70,7 @@ app.use('/api/stockitem', routestockitems);
 app.use('/api/stockmanag', routestockmanag);
 app.use('/api/expenses', routeexpense);
 app.use('/api/dailyexpense', routedailyexpense);
-app.use('/api/cashRegister', routecashRegister);
+app.use('/api/cash', routecashRegister);
 app.use('/api/cashMovement', routecashMovement);
 
 

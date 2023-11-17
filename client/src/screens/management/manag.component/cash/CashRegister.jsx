@@ -13,8 +13,7 @@ const CashRegister = () => {
   const [cashID, setcashID] = useState('');
 
   // Fetch employees
-  const getEmployees = async (e) => {
-    e.preventDefault()
+  const getEmployees = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee')
       const data = await response.data

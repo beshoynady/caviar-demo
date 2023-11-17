@@ -88,6 +88,7 @@ const updateuser = async (req, res) => {
             address: Joi.string().trim().min(3).max(150),
             phone: Joi.string().trim().length(11).required(),
             password: Joi.string().trim().min(3).max(200),
+            isActive: Joi.boolean(),
         });
 
         const validationResult = schema.validate(req.body);
@@ -105,6 +106,7 @@ const updateuser = async (req, res) => {
             email,
             address,
             phone,
+            isActive
         };
 
         if (password) {

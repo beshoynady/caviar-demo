@@ -299,8 +299,8 @@ function App() {
           const products = [...itemsincart]
           const total = costOrder;
           const tax = total * 0.14
-          const phone = finduser?finduser.phone:''
-          const address = finduser?finduser.address:''
+          const phone = finduser ? finduser.phone : ''
+          const address = finduser ? finduser.address : ''
           const totalAfterTax = total + tax
           if (user) {
             const order_type = 'ديلفري'
@@ -575,16 +575,16 @@ function App() {
 
 
   const usertitle = (id) => {
-    const istable =alltable?alltable.find((table, i) => table._id == id):null;
-    const isuser =allusers?allusers.find((user, i) => user._id == id):null
-    const isemployee = allemployees? allemployees.find((employee, i) => employee._id == id):null
+    const istable = alltable ? alltable.find((table, i) => table._id == id) : null;
+    const isuser = allusers ? allusers.find((user, i) => user._id == id) : null
+    const isemployee = allemployees ? allemployees.find((employee, i) => employee._id == id) : null
     if (istable) {
       const table_num = istable.tablenum
       return table_num
     } else if (isuser) {
       const user_name = isuser.username
       return user_name
-    } else if (isemployee){
+    } else if (isemployee) {
       const employee_name = isemployee.username
       return employee_name
     }
@@ -616,32 +616,32 @@ function App() {
   axios.defaults.withCredentials = true;
 
   const signup = async (e, username, password, phone, address, email, setToken) => {
-      e.preventDefault();
-      try {
-          const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
-              username,
-              password,
-              phone,
-              address,
-              email,
-          });
-  
-          if (response && response.data) {
-              const { accessToken } = response.data;
-  
-              if (accessToken) {
-                  // Store the token in the component state using the provided setToken function
-                  setToken(accessToken);
-                  // Optionally, you can store the token in localStorage here if required
-                  // localStorage.setItem('token_u', accessToken);
-              }
-          }
-      } catch (error) {
-          console.error('Signup error:', error);
-          // Handle errors appropriately (e.g., display an error message to the user)
+    e.preventDefault();
+    try {
+      const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
+        username,
+        password,
+        phone,
+        address,
+        email,
+      });
+
+      if (response && response.data) {
+        const { accessToken } = response.data;
+
+        if (accessToken) {
+          // Store the token in the component state using the provided setToken function
+          setToken(accessToken);
+          // Optionally, you can store the token in localStorage here if required
+          // localStorage.setItem('token_u', accessToken);
+        }
       }
+    } catch (error) {
+      console.error('Signup error:', error);
+      // Handle errors appropriately (e.g., display an error message to the user)
+    }
   };
-    
+
 
   const [userlogininfo, setuserlogininfo] = useState(null)
   const getUserInfoFromToken = () => {
@@ -651,106 +651,98 @@ function App() {
     let decodedToken = null;
 
     if (employeetoken) {
-        decodedToken = jwt_decode(employeetoken);
-        console.log(decodedToken);
-        setuserlogininfo(decodedToken);
-        console.log(decodedToken.employeeinfo);
+      decodedToken = jwt_decode(employeetoken);
+      console.log(decodedToken);
+      setuserlogininfo(decodedToken);
+      console.log(decodedToken.employeeinfo);
     } else if (usertoken) {
-        decodedToken = jwt_decode(usertoken);
-        console.log(decodedToken);
-        setuserlogininfo(decodedToken);
-        console.log(decodedToken.userinfo);
+      decodedToken = jwt_decode(usertoken);
+      console.log(decodedToken);
+      setuserlogininfo(decodedToken);
+      console.log(decodedToken.userinfo);
     } else {
-        setuserlogininfo(null);
+      setuserlogininfo(null);
     }
 
     return decodedToken;
-};
+  };
 
   const [islogin, setislogin] = useState(false)
-  const login = async (e,phone, password) => {
-    e.preventDefault()
+  const login = async (e, phone, password) => {
+    e.preventDefault();
     try {
-        // Validate phone and password inputs before sending the request
-        if (!phone || !password) {
-            toast.error('Phone and password are required.');
-            return;
+      if (!phone || !password) {
+        toast.error('Phone and password are required.');
+        return;
+      }
+
+      const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
+        phone,
+        password,
+      });
+
+      if (response && response.data) {
+        const { accessToken, findUser } = response.data;
+
+        if (accessToken && findUser.isActive) {
+          localStorage.setItem('token_u', accessToken);
+          setislogin(true);
+          toast.success('Login successful!');
+        } else {
+          toast.error('User is not active.');
         }
-
-        const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
-            phone,
-            password,
-        });
-
-        if (response && response.data) {
-            const { accessToken } = response.data;
-
-            if (accessToken) {
-                // Save the token in localStorage
-                localStorage.setItem('token_u', accessToken);
-                // Call the function to retrieve user info from the token
-                const userInfo = getUserInfoFromToken();
-                // You can use userInfo as needed
-                console.log(userInfo);
-
-                // Update the login state
-                setislogin(true);
-
-                // Notify successful login
-                toast.success('Login successful!');
-            }
-        }
+      }
     } catch (error) {
-        console.error('Login error:', error);
-        // Notify login error
-        toast.error('Login failed. Please check your credentials.');
-        // Handle errors here or pass the error to the appropriate place for handling
+      console.error('Login error:', error);
+      toast.error('Login failed. Please check your credentials.');
     }
-};
+  };
 
-const employeelogin = async (phone, password, setislogin) => {
-  try {
+  const employeelogin = async (phone, password) => {
+    e.preventDefault()
+
+    try {
       const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', {
-          phone,
-          password,
+        phone,
+        password,
       });
 
       console.log(employee.data.message);
       toast(employee.data.message);
 
       if (employee && employee.data) {
-          setislogin(!islogin);
-          const token = employee.data.accessToken;
-          console.log(token);
+        setislogin(!islogin);
+        const token = employee.data.accessToken;
+        console.log(token);
 
-          if (token) {
-              // Save the employee token in localStorage
-              localStorage.setItem('token_e', token);
-              // Retrieve user info from the token
-              const userInfo = getUserInfoFromToken();
-              // Use userInfo as needed
-              console.log(userInfo);
-          }
+        if (token) {
+          // Save the employee token in localStorage
+          localStorage.setItem('token_e', token);
+          // Retrieve user info from the token
+          const userInfo = getUserInfoFromToken();
+          // Use userInfo as needed
+          console.log(userInfo);
+        }
 
-          setislogin(!islogin);
+        setislogin(!islogin);
 
-          if (employee.data.findEmployee.isActive === true) {
-              // Redirect to the management page if the employee is active
-              window.location.href = `https://${window.location.hostname}/management`;
-          } else {
-              // Notify if the employee is not authorized to log in
-              toast('This user is not authorized to log in');
-          }
+        if (employee.data.findEmployee.isActive === true) {
+          // Redirect to the management page if the employee is active
+          window.location.href = `https://${window.location.hostname}/management`;
+        } else {
+          // Notify if the employee is not authorized to log in
+          toast('This user is not authorized to log in');
+        }
       }
-  } catch (error) {
+    } catch (error) {
       console.log(error);
 
       // Display error message if available
       if (error.response && error.response.data && error.response.data.message) {
-          toast(error.response.data.message);
+        toast(error.response.data.message);
       }
-  }
-};
+    }
+  };
 
   const logout = () => {
     localStorage.removeItem('token_u');
@@ -815,7 +807,7 @@ const employeelogin = async (phone, password, setislogin) => {
             <Route path='tables' element={<Tables />} />
             <Route path='employees' element={<Employees />} />
             <Route path='Employeessalary' element={<EmployeesSalary />} />
-            <Route path='payroll' element={<PayRoll/>} />
+            <Route path='payroll' element={<PayRoll />} />
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
@@ -823,8 +815,8 @@ const employeelogin = async (phone, password, setislogin) => {
             <Route path='categoryStock' element={<CategoryStock />} />
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
-            <Route path='expense' element={<ExpenseItem/>} />
-            <Route path='dailyexpense' element={<DailyExpense/>} />
+            <Route path='expense' element={<ExpenseItem />} />
+            <Route path='dailyexpense' element={<DailyExpense />} />
           </Route>
 
         </Routes>

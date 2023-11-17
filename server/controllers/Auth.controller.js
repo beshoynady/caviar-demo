@@ -45,6 +45,11 @@ const login = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Check if the user is active before allowing login
+        if (!findUser.isActive) {
+            return res.status(401).json({ message: 'User is not active' });
+        }
+
         const match = await bcrypt.compare(password, findUser.password);
         if (!match) {
             return res.status(401).json({ message: 'Wrong password' });
@@ -63,6 +68,7 @@ const generateAccessToken = (user) => {
         {
             userinfo: {
                 id: user._id,
+                isActive: user.isActive,
                 username: user.username,
                 phone: user.phone,
             },

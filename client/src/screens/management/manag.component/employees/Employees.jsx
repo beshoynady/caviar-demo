@@ -37,17 +37,41 @@ const Employees = () => {
     });
   };
 
+  const createEmployeeSchema = Joi.object({
+    fullname: Joi.string().min(3).max(100),
+    numberID: Joi.string().length(14),
+    username: Joi.string().min(3).max(100),
+    email: Joi.string().email(),
+    address: Joi.string().min(3).max(150),
+    phone: Joi.string().length(11),
+    password: Joi.string().min(3),
+    basicSalary: Joi.number().min(0),
+    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
+    isActive: Joi.boolean(),
+});
   const createEmployee = async (e) => {
     e.preventDefault()
-    console.log(username)
-    console.log(password)
-    console.log(address)
-    console.log(phone)
-    console.log(email)
-    console.log(isAdmin)
-    console.log(role)
-    console.log(basicSalary)
-
+    const { error } = createEmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+    if (error) {
+        notify(error.details[0].message, 'error');
+        return;
+    }
+    if (
+      !fullname ||
+      !basicSalary ||
+      !numberID ||
+      !username ||
+      !password ||
+      !address ||
+      !phone ||
+      !email ||
+      !isActive ||
+      !role
+    ) {
+      // Notify the user that some fields are missing
+      notify('Please fill in all required fields', 'error');
+      return;
+    }
     try {
       const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', { fullname, basicSalary, numberID, payRoll, username, password, address, phone, email, isActive, role })
       console.log(newemployee)
@@ -59,6 +83,19 @@ const Employees = () => {
     }
   };
 
+
+  const updateEmployeeSchema = Joi.object({
+    fullname: Joi.string().min(3).max(100),
+    numberID: Joi.string().length(14),
+    username: Joi.string().min(3).max(100),
+    email: Joi.string().email(),
+    address: Joi.string().min(3).max(150),
+    phone: Joi.string().length(11),
+    password: Joi.string().min(3),
+    basicSalary: Joi.number().min(0),
+    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
+    isActive: Joi.boolean(),
+});
   const editEmployee = async (e) => {
     e.preventDefault()
     console.log(fullname)
@@ -70,18 +107,33 @@ const Employees = () => {
     console.log(isActive)
     console.log(role)
     console.log(basicSalary)
-    if (password) {
-      try {
-        const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, { fullname, basicSalary, numberID, username, address, phone, email, isActive, role })
-        console.log(update)
-        notify('Employee details updated', 'success');
-        getemployees();
-      } catch (error) {
-        console.log(error);
-        notify('Failed to update employee details', 'error');
+    try {
+      const { error } = updateEmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+      if (error) {
+          notify(error.details[0].message, 'error');
+          return;
       }
+
+      const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+
+      const updateData = password
+          ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role }
+          : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };
+
+      const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, updateData);
+      if (update.status === 200){
+      getemployees()
+      notify('Employee details updated', 'success');
+      // Additional logic if needed after successful update
     }
-  };
+
+  } catch (error) {
+      notify('Failed to update employee details', 'error');
+      console.log(error);
+      // Additional error handling
+  }
+};
+
 
     const [filterEmp, setfilterEmp] = useState([])
     const getemployeesByJob = (role) => {

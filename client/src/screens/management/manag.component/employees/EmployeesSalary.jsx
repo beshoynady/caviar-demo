@@ -32,28 +32,28 @@ const EmployeesSalary = () => {
 
 
   // Schema for data validation using Joi
-  const schema = {
-    // EmployeeId: Joi.string().required(),
-    // EmployeeName: Joi.string().required(),
-    // movement: Joi.string().required(),
-    Amount: Joi.number().min(0).required(),
-    oldAmount: Joi.number().min(0).required(),
-    newAmount: Joi.number().min(0).required(),
-    actionBy: Joi.string().required(),
-  };
+  // const schema = {
+  //   EmployeeId: Joi.string().required(),
+  //   EmployeeName: Joi.string().required(),
+  //   movement: Joi.string().required(),
+  //   Amount: Joi.number().min(0).required(),
+  //   oldAmount: Joi.number().min(0).required(),
+  //   newAmount: Joi.number().min(0).required(),
+  //   actionBy: Joi.string().required(),
+  // };
 
-  // Function to validate data based on schema
-  const validate = (data) => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(data, schema, options);
-    if (!error) return null;
+  // // Function to validate data based on schema
+  // const validate = (data) => {
+  //   const options = { abortEarly: false };
+  //   const { error } = Joi.validate(data, schema, options);
+  //   if (!error) return null;
 
-    const errors = {};
-    for (let item of error.details) {
-      errors[item.path[0]] = item.message;
-    }
-    return errors;
-  };
+  //   const errors = {};
+  //   for (let item of error.details) {
+  //     errors[item.path[0]] = item.message;
+  //   }
+  //   return errors;
+  // };
 
   // Function to add new salary movement
   const addSalaryMovement = async (e) => {
@@ -69,11 +69,11 @@ const EmployeesSalary = () => {
     };
 
     // Validating the data before sending the request
-    const errors = validate(data);
-    if (errors) {
-      toast.error('Please review the entered data');
-      return;
-    }
+    // const errors = validate(data);
+    // if (errors) {
+    //   toast.error('Please review the entered data');
+    //   return;
+    // }
 
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/salarymovement', data);
@@ -99,11 +99,11 @@ const EmployeesSalary = () => {
     };
 
     // Validating the data before sending the request
-    const errors = validate(data);
-    if (errors) {
-      toast.error('Please review the entered data');
-      return;
-    }
+    // const errors = validate(data);
+    // if (errors) {
+    //   toast.error('Please review the entered data');
+    //   return;
+    // }
 
     try {
       const response = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, data);
@@ -359,12 +359,12 @@ const EmployeesSalary = () => {
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
-                          <label>Name</label>
+                          <label>الاسم</label>
                           <select form="carform" required onChange={(e) => {
                             setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value);
                             filterEmployeeSalaryMovement(e.target.value)
                           }}>
-                            <option>Select</option>
+                            <option>اختار</option>
                             {listofemployee.map((employee, i) => {
                               return (
                                 <option value={employee._id} key={i}>{employee.fullname}</option>
@@ -373,7 +373,7 @@ const EmployeesSalary = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>Movement</label>
+                          <label>التعامل</label>
                           <select form="carform" required onChange={(e) => { filterSalaryMovement(e.target.value); setmovement(e.target.value) }}>
                             {listofmovement.map((movement, i) => {
                               return (
@@ -383,25 +383,25 @@ const EmployeesSalary = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>Amount</label>
+                          <label>المبلغ</label>
                           <input type="number" min={0} className="form-control" required pattern="[0-9]+" onChange={(e) => { setAmount(e.target.value); setnewAmount(Number(oldAmount) + Number(e.target.value)) }} />
                           <small className="text-danger">Please enter a valid number.</small>
                         </div>
                         <div className="form-group">
-                          <label>Old Amount</label>
+                          <label>الرصيد</label>
                           <input type="number" className="form-control" value={oldAmount > 0 ? oldAmount : 0} readOnly />
                         </div>
                         <div className="form-group">
-                          <label>Total Amount</label>
+                          <label>الاجمالي</label>
                           <input type="number" className="form-control" readOnly defaultValue={newAmount} />
                         </div>
                         <div className="form-group">
-                          <label>By</label>
+                          <label>بواسطه</label>
                           <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.employeeinfo.username : ''} />
                         </div>
                         <div className="form-group">
-                          <label>Date</label>
-                          <input type="text" className="form-control" readOnly defaultValue={actionAt} />
+                          <label>التاريخ</label>
+                          <input type="text" className="form-control" readOnly Value={Date()} />
                         </div>
                       </div>
                       <div className="modal-footer">

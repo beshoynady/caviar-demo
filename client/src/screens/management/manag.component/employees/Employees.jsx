@@ -3,26 +3,7 @@ import axios from 'axios'
 import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const Joi = require('joi').extend(require('@hapi/joi-date'), joi => ({
-  type: 'string',
-  base: joi.string(),
-  messages: {
-    'string.tld': '{{#label}} must be a valid email',
-  },
-  rules: {
-    email: {
-      validate(value, helpers) {
-        const tldSchema = joi.string().email().message('"{{#label}}" must be a valid email');
-        const { error } = tldSchema.validate(value);
-        if (error) {
-          return { value, errors: helpers.error('string.tld', { label: helpers.prefixed() }) };
-        }
-        return value;
-      },
-    },
-  },
-}));
-
+const Joi = require('joi')
 const Employees = () => {
 
   const [listofemployee, setlistofemployee] = useState([])
@@ -46,7 +27,6 @@ const Employees = () => {
   const [address, setaddress] = useState("")
   const [phone, setphone] = useState("")
   const [email, setemail] = useState("")
-  const [isAdmin, setisAdmin] = useState(true)
   const [isActive, setisActive] = useState(true)
   const [role, setrole] = useState("")
 
@@ -57,25 +37,25 @@ const Employees = () => {
     });
   };
 
-  const createEmployeeSchema = Joi.object({
-    fullname: Joi.string().min(3).max(100),
-    numberID: Joi.string().length(14),
-    username: Joi.string().min(3).max(100),
-    email: Joi.string().email(),
-    address: Joi.string().min(3).max(150),
-    phone: Joi.string().length(11),
-    password: Joi.string().min(3),
-    basicSalary: Joi.number().min(0),
-    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
-    isActive: Joi.boolean(),
-});
+//   const EmployeeSchema = Joi.object({
+//     fullname: Joi.string().min(3).max(100),
+//     numberID: Joi.string().length(14),
+//     username: Joi.string().min(3).max(100),
+//     email: Joi.string().email(),
+//     address: Joi.string().min(3).max(150),
+//     phone: Joi.string().length(11),
+//     password: Joi.string().min(3),
+//     basicSalary: Joi.number().min(0),
+//     role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
+//     isActive: Joi.boolean(),
+// });
   const createEmployee = async (e) => {
     e.preventDefault()
-    const { error } = createEmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
-    if (error) {
-        notify(error.details[0].message, 'error');
-        return;
-    }
+    // const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+    // if (error) {
+    //     notify(error.details[0].message, 'error');
+    //     return;
+    // }
     if (
       !fullname ||
       !basicSalary ||
@@ -104,18 +84,6 @@ const Employees = () => {
   };
 
 
-  const updateEmployeeSchema = Joi.object({
-    fullname: Joi.string().min(3).max(100),
-    numberID: Joi.string().length(14),
-    username: Joi.string().min(3).max(100),
-    email: Joi.string().email(),
-    address: Joi.string().min(3).max(150),
-    phone: Joi.string().length(11),
-    password: Joi.string().min(3),
-    basicSalary: Joi.number().min(0),
-    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
-    isActive: Joi.boolean(),
-});
   const editEmployee = async (e) => {
     e.preventDefault()
     console.log(fullname)
@@ -128,11 +96,11 @@ const Employees = () => {
     console.log(role)
     console.log(basicSalary)
     try {
-      const { error } = updateEmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
-      if (error) {
-          notify(error.details[0].message, 'error');
-          return;
-      }
+      // const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+      // if (error) {
+      //     notify(error.details[0].message, 'error');
+      //     return;
+      // }
 
       const updateData = password
           ? { fullname, numberID, username, email, address, phone, password, basicSalary, isActive, role }
@@ -198,6 +166,7 @@ const Employees = () => {
           ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
             return (
               <div className="container-xl mlr-auto">
+                <ToastContainer/>
                 <div className="table-responsive">
                   <div className="table-wrapper">
                     <div className="table-title">
@@ -296,7 +265,7 @@ const Employees = () => {
                                 <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setemployeeid(emp._id); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
+                                    setemployeeid(emp._id); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email);setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
                                   }}>&#xE254;</i></a>
                                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setemployeeid(emp._id)}>&#xE872;</i></a>
                                 </td>
@@ -325,7 +294,7 @@ const Employees = () => {
                                   <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
                                   <td>
                                     <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                      setemployeeid(emp._id); setfullname(emp.fullname); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisAdmin(emp.isAdmin); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
+                                      setemployeeid(emp._id); setfullname(emp.fullname); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
                                     }}>&#xE254;</i></a>
                                     <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setemployeeid(emp._id)}>&#xE872;</i></a>
                                   </td>

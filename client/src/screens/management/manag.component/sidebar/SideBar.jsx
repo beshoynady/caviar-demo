@@ -9,6 +9,7 @@ const SideBar = () => {
     arrowemp: useRef(),
     arrowsto: useRef(),
     arrowsexp: useRef(),
+    arrowsCash: useRef(),
   };
 
   const sidebarRef = useRef();
@@ -154,7 +155,7 @@ const SideBar = () => {
                   <li ref={arrowRefs.arrowsexp} onClick={() => openSubMenu(arrowRefs.arrowsexp)}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span className="material-symbols-outlined arrow icon">request_page</span>
+                        <span className="material-symbols-outlined icon">request_page</span>
                         <span className="link_name">المصروفات</span>
                       </a>
                       <i className='bx bxs-chevron-down arrow'></i>
@@ -165,10 +166,10 @@ const SideBar = () => {
                       <li><Link to="dailyexpense">تسجيل مصروف</Link></li>
                     </ul>
                   </li>
-                  <li ref={arrowRefs.arrowsexp} onClick={() => openSubMenu(arrowRefs.arrowsexp)}>
+                  <li ref={arrowRefs.arrowsCash} onClick={() => openSubMenu(arrowRefs.arrowsCash)}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span class="material-symbols-outlined">monetization_on</span>                        
+                        <span class="material-symbols-outlined icon">monetization_on</span>                        
                         <span className="link_name">الخزينة</span>
                       </a>
                       <i className='bx bxs-chevron-down arrow'></i>

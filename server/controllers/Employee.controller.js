@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const Joi = require('joi');
+const EmployeeModel = require('../models/Employee.model.js');
 
 const createEmployeeSchema = Joi.object({
     fullname: Joi.string().min(3).max(100).required(),
@@ -224,7 +225,7 @@ const validatePayroll = (data) => {
         isPaid,
       } = req.body;
   
-      const employee = await EmployeeModel.findById(employeeId);
+      const employee = await Employeemodel.findById(employeeId);
       if (!employee) {
         return res.status(404).json({ message: 'Employee not found' });
       }

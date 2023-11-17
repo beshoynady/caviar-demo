@@ -189,7 +189,7 @@ const EmployeesSalary = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -290,7 +290,7 @@ const EmployeesSalary = () => {
                               <td>{mov.Amount}</td>
                               <td>{mov.oldAmount}</td>
                               <td>{mov.newAmount}</td>
-                              <td>{mov.actionBy}</td>
+                              <td>{usertitle(mov.actionBy)}</td>
                               <td>{mov.actionAt}</td>
                               <td>
                                 <a href="#editSalaryMovementModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {

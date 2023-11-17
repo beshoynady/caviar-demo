@@ -1,17 +1,11 @@
-import React, { createContext, useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React, { createContext, useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import './App.css';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const Joi = require('joi');
-
-
-
 
 import Userscreen from './screens/user.screen/Userscreen';
-
 import ManagLayout from './screens/management/ManagLayout';
 import ManagerDash from './screens/management/manag.component/managerdash/ManagerDash';
 import Orders from './screens/management/manag.component/orders/Orders';
@@ -24,7 +18,7 @@ import Kitchen from './screens/management/manag.component/kitchen/Kitchen';
 import Waiter from './screens/management/manag.component/waiter/Waiter';
 import Login from './screens/management/manag.component/login/Login';
 import POS from './screens/management/manag.component/pos/POS';
-import StockItem from './screens/management/manag.component/stock/StockItem'
+import StockItem from './screens/management/manag.component/stock/StockItem';
 import StockManag from './screens/management/manag.component/stock/StockManag';
 import ProductRecipe from './screens/management/manag.component/products/ProductRecipe';
 import EmployeesSalary from './screens/management/manag.component/employees/EmployeesSalary';
@@ -32,8 +26,7 @@ import PayRoll from './screens/management/manag.component/employees/PayRoll';
 import ExpenseItem from './screens/management/manag.component/expenses/Expense';
 import DailyExpense from './screens/management/manag.component/expenses/dailyExpense';
 
-
-export const detacontext = createContext({})
+export const detacontext = createContext({});
 
 function App() {
   //++++++++++++++++++++ pagination ++++++++++

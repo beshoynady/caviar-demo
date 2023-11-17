@@ -117,8 +117,6 @@ const Employees = () => {
           return;
       }
 
-      const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
-
       const updateData = password
           ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role }
           : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };

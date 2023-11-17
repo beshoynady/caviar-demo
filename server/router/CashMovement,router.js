@@ -4,12 +4,16 @@ const cashMovementController = require('../controllers/CashMovement.controller')
 
 // Routes related to Cash Movements
 router.route('/')
-  .post(cashMovementController.createCashMovement)
-  .get(cashMovementController.getAllCashMovements);
+  .get(cashMovementController.getAllCashMovements)
+  .post(cashMovementController.createCashMovement);
 
 router.route('/:id')
   .get(cashMovementController.getCashMovementById)
   .put(cashMovementController.updateCashMovement)
   .delete(cashMovementController.deleteCashMovement);
 
+router.route('/transfer')
+  .post(cashMovementController.transferCashBetweenRegisters);
+
 module.exports = router;
+

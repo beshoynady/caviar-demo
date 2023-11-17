@@ -615,101 +615,141 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  const signup = async (e, username, password, phone, address, email) => {
-    e.preventDefault()
-    try {
-      const newclient = await axios.post('https://caviar-api.vercel.app/api/auth/signup', { username, password, phone, address, email })
-      console.log(newclient)
-      if (newclient) {
-        const token = newclient.accessToken
-        localStorage.setItem("token_u", token)
+  const signup = async (e, username, password, phone, address, email, setToken) => {
+      e.preventDefault();
+      try {
+          const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
+              username,
+              password,
+              phone,
+              address,
+              email,
+          });
+  
+          if (response && response.data) {
+              const { accessToken } = response.data;
+  
+              if (accessToken) {
+                  // Store the token in the component state using the provided setToken function
+                  setToken(accessToken);
+                  // Optionally, you can store the token in localStorage here if required
+                  // localStorage.setItem('token_u', accessToken);
+              }
+          }
+      } catch (error) {
+          console.error('Signup error:', error);
+          // Handle errors appropriately (e.g., display an error message to the user)
       }
-      // navigate('/login')
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  };
+    
 
   const [userlogininfo, setuserlogininfo] = useState(null)
-  const getdatafromtoken = () => {
-    const usertoken = localStorage.getItem('token_u')
-    const employeetoken = localStorage.getItem('token_e')
+  const getUserInfoFromToken = () => {
+    const usertoken = localStorage.getItem('token_u');
+    const employeetoken = localStorage.getItem('token_e');
+
+    let decodedToken = null;
+
     if (employeetoken) {
-      const decodetoken = jwt_decode(employeetoken)
-      console.log(decodetoken)
-      setuserlogininfo(decodetoken)
-      console.log(decodetoken.employeeinfo)
+        decodedToken = jwt_decode(employeetoken);
+        console.log(decodedToken);
+        setuserlogininfo(decodedToken);
+        console.log(decodedToken.employeeinfo);
     } else if (usertoken) {
-      const decodetoken = jwt_decode(usertoken)
-      console.log(decodetoken)
-      setuserlogininfo(decodetoken)
-      console.log(decodetoken.userinfo)
-    }else{
-      setuserlogininfo(null)
-    } 
-      
-  }
+        decodedToken = jwt_decode(usertoken);
+        console.log(decodedToken);
+        setuserlogininfo(decodedToken);
+        console.log(decodedToken.userinfo);
+    } else {
+        setuserlogininfo(null);
+    }
+
+    return decodedToken;
+};
 
   const [islogin, setislogin] = useState(false)
-  const login = async (e, phone, password) => {
-    e.preventDefault()
-    console.log(phone);
-    console.log(password);
+  const login = async (phone, password, setislogin) => {
     try {
-      const client = await axios.post('https://caviar-api.vercel.app/api/auth/login', { phone, password })
-      console.log(client.data)
-      if (client) {
-        setislogin(!islogin)
-        const token = client.data.accessToken;
-        console.log(token)
-        if (token) {
-          localStorage.setItem("token_u", token)
-          if (localStorage.getItem('token_u')) {
-            getdatafromtoken()
-          }
+        // Validate phone and password inputs before sending the request
+        if (!phone || !password) {
+            toast.error('Phone and password are required.');
+            return;
         }
-        setislogin(!islogin)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const employeelogin = async (e, phone, password) => {
-    e.preventDefault()
-    console.log(phone);
-    console.log(password);
-    try {
-      const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', { phone, password })
-      console.log(employee.data.message)
-      toast(employee.data.message)
 
-      if (employee) {
-        setislogin(!islogin)
-        const token = employee.data.accessToken;
-        console.log(token)
-        if (token) {
-          localStorage.setItem("token_e", token)
-          if (localStorage.getItem('token_e')) {
-            getdatafromtoken()
-          }
+        const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
+            phone,
+            password,
+        });
+
+        if (response && response.data) {
+            const { accessToken } = response.data;
+
+            if (accessToken) {
+                // Save the token in localStorage
+                localStorage.setItem('token_u', accessToken);
+                // Call the function to retrieve user info from the token
+                const userInfo = getUserInfoFromToken();
+                // You can use userInfo as needed
+                console.log(userInfo);
+
+                // Update the login state
+                setislogin(true);
+
+                // Notify successful login
+                toast.success('Login successful!');
+            }
         }
-        setislogin(!islogin)
-        // returnToMange()
-      }
-      if (employee.data.findEmployee.isActive == true) {
-        window.location.href = `https://${window.location.hostname}/management`;
-      }else{
-        toast('هذا المستخدم غير مصرح له بالدخول')
-      }
     } catch (error) {
-      console.log(error)
-      if(error.response.data.message){
-      toast(error.response.data.message)
+        console.error('Login error:', error);
+        // Notify login error
+        toast.error('Login failed. Please check your credentials.');
+        // Handle errors here or pass the error to the appropriate place for handling
     }
+};
 
-    }
+const employeelogin = async (phone, password, setislogin, returnToMange) => {
+  try {
+      const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', {
+          phone,
+          password,
+      });
+
+      console.log(employee.data.message);
+      toast(employee.data.message);
+
+      if (employee && employee.data) {
+          setislogin(!islogin);
+          const token = employee.data.accessToken;
+          console.log(token);
+
+          if (token) {
+              // Save the employee token in localStorage
+              localStorage.setItem('token_e', token);
+              // Retrieve user info from the token
+              const userInfo = getUserInfoFromToken();
+              // Use userInfo as needed
+              console.log(userInfo);
+          }
+
+          setislogin(!islogin);
+
+          if (employee.data.findEmployee.isActive === true) {
+              // Redirect to the management page if the employee is active
+              window.location.href = `https://${window.location.hostname}/management`;
+          } else {
+              // Notify if the employee is not authorized to log in
+              toast('This user is not authorized to log in');
+          }
+      }
+  } catch (error) {
+      console.log(error);
+
+      // Display error message if available
+      if (error.response && error.response.data && error.response.data.message) {
+          toast(error.response.data.message);
+      }
   }
+};
 
   const logout = () => {
     localStorage.removeItem('token_u');
@@ -743,7 +783,7 @@ function App() {
     getallusers();
     getallorders()
     costOfOrder()
-    getdatafromtoken()
+    getUserInfoFromToken()
 
   }, [count, itemsincart, islogin])
 

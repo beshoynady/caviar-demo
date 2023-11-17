@@ -1,129 +1,140 @@
-const Usermodel = require('../models/Users.model.js')
+const Usermodel = require('../models/Users.model.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Joi = require('joi');
 
-// const hash = (password) =>{
-//     const saltRounds = 10;
-//     const salt = bcrypt.genSaltSync(saltRounds);
-//     const hash = bcrypt.hashSync(password, salt);
-//     return hash
-// }
-
-
-const createuser = async (req, res, next) => {
+// Function to create a new user
+const createuser = async (req, res) => {
     try {
-        const username = await req.body.username;
-        const email = await req.body.email;
-        const address = await req.body.address;
-        const salary = await req.body.salary;
-        const phone = await req.body.phone;
-        const role = await req.body.role;
-        const isAdmin = await req.body.isAdmin;
+        const { username, email, address, phone, password } = req.body;
 
-        const pass = await req.body.password;
-        const password = await bcrypt.hash(pass, 10);
+        // Schema validation using Joi for incoming data
+        const schema = Joi.object({
+            username: Joi.string().trim().min(3).max(100).required(),
+            email: Joi.string().email().trim().min(10).max(100).required(),
+            address: Joi.string().trim().min(3).max(150),
+            phone: Joi.string().trim().length(11).required(),
+            password: Joi.string().trim().min(3).max(200).required(),
+        });
 
-        if (!username || !phone || !password || !pass) {
-            return res.status(404).json({ message: 'username or password or phone or address is incorrect' })
+        const validationResult = schema.validate(req.body);
+        if (validationResult.error) {
+            return res.status(400).json({ message: validationResult.error.details[0].message });
         }
-        const isuserfound = await Usermodel.findOne({ phone });
-        if (isuserfound) {
-            return res.status(404).json({ message: 'this phone is already in use' })
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const isUserFound = await Usermodel.findOne({ phone });
+        if (isUserFound) {
+            return res.status(409).json({ message: 'This phone number is already in use' });
         }
-        const newUser = await Usermodel.create({ username, email, phone, salary, address, password, isAdmin, role })
+
+        const newUser = await Usermodel.create({
+            username,
+            email,
+            address,
+            phone,
+            password: hashedPassword,
+        });
+
+        // Generating JWT token for user authentication
         const accessToken = jwt.sign({
             userinfo: {
                 id: newUser._id,
-                isAdmin: newUser.isAdmin,
                 isActive: newUser.isActive,
-                role: newUser.role
-            }
-        }, process.env.jwt_secret_key,
-            { expiresIn: process.env.jwt_expire }
-        )
-        res.status(200).json({ accessToken, newUser })
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-}
+            },
+        }, process.env.jwt_secret_key, { expiresIn: process.env.jwt_expire });
 
+        res.status(201).json({ accessToken, newUser });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// Function to retrieve a single user by ID
 const getoneuser = async (req, res) => {
     try {
-        const userid = await req.params.userid;
+        const { userid } = req.params;
         const user = await Usermodel.findById(userid);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         res.status(200).json(user);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(500).json({ message: err.message });
     }
-}
+};
+
+// Function to retrieve all users
 const getallusers = async (req, res) => {
     try {
         const allusers = await Usermodel.find({});
         res.status(200).json(allusers);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
+// Function to update user information
 const updateuser = async (req, res) => {
     try {
-        const id = req.params.userid;
-        const username = await req.body.username;
-        const email = await req.body.email;
-        const address = await req.body.address;
-        const salary = await req.body.salary;
-        const phone = await req.body.phone;
-        const role = await req.body.role;
-        const isAdmin = await req.body.isAdmin;
-        const isActive = await req.body.isActive;
+        const { userid } = req.params;
+        const { username, email, address, phone, password } = req.body;
 
-        const pass = await req.body.password;
-        
-        if (!username || !phone ) {
-            return res.status(404).json({ message: 'username or phone is incorrect' })
+        // Schema validation using Joi for incoming data
+        const schema = Joi.object({
+            username: Joi.string().trim().min(3).max(100).required(),
+            email: Joi.string().email().trim().min(10).max(100).required(),
+            address: Joi.string().trim().min(3).max(150),
+            phone: Joi.string().trim().length(11).required(),
+            password: Joi.string().trim().min(3).max(200),
+        });
+
+        const validationResult = schema.validate(req.body);
+        if (validationResult.error) {
+            return res.status(400).json({ message: validationResult.error.details[0].message });
         }
 
-        const isuserfound = await Usermodel.findOne({ phone });
-        if (!isuserfound) {
-            return res.status(404).json({ message: 'this user not found' })
+        const isUserFound = await Usermodel.findOne({ phone });
+        if (!isUserFound) {
+            return res.status(404).json({ message: 'User not found' });
         }
-        if(pass){
-            const password = await bcrypt.hash(pass, 10);
-            const updateuser = await Usermodel.findByIdAndUpdate(id, { username, email, phone, salary, address, password, isAdmin,isActive, role }, { new: true });
-            res.status(200).json(updateuser)
-        }else{
-            const updateuser = await Usermodel.findByIdAndUpdate(id, { username, email, phone, salary, address, isAdmin,isActive, role }, { new: true });
-            res.status(200).json(updateuser)
-        }
-        const accessToken = jwt.sign({
-            userinfo: {
-                id: newUser._id,
-                isAdmin: newUser.isAdmin,
-                isActive: newUser.isActive,
-                role: newUser.role
-            }
-        }, process.env.jwt_secret_key,
-            { expiresIn: process.env.jwt_expire }
-        )
-        res.status(200).json({ accessToken, updateuser })
-    } catch (err) { res.status(400).json(err) }
-}
 
-
-const deleteuser = async (req, res) => {
-    const id = await req.params.userid;
-    try {
-        const userdeleted = await Usermodel.findByIdAndDelete(id).exec();
-        if (userdeleted) {
-            return res.status(200).send("user deleted successfully").json(userdeleted);
-        } else {
-            return res.status(404).json({ "Error message": "Requested user not found or already deleted!" })
+        const updateFields = {
+            username,
+            email,
+            address,
+            phone,
         };
-    } catch (error) {
-        res.status(500).json(error)
 
+        if (password) {
+            updateFields.password = await bcrypt.hash(password, 10);
+        }
+
+        const updatedUser = await Usermodel.findByIdAndUpdate(userid, updateFields, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
+// Function to delete a user by ID
+const deleteuser = async (req, res) => {
+    try {
+        const { userid } = req.params;
+        const userDeleted = await Usermodel.findByIdAndDelete(userid);
+        if (!userDeleted) {
+            return res.status(404).json({ message: 'User not found or already deleted' });
+        }
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 module.exports = { createuser, getoneuser, getallusers, updateuser, deleteuser };

@@ -37,19 +37,6 @@ const userschema = new mongoose.Schema({
         trim : true,
         length: 11,
     },
-    isAdmin :{
-        type : Boolean,
-        default : false
-    },
-    role :{
-        type : String,
-        enum : ['manager', 'casher', 'waiter', 'Chef','user'],
-        default : 'user',
-    },
-    // salary : {
-    //     type : Number,
-    //     min : 10,
-    // },
 
     isVarified :{
         type : Boolean,
@@ -60,7 +47,6 @@ const userschema = new mongoose.Schema({
         default : true,
         require : [true , 'isActive required'],
     }
-    
 },
 {timestamp: true}
 );

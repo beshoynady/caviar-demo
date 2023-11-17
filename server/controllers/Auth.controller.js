@@ -1,122 +1,75 @@
 const Usermodel = require('../models/Users.model.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+const { validationResult } = require('express-validator');
 
 const signup = async (req, res) => {
     try {
-        const username = await req.body.username;
-        const email = await req.body.email;
-        const address = await req.body.address;
-        const phone = await req.body.phone;
-        const password = await req.body.password;
+        const { username, email, address, phone, password } = req.body;
+
+        // Validate input fields
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const isUserExist = await Usermodel.findOne({ phone });
+        if (isUserExist) {
+            return res.status(409).json({ message: 'This phone number is already in use' });
+        }
+
         const passwordHash = await bcrypt.hash(password, 10);
 
-        if (!username || !phone || !password || !address) {
-            return res.status(404).json({ message: 'username or password or phone or address is incorrect' })
-        }
-        const isuserfound = await Usermodel.findOne({ phone });
-        if (isuserfound) {
-            return res.status(404).json({ message: 'this phone is already in use' })
-        }
-        const newUser = await Usermodel.create({ username, email, phone, address, password: passwordHash })
+        const newUser = await Usermodel.create({
+            username,
+            email,
+            phone,
+            address,
+            password: passwordHash,
+        });
 
-        const accessToken = jwt.sign({
-            userinfo: {
-                id: newUser._id,
-                isAdmin: newUser.isAdmin,
-                role: newUser.role
-            }
-        }, process.env.jwt_secret_key,
-            { expiresIn: process.env.jwt_expire }
-        )
-        res.status(200).json({ accessToken, newUser })
+        const accessToken = generateAccessToken(newUser);
+
+        res.status(201).json({ accessToken, newUser });
     } catch (err) {
-        res.status(404).json(err.message);
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
 const login = async (req, res) => {
     try {
-        const phone = await req.body.phone;
-        const password = await req.body.password;
+        const { phone, password } = req.body;
 
-        if (!phone || !password) {
-            return res.status(404).json({ message: 'phone or password is required' });
+        const findUser = await Usermodel.findOne({ phone });
+        if (!findUser) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-
-        const finduser = await Usermodel.findOne({ phone: phone });
-        if (!finduser) {
-            return res.status(400).json({ message: 'this user not founded' })
-        } else {
-            const match = bcrypt.compare(password, finduser.password, function(err, result) {
-                if (!result) {
-                    return res.status(401).json({ message: "Wrong Password" })
-                } else {
-                    const accessToken = jwt.sign({
-                        userinfo: {
-                            id: finduser._id,
-                            isAdmin: finduser.isAdmin,
-                            role: finduser.role
-                        }
-                    }, process.env.jwt_secret_key,
-                        { expiresIn: process.env.jwt_expire }
-                    )
-                    if (!accessToken) {
-                        return res.status(401).json({ message: "accessToken not sign" })
-                    }
-    
-                    res.status(200).json({ finduser, accessToken })
-    
-                }          
-            });
-
+        const match = await bcrypt.compare(password, findUser.password);
+        if (!match) {
+            return res.status(401).json({ message: 'Wrong password' });
         }
 
+        const accessToken = generateAccessToken(findUser);
 
-
-        // res.status(200).json(finduser)
+        res.status(200).json({ findUser, accessToken });
     } catch (error) {
-        res.status(404).send('error');
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-// const refresh = (req, res) => {
-//     const cookies = req.cookies;
-//     if (!cookies?.jwt) res.status(401).json({ message: "Unauthorized" });
-//     const refreshToken = cookies.jwt;
-//     jwt.verify(
-//         accessToken,
-//         process.env.jwt_secret_key,
-//         async (err, decoded) => {
-//             if (err) return res.status(403).json({ message: "Forbidden" });
-//             const foundUser = await Usermodel.findById(decoded.userinfo.id).exec();
-//             if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-//             const accessToken = jwt.sign(
-//                 {
-//                     userinfo: {
-//                         id: foundUser._id,
-//                     },
-//                 },
-//                 process.env.ACCESS_TOKEN_SECRET,
-//                 { expiresIn: "15m" }
-//             );
-//             res.json({ accessToken });
-//         }
-//     );
-// };
-// const logout = (req, res) => {
-//     const cookies = req.cookies;
-//     if (!cookies?.jwt) return res.sendStatus(204); //No content
-//     res.clearCookie("jwt", {
-//         httpOnly: true,
-//         sameSite: "None",
-//         secure: true,
-//     });
-//     res.json({ message: "Cookie cleared" });
-// };
+const generateAccessToken = (user) => {
+    return jwt.sign(
+        {
+            userinfo: {
+                id: user._id,
+                username: user.username,
+                phone: user.phone,
+            },
+        },
+        process.env.jwt_secret_key,
+        { expiresIn: process.env.jwt_expire }
+    );
+};
 
-
-// module.exports = { signup, login, refresh, logout }
-module.exports = { signup, login }
+module.exports = { signup, login };

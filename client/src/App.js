@@ -668,7 +668,7 @@ function App() {
 };
 
   const [islogin, setislogin] = useState(false)
-  const login = async (e,phone, password, setislogin) => {
+  const login = async (e,phone, password) => {
     e.preventDefault()
     try {
         // Validate phone and password inputs before sending the request

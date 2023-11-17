@@ -789,7 +789,7 @@ const employeelogin = async (phone, password, setislogin) => {
 
   return (
     <detacontext.Provider value={{
-      userlogininfo, getdatafromtoken, login, signup, logout, employeelogin, employeelogout,
+      userlogininfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
       allusers, alltable, usertitle, allorders, askingForHelp,
       setproductnote, addnotrstoproduct,

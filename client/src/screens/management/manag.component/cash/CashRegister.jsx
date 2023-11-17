@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { detacontext } from '../../../../App';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const CashRegister = () => {
   const [cashRegisters, setCashRegisters] = useState([]);
@@ -12,8 +10,9 @@ const CashRegister = () => {
   const [name, setname] = useState('');
   const [balance, setbalance] = useState('');
   const [employee, setemployee] = useState('');
-  const [cachID, setcachID] = useState('');
+  const [cashID, setcashID] = useState('');
 
+  // Fetch employees
   const getEmployees = async (e) => {
     e.preventDefault()
     try {
@@ -25,6 +24,7 @@ const CashRegister = () => {
     }
   }
 
+  // Fetch all cash registers
   const getAllCashRegisters = async (e) => {
     e.preventDefault()
     try {
@@ -35,21 +35,22 @@ const CashRegister = () => {
     }
   };
 
-  const getCashRegisterById = async (id) => {
+  // Fetch a cash register by ID
+  const getCashRegisterById = async () => {
     try {
-      const response = await axios.get(`https://caviar-api.vercel.app/api/cash/${id}`);
+      const response = await axios.get(`https://caviar-api.vercel.app/api/cash/${cashID}`);
       // Handle response (e.g., display details, update state)
     } catch (err) {
       toast.error('Cash register not found');
     }
   };
 
+  // Create a new cash register
   const createCashRegister = async (e) => {
     e.preventDefault()
     const newCashRegister = { name, balance, employee };
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/cash', newCashRegister);
-      // Handle response (e.g., update state, show success message)
       toast.success('Cash register created successfully');
       getAllCashRegisters()
     } catch (err) {
@@ -57,11 +58,12 @@ const CashRegister = () => {
     }
   };
 
-  const updateCashRegister = async (id) => {
+  // Update a cash register
+  const updateCashRegister = async (e) => {
+    e.preventDefault()
     const updatedCashRegister = { name, balance, employee };
     try {
-      const response = await axios.put(`https://caviar-api.vercel.app/api/cash/${cachID}`, updatedCashRegister);
-      // Handle response (e.g., update state, show success message)
+      const response = await axios.put(`https://caviar-api.vercel.app/api/cash/${cashID}`, updatedCashRegister);
       toast.success('Cash register updated successfully');
       getAllCashRegisters()
     } catch (err) {
@@ -69,38 +71,41 @@ const CashRegister = () => {
     }
   };
 
+  // Delete a cash register
   const deleteCashRegister = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.delete(`https://caviar-api.vercel.app/api/cash/${cachID}`);
-      // Handle response (e.g., update state, show success message)
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/cash/${cashID}`);
       toast.success('Cash register deleted successfully');
     } catch (err) {
       toast.error('Failed to delete cash register');
     }
   };
 
+  // Filter cash registers by employee ID
   const filterCashRegistersByEmployee = (employeeid) => {
-    const filteredRegisters = cashRegisters.filter(register => register.employee == employeeid);
+    const filteredRegisters = cashRegisters.filter(register => register.employee === employeeid);
     setCashRegisters(filteredRegisters);
   };
 
+  // Filter cash registers by name (startsWith comparison)
   const filterCashRegistersByName = (cashName) => {
-    const filteredRegisters = cashRegisters.filter(register => register.name.startsWith(cashName) == true);
+    const filteredRegisters = cashRegisters.filter(register => register.name.startsWith(cashName));
     setCashRegisters(filteredRegisters);
   };
+
   useEffect(() => {
+    // Fetch initial data on component mount
     getAllCashRegisters()
     getEmployees()
   }, [])
 
   return (
     <detacontext.Consumer>
-      {
-        ({ EditPagination, usertitle, startpagination, endpagination, setstartpagination, setendpagination }) => {
-          return (
-            <div className="container-xl mlr-auto">
-              <ToastContainer />
+      {({ EditPagination, usertitle, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        return (
+          <div className="container-xl mlr-auto">
+            <ToastContainer />
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -195,9 +200,9 @@ const CashRegister = () => {
                               <td>{usertitle(cash.employee)}</td>
                               <td>{cash.balance}</td>
                               <td>
-                                <a href="#editCashRegisterModal" className="edit" data-toggle="modal" onClick={() => { setcachID(cash._id); setname(cash.name); setemployee(cash.employee); setbalance(cash.balance) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editCashRegisterModal" className="edit" data-toggle="modal" onClick={() => { setcashID(cash._id); setname(cash.name); setemployee(cash.employee); setbalance(cash.balance) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteCashRegisterModal" className="delete" data-toggle="modal" onClick={() => setcachID(cash._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#deleteCashRegisterModal" className="delete" data-toggle="modal" onClick={() => setcashID(cash._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )

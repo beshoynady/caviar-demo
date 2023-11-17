@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { detacontext } from '../../../../App';
 
@@ -14,7 +14,8 @@ const CashRegister = () => {
   const [employee, setemployee] = useState('');
   const [cachID, setcachID] = useState('');
 
-  const getEmployees = async () => {
+  const getEmployees = async (e) => {
+    e.preventDefault()
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee')
       const data = await response.data
@@ -24,7 +25,8 @@ const CashRegister = () => {
     }
   }
 
-  const getAllCashRegisters = async () => {
+  const getAllCashRegisters = async (e) => {
+    e.preventDefault()
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cash');
       setCashRegisters(response.data);
@@ -42,12 +44,14 @@ const CashRegister = () => {
     }
   };
 
-  const createCashRegister = async () => {
+  const createCashRegister = async (e) => {
+    e.preventDefault()
     const newCashRegister = { name, balance, employee };
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/cash', newCashRegister);
       // Handle response (e.g., update state, show success message)
       toast.success('Cash register created successfully');
+      getAllCashRegisters()
     } catch (err) {
       toast.error('Failed to create cash register');
     }
@@ -59,12 +63,14 @@ const CashRegister = () => {
       const response = await axios.put(`https://caviar-api.vercel.app/api/cash/${cachID}`, updatedCashRegister);
       // Handle response (e.g., update state, show success message)
       toast.success('Cash register updated successfully');
+      getAllCashRegisters()
     } catch (err) {
       toast.error('Failed to update cash register');
     }
   };
 
-  const deleteCashRegister = async () => {
+  const deleteCashRegister = async (e) => {
+    e.preventDefault()
     try {
       const response = await axios.delete(`https://caviar-api.vercel.app/api/cash/${cachID}`);
       // Handle response (e.g., update state, show success message)
@@ -133,10 +139,11 @@ const CashRegister = () => {
                         <div class="filter-group">
                           <label>الموظف</label>
                           <select class="form-control" onChange={(e) => filterCashRegistersByEmployee(e.target.value)}>
-                          {allEmployee.map((Employee, i) => {
-                            return <option value={Employee._id} key={i} >{Employee.username}</option>
-                          })
-                          }
+                            <option >اختر</option>
+                            {allEmployee.map((Employee, i) => {
+                              return <option value={Employee._id} key={i} >{Employee.username}</option>
+                            })
+                            }
                           </select>
                         </div>
                         {/* 

@@ -49,9 +49,11 @@ const CashRegister = () => {
     const newCashRegister = { name, balance, employee };
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/cash', newCashRegister);
+      console.log(response);
       toast.success('Cash register created successfully');
       getAllCashRegisters()
     } catch (err) {
+      console.log(err);
       toast.error('Failed to create cash register');
     }
   };
@@ -143,7 +145,7 @@ const CashRegister = () => {
                           <label>الموظف</label>
                           <select class="form-control" onChange={(e) => filterCashRegistersByEmployee(e.target.value)}>
                             <option >اختر</option>
-                            {allEmployee.map((Employee, i) => {
+                            {allEmployee&&allEmployee.map((Employee, i) => {
                               return <option value={Employee._id} key={i} >{Employee.username}</option>
                             })
                             }

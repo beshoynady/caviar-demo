@@ -66,7 +66,13 @@
     height: 100%;
   }
   #menu .container-lg .section-content {
+    width: 100%;
     height: calc(100% - 100px);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     margin-top: 15px;
     overflow: hidden;
   }

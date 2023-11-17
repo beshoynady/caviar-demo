@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios from 'axios';
+import { detacontext } from '../../../../App';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -215,7 +217,7 @@ const CashRegister = () => {
               <div id="addCashRegisterModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={createCategoryStock}>
+                    <form onSubmit={createCashRegister}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه خزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -248,7 +250,7 @@ const CashRegister = () => {
               <div id="editCashRegisterModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={editCategoryStock}>
+                    <form onSubmit={updateCashRegister}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل التصنيف</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

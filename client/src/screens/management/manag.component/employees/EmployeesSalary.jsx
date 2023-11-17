@@ -5,6 +5,7 @@ import { detacontext } from '../../../../App';
 
 const EmployeesSalary = () => {
 
+  // Existing state variables and useEffect
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
     try {
@@ -15,6 +16,7 @@ const EmployeesSalary = () => {
       console.log(error)
     }
   }
+
   const [listofmovement, setlistofmovement] = useState(['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة'])
   const [salarymovementId, setsalarymovementId] = useState("")
   const [EmployeeId, setEmployeeId] = useState("")
@@ -27,42 +29,102 @@ const EmployeesSalary = () => {
   const [actionAt, setactionAt] = useState(Date())
 
 
+  // Schema for data validation using Joi
+  const schema = {
+    EmployeeId: Joi.string().required(),
+    EmployeeName: Joi.string().required(),
+    movement: Joi.string().required(),
+    Amount: Joi.number().min(0).required(),
+    oldAmount: Joi.number().min(0).required(),
+    newAmount: Joi.number().min(0).required(),
+    actionBy: Joi.string().required(),
+  };
+
+  // Function to validate data based on schema
+  const validate = (data) => {
+    const options = { abortEarly: false };
+    const { error } = Joi.validate(data, schema, options);
+    if (!error) return null;
+
+    const errors = {};
+    for (let item of error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+
+  // Function to add new salary movement
   const addSalaryMovement = async (e) => {
-    e.preventDefault()
-    try {
-      const SalaryMovement = await axios.post('https://caviar-api.vercel.app/api/salarymovement', { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
-      console.log(SalaryMovement)
+    e.preventDefault();
+    const data = {
+      EmployeeId,
+      EmployeeName,
+      movement,
+      Amount,
+      oldAmount,
+      newAmount,
+      actionBy,
+    };
 
-      getSalaryMovement()
-    } catch (error) {
-      console.log(error)
+    // Validating the data before sending the request
+    const errors = validate(data);
+    if (errors) {
+      toast.error('Please review the entered data');
+      return;
     }
-  }
+
+    try {
+      const response = await axios.post('https://caviar-api.vercel.app/api/salarymovement', data);
+      getSalaryMovement();
+      toast.success('Movement added successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('An error occurred while adding the movement');
+    }
+  };
+
+  // Function to update salary movement
   const updateSalaryMovement = async (e) => {
-    e.preventDefault()
-    try {
-      const SalaryMovement = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, { EmployeeId, EmployeeName, movement, Amount, oldAmount, newAmount, actionBy })
-      console.log(SalaryMovement)
+    e.preventDefault();
+    const data = {
+      EmployeeId,
+      EmployeeName,
+      movement,
+      Amount,
+      oldAmount,
+      newAmount,
+      actionBy,
+    };
 
-      getSalaryMovement()
-    } catch (error) {
-      console.log(error)
+    // Validating the data before sending the request
+    const errors = validate(data);
+    if (errors) {
+      toast.error('Please review the entered data');
+      return;
     }
-  }
 
+    try {
+      const response = await axios.put(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`, data);
+      getSalaryMovement();
+      toast.success('Movement updated successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('An error occurred while updating the movement');
+    }
+  };
 
-
+  // Function to delete salary movement
   const deleteSalaryMovement = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      console.log(salarymovementId)
-      const deleted = await axios.delete(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`)
-      console.log(deleted)
-      getSalaryMovement()
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/salarymovement/${salarymovementId}`);
+      getSalaryMovement();
+      toast.success('Movement deleted successfully');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error('An error occurred while deleting the movement');
     }
-  }
+  };
 
   const [listofsalarymovement, setlistofsalarymovement] = useState([])
   const getSalaryMovement = async () => {
@@ -176,7 +238,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div class="filter-group">
                           <label>العملية</label>
-                          <select class="form-control" onChange={(e)=>filterEmpSalaryMovement(e.target.value)} >
+                          <select class="form-control" onChange={(e) => filterEmpSalaryMovement(e.target.value)} >
                             <option >الكل</option>
                             {listofmovement.map((m, i) => {
                               return (
@@ -290,17 +352,18 @@ const EmployeesSalary = () => {
                   <div className="modal-content">
                     <form onSubmit={addSalaryMovement}>
                       <div className="modal-header">
-                        <h4 className="modal-title">اضافه تعامل جديد</h4>
+                        <h4 className="modal-title">Add New Transaction</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
-                          <label>الاسم</label>
-                          <select form="carform" required onChange={(e) => { 
-                            setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); 
-                            filterEmployeeSalaryMovement(e.target.value) }}>
-                            <option>اختر</option>
-                            {listofemployee.map((employee,i) => {
+                          <label>Name</label>
+                          <select form="carform" required onChange={(e) => {
+                            setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value);
+                            filterEmployeeSalaryMovement(e.target.value)
+                          }}>
+                            <option>Select</option>
+                            {listofemployee.map((employee, i) => {
                               return (
                                 <option value={employee._id} key={i}>{employee.fullname}</option>
                               )
@@ -308,44 +371,46 @@ const EmployeesSalary = () => {
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>الحركه</label>
+                          <label>Movement</label>
                           <select form="carform" required onChange={(e) => { filterSalaryMovement(e.target.value); setmovement(e.target.value) }}>
                             {listofmovement.map((movement, i) => {
                               return (
-                                <option value={movement}>{movement}</option>
+                                <option value={movement} key={i}>{movement}</option>
                               )
                             })}
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>المبلغ</label>
-                          <input type="Number" min={0} className="form-control" required onChange={(e) => { setAmount(e.target.value); setnewAmount(Number(oldAmount) + Number(e.target.value)) }} />
+                          <label>Amount</label>
+                          <input type="number" min={0} className="form-control" required pattern="[0-9]+" onChange={(e) => { setAmount(e.target.value); setnewAmount(Number(oldAmount) + Number(e.target.value)) }} />
+                          <small className="text-danger">Please enter a valid number.</small>
                         </div>
                         <div className="form-group">
-                          <label>المبلغ السابق</label>
-                          <input type="Number" className="form-control" Value={oldAmount > 0 ? oldAmount : 0} readOnly />
+                          <label>Old Amount</label>
+                          <input type="number" className="form-control" value={oldAmount > 0 ? oldAmount : 0} readOnly />
                         </div>
                         <div className="form-group">
-                          <label>الاجمالي</label>
-                          <input type="Number" className="form-control" readOnly defaultValue={newAmount} />
+                          <label>Total Amount</label>
+                          <input type="number" className="form-control" readOnly defaultValue={newAmount} />
                         </div>
                         <div className="form-group">
-                          <label>بواسطة</label>
+                          <label>By</label>
                           <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.username : ''} />
                         </div>
                         <div className="form-group">
-                          <label>التاريخ</label>
+                          <label>Date</label>
                           <input type="text" className="form-control" readOnly defaultValue={actionAt} />
                         </div>
                       </div>
                       <div className="modal-footer">
-                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="اغلاق" />
-                        <input type="submit" className="btn btn-success" value="اضافه" />
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="Close" />
+                        <input type="submit" className="btn btn-success" value="Add" />
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
+
               <div id="editSalaryMovementModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
@@ -357,7 +422,7 @@ const EmployeesSalary = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>الاسم</label>
-                          <select form="carform" defaultValue={EmployeeName} required  onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); filterEmployeeSalaryMovement(e.target.value) }}>
+                          <select form="carform" defaultValue={EmployeeName} required onChange={(e) => { setEmployeeName(listofemployee.find(em => em._id == e.target.value).fullname); setEmployeeId(e.target.value); filterEmployeeSalaryMovement(e.target.value) }}>
                             <option>اختر</option>
                             {listofemployee.map(employee => {
                               return (

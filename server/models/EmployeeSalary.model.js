@@ -14,7 +14,7 @@ const EmployeeSalarySchema = new mongoose.Schema(
     },
     movement: {
       type: String,
-      enum: ['loan', 'deduction', 'absence', 'additional', 'bonus'],
+      enum: ['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة'],
       required: true,
     },
     Amount: {

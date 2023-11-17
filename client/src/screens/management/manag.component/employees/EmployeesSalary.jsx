@@ -43,17 +43,17 @@ const EmployeesSalary = () => {
   // };
 
   // Function to validate data based on schema
-  const validate = (data) => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(data, schema, options);
-    if (!error) return null;
+  // const validate = (data) => {
+  //   const options = { abortEarly: false };
+  //   const { error } = Joi.validate(data, schema, options);
+  //   if (!error) return null;
 
-    const errors = {};
-    for (let item of error.details) {
-      errors[item.path[0]] = item.message;
-    }
-    return errors;
-  };
+  //   const errors = {};
+  //   for (let item of error.details) {
+  //     errors[item.path[0]] = item.message;
+  //   }
+  //   return errors;
+  // };
 
   // Function to add new salary movement
   const addSalaryMovement = async (e) => {

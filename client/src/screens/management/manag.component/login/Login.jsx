@@ -11,7 +11,7 @@ const [password, setpassword] = useState('')
             {
                 ({ employeelogin }) => {
                     return (
-                        <div className="login-container container-lg">
+                        <div className="login-container">
                             <ToastContainer/>
                             <div className="screen">
                                 <div className="screen__content">

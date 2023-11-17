@@ -323,6 +323,7 @@ const PayRoll = () => {
       let Insurance = 0
       let Tax = 0
       let NetSalary = 0
+      let isPaid = false
       let salary = listofemployee[i].basicSalary
       let month = new Date().getMonth() + 1
       let id = listofemployee[i]._id
@@ -393,7 +394,6 @@ const PayRoll = () => {
         })
         console.log(result)
         if (result) {
-          payRoll = []
           getemployees()
         }
       } else {

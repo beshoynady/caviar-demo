@@ -20,40 +20,41 @@ const EmployeesSalary = () => {
   }
 
   const [listofmovement, setlistofmovement] = useState(['سلف', 'خصم', 'غياب', 'اضافي', 'مكافأة'])
-  const [salarymovementId, setsalarymovementId] = useState("");
-  const [EmployeeId, setEmployeeId] = useState(""); // Set default value for EmployeeId
-  const [EmployeeName, setEmployeeName] = useState(""); // Set default value for EmployeeName
-  const [movement, setmovement] = useState(""); // Set default value for movement
-  const [Amount, setAmount] = useState(0); // Set default value for Amount
-  const [oldAmount, setoldAmount] = useState(0); // Set default value for oldAmount
-  const [newAmount, setnewAmount] = useState(0); // Set default value for newAmount
-  const [actionBy, setactionBy] = useState(""); // Set default value for actionBy
-  const [actionAt, setactionAt] = useState(new Date().toISOString()); // Set default value for actionAt
-  
+  const [salarymovementId, setsalarymovementId] = useState("")
+  const [EmployeeId, setEmployeeId] = useState("")
+  const [EmployeeName, setEmployeeName] = useState("")
+  const [movement, setmovement] = useState("")
+  const [Amount, setAmount] = useState()
+  const [oldAmount, setoldAmount] = useState(0)
+  const [newAmount, setnewAmount] = useState()
+  const [actionBy, setactionBy] = useState("")
+  const [actionAt, setactionAt] = useState(Date())
+
+
   // Schema for data validation using Joi
-  const schema = {
-    EmployeeId: Joi.string().required(),
-    EmployeeName: Joi.string().required(),
-    movement: Joi.string().required(),
-    Amount: Joi.number().min(0).required(),
-    oldAmount: Joi.number().min(0).required(),
-    newAmount: Joi.number().min(0).required(),
-    actionBy: Joi.string().required(),
-  };
-  
+  // const schema = {
+  //   EmployeeId: Joi.string().required(),
+  //   EmployeeName: Joi.string().required(),
+  //   movement: Joi.string().required(),
+  //   Amount: Joi.number().min(0).required(),
+  //   oldAmount: Joi.number().min(0).required(),
+  //   newAmount: Joi.number().min(0).required(),
+  //   actionBy: Joi.string().required(),
+  // };
+
   // Function to validate data based on schema
   const validate = (data) => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(data, schema, options);
     if (!error) return null;
-  
+
     const errors = {};
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
     }
     return errors;
   };
-  
+
   // Function to add new salary movement
   const addSalaryMovement = async (e) => {
     e.preventDefault();
@@ -66,14 +67,14 @@ const EmployeesSalary = () => {
       newAmount,
       actionBy,
     };
-  
+
     // Validating the data before sending the request
-    const errors = validate(data);
-    if (errors) {
-      toast.error('Please review the entered data');
-      return;
-    }
-  
+    // const errors = validate(data);
+    // if (errors) {
+    //   toast.error('Please review the entered data');
+    //   return;
+    // }
+
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/salarymovement', data);
       getSalaryMovement();
@@ -83,6 +84,7 @@ const EmployeesSalary = () => {
       toast.error('An error occurred while adding the movement');
     }
   };
+
   // Function to update salary movement
   const updateSalaryMovement = async (e) => {
     e.preventDefault();

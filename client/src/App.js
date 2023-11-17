@@ -698,46 +698,42 @@ function App() {
     }
   };
 
-  const employeelogin = async (phone, password) => {
-    e.preventDefault()
+  const employeelogin = async (e, phone, password) => {
+    e.preventDefault();
+
+    if (!phone || !password) {
+      toast('Phone and Password are required');
+      return;
+    }
 
     try {
-      const employee = await axios.post('https://caviar-api.vercel.app/api/employee/login', {
+      const response = await axios.post('https://caviar-api.vercel.app/api/employee/login', {
         phone,
         password,
       });
 
-      console.log(employee.data.message);
-      toast(employee.data.message);
+      if (response && response.data) {
+        const { data } = response;
 
-      if (employee && employee.data) {
-        setislogin(!islogin);
-        const token = employee.data.accessToken;
-        console.log(token);
+        console.log(data.message);
+        toast(data.message);
 
-        if (token) {
-          // Save the employee token in localStorage
-          localStorage.setItem('token_e', token);
-          // Retrieve user info from the token
+        if (data.accessToken) {
+          localStorage.setItem('token_e', data.accessToken);
           const userInfo = getUserInfoFromToken();
-          // Use userInfo as needed
+
           console.log(userInfo);
         }
 
-        setislogin(!islogin);
-
-        if (employee.data.findEmployee.isActive === true) {
-          // Redirect to the management page if the employee is active
+        if (data.findEmployee.isActive === true) {
           window.location.href = `https://${window.location.hostname}/management`;
         } else {
-          // Notify if the employee is not authorized to log in
           toast('This user is not authorized to log in');
         }
       }
     } catch (error) {
       console.log(error);
 
-      // Display error message if available
       if (error.response && error.response.data && error.response.data.message) {
         toast(error.response.data.message);
       }

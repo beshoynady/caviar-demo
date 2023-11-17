@@ -3,8 +3,25 @@ import axios from 'axios'
 import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const Joi = require('joi');
-
+const Joi = require('joi').extend(require('@hapi/joi-date'), joi => ({
+  type: 'string',
+  base: joi.string(),
+  messages: {
+    'string.tld': '{{#label}} must be a valid email',
+  },
+  rules: {
+    email: {
+      validate(value, helpers) {
+        const tldSchema = joi.string().email().message('"{{#label}}" must be a valid email');
+        const { error } = tldSchema.validate(value);
+        if (error) {
+          return { value, errors: helpers.error('string.tld', { label: helpers.prefixed() }) };
+        }
+        return value;
+      },
+    },
+  },
+}));
 
 const Employees = () => {
 

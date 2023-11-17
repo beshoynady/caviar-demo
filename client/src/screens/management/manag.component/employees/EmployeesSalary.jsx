@@ -36,10 +36,10 @@ const EmployeesSalary = () => {
     EmployeeId: Joi.string().required(),
     EmployeeName: Joi.string().required(),
     movement: Joi.string().required(),
-    Amount: Joi.number().min(0).required(),
-    oldAmount: Joi.number().min(0).required(),
-    newAmount: Joi.number().min(0).required(),
-    actionBy: Joi.string().required(),
+    // Amount: Joi.number().min(0).required(),
+    // oldAmount: Joi.number().min(0).required(),
+    // newAmount: Joi.number().min(0).required(),
+    // actionBy: Joi.string().required(),
   };
 
   // Function to validate data based on schema

@@ -13,6 +13,6 @@ router.route('/:employeeId')
 
 router.route('/login').post(employeesController.loginEmployee);
 router.route('/payroll/:employeeId')
-    .post(employeesController.updateOrAddPayrollForMonth);
+    .put(employeesController.updateOrAddPayrollForMonth);
 
 module.exports = router;

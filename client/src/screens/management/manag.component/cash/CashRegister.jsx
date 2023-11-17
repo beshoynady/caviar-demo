@@ -5,7 +5,6 @@ import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-toast.configure();
 
 const CashRegister = () => {
   const [cashRegisters, setCashRegisters] = useState([]);

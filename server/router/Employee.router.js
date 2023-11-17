@@ -1,24 +1,18 @@
 const express = require("express");
-const { createEmployee, getoneEmployee, payRollEmployee, loginEmployee, getallEmployees, updateEmployee, deleteEmployee } = require('../controllers/Employee.controller.js')
-// const verifyJWT = require('../middleware/verifyjwt');
-
-
 const router = express.Router();
+const employeesController = require('../controllers/Employee.controller.js');
 
-// router.use(verifyJWT)
+router.route('/')
+    .post(employeesController.createEmployee)
+    .get(employeesController.getallEmployees);
 
+router.route('/:employeeId')
+    .get(employeesController.getoneEmployee)
+    .put(employeesController.updateEmployee)
+    .delete(employeesController.deleteEmployee);
 
-router.route('/').post(createEmployee).get(getallEmployees);
-router.route('/:employeeid').get(getoneEmployee).put(updateEmployee).delete(deleteEmployee);
-router.route('/login').post(loginEmployee);
-router.route('/payroll/:employeeid').put(payRollEmployee);
+router.route('/login').post(employeesController.loginEmployee);
+router.route('/payroll/:employeeid')
+    .post(employeesController.updateOrAddPayrollForMonth);
+
 module.exports = router;
-
-
-// route.post("/create", createEmployee);
-// route.get("/allEmployees", getallEmployees);
-// route.get("/:Employeeid", getoneEmployee);
-// route.put("/update/:Employeeid", updateEmployee);
-// route.delete("/delete/:Employeeid", deleteEmployee);
-
-// module.exports = route;

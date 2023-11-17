@@ -2,55 +2,85 @@ const Employeemodel = require('../models/Employee.model.js')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-// const hash = (password) =>{
-//     const saltRounds = 10;
-//     const salt = bcrypt.genSaltSync(saltRounds);
-//     const hash = bcrypt.hashSync(password, salt);
-//     return hash
-// }
+const Joi = require('joi');
 
+const createEmployeeSchema = Joi.object({
+    fullname: Joi.string().min(3).max(100).required(),
+    numberID: Joi.string().length(14).required(),
+    username: Joi.string().min(3).max(100).required(),
+    email: Joi.string().email().required(),
+    address: Joi.string().min(3).max(150),
+    phone: Joi.string().length(11).required(),
+    password: Joi.string().min(3).required(),
+    basicSalary: Joi.number().min(0).required(),
+    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef').required(),
+    isActive: Joi.boolean().required(),
+});
+
+const updateEmployeeSchema = Joi.object({
+    fullname: Joi.string().min(3).max(100),
+    numberID: Joi.string().length(14),
+    username: Joi.string().min(3).max(100),
+    email: Joi.string().email(),
+    address: Joi.string().min(3).max(150),
+    phone: Joi.string().length(11),
+    password: Joi.string().min(3),
+    basicSalary: Joi.number().min(0),
+    role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
+    isActive: Joi.boolean(),
+});
 
 const createEmployee = async (req, res, next) => {
     try {
-        const fullname = await req.body.fullname;
-        const numberID = await req.body.numberID;
-        const username = await req.body.username;
-        const email = await req.body.email;
-        const address = await req.body.address;
-        const phone = await req.body.phone;
-        const basicSalary = await req.body.basicSalary;
-        const payRoll = await req.body.payRoll;
-        const role = await req.body.role;
-        const isActive = await req.body.isActive;
+        const { error } = createEmployeeSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+        // Destructuring request body for required employee details
+        const { fullname, numberID, username, email, address, phone, basicSalary, role, isActive } = req.body;
 
-        const pass = await req.body.password;
+        // Destructuring request body for optional employee details
+        const pass = req.body.password;
         const password = await bcrypt.hash(pass, 10);
 
         if (!fullname || !phone || !pass) {
-            return res.status(404).json({ message: 'fullname or pass or phone is incorrect' })
+            return res.status(400).json({ message: 'Invalid input: Fullname, Phone, or Password missing' });
         }
-        const isemployeefound = await Employeemodel.findOne({ phone });
-        if (isemployeefound) {
-            return res.status(404).json({ message: 'this phone is already in use' })
+
+        const isEmployeeFound = await Employeemodel.findOne({ phone });
+        if (isEmployeeFound) {
+            return res.status(409).json({ message: 'This phone is already in use' });
         }
-        const newEmployee = await Employeemodel.create({ fullname, username, numberID, email, phone, address, password, basicSalary, payRoll, role, isActive })
-        newEmployee.save()
+
+        const newEmployee = await Employeemodel.create({
+            fullname,
+            username,
+            numberID,
+            email,
+            phone,
+            address,
+            password,
+            basicSalary,
+            role,
+            isActive,
+        });
+
+        // Generating JWT token
         const accessToken = jwt.sign({
             employeeinfo: {
                 id: newEmployee._id,
                 username: newEmployee.username,
                 isAdmin: newEmployee.isAdmin,
                 isActive: newEmployee.isActive,
-                role: newEmployee.role
+                role: newEmployee.role,
             }
-        }, process.env.jwt_secret_key,
-            { expiresIn: process.env.jwt_expire }
-        )
-        res.status(200).json({ accessToken, newEmployee })
+        }, process.env.jwt_secret_key, { expiresIn: process.env.jwt_expire });
+
+        res.status(201).json({ accessToken, newEmployee });
     } catch (err) {
-        res.status(404).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
 const getoneEmployee = async (req, res) => {
     try {
@@ -116,44 +146,25 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const id = await req.params.employeeid;
-        const fullname = await req.body.fullname;
-        const numberID = await req.body.numberID;
-        const username = await req.body.username;
-        const email = await req.body.email;
-        const address = await req.body.address;
-        const phone = await req.body.phone;
-        const basicSalary = await req.body.basicSalary;
-        const payRoll = await req.body.payRoll;
-        const role = await req.body.role;
-        const isActive = await req.body.isActive;
-
-        const pass = await req.body.password;
-
-        if (pass) {
-            const password = await bcrypt.hash(pass, 10);
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, password, basicSalary, isActive, role }, { new: true });
-            updateemployee.save()
-            res.status(200).json(updateemployee)
-        } else {
-            const updateemployee = await Employeemodel.findByIdAndUpdate(id, { fullname, username, numberID, email, phone, address, basicSalary, isActive, role }, { new: true });
-            updateemployee.save()
-            res.status(200).json(updateemployee)
+        const { error } = updateEmployeeSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
         }
-    } catch (err) { res.status(400).json(err) }
-}
-const payRollEmployee = async (req, res) => {
-    try {
-        const id = await req.params.employeeid;
-        const payRoll = await req.body.payRoll;
+        const id = req.params.employeeid;
+        const { fullname, numberID, username, email, address, phone, basicSalary, role, isActive, password } = req.body;
 
-        const updatepayRoll = await Employeemodel.findByIdAndUpdate(id, { payRoll }, { new: true });
-        updatepayRoll.save()
-        res.status(200).json(updatepayRoll)
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+
+        const updateData = password ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role } : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };
+
+        const updateEmployee = await Employeemodel.findByIdAndUpdate(id, updateData, { new: true });
+
+        res.status(200).json(updateEmployee);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json(err);
     }
-}
+};
+
 
 
 const deleteEmployee = async (req, res) => {
@@ -167,4 +178,100 @@ const deleteEmployee = async (req, res) => {
     }
 }
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,payRollEmployee, getallEmployees, updateEmployee, deleteEmployee };
+
+
+const validatePayroll = (data) => {
+    const schema = Joi.object({
+      month: Joi.number().required(),
+      salary: Joi.number().min(0).required(),
+      additional: Joi.number().min(0).required(),
+      bonus: Joi.number().min(0).required(),
+      totalDue: Joi.number().min(0).required(),
+      absence: Joi.number().min(0).required(),
+      deduction: Joi.number().min(0).required(),
+      predecessor: Joi.number().min(0).required(),
+      insurance: Joi.number().min(0).required(),
+      tax: Joi.number().min(0).required(),
+      totalDeductible: Joi.number().min(0).required(),
+      netSalary: Joi.number().min(0).required(),
+      isPaid: Joi.boolean().required(),
+    });
+  
+    return schema.validate(data);
+  };
+  
+  const updateOrAddPayrollForMonth = async (req, res) => {
+    try {
+      const { error } = validatePayroll(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
+  
+      const employeeId = req.params.employeeId;
+      const {
+        month,
+        salary,
+        additional,
+        bonus,
+        totalDue,
+        absence,
+        deduction,
+        predecessor,
+        insurance,
+        tax,
+        totalDeductible,
+        netSalary,
+        isPaid,
+      } = req.body;
+  
+      const employee = await EmployeeModel.findById(employeeId);
+      if (!employee) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+  
+      let found = false;
+      employee.payRoll.forEach((payroll) => {
+        if (payroll.Month === month && !payroll.isPaid) {
+          found = true;
+          payroll.salary = salary;
+          payroll.Additional = additional;
+          payroll.Bonus = bonus;
+          payroll.TotalDue = totalDue;
+          payroll.Absence = absence;
+          payroll.Deduction = deduction;
+          payroll.Predecessor = predecessor;
+          payroll.Insurance = insurance;
+          payroll.Tax = tax;
+          payroll.TotalDeductible = totalDeductible;
+          payroll.NetSalary = netSalary;
+          payroll.isPaid = isPaid;
+        }
+      });
+  
+      if (!found) {
+        employee.payRoll.push({
+          Month: month,
+          salary: salary,
+          Additional: additional,
+          Bonus: bonus,
+          TotalDue: totalDue,
+          Absence: absence,
+          Deduction: deduction,
+          Predecessor: predecessor,
+          Insurance: insurance,
+          Tax: tax,
+          TotalDeductible: totalDeductible,
+          NetSalary: netSalary,
+          isPaid: isPaid,
+        });
+      }
+  
+      await employee.save();
+      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+
+module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };

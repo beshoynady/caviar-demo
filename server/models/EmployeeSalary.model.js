@@ -1,53 +1,52 @@
-const mongoose = require('mongoose')
-const { ObjectId } = mongoose.Schema
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 const EmployeeSalarySchema = new mongoose.Schema(
   {
     EmployeeId: {
       type: ObjectId,
       ref: 'Employee',
-      require: true,
+      required: true,
     },
     EmployeeName: {
       type: String,
-      require: true,
+      required: true,
     },
     movement: {
       type: String,
-      enum: ['سلف', 'خصم', 'غياب','اضافي','مكافأة'],
-      require: true
+      enum: ['loan', 'deduction', 'absence', 'additional', 'bonus'],
+      required: true,
     },
     Amount: {
       type: Number,
       default: 0,
-      require: true,
+      required: true,
     },
     oldAmount:{
       type: Number,
-      require: true,
+      required: true,
     },
     newAmount:{
       type: Number,
-      require: true,
+      required: true,
     }, 
     actionBy: {
       type: ObjectId,
-      ref: 'employees',
-      require: true
+      ref: 'Employee',
+      required: true,
     },
     actionAt: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
     updatedAt: {
       type: Date,
-     }
+    },
   },
   {
     timestamps: true,
   }
-)
+);
 
-
-const EmployeeSalaryModel = mongoose.model('EmployeeSalary', EmployeeSalarySchema)
-module.exports = EmployeeSalaryModel
+const EmployeeSalaryModel = mongoose.model('EmployeeSalary', EmployeeSalarySchema);
+module.exports = EmployeeSalaryModel;

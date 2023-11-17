@@ -1,187 +1,161 @@
 const mongoose = require('mongoose');
 
-const employeeschema = new mongoose.Schema({
-    fullname: {
-        type: String,
-        trim: true,
-        require: [true, 'required fullname'],
-        minlength: 3,
-        maxlength: 100,
-    },
-    numberID: {
-        type: String,
-        unique: true,
-        require: [true, 'required numberID'],
-        trim: true,
-        minlength: 14,
-        maxlength: 14,
-    },
-    address: {
-        type: String,
-        trim: true,
-        minlength: 3,
-        maxlength: 150,
-    },
-    email: {
-        type: String,
-        unique: true,
-        maxlength: 100,
-        minlength: 10,
-        trim: true,
-    },
-    username: {
-        type: String,
-        unique: true,
-        require: [true, 'required username'],
-        trim: true,
-        minlength: 3,
-        maxlength: 100,
-    },
-    phone: {
-        type: String,
-        trim: true,
-        length: 11,
-    },
-    password: {
-        type: String,
-        trim: true,
-        require: [true, 'password required'],
-        maxlength: 200,
-        minlength: 3,
-    },
-    isAdmin: {
-        type: Boolean,
-        default: true,
-    },
-    isActive: {
-        type: Boolean,
-        default: true,
-        require: [true, 'isActive required'],
-    },
-    role: {
-        type: String,
-        trim: true,
-        enum: ['manager', 'casher', 'waiter', 'Chef'],
-        require: [true, 'role required'],
-    },
-    basicSalary: {
+const employeeSchema = new mongoose.Schema({
+  fullname: {
+    type: String,
+    trim: true,
+    required: [true, 'Fullname is required'],
+    minlength: 3,
+    maxlength: 100,
+  },
+  numberID: {
+    type: String,
+    unique: true,
+    required: [true, 'Number ID is required'],
+    trim: true,
+    minlength: 14,
+    maxlength: 14,
+  },
+  address: {
+    type: String,
+    trim: true,
+    minlength: 3,
+    maxlength: 150,
+  },
+  email: {
+    type: String,
+    unique: true,
+    maxlength: 100,
+    minlength: 10,
+    trim: true,
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: [true, 'Username is required'],
+    trim: true,
+    minlength: 3,
+    maxlength: 100,
+  },
+  phone: {
+    type: String,
+    trim: true,
+    length: 11,
+  },
+  password: {
+    type: String,
+    trim: true,
+    required: [true, 'Password is required'],
+    maxlength: 200,
+    minlength: 3,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: true,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+    required: [true, 'isActive required'],
+  },
+  role: {
+    type: String,
+    trim: true,
+    enum: ['manager', 'casher', 'waiter', 'Chef'],
+    required: [true, 'Role is required'],
+  },
+  basicSalary: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  payRoll: [
+    {
+      Month: {
+        type: Number,
+        required: true,
+      },
+      salary: {
         type: Number,
         required: true,
         min: 0,
-    },
-    payRoll: [
-        {
-            Month: {
-                type: Number,
-                required: true,
-            },
-            salary: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0
-            },
-            // DaySalary: {
-            //     type: Number,
-            //     required: true,
-            //     min: 0,
-            //     default: 0
-            // },
-            // HourlySalary: {
-            //     type: Number,
-            //     required: true,
-            //     min: 0,
-            //     default: 0
-            // },
-            // workingDays: {
-            //     type: Number,
-            //     required: true,
-            //     min: 0,
-            //     max: 31,
-            //     default: 0
-            // },
-            //     absenceDay: {
-            //         type: Number,
-            //         required: true,
-            //         min: 0,
-            //         default: 0
-            //     },
-            Additional: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Bonus: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            TotalDue: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Absence: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Deduction: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Predecessor: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Insurance: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            Tax: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            TotalDeductible: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            NetSalary: {
-                type: Number,
-                required: true,
-                min: 0,
-                default: 0,
-            },
-            ispaid: {
-                type: Boolean,
-                required: true,
-                default: false,
-            }
-        }
-    ],
-    isVarified: {
+        default: 0,
+      },
+      Additional: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Bonus: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      TotalDue: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Absence: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Deduction: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Predecessor: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Insurance: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      Tax: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      TotalDeductible: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      NetSalary: {
+        type: Number,
+        required: true,
+        min: 0,
+        default: 0,
+      },
+      isPaid: {
         type: Boolean,
-        default: false
+        required: true,
+        default: false,
+      },
     },
+  ],
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
 },
-    { timestamp: true }
+{ timestamps: true }
 );
 
-const Employeemodel = mongoose.model('Employee', employeeschema);
+const EmployeeModel = mongoose.model('Employee', employeeSchema);
 
-module.exports = Employeemodel;
-
+module.exports = EmployeeModel;

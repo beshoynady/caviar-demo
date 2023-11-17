@@ -118,7 +118,7 @@ const Employees = () => {
       }
 
       const updateData = password
-          ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role }
+          ? { fullname, numberID, username, email, address, phone, password, basicSalary, isActive, role }
           : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };
 
       const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, updateData);

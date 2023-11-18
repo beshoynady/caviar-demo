@@ -96,6 +96,10 @@ const DailyExpense = () => {
       const amountDifference = amount - prevExpenseData.amount;
   
       const updatedBalance = balance + prevExpenseData.amount - amountDifference;
+      console.log(amount) 
+      console.log(prevExpenseData.amount) 
+      console.log(amountDifference)
+      console.log(updatedBalance)
   
       if (cashRegister) { // Ensure cashRegister has a value before sending the request
         const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {

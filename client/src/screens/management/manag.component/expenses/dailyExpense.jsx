@@ -293,10 +293,10 @@ const DailyExpense = () => {
                         <label>المصروف</label>
                         <select name="category" id="category" form="carform" onChange={(e) => {
                           setexpenseID(e.target.value);
-                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).expenseDescription);
+                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).description);
                         }}>
                           {allExpenses.map((expense, i) => {
-                            return <option value={expense._id} key={i} >{expense.expenseDescription}</option>
+                            return <option value={expense._id} key={i} >{expense.description}</option>
                           })
                           }
                         </select>

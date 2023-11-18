@@ -96,6 +96,7 @@ const DailyExpense = () => {
       const amountDifference = amount - prevExpenseData.amount;
   
       const updatedBalance = balance + prevExpenseData.amount - amountDifference;
+      console.log(balance) 
       console.log(amount) 
       console.log(prevExpenseData.amount) 
       console.log(amountDifference)

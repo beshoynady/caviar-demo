@@ -25,10 +25,9 @@ const getCashRegisterById = async (req, res) => {
 
 // Create a cash register
 const createCashRegister = async (req, res) => {
-  const { name, balance, employee } = req.body;
+  const { name, employee } = req.body;
   const cashRegister = new CashRegister({
     name,
-    balance,
     employee,
   });
 

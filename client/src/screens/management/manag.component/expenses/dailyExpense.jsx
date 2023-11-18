@@ -51,9 +51,9 @@ const DailyExpense = () => {
   };
 
   const createDailyExpense = async (e) => {
-    console.log({b:balance})
     e.preventDefault();
-    let newbalance = balance - amount
+    const updatedBalance = balance - amount; // Calculate the updated balance
+
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
         expenseID,
@@ -64,17 +64,23 @@ const DailyExpense = () => {
         notes,
       });
       console.log(response.data);
+
       const updatecashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
         registerId: cashRegister,
         createBy: paidBy,
         amount,
         type: 'expense',
         description: expenseDescription,
-      })
+      });
+
       const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-        balance:newbalance
-      })
-      getAllDailyExpenses();
+        balance: updatedBalance, // Use the updated balance
+      });
+
+      // Update the state after successful updates
+      setbalance(updatedBalance);
+
+      getAllDailyExpenses(); // Assuming this function fetches and sets the daily expenses
     } catch (error) {
       console.log(error);
     }

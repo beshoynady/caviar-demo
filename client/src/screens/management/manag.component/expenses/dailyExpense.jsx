@@ -284,9 +284,8 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.date}</td>
                                 <td>{dailyexpense.notes}</td>
                                 <td>
-                                  <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount);setpaidBy(dailyexpense.paidBy);setcashRegistername(AllCashRegisters?AllCashRegisters.find(cash=>cash._id== dailyexpense.cashRegister).name:'');
-                                    setcashRegister(dailyexpense.cashRegister); setdailyexpenseID(dailyexpense._id)
+                                  <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { handelCashRegister(userlogininfo.employeeinfo.id);
+                                    setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount);setpaidBy(dailyexpense.paidBy); setdailyexpenseID(dailyexpense._id)
                                   }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(dailyexpense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>

@@ -86,30 +86,42 @@ const DailyExpense = () => {
     }
   };
 
-  // const editDailyExpense = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
-  //       expenseID,
-  //       expenseDescription,
-  //       cashRegister,
-  //       paidBy,
-  //       amount,
-  //       notes,
-  //     });
-  //     const data = response.data
-  //     console.log(response.data);
-  //     if (data) {
-  //       const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseID}`, { amount: totalAmount })
-  //       if (updateexpense) {
-  //         getAllDailyExpenses();
-  //       }
-  //     }
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const editDailyExpense = async (e) => {
+    e.preventDefault();
+    try {
+      const prevExpense = await axios.get(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`);
+      const prevExpenseData = prevExpense.data;
+  
+      // Calculate the difference between the new amount and the previous amount
+      const amountDifference = amount - prevExpenseData.amount;
+  
+      const updatedBalance = balance + prevExpenseData.amount - amountDifference;
+  
+      const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
+        expenseID,
+        expenseDescription,
+        cashRegister,
+        paidBy,
+        amount,
+        notes,
+      });
+  
+      const data = response.data;
+      console.log(response.data);
+  
+      if (data) {
+          const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
+            balance: updatedBalance,
+          });
+          if (updateCashRegister) {
+            getAllDailyExpenses();
+          }
+        }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   const deleteDailyExpense = async (e) => {
     e.preventDefault();
@@ -337,7 +349,7 @@ const DailyExpense = () => {
                 </div>
               </div>
             </div>
-            {/* <div id="editDailyExpensesModal" className="modal fade">
+            <div id="editDailyExpensesModal" className="modal fade">
               <div className="modal-dialog">
                 <div className="modal-content">
                   <form onSubmit={editDailyExpense}>
@@ -348,24 +360,29 @@ const DailyExpense = () => {
                     <div className="modal-body">
                       <div className="form-group">
                         <label>المصروف</label>
-                        <select name="category" id="category" defaultValue={expenseID} form="carform" onChange={(e) => {
+                        <select name="category" id="category" form="carform" onChange={(e) => {
                           setexpenseID(e.target.value);
-                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).expenseDescription);
-
+                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).description);
                         }}>
                           {allExpenses.map((expense, i) => {
-                            return <option value={expense._id} key={i} >{expense.expenseDescription}</option>
+                            return <option value={expense._id} key={i} >{expense.description}</option>
                           })
                           }
                         </select>
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" defaultValue={amount} required onChange={(e) => { setamount(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" required max={balance} onChange={(e) => {
+                          setamount(e.target.value)
+                        }} />
                       </div>
                       <div className="form-group">
-                        <label>الاجمالي </label>
-                        <input type="Number" className="form-control" value={totalAmount} readOnly />
+                        <label>الخزينه </label>
+                        <input type="text" className="form-control" value={cashRegistername} readOnly />
+                      </div>
+                      <div className="form-group">
+                        <label>بواسطه </label>
+                        <input type="text" className="form-control" value={usertitle(paidBy)} readOnly />
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
@@ -381,7 +398,7 @@ const DailyExpense = () => {
               </div>
             </div>
 
-            <div id="deleteDailyExpensesModal" className="modal fade">
+            {/* <div id="deleteDailyExpensesModal" className="modal fade">
               <div className="modal-dialog">
                 <div className="modal-content">
                   <form onSubmit={deleteDailyExpense}>

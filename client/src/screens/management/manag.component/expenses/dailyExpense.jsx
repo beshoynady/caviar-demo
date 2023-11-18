@@ -77,30 +77,30 @@ const DailyExpense = () => {
     }
   };
 
-  const editDailyExpense = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
-        expenseID,
-        expenseDescription,
-        cashRegister,
-        paidBy,
-        amount,
-        notes,
-      });
-      const data = response.data
-      console.log(response.data);
-      if (data) {
-        const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseID}`, { amount: totalAmount })
-        if (updateexpense) {
-          getAllDailyExpenses();
-        }
-      }
+  // const editDailyExpense = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
+  //       expenseID,
+  //       expenseDescription,
+  //       cashRegister,
+  //       paidBy,
+  //       amount,
+  //       notes,
+  //     });
+  //     const data = response.data
+  //     console.log(response.data);
+  //     if (data) {
+  //       const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseID}`, { amount: totalAmount })
+  //       if (updateexpense) {
+  //         getAllDailyExpenses();
+  //       }
+  //     }
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const deleteDailyExpense = async (e) => {
     e.preventDefault();
@@ -143,7 +143,7 @@ const DailyExpense = () => {
 
   return (
     <detacontext.Consumer>
-      {({ userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ userlogininfo,usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
             <ToastContainer/>

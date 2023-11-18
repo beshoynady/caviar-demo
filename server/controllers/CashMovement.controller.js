@@ -5,7 +5,7 @@ exports.createCashMovement = async (req, res) => {
   try {
     const { registerId, createBy, amount, type, description } = req.body;
 
-    const newCashMovement = new CashMovement({
+    const newCashMovement = await CashMovement.create({
       registerId,
       createBy,
       amount,

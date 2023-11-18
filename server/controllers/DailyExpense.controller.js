@@ -1,6 +1,5 @@
 const DailyExpenseModel = require('../models/DailyExpense.model');
 
-
 // Get all daily expenses
 exports.getAllDailyExpenses = async (req, res) => {
   try {
@@ -15,7 +14,10 @@ exports.getAllDailyExpenses = async (req, res) => {
 exports.getDailyExpenseById = async (req, res) => {
   try {
     const dailyExpense = await DailyExpenseModel.findById(req.params.dailyExpenseId)
-      .populate('expense', 'description amount'); // Populate the 'expense' field with relevant data
+      .populate('expenseID', 'description amount') // Populate the 'expenseID' field with relevant data
+      .populate('cashRegister', 'fieldName') // Replace 'fieldName' with the actual field name you want to populate
+      .populate('paidBy', 'fieldName'); // Replace 'fieldName' with the actual field name you want to populate
+
     if (dailyExpense) {
       res.status(200).json(dailyExpense);
     } else {
@@ -28,15 +30,17 @@ exports.getDailyExpenseById = async (req, res) => {
 
 // Add a new daily expense
 exports.addDailyExpense = async (req, res) => {
-  const { expenseID,expenseDescription, quantity,totalAmount, notes } =await req.body;
+  const { expenseID, expenseDescription, cashRegister, paidBy, amount, notes, date } = req.body;
 
   try {
     const newDailyExpense = await DailyExpenseModel.create({
       expenseID,
       expenseDescription,
-      quantity,
+      cashRegister,
+      paidBy,
+      amount,
       notes,
-      totalAmount
+      date
     });
 
     res.status(201).json(newDailyExpense);
@@ -47,16 +51,18 @@ exports.addDailyExpense = async (req, res) => {
 
 // Update a daily expense by ID
 exports.updateDailyExpense = async (req, res) => {
-  const { expenseID,expenseDescription, quantity,totalAmount, notes } =await req.body;
+  const { expenseID, expenseDescription, cashRegister, paidBy, amount, notes, date } = req.body;
+
   try {
     const updatedDailyExpense = await DailyExpenseModel.findByIdAndUpdate(
       req.params.dailyExpenseId,
       {
         expenseID,
         expenseDescription,
-        quantity,
+        cashRegister,
+        paidBy,
+        amount,
         notes,
-        totalAmount
       },
       { new: true }
     );
@@ -70,6 +76,8 @@ exports.updateDailyExpense = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 // Delete a daily expense by ID
 exports.deleteDailyExpense = async (req, res) => {

@@ -43,8 +43,7 @@ exports.updateExpense = async (req, res) => {
   try {
     const id = await req.params.expenseId
     const description = req.body.description
-    const amount = req.body.amount
-    const updatedExpense = await ExpenseModel.findByIdAndUpdate(id, { description, amount });
+    const updatedExpense = await ExpenseModel.findByIdAndUpdate(id, { description });
     if (updatedExpense) {
       res.status(200).json(updatedExpense);
     } else {

@@ -3,16 +3,38 @@ import axios from 'axios';
 import { detacontext } from '../../../../App';
 
 const DailyExpense = () => {
-  const [expenseId, setexpenseId] = useState('');
-  const [amount, setamount] = useState('');
+  const [expenseID, setexpenseID] = useState('');
 
-  const [dailyExpenseId, setdailyExpenseId] = useState('');
-  const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [dailyexpenseID, setdailyexpenseID] = useState('');
+  const [expenseDescription, setexpenseDescription] = useState('');
+  const [amount, setamount] = useState();
+  const [balance, setbalance] = useState();
+  const [cashRegister, setcashRegister] = useState('');
+  const [cashRegistername, setcashRegistername] = useState('');
+  const [paidBy, setpaidBy] = useState('');
   const [notes, setNotes] = useState('');
   const [allExpenses, setAllExpenses] = useState([]);
   const [allDailyExpenses, setAllDailyExpenses] = useState([]);
+
+
+  const [AllCashRegisters, setAllCashRegisters] = useState([]);
+  // Fetch all cash registers
+  const getAllCashRegisters = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/cash');
+      setAllCashRegisters(response.data);
+    } catch (err) {
+      toast.error('Error fetching cash registers');
+    }
+  };
+
+  const handelCashRegister = (id) => {
+    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+    setcashRegister(CashRegister._id)
+    setcashRegistername(CashRegister.name)
+    setbalance(CashRegister.balance)
+    setpaidBy(id)
+  }
 
 
   const getAllExpenses = async () => {
@@ -30,14 +52,24 @@ const DailyExpense = () => {
     e.preventDefault();
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
-        expenseID: expenseId,
-        expenseDescription: description,
-        quantity: quantity,
-        totalAmount: totalAmount,
-        notes: notes,
+        expenseID,
+        expenseDescription,
+        cashRegister,
+        paidBy,
+        amount,
+        notes,
       });
       console.log(response.data);
-      const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseId}`,{amount : totalAmount})
+      const updatecashMovement = await axios.post(`https://caviar-api.vercel.app/api/cashMovement/`, {
+        registerId: cashRegister,
+        createBy: paidBy,
+        amount,
+        type: 'expense',
+        description: expenseDescription,
+      })
+      const updatecashRegister = await axios.post(`https://caviar-api.vercel.app/api/cashregister/`, {
+        balance
+      })
       getAllDailyExpenses();
     } catch (error) {
       console.log(error);
@@ -47,17 +79,18 @@ const DailyExpense = () => {
   const editDailyExpense = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyExpenseId}`, {
-        expenseID: expenseId,
-        expenseDescription: description,
-        quantity: quantity,
-        totalAmount: totalAmount,
-        notes: notes,
+      const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
+        expenseID,
+        expenseDescription,
+        cashRegister,
+        paidBy,
+        amount,
+        notes,
       });
       const data = response.data
       console.log(response.data);
-      if(data){
-        const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseId}`,{amount : totalAmount})
+      if (data) {
+        const updateexpense = await axios.put(`https://caviar-api.vercel.app/api/expenses/${expenseID}`, { amount: totalAmount })
         if (updateexpense) {
           getAllDailyExpenses();
         }
@@ -71,7 +104,7 @@ const DailyExpense = () => {
   const deleteDailyExpense = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`https://caviar-api.vercel.app/api/dailyexpense/${dailyExpenseId}`);
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`);
       if (response.status === 200) {
         console.log(response);
         getAllDailyExpenses();
@@ -97,18 +130,19 @@ const DailyExpense = () => {
 
   const [fielterDailyExpenses, setfielterDailyExpenses] = useState([])
   const searchByDailyExpense = (expense) => {
-    const filter = allDailyExpenses.filter(exp => exp.description.startsWith(expense) == true)
+    const filter = allDailyExpenses.filter(exp => exp.expenseDescription.startsWith(expense) == true)
     setfielterDailyExpenses(filter)
   }
 
   useEffect(() => {
     getAllExpenses();
+    getAllCashRegisters()
     getAllDailyExpenses()
   }, [])
 
   return (
     <detacontext.Consumer>
-      {({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ userlogininfo, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
             <div className="table-responsive mt-1">
@@ -162,40 +196,16 @@ const DailyExpense = () => {
                       <th>م</th>
                       <th>اسم المصروف</th>
                       <th>المبلغ </th>
-                      <th>الاجمالي </th>
+                      <th>الحزينه </th>
+                      <th>بواسطه </th>
                       <th>اضف في</th>
                       <th>ملاحظات</th>
                       <th>اجراءات</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {fielterDailyExpenses.length > 0 ? fielterDailyExpenses.map((expense, i) => {
-                      if (i >= startpagination & i < endpagination) {
-                        return (
-                          <tr key={i}>
-                            <td>
-                              <span className="custom-checkbox">
-                                <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                <label htmlFor="checkbox1"></label>
-                              </span>
-                            </td>
-                            <td>{i + 1}</td>
-                            <td>{expense.expenseDescription}</td>
-                            <td>{expense.quantity}</td>
-                            <td>{expense.totalAmount}</td>
-                            <td>{expense.date}</td>
-                            <td>{expense.notes}</td>
-                            <td>
-                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);setQuantity(expense.quantity)
-                                setamount(expense.totalAmount - expense.quantity);setdailyExpenseId(expense._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-
-                          </tr>
-                        )
-                      }
-                    })
-                      : allDailyExpenses.map((expense, i) => {
+                    {
+                      fielterDailyExpenses.length > 0 ? fielterDailyExpenses.map((expense, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -206,20 +216,52 @@ const DailyExpense = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{expense.expenseDescription}</td>
-                              <td>{expense.quantity}</td>
-                              <td>{expense.totalAmount}</td>
+                              <td>{expense.expenseexpenseDescription}</td>
+                              <td>{expense.amount}</td>
+                              <td>{expense.cashRegister}</td>
+                              <td>{expense.paidBy}</td>
                               <td>{expense.date}</td>
                               <td>{expense.notes}</td>
                               <td>
-                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.expenseDescription);setQuantity(expense.quantity)
-                                setamount(expense.totalAmount - expense.quantity);setdailyExpenseId(expense._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyExpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
+                                    setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
+                                    setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
+                                  }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
+
                             </tr>
                           )
                         }
-                      })}
+                      })
+                        : allDailyExpenses.map((expense, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{expense.expenseexpenseDescription}</td>
+                                <td>{expense.amount}</td>
+                                <td>{expense.cashRegister}</td>
+                                <td>{expense.paidBy}</td>
+                                <td>{expense.date}</td>
+                                <td>{expense.notes}</td>
+                                <td>
+                                  <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
+                                    setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
+                                    setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
+                                  }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+                          }
+                        })}
                   </tbody>
                 </table>
                 <div className="clearfix">
@@ -248,23 +290,26 @@ const DailyExpense = () => {
                       <div className="form-group">
                         <label>المصروف</label>
                         <select name="category" id="category" form="carform" onChange={(e) => {
-                          setexpenseId(e.target.value);
-                          setDescription(allExpenses.find(ex => ex._id == e.target.value).description);
-                          setamount(allExpenses.find(ex => ex._id == e.target.value).amount)
+                          setexpenseID(e.target.value);
+                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).expenseDescription);
                         }}>
                           {allExpenses.map((expense, i) => {
-                            return <option value={expense._id} key={i} >{expense.description}</option>
+                            return <option value={expense._id} key={i} >{expense.expenseDescription}</option>
                           })
                           }
                         </select>
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" required max={balance} onChange={(e) => { setamount(e.target.value); setbalance(balance - Number(e.target.value)) }} />
                       </div>
                       <div className="form-group">
-                        <label>الاجمالي </label>
-                        <input type="Number" className="form-control" value={totalAmount} readOnly />
+                        <label>الخزينه </label>
+                        <input type="text" className="form-control" value={cashRegistername} readOnly />
+                      </div>
+                      <div className="form-group">
+                        <label>بواسطه </label>
+                        <input type="text" className="form-control" value={usertitle(paidBy)} readOnly />
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
@@ -290,20 +335,20 @@ const DailyExpense = () => {
                     <div className="modal-body">
                       <div className="form-group">
                         <label>المصروف</label>
-                        <select name="category" id="category" defaultValue={expenseId} form="carform" onChange={(e) => {
-                          setexpenseId(e.target.value);
-                          setDescription(allExpenses.find(ex => ex._id == e.target.value).description);
-                          
+                        <select name="category" id="category" defaultValue={expenseID} form="carform" onChange={(e) => {
+                          setexpenseID(e.target.value);
+                          setexpenseDescription(allExpenses.find(ex => ex._id == e.target.value).expenseDescription);
+
                         }}>
                           {allExpenses.map((expense, i) => {
-                            return <option value={expense._id} key={i} >{expense.description}</option>
+                            return <option value={expense._id} key={i} >{expense.expenseDescription}</option>
                           })
                           }
                         </select>
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" defaultValue={quantity} required onChange={(e) => { setQuantity(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" defaultValue={amount} required onChange={(e) => { setamount(e.target.value); setTotalAmount(amount + Number(e.target.value)) }} />
                       </div>
                       <div className="form-group">
                         <label>الاجمالي </label>

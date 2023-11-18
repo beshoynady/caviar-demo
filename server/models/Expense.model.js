@@ -6,12 +6,6 @@ const expenseSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  amount: {
-    type: Number,
-    required: true,
-    default: 0,
-    min: 0
-  },
   date: {
     type: Date,
     default: Date.now

@@ -5,20 +5,31 @@ const { ObjectId } = mongoose.Schema;
 const dailyExpenseSchema = new mongoose.Schema({
     expenseID: {
         type: ObjectId,
-        ref: 'Expense', 
+        ref: 'Expense',
         required: true,
     },
     expenseDescription: {
         type: String,
         required: true,
     },
-    quantity: { type: Number, required: true },
-    
-    totalAmount: { type: Number, required: true, min: 0 },
+    cashRegister: {
+        type: ObjectId,
+        ref: 'CashRegister',
+        required: true,
+    },
+    paidBy: {
+        type: ObjectId,
+        ref: 'Employee',
+        required: true,
+    },
+    amount: {
+        type: Number,
+        required: true
+    },
     notes: String,
-    date: { 
-        type: Date, 
-        default: Date.now 
+    date: {
+        type: Date,
+        default: Date.now
     },
 });
 

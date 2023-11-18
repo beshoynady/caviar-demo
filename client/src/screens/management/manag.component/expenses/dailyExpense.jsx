@@ -51,8 +51,9 @@ const DailyExpense = () => {
   };
 
   const createDailyExpense = async (e) => {
+    console.log({b:balance})
     e.preventDefault();
-    let balance = balance - amount
+    let newbalance = balance - amount
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
         expenseID,
@@ -71,7 +72,7 @@ const DailyExpense = () => {
         description: expenseDescription,
       })
       const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-        balance
+        balance:newbalance
       })
       getAllDailyExpenses();
     } catch (error) {

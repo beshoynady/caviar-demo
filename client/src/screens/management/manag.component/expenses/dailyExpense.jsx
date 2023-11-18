@@ -97,19 +97,20 @@ const DailyExpense = () => {
   
       const updatedBalance = balance + prevExpenseData.amount - amountDifference;
   
-      const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
-        expenseID,
-        expenseDescription,
-        cashRegister,
-        paidBy,
-        amount,
-        notes,
-      });
+      if (cashRegister) { // Ensure cashRegister has a value before sending the request
+        const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
+          expenseID,
+          expenseDescription,
+          cashRegister,
+          paidBy,
+          amount,
+          notes,
+        });
   
-      const data = response.data;
-      console.log(response.data);
+        const data = response.data;
+        console.log(response.data);
   
-      if (data) {
+        if (data) {
           const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
             balance: updatedBalance,
           });
@@ -117,10 +118,14 @@ const DailyExpense = () => {
             getAllDailyExpenses();
           }
         }
+      } else {
+        console.log('Cash register value is empty.');
+      }
     } catch (error) {
       console.log(error);
     }
   };
+  
   
 
   const deleteDailyExpense = async (e) => {
@@ -276,7 +281,7 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.notes}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount);setpaidBy(dailyexpense.paidBy);setcashRegistername(AllCashRegisters.find(cash=>cash._id== dailyexpense.cashRegister).name);
+                                    setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount);setpaidBy(dailyexpense.paidBy);setcashRegistername(AllCashRegisters?AllCashRegisters.find(cash=>cash._id== dailyexpense.cashRegister).name:'');
                                     setcashRegister(dailyexpense.cashRegister); setdailyexpenseID(dailyexpense._id)
                                   }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(dailyexpense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

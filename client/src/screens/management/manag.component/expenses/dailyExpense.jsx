@@ -52,6 +52,7 @@ const DailyExpense = () => {
 
   const createDailyExpense = async (e) => {
     e.preventDefault();
+    balance = balance - amount
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
         expenseID,
@@ -305,8 +306,7 @@ const DailyExpense = () => {
                       <div className="form-group">
                         <label>المبلغ</label>
                         <input type="Number" className="form-control" required max={balance} onChange={(e) => {
-                          setamount(e.target.value);console.log(Number(e.target.value)); console.log(balance - Number(e.target.value))
-                            ; setbalance(balance - Number(e.target.value))
+                          setamount(e.target.value)
                         }} />
                       </div>
                       <div className="form-group">

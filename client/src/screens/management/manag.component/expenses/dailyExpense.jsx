@@ -34,6 +34,7 @@ const DailyExpense = () => {
     setcashRegister(CashRegister._id)
     setcashRegistername(CashRegister.name)
     setbalance(CashRegister.balance)
+    console.log(CashRegister.balance)
     setpaidBy(id)
   }
 
@@ -143,10 +144,10 @@ const DailyExpense = () => {
 
   return (
     <detacontext.Consumer>
-      {({ userlogininfo,usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
-            <ToastContainer/>
+            <ToastContainer />
             <div className="table-responsive mt-1">
               <div className="table-wrapper p-3 mw-100">
                 <div className="table-title">
@@ -155,7 +156,7 @@ const DailyExpense = () => {
                       <h2>ادارة <b>تسجيل المصروفات</b></h2>
                     </div>
                     <div className="col-sm-6 d-flex justify-content-end">
-                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={()=>handelCashRegister(userlogininfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
+                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashRegister(userlogininfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
 
                       <a href="#deleteDailyExpensesModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                     </div>
@@ -225,11 +226,11 @@ const DailyExpense = () => {
                               <td>{expense.date}</td>
                               <td>{expense.notes}</td>
                               <td>
-                              <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
-                                    setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
-                                  }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
+                                  setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
+                                  setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
+                                }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
 
                             </tr>
@@ -303,7 +304,10 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" required max={balance} onChange={(e) => { setamount(e.target.value); setbalance(balance - Number(e.target.value)) }} />
+                        <input type="Number" className="form-control" required max={balance} onChange={(e) => {
+                          setamount(e.target.value);console.log(Number(e.target.value)); console.log(balance - Number(e.target.value))
+                            ; setbalance(balance - Number(e.target.value))
+                        }} />
                       </div>
                       <div className="form-group">
                         <label>الخزينه </label>

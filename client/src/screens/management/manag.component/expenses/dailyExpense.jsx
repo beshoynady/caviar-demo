@@ -52,6 +52,8 @@ const DailyExpense = () => {
 
   const createDailyExpense = async (e) => {
     e.preventDefault();
+    console.log(balance)
+    console.log(amount)
     const updatedBalance = balance - amount; // Calculate the updated balance
 
     try {
@@ -94,7 +96,7 @@ const DailyExpense = () => {
   
       // Calculate the difference between the new amount and the previous amount
       const amountDifference = amount - prevExpenseData.amount <0?(amount - prevExpenseData.amount)*-1:amount - prevExpenseData.amount 
-      
+
       const updatedBalance = balance + prevExpenseData.amount - amountDifference;
       console.log(balance) 
       console.log(amount) 

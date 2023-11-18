@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Schema;
 
 const cashMovementSchema = new mongoose.Schema({
   registerId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'CashRegister',
     required: true,
   },

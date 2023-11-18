@@ -43,16 +43,27 @@ const createCashRegister = async (req, res) => {
 // Update a cash register
 const updateCashRegister = async (req, res) => {
   try {
-    const { name, balance, employee } = req.body;
+    const updateFields = {}; // Updated values will be stored here
+
+    // Check the sent values and update them if they are sent in req.body
+    if (req.body.name) {
+      updateFields.name = req.body.name;
+    }
+    if (req.body.balance) {
+      updateFields.balance = req.body.balance;
+    }
+    if (req.body.employee) {
+      updateFields.employee = req.body.employee;
+    }
+
     const cashRegister = await CashRegister.findById(req.params.id);
 
     if (!cashRegister) {
       return res.status(404).json({ message: 'Cash register not found' });
     }
 
-    cashRegister.name = name;
-    cashRegister.balance = balance;
-    cashRegister.employee = employee;
+    // Update the values in the cash register using only the updated fields
+    Object.assign(cashRegister, updateFields);
 
     const updatedCashRegister = await cashRegister.save();
     res.status(200).json(updatedCashRegister);
@@ -60,6 +71,7 @@ const updateCashRegister = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 
 // Delete a cash register
 const deleteCashRegister = async (req, res) => {

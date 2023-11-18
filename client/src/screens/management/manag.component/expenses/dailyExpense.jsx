@@ -61,14 +61,14 @@ const DailyExpense = () => {
         notes,
       });
       console.log(response.data);
-      const updatecashMovement = await axios.post(`https://caviar-api.vercel.app/api/cashMovement/`, {
+      const updatecashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
         registerId: cashRegister,
         createBy: paidBy,
         amount,
         type: 'expense',
         description: expenseDescription,
       })
-      const updatecashRegister = await axios.post(`https://caviar-api.vercel.app/api/cashregister/`, {
+      const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
         balance
       })
       getAllDailyExpenses();

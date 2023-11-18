@@ -228,7 +228,7 @@ const DailyExpense = () => {
                   </thead>
                   <tbody>
                     {
-                      fielterDailyExpenses.length > 0 ? fielterDailyExpenses.map((expense, i) => {
+                      fielterDailyExpenses.length > 0 ? fielterDailyExpenses.map((dailyexpense, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -239,25 +239,25 @@ const DailyExpense = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{expense.expenseexpenseDescription}</td>
-                              <td>{expense.amount}</td>
-                              <td>{expense.cashRegister}</td>
-                              <td>{expense.paidBy}</td>
-                              <td>{expense.date}</td>
-                              <td>{expense.notes}</td>
+                              <td>{dailyexpense.expenseexpenseDescription}</td>
+                              <td>{dailyexpense.amount}</td>
+                              <td>{dailyexpense.cashRegister}</td>
+                              <td>{dailyexpense.paidBy}</td>
+                              <td>{dailyexpense.date}</td>
+                              <td>{dailyexpense.notes}</td>
                               <td>
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                  setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
-                                  setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
+                                  setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount)
+                                  setamount(dailyexpense.totalAmount - dailyexpense.amount); setdailyexpenseID(dailyexpense._id)
                                 }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(dailyexpense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
 
                             </tr>
                           )
                         }
                       })
-                        : allDailyExpenses.map((expense, i) => {
+                        : allDailyExpenses.map((dailyexpense, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -268,18 +268,18 @@ const DailyExpense = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{expense.expenseexpenseDescription}</td>
-                                <td>{expense.amount}</td>
-                                <td>{expense.cashRegister}</td>
-                                <td>{expense.paidBy}</td>
-                                <td>{expense.date}</td>
-                                <td>{expense.notes}</td>
+                                <td>{dailyexpense.expenseexpenseDescription}</td>
+                                <td>{dailyexpense.amount}</td>
+                                <td>{dailyexpense.cashRegister}</td>
+                                <td>{dailyexpense.paidBy}</td>
+                                <td>{dailyexpense.date}</td>
+                                <td>{dailyexpense.notes}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    setexpenseID(expense._id); setexpenseDescription(expense.expenseexpenseDescription); setamount(expense.amount)
-                                    setamount(expense.totalAmount - expense.amount); setdailyexpenseID(expense._id)
+                                    setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount);setpaidBy(dailyexpense.paidBy);setcashRegistername(AllCashRegisters.find(cash=>cash._id== dailyexpense.cashRegister).name);
+                                    setcashRegister(dailyexpense.cashRegister); setdailyexpenseID(dailyexpense._id)
                                   }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(dailyexpense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
@@ -372,7 +372,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group">
                         <label>المبلغ</label>
-                        <input type="Number" className="form-control" required max={balance} onChange={(e) => {
+                        <input type="Number" className="form-control" value={amount} required max={balance} onChange={(e) => {
                           setamount(e.target.value)
                         }} />
                       </div>

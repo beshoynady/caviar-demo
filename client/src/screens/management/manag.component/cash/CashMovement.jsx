@@ -156,7 +156,7 @@ const CashMovement = () => {
                       //   }
                       // })
                       //   : 
-                      setAllCashMovement.map((movement, i) => {
+                      AllCashMovement.map((movement, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>

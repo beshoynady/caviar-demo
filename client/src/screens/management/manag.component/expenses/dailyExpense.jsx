@@ -152,13 +152,15 @@ const DailyExpense = () => {
       // Calculate the difference between the new balance and the previous amount
       const updatedBalance = balance + prevExpenseData.amount;
   
-      if (cashRegister) { // Ensure cashRegister has a value before sending the request
+      if (cashMovementId) { // Ensure cashMovementId has a value before sending the request
         // Delete the daily expense record
         const response = await axios.delete(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`);
         const data = response.data;
-
+  
         if (data) {
-          const cashMovement = await axios.delete(`https://caviar-api.vercel.app/api/cashMovement/${cashMovementId}`);
+          // Delete the expense record after extracting previous expense data
+          const deleteExpenseRecord = await axios.delete(`https://caviar-api.vercel.app/api/dailyexpense/${prevExpenseData._id}`);
+  
           // Update the cash register balance with the updatedBalance
           const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
             balance: updatedBalance,
@@ -170,12 +172,13 @@ const DailyExpense = () => {
           }
         }
       } else {
-        console.log('Cash register value is update.');
+        console.log('Cash movement ID value is empty.');
       }
     } catch (error) {
       console.log(error);
     }
   };
+  
   
 
   const getAllDailyExpenses = async () => {

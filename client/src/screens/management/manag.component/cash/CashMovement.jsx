@@ -4,6 +4,12 @@ import { detacontext } from '../../../../App'
 
 
 const CashMovement = () => {
+  const [registerId, setRegisterId] = useState('');
+  const [createBy, setCreateBy] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [type, setType] = useState('');
+  const [description, setDescription] = useState('');
+  
   const [AllCashMovement, setAllCashMovement] = useState([]);
   const getCashMovement = async () => {
     try {
@@ -16,6 +22,47 @@ const CashMovement = () => {
     }
 
   }
+
+
+  const addCashMovementAndUpdateBalance = async () => {
+    try {
+      // Send cash movement data to the API
+      const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
+        registerId,
+        createBy,
+        amount,
+        type,
+        description,
+      });
+  
+      // Check if it's a withdrawal operation
+      const isWithdrawal = type === 'expense';
+      // Calculate the update amount based on the operation type
+      const updateAmount = isWithdrawal ? -amount : amount;
+  
+      // Fetch the cash register data
+      const cashRegisterResponse = await axios.get(`https://caviar-api.vercel.app/api/cashregister/${registerId}`);
+      const cashRegister = cashRegisterResponse.data;
+  
+      // Calculate the updated balance
+      const updatedBalance = cashRegister.balance + updateAmount;
+  
+      // Update the cash register balance on the server
+      await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
+        balance: updatedBalance,
+      });
+  
+      // Show success toast message if the process was successful
+      toast.success('Cash movement recorded successfully');
+  
+    } catch (error) {
+      // Show error toast message if the process failed
+      toast.error('Failed to record cash movement');
+    }
+  };
+  
+
+
 
   useEffect(() => {
     getCashMovement()
@@ -111,17 +158,13 @@ const CashMovement = () => {
                           </span>
                         </th>
                         <th>م</th>
-                        <th>اسم الصنف</th>
-                        <th>الحركة</th>
-                        <th>الكمية</th>
-                        <th>الوحدة</th>
-                        <th>السعر</th>
-                        <th>الثمن</th>
-                        <th>الرصيدالقديم</th>
-                        <th>الرصيد الجديد</th>
-                        <th>تاريخ الحركه</th>
-                        <th>تم بواسطه</th>
-                        <th>اجراءات</th>
+                        <th>الخزنه</th>
+                        <th>المسؤل</th>
+                        <th>النوع</th>
+                        <th>المبلغ</th>
+                        <th>الوصف</th>
+                        <th>التاريخ</th>
+                        {/* <th>اجراءات</th> */}
                       </tr>
                     </thead>
                     <tbody>
@@ -169,16 +212,14 @@ const CashMovement = () => {
                                 <td>{i + 1}</td>
                                 <td>{movement.registerId}</td>
                                 <td>{usertitle(movement.createBy)}</td>
-                                <td>{movement.amount}</td>
                                 <td>{movement.type}</td>
+                                <td>{movement.amount}</td>
                                 <td>{movement.description}</td>
-                                <td>{movement.Balance}</td>
                                 <td>{Date(movement.actionAt).toLocaleString}</td>
-                                <td>{usertitle(movement.actionBy)}</td>
-                                <td>
-                                  {/* <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> */}
-                                </td>
+                                {/* <td>
+                                  <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td> */}
                               </tr>
                             )
                           }

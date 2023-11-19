@@ -66,24 +66,24 @@ const DailyExpense = () => {
       console.log(cashMovement)
       console.log(cashMovement.data.cashMovement._id)
       
-      // const cashMovementId = cashMovement.data._id; // Retrieve the cashMovementId from the response data
+      const cashMovementId = await cashMovement.data.cashMovement._id; // Retrieve the cashMovementId from the response data
   
-      // const dailyexpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
-      //   expenseID,
-      //   expenseDescription,
-      //   cashRegister,
-      //   cashMovementId,
-      //   paidBy,
-      //   amount,
-      //   notes,
-      // });
+      const dailyexpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
+        expenseID,
+        expenseDescription,
+        cashRegister,
+        cashMovementId,
+        paidBy,
+        amount,
+        notes,
+      });
   
-      // const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-      //   balance: updatedBalance, // Use the updated balance
-      // });
+      const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
+        balance: updatedBalance, // Use the updated balance
+      });
   
       // Update the state after successful updates
-      // setbalance(updatedBalance);
+      setbalance(updatedBalance);
   
       getAllDailyExpenses(); // Assuming this function fetches and sets the daily expenses
     } catch (error) {

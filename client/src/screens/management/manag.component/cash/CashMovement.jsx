@@ -238,7 +238,7 @@ const CashMovement = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == movement.registerId).name : ''}</td>
+                                {/* <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == movement.registerId).name : ''}</td> */}
                                 <td>{usertitle(movement.createBy)}</td>
                                 <td>{movement.type}</td>
                                 <td>{movement.amount}</td>

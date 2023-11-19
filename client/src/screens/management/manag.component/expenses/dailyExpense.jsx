@@ -54,7 +54,7 @@ const DailyExpense = () => {
   const createDailyExpense = async (e) => {
     e.preventDefault();
     const updatedBalance = balance - amount; // Calculate the updated balance
-
+  
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
         registerId: cashRegister,
@@ -63,8 +63,9 @@ const DailyExpense = () => {
         type: 'expense',
         description: expenseDescription,
       });
-      const cashMovementId = await cashMovement.data._id
-
+  
+      const cashMovementId = cashMovement.data._id; // Retrieve the cashMovementId from the response data
+  
       const dailyexpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
         expenseID,
         expenseDescription,
@@ -74,20 +75,20 @@ const DailyExpense = () => {
         amount,
         notes,
       });
-
-
+  
       const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
         balance: updatedBalance, // Use the updated balance
       });
-
+  
       // Update the state after successful updates
       setbalance(updatedBalance);
-
+  
       getAllDailyExpenses(); // Assuming this function fetches and sets the daily expenses
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   const editDailyExpense = async (e) => {
     e.preventDefault();
@@ -259,6 +260,7 @@ const DailyExpense = () => {
                       <th>اسم المصروف</th>
                       <th>المبلغ </th>
                       <th>الحزينه </th>
+                      <th>رقم الحركه </th>
                       <th>بواسطه </th>
                       <th>اضف في</th>
                       <th>ملاحظات</th>
@@ -281,6 +283,7 @@ const DailyExpense = () => {
                               <td>{dailyexpense.expenseexpenseDescription}</td>
                               <td>{dailyexpense.amount}</td>
                               <td>{dailyexpense.cashRegister}</td>
+                              <td>{dailyexpense.cashMovementId}</td>
                               <td>{dailyexpense.paidBy}</td>
                               <td>{dailyexpense.date}</td>
                               <td>{dailyexpense.notes}</td>

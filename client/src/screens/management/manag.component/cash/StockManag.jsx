@@ -3,152 +3,23 @@ import axios from 'axios'
 import { detacontext } from '../../../../App'
 
 
-const StockManag = () => {
-  const [StockItems, setStockItems] = useState([]);
-  const getaStockItems = async () => {
+const CashMovement = () => {
+  const [AllCashMovement, setAllCashMovement] = useState([]);
+  const getCashMovement = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+      const response = await axios.get('https://caviar-api.vercel.app/api/cashmovement/');
       console.log(response.data)
-      setStockItems(response.data)
+      setAllCashMovement(response.data)
 
     } catch (error) {
       console.log(error)
     }
 
   }
-
-  const Stockmovement = ["مشتريات", "منصرف", "راجع", "هالك"];
-  const [movement, setmovement] = useState('');
-  const [itemId, setitemId] = useState("");
-  const [unit, setunit] = useState('')
-  const [Quantity, setQuantity] = useState(0);
-  const [price, setprice] = useState(0);
-  const [cost, setcost] = useState(0)
-  const [oldCost, setoldCost] = useState(0)
-  const [newcost, setnewcost] = useState(0)
-  const [oldBalance, setoldBalance] = useState(0)
-  const [newBalance, setnewBalance] = useState(0)
-
-
-
-  const [actionId, setactionId] = useState("")
-  const actionAt = new Date().toLocaleString()
-
-  const createStockaction = async (e, userid) => {
-    e.preventDefault();
-    try {
-      const actionBy = userid;
-
-      console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
-      console.log(changeItem)
-
-      if (changeItem.status == 200) {
-        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
-        console.log(response.data);
-        getallStockaction()
-        getaStockItems()
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-
-  const updateStockaction = async (e, userid) => {
-    e.preventDefault();
-    try {
-      const actionBy = userid;
-
-      console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
-      console.log(changeItem)
-
-      if (changeItem.status == 200) {
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
-        console.log(response.data);
-        getallStockaction()
-        getaStockItems()
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const [AllStockactions, setAllStockactions] = useState([]);
-
-  const getallStockaction = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/stockmanag/');
-      console.log(response.data)
-      const Stockactions = await response.data;
-      setAllStockactions(Stockactions)
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
-
-  const deleteStockaction = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.delete(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`);
-      console.log(response);
-      if (response) {
-        getallStockaction();
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const itemname = (id) => {
-    const item = StockItems.filter(item => item._id == id)[0]
-    if (item) {
-      return item.itemName
-    } else {
-      return 'غير متوفر'
-    }
-  }
-
-  const [StockitemFilterd, setStockitemFilterd] = useState([])
-  const searchByitem = (item) => {
-    const items = AllStockactions.filter((action) => itemname(action.itemId).startsWith(item) == true)
-    setStockitemFilterd(items)
-  }
-  const searchByaction = (action) => {
-    const items = AllStockactions.filter((Stockactions) => Stockactions.movement == action)
-    setStockitemFilterd(items)
-  }
-
-  // const calcBalance = (qu) => {
-  //   console.log('+++++++++')
-  //   console.log(quantity)
-  //   const quantity = Number(qu)
-  //   if (movement == 'منصرف') {
-  //     setnewBalance(oldBalance - quantity)
-  //     setnewcost(oldCost - cost)
-  //   } else {
-  //     console.log(oldBalance + quantity)
-  //     setnewBalance(oldBalance + quantity)
-  //     setnewcost(oldCost + cost)
-  //   }
-  // }
 
   useEffect(() => {
-    getallStockaction()
-    getaStockItems()
+    getCashMovement()
   }, [])
-
-  useEffect(() => {
-    if (movement == "منصرف" || movement == "هالك") {
-      setnewBalance(Number(oldBalance) - Number(Quantity))
-      setnewcost(oldCost - cost)
-    } else {
-      setnewBalance(Number(oldBalance) + Number(Quantity))
-      setnewcost(oldCost + cost)
-    }
-  }, [Quantity, price])
 
 
 
@@ -191,7 +62,7 @@ const StockManag = () => {
                       </div>
                       <div class="col-sm-9">
                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        <div class="filter-group">
+                        {/* <div class="filter-group">
                           <label>اسم الصنف</label>
                           <input type="text" class="form-control" onChange={(e) => searchByitem(e.target.value)} />
                         </div>
@@ -204,7 +75,7 @@ const StockManag = () => {
                             <option value="منصرف" >منصرف</option>
                             <option value="هالك" >هالك</option>
                           </select>
-                        </div>
+                        </div> */}
                         {/* <div class="filter-group">
                           <label>Location</label>
                           <select class="form-control">
@@ -254,36 +125,38 @@ const StockManag = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {StockitemFilterd.length > 0 ? StockitemFilterd.map((action, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{itemname(action.itemId)}</td>
-                              <td>{action.movement}</td>
-                              <td>{action.Quantity}</td>
-                              <td>{action.unit}</td>
-                              <td>{action.price}</td>
-                              <td>{action.cost}</td>
-                              <td>{action.oldBalance}</td>
-                              <td>{action.Balance}</td>
-                              <td>{Date(action.actionAt).toLocaleString}</td>
-                              <td>{usertitle(action.actionBy)}</td>
-                              <td>
-                                <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })
-                        : AllStockactions.map((action, i) => {
+                      {
+                      // StockitemFilterd.length > 0 ? StockitemFilterd.map((action, i) => {
+                      //   if (i >= startpagination & i < endpagination) {
+                      //     return (
+                      //       <tr key={i}>
+                      //         <td>
+                      //           <span className="custom-checkbox">
+                      //             <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                      //             <label htmlFor="checkbox1"></label>
+                      //           </span>
+                      //         </td>
+                      //         <td>{i + 1}</td>
+                      //         <td>{itemname(action.itemId)}</td>
+                      //         <td>{action.movement}</td>
+                      //         <td>{action.Quantity}</td>
+                      //         <td>{action.unit}</td>
+                      //         <td>{action.price}</td>
+                      //         <td>{action.cost}</td>
+                      //         <td>{action.oldBalance}</td>
+                      //         <td>{action.Balance}</td>
+                      //         <td>{Date(action.actionAt).toLocaleString}</td>
+                      //         <td>{usertitle(action.actionBy)}</td>
+                      //         <td>
+                      //           <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                      //           <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                      //         </td>
+                      //       </tr>
+                      //     )
+                      //   }
+                      // })
+                      //   : 
+                      setAllCashMovement.map((movement, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -294,16 +167,14 @@ const StockManag = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{itemname(action.itemId)}</td>
-                                <td>{action.movement}</td>
-                                <td>{action.Quantity}</td>
-                                <td>{action.unit}</td>
-                                <td>{action.price}</td>
-                                <td>{action.cost}</td>
-                                <td>{action.oldBalance}</td>
-                                <td>{action.Balance}</td>
-                                <td>{Date(action.actionAt).toLocaleString}</td>
-                                <td>{usertitle(action.actionBy)}</td>
+                                <td>{movement.registerId}</td>
+                                <td>{usertitle(movement.createBy)}</td>
+                                <td>{movement.amount}</td>
+                                <td>{movement.type}</td>
+                                <td>{movement.description}</td>
+                                <td>{movement.Balance}</td>
+                                <td>{Date(movement.actionAt).toLocaleString}</td>
+                                <td>{usertitle(movement.actionBy)}</td>
                                 <td>
                                   <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -329,7 +200,7 @@ const StockManag = () => {
                   </div>
                 </div>
               </div>
-              <div id="addStockactionModal" className="modal fade">
+              {/* <div id="addStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={(e) => createStockaction(e, userlogininfo.employeeinfo.id)}>
@@ -397,8 +268,8 @@ const StockManag = () => {
                     </form>
                   </div>
                 </div>
-              </div>
-              <div id="editStockactionModal" className="modal fade">
+              </div> */}
+              {/* <div id="editStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={(e) => updateStockaction(e, userlogininfo.employeeinfo.id)}>
@@ -462,8 +333,8 @@ const StockManag = () => {
                     </form>
                   </div>
                 </div>
-              </div>
-              <div id="deleteStockactionModal" className="modal fade">
+              </div> */}
+              {/* <div id="deleteStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={deleteStockaction}>
@@ -482,7 +353,7 @@ const StockManag = () => {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           )
         }
@@ -492,4 +363,4 @@ const StockManag = () => {
   )
 }
 
-export default StockManag
+export default CashMovement

@@ -49,9 +49,9 @@ const CashMovement = () => {
       });
 
       // Check if it's a withdrawal operation
-      // const isWithdrawal = type === 'Withdraw';
+      const isWithdrawal = type === 'Withdraw';
       // Calculate the update amount based on the operation type
-      // const updateAmount = isWithdrawal ? -amount : amount;
+      const updateAmount = isWithdrawal ? -amount : amount;
 
       // Fetch the cash register data
       // const cashRegisterResponse = await axios.get(`https://caviar-api.vercel.app/api/cashregister/${registerId}`);
@@ -59,8 +59,8 @@ const CashMovement = () => {
 
       // Calculate the updated balance
       // const updatedBalance = cashRegister.balance + updateAmount;
-      // const updatedBalance = balance + updateAmount;
-      const updatedBalance = balance + amount;
+      const updatedBalance = balance + updateAmount;
+      // const updatedBalance = balance + amount;
 
       // Update the cash register balance on the server
       await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
@@ -284,7 +284,7 @@ const CashMovement = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setAmount(e.target.value); setbalance(balance +  Number(amount)) }} />
+                          <input type='Number' className="form-control" required onChange={(e) => setAmount(e.target.value) } />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -292,7 +292,8 @@ const CashMovement = () => {
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <texterea className="form-control" onChange={(e) => setDescription(e.target.value)} require />
+                          <textarea className="form-control" onChange={(e) => setDescription(e.target.value)}
+                            required />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -326,7 +327,7 @@ const CashMovement = () => {
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <textarea rows="2" cols="33" className="form-control" onChange={(e) => setDescription(e.target.value)} required/>
+                          <textarea rows="2" cols="33" className="form-control" onChange={(e) => setDescription(e.target.value)} required />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

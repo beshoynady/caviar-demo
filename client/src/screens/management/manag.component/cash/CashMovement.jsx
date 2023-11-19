@@ -276,7 +276,7 @@ const CashMovement = () => {
               <div id="DepositModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => addCashMovementAndUpdateBalance}>
+                  <form onSubmit={addCashMovementAndUpdateBalance}>
                       <div className="modal-header">
                         <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -311,7 +311,7 @@ const CashMovement = () => {
               <div id="WithdrawModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => addCashMovementAndUpdateBalance}>
+                    <form onSubmit={addCashMovementAndUpdateBalance}>
                       <div className="modal-header">
                         <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

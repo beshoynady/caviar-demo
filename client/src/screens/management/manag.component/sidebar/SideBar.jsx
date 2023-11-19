@@ -177,7 +177,7 @@ const SideBar = () => {
                     <ul className="sub-menu">
                       <li><a className="link_name" href="#">الخزينة</a></li>
                       <li><Link to="cashregister">الرصيد</Link></li>
-                      <li><Link to="dailyexpense">تسجيل حركه</Link></li>
+                      <li><Link to="cashmovement">تسجيل حركه</Link></li>
                     </ul>
                   </li>
                   <li className="profile-details">

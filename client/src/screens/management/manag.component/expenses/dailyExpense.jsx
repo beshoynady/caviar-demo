@@ -315,6 +315,7 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.expenseexpenseDescription}</td>
                                 <td>{dailyexpense.amount}</td>
                                 <td>{dailyexpense.cashRegister}</td>
+                                <td>{dailyexpense.cashMovementId}</td>
                                 <td>{dailyexpense.paidBy}</td>
                                 <td>{dailyexpense.date}</td>
                                 <td>{dailyexpense.notes}</td>

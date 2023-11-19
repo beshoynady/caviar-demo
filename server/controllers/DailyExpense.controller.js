@@ -30,7 +30,7 @@ exports.getDailyExpenseById = async (req, res) => {
 
 // Add a new daily expense
 exports.addDailyExpense = async (req, res) => {
-  const { expenseID, expenseDescription, cashRegister, paidBy, amount, notes, date } = req.body;
+  const { expenseID, expenseDescription, cashRegister,cashMovementId, paidBy, amount, notes, date } = req.body;
 
   try {
     const newDailyExpense = await DailyExpenseModel.create({

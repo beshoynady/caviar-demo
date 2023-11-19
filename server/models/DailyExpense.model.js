@@ -17,6 +17,11 @@ const dailyExpenseSchema = new mongoose.Schema({
         ref: 'CashRegister',
         required: true,
     },
+    cashMovementId: {
+        type: ObjectId,
+        ref: 'CashMovement',
+        required: true,
+      },
     paidBy: {
         type: ObjectId,
         ref: 'Employee',

@@ -37,6 +37,7 @@ exports.addDailyExpense = async (req, res) => {
       expenseID,
       expenseDescription,
       cashRegister,
+      cashMovementId,
       paidBy,
       amount,
       notes,

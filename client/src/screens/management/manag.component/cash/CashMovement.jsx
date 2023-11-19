@@ -238,12 +238,16 @@ const CashMovement = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                {/* <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == movement.registerId).name : ''}</td> */}
+                                <td>{
+                                  AllCashRegisters.find(cash => cash._id == movement.registerId)
+                                    ? AllCashRegisters.find(cash => cash._id == movement.registerId).name
+                                    : 'No register found'
+                                }</td>
                                 <td>{usertitle(movement.createBy)}</td>
                                 <td>{movement.type}</td>
                                 <td>{movement.amount}</td>
                                 <td>{movement.description}</td>
-                                <td>{Date(movement.actionAt).toLocaleString}</td>
+                                <td>{Date(movement.createdAt).toLocaleString}</td>
                                 {/* <td>
                                   <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

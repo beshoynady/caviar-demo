@@ -284,7 +284,7 @@ const CashMovement = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setAmount(e.target.value); setbalance(balance + Number(e.target.value)) }} />
+                          <input type='Number' className="form-control" required onChange={(e) => { setAmount(e.target.value); setbalance(balance +  Number(amount)) }} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -318,7 +318,7 @@ const CashMovement = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" max={balance} required onChange={(e) => { setAmount(e.target.value); setbalance(balance - Number(e.target.value)) }} />
+                          <input type='Number' className="form-control" max={balance} required onChange={(e) => { setAmount(e.target.value); setbalance(balance - Number(amount)) }} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -326,7 +326,7 @@ const CashMovement = () => {
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <texterea className="form-control" onChange={(e) => setDescription(e.target.value)} require />
+                          <textarea rows="2" cols="33" className="form-control" onChange={(e) => setDescription(e.target.value)} required/>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

@@ -410,7 +410,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
-                        <textarea className="form-control" rows={2} cols={100} onChange={(e) => { setNotes(e.target.value) }} />
+                        <textarea className="form-control" rows={2} cols={50} onChange={(e) => { setNotes(e.target.value) }} />
                       </div>
                     </div>
                     <div className="modal-footer">

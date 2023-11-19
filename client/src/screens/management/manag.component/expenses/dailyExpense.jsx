@@ -64,6 +64,7 @@ const DailyExpense = () => {
         description: expenseDescription,
       });
       console.log(cashMovement)
+      console.log(cashMovement.data._id)
       
       // const cashMovementId = cashMovement.data._id; // Retrieve the cashMovementId from the response data
   

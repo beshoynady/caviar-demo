@@ -99,11 +99,11 @@ const DailyExpense = () => {
       const prevExpenseData = prevExpense.data;
   
       // Calculate the difference between the new amount and the previous amount
-      const amountDifference = amount - prevExpenseData.amount <0?(amount - prevExpenseData.amount)*-1:amount - prevExpenseData.amount 
-
+      const amountDifference = amount - prevExpenseData.amount < 0 ? (amount - prevExpenseData.amount) * -1 : amount - prevExpenseData.amount;
+  
       const updatedBalance = balance + prevExpenseData.amount - amountDifference;
-
-      if (cashRegister) { // Ensure cashRegister has a value before sending the request
+  
+      if (cashMovementId) { // Ensure cashMovementId has a value before sending the request
         const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
           expenseID,
           expenseDescription,
@@ -112,10 +112,10 @@ const DailyExpense = () => {
           amount,
           notes,
         });
-        
+  
         const data = response.data;
         console.log(response.data);
-
+  
         const cashMovement = await axios.put(`https://caviar-api.vercel.app/api/cashMovement/${cashMovementId}`, {
           registerId: cashRegister,
           createBy: paidBy,
@@ -123,7 +123,7 @@ const DailyExpense = () => {
           type: 'expense',
           description: expenseDescription,
         });
-
+  
         if (data) {
           const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
             balance: updatedBalance,
@@ -133,7 +133,7 @@ const DailyExpense = () => {
           }
         }
       } else {
-        console.log('Cash register value is empty.');
+        console.log('Cash movement ID value is empty.');
       }
     } catch (error) {
       console.log(error);

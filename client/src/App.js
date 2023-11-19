@@ -56,6 +56,14 @@ function App() {
     }
   }
 
+  const showdate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (`0${currentDate.getMonth() + 1}`).slice(-2);
+    const day = (`0${currentDate.getDate()}`).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate
+  }
 
   //+++++++++++++++++ product ++++++++++++++++++++
   const [allProducts, setallProducts] = useState([])
@@ -785,7 +793,8 @@ function App() {
       categoryid, itemsincart, costOrder, additemtocart, increment, descrement,
       createclientorder, checkout, calcTotalSalesOfCategory, updatecountofsales,
       CreateWaiterOrder, CreateCasherOrder, POSinvoice,
-      EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid
+      EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid,
+      showdate
     }}>
       <BrowserRouter>
         <Routes>

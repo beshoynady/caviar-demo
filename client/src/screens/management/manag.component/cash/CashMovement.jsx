@@ -7,10 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 const CashMovement = () => {
   const [registerId, setRegisterId] = useState('');
   const [createBy, setCreateBy] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
-  
+  const [balance, setbalance] = useState();
+
   const [AllCashMovement, setAllCashMovement] = useState([]);
   const getCashMovement = async () => {
     try {
@@ -24,8 +25,19 @@ const CashMovement = () => {
 
   }
 
+  const [AllCashRegisters, setAllCashRegisters] = useState([]);
+  // Fetch all cash registers
+  const getAllCashRegisters = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
+      setAllCashRegisters(response.data);
+    } catch (err) {
+      toast.error('Error fetching cash registers');
+    }
+  };
 
-  const addCashMovementAndUpdateBalance = async () => {
+  const addCashMovementAndUpdateBalance = async (e) => {
+    e.preventDefault();
     try {
       // Send cash movement data to the API
       const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
@@ -35,38 +47,53 @@ const CashMovement = () => {
         type,
         description,
       });
-  
+
       // Check if it's a withdrawal operation
-      const isWithdrawal = type === 'expense';
+      // const isWithdrawal = type === 'Withdraw';
       // Calculate the update amount based on the operation type
-      const updateAmount = isWithdrawal ? -amount : amount;
-  
+      // const updateAmount = isWithdrawal ? -amount : amount;
+
       // Fetch the cash register data
-      const cashRegisterResponse = await axios.get(`https://caviar-api.vercel.app/api/cashregister/${registerId}`);
-      const cashRegister = cashRegisterResponse.data;
-  
+      // const cashRegisterResponse = await axios.get(`https://caviar-api.vercel.app/api/cashregister/${registerId}`);
+      // const cashRegister = cashRegisterResponse.data;
+
       // Calculate the updated balance
-      const updatedBalance = cashRegister.balance + updateAmount;
-  
+      // const updatedBalance = cashRegister.balance + updateAmount;
+      // const updatedBalance = balance + updateAmount;
+      const updatedBalance = balance + amount;
+
       // Update the cash register balance on the server
       await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
         balance: updatedBalance,
       });
-  
+
       // Show success toast message if the process was successful
       toast.success('Cash movement recorded successfully');
-  
+      getCashMovement()
+      getAllCashRegisters()
+
     } catch (error) {
       // Show error toast message if the process failed
       toast.error('Failed to record cash movement');
     }
   };
-  
 
+
+  const handelCashMovement = (id, t) => {
+    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+    setRegisterId(CashRegister._id)
+    setcashRegistername(CashRegister.name)
+    setbalance(CashRegister.balance)
+    setType(t)
+    console.log(CashRegister.balance)
+    setCreateBy(id)
+  }
 
 
   useEffect(() => {
     getCashMovement()
+    getAllCashRegisters()
+
   }, [])
 
 
@@ -75,10 +102,10 @@ const CashMovement = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userlogininfo, usertitle, showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
-              <ToastContainer/>
+              <ToastContainer />
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -87,9 +114,9 @@ const CashMovement = () => {
                         <h2>ادارة <b>المخزون</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#addStockactionModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
+                        <a href="#DepositModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashMovement(userlogininfo.employeeinfo.id, 'Deposit')}><i className="material-icons">&#xE147;</i> <span>ايداع</span></a>
 
-                        <a href="#deleteStockactionModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#WithdrawModal" className="btn btn-danger" data-toggle="modal" onClick={() => handelCashMovement(userlogininfo.employeeinfo.id, 'Withdraw')}><i className="material-icons">&#xE15C;</i> <span>سحب</span></a>
                       </div>
                     </div>
                   </div>
@@ -171,37 +198,37 @@ const CashMovement = () => {
                     </thead>
                     <tbody>
                       {
-                      // StockitemFilterd.length > 0 ? StockitemFilterd.map((action, i) => {
-                      //   if (i >= startpagination & i < endpagination) {
-                      //     return (
-                      //       <tr key={i}>
-                      //         <td>
-                      //           <span className="custom-checkbox">
-                      //             <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                      //             <label htmlFor="checkbox1"></label>
-                      //           </span>
-                      //         </td>
-                      //         <td>{i + 1}</td>
-                      //         <td>{itemname(action.itemId)}</td>
-                      //         <td>{action.movement}</td>
-                      //         <td>{action.Quantity}</td>
-                      //         <td>{action.unit}</td>
-                      //         <td>{action.price}</td>
-                      //         <td>{action.cost}</td>
-                      //         <td>{action.oldBalance}</td>
-                      //         <td>{action.Balance}</td>
-                      //         <td>{Date(action.actionAt).toLocaleString}</td>
-                      //         <td>{usertitle(action.actionBy)}</td>
-                      //         <td>
-                      //           <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                      //           <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                      //         </td>
-                      //       </tr>
-                      //     )
-                      //   }
-                      // })
-                      //   : 
-                      AllCashMovement.map((movement, i) => {
+                        // StockitemFilterd.length > 0 ? StockitemFilterd.map((action, i) => {
+                        //   if (i >= startpagination & i < endpagination) {
+                        //     return (
+                        //       <tr key={i}>
+                        //         <td>
+                        //           <span className="custom-checkbox">
+                        //             <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                        //             <label htmlFor="checkbox1"></label>
+                        //           </span>
+                        //         </td>
+                        //         <td>{i + 1}</td>
+                        //         <td>{itemname(action.itemId)}</td>
+                        //         <td>{action.movement}</td>
+                        //         <td>{action.Quantity}</td>
+                        //         <td>{action.unit}</td>
+                        //         <td>{action.price}</td>
+                        //         <td>{action.cost}</td>
+                        //         <td>{action.oldBalance}</td>
+                        //         <td>{action.Balance}</td>
+                        //         <td>{Date(action.actionAt).toLocaleString}</td>
+                        //         <td>{usertitle(action.actionBy)}</td>
+                        //         <td>
+                        //           <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        //           <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        //         </td>
+                        //       </tr>
+                        //     )
+                        //   }
+                        // })
+                        //   : 
+                        AllCashMovement.map((movement, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -212,7 +239,7 @@ const CashMovement = () => {
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{movement.registerId}</td>
+                                <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == movement.registerId).name : ''}</td>
                                 <td>{usertitle(movement.createBy)}</td>
                                 <td>{movement.type}</td>
                                 <td>{movement.amount}</td>
@@ -243,65 +270,30 @@ const CashMovement = () => {
                   </div>
                 </div>
               </div>
-              {/* <div id="addStockactionModal" className="modal fade">
+              <div id="DepositModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createStockaction(e, userlogininfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => addCashMovementAndUpdateBalance}>
                       <div className="modal-header">
-                        <h4 className="modal-title">اضافه صنف بالمخزن</h4>
+                        <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
-                          <label>نوع الحركه</label>
-                          <select name="" id="" onChange={(e) => setmovement(e.target.value)}>
-                            <option >اختر الاجراء</option>
-                            {Stockmovement.map((status, i) => {
-                              return <option key={i} defaultValue={status}>{status}</option>
-                            })}
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => {
-                            setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);; setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
-                            setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
-                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost)
-                          }}>
-                            <option >اختر الصنف</option>
-                            {StockItems.map((item, i) => {
-                              return <option key={i} value={item._id}>{item.itemName}</option>
-                            })}
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); }} />
-                          <input type='text' className="form-control" defaultValue={unit} readOnly />
-                        </div>
-
-                        <div className="form-group">
-                          <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" || movement == "راجع" ?
-                            <input type='Number' className="form-control" readOnly required defaultValue={price} />
-                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
-                          }
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة</label>
-                          <input type='Number' className="form-control" Value={cost} readOnly />
+                          <label>المبلغ</label>
+                          <input type='Number' className="form-control" required onChange={(e) => { setAmount(e.target.value); setbalance(balance + Number(e.target.value)) }} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
-                          <input type='text' className="form-control" Value={oldBalance} readOnly />
+                          <input type='text' className="form-control" Value={balance} readOnly />
                         </div>
                         <div className="form-group">
-                          <label>الرصيد الجديد</label>
-                          <input type='text' className="form-control" Value={newBalance} readOnly />
+                          <label>الوصف</label>
+                          <texterea className="form-control" onChange={(e) => setDescription(e.target.value)} require />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" Value={actionAt} readOnly />
+                          <input type="text" className="form-control" Value={showdate} readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -311,62 +303,31 @@ const CashMovement = () => {
                     </form>
                   </div>
                 </div>
-              </div> */}
-              {/* <div id="editStockactionModal" className="modal fade">
+              </div>
+              <div id="WithdrawModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => updateStockaction(e, userlogininfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => addCashMovementAndUpdateBalance}>
                       <div className="modal-header">
-                        <h4 className="modal-title">اضافه صنف بالمخزن</h4>
+                        <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
-                          <label>نوع الحركه</label>
-                          <select name="" id="" onChange={(e) => setmovement(e.target.value)}>
-                            <option >اختر الاجراء</option>
-                            {Stockmovement.map((statu, i) => {
-                              return <option key={i} defaultValue={statu}>{statu}</option>
-                            })}
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].unit) }}>
-                            <option >اختر الصنف</option>
-                            {StockItems.map((item, i) => {
-                              return <option key={i} value={item._id}>{item.itemName}</option>
-                            })}
-                          </select>
-                        </div>
-                        <div className="form-group">
-                          <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); setcost(e.target.value * price) }} />
-                          <input type='text' className="form-control" defaultValue={unit} readOnly />
-                        </div>
-
-                        <div className="form-group">
-                          <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" ?
-                            <input type='Number' className="form-control" readOnly required defaultValue={price} />
-                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
-                          }
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة</label>
-                          <input type='Number' className="form-control" Value={cost} readOnly />
+                          <label>المبلغ</label>
+                          <input type='Number' className="form-control" max={balance} required onChange={(e) => { setAmount(e.target.value); setbalance(balance - Number(e.target.value)) }} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
-                          <input type='text' className="form-control" Value={oldBalance} readOnly />
+                          <input type='text' className="form-control" Value={balance} readOnly />
                         </div>
                         <div className="form-group">
-                          <label>الرصيد الجديد</label>
-                          <input type='text' className="form-control" Value={newBalance} readOnly />
+                          <label>الوصف</label>
+                          <texterea className="form-control" onChange={(e) => setDescription(e.target.value)} require />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" Value={actionAt} readOnly />
+                          <input type="text" className="form-control" Value={showdate} readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -376,7 +337,7 @@ const CashMovement = () => {
                     </form>
                   </div>
                 </div>
-              </div> */}
+              </div>
               {/* <div id="deleteStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">

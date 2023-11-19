@@ -60,7 +60,7 @@ const DailyExpense = () => {
         registerId: cashRegister,
         createBy: paidBy,
         amount,
-        type: 'expense',
+        type: 'Withdraw',
         description: expenseDescription,
       });
       console.log(cashMovement)
@@ -129,7 +129,7 @@ const DailyExpense = () => {
           registerId: cashRegister,
           createBy: paidBy,
           amount,
-          type: 'expense',
+          type: 'Withdraw',
           description: expenseDescription,
         });
 
@@ -233,7 +233,7 @@ const DailyExpense = () => {
 
   return (
     <detacontext.Consumer>
-      {({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ userlogininfo, usertitle,showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
             <ToastContainer />

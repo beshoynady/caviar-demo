@@ -19,7 +19,7 @@ const cashMovementSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['income', 'expense'],
+    enum: ['Deposit', 'Withdraw'],
     required: true,
   },
   description: {

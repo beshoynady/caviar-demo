@@ -82,7 +82,6 @@ const CashMovement = () => {
   const handelCashMovement = (id, t) => {
     const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
     setRegisterId(CashRegister._id)
-    setcashRegistername(CashRegister.name)
     setbalance(CashRegister.balance)
     setType(t)
     console.log(CashRegister.balance)

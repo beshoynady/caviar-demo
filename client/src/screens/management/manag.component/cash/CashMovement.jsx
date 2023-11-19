@@ -82,7 +82,7 @@ const CashMovement = () => {
   const handelCashMovement = (id, t) => {
     const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
     setRegisterId(CashRegister._id)
-    setbalance(CashRegister.balance)
+    setbalance(Number(CashRegister.balance))
     setType(t)
     console.log(CashRegister.balance)
     setCreateBy(id)
@@ -284,7 +284,7 @@ const CashMovement = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" required onChange={(e) => setAmount(e.target.value) } />
+                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value)) } />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -319,7 +319,7 @@ const CashMovement = () => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" max={balance} required onChange={(e) => { setAmount(e.target.value); setbalance(balance - Number(amount)) }} />
+                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value)) } />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>

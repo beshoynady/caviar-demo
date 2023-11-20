@@ -111,11 +111,13 @@ const ManagerDash = () => {
   const handelCashRegister = (id) => {
     console.log({handel:id})
     const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
-    setcashRegister(CashRegister._id)
-    setcashRegistername(CashRegister.name)
-    setbalance(CashRegister.balance)
-    console.log(CashRegister.balance)
-    setcreateBy(id)
+    if(CashRegister){
+      setcashRegister(CashRegister._id)
+      setcashRegistername(CashRegister.name)
+      setbalance(CashRegister.balance)
+      console.log(CashRegister.balance)
+      setcreateBy(id)
+    }
   }
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);

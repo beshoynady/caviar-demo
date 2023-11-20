@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './ManagerDash.css'
 import { detacontext } from '../../../../App'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const ManagerDash = () => {
 
@@ -43,7 +45,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status
       })
-      setupdate(!update)
+      // setupdate(!update)
     } catch (error) {
       console.log(error)
     }
@@ -171,9 +173,8 @@ const ManagerDash = () => {
           // Toast notification for successful creation
           toast.success('Expense created successfully');
 
-          getAllExpenses();
           getAllCashRegisters()
-          getAllDailyExpenses()
+          setupdate(!update)
         }
       }
     } catch (error) {

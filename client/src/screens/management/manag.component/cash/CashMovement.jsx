@@ -298,7 +298,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success" value="اضافه" aria-hidden="true"/>
+                        <input type="submit" className="btn btn-success" data-dismiss="modal" value="اضافه" />
                       </div>
                     </form>
                   </div>
@@ -327,12 +327,12 @@ const addCashMovementAndUpdateBalance = async (e) => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" value={showdate()} readOnly />
+                          <input type="text" className="form-control" Value={showdate} readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success" value="اضافه" aria-hidden="true" />
+                        <input type="submit" className="btn btn-success" data-dismiss="modal" value="اضافه" />
                       </div>
                     </form>
                   </div>

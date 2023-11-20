@@ -276,7 +276,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>رصيد الخزينه اليوم</p>
                       <h3>
-                        {balance}
+                        {balance?balance:''}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

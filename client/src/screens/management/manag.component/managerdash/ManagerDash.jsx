@@ -181,7 +181,7 @@ const ManagerDash = () => {
     }
   };
 
-  const [userlogininfo, setuserlogininfo] = useState({})
+  const [userlogininfo, setuserlogininfo] = useState(null)
   const getUserInfoFromToken = () => {
     const employeetoken = localStorage.getItem('token_e');
 
@@ -192,6 +192,7 @@ const ManagerDash = () => {
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);
+      handelCashRegister(decodedToken.employeeinfo.id)
     } else {
       setuserlogininfo(null);
     }
@@ -204,9 +205,6 @@ const ManagerDash = () => {
     getAllWaiter()
     getAllCashRegisters()
     getUserInfoFromToken()
-    if(userlogininfo){
-      userlogininfo.id?handelCashRegister(userlogininfo.id):''
-    }
   }, [update])
 
   return (

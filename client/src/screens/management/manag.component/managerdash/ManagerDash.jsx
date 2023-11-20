@@ -204,9 +204,11 @@ const ManagerDash = () => {
     getAllWaiter()
     getAllCashRegisters()
     getUserInfoFromToken()
-    handelCashRegister(userlogininfo.id)
+    if(userlogininfo){
+      handelCashRegister(userlogininfo.id)
+    }
   }, [update])
-
+  
   return (
     <detacontext.Consumer>
       {

@@ -15,7 +15,7 @@ const Orders = () => {
   const [listofoeders, setlistofoeders] = useState([])
   const getorders = async () => {
     const res = await axios.get('https://caviar-api.vercel.app/api/order')
-    setlistofoeders(res.data)
+    setlistofoeders(res.data.reverse())
   }
   const [orederid, setorederid] = useState()
   const deletorder = async () => {
@@ -145,7 +145,7 @@ const Orders = () => {
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
                                 <td>{o.payment_status}</td>
-                                <td>{formatdate(o.payment_date)}</td>
+                                <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

@@ -24,7 +24,7 @@ const DailyExpense = () => {
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      setAllCashRegisters(response.data);
+      setAllCashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');
     }
@@ -314,7 +314,7 @@ const DailyExpense = () => {
                               <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                               <td>{dailyexpense.cashMovementId}</td>
                               <td>{dailyexpense.paidBy}</td>
-                              <td>{dailyexpense.date}</td>
+                              <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{dailyexpense.notes}</td>
                               <td>
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
@@ -344,7 +344,7 @@ const DailyExpense = () => {
                                 <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                                 <td>{dailyexpense.cashMovementId}</td>
                                 <td>{dailyexpense.paidBy}</td>
-                                <td>{dailyexpense.date}</td>
+                                <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{dailyexpense.notes}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {

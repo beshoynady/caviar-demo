@@ -241,6 +241,7 @@ const Employees = () => {
                           <th>الوظيفه</th>
                           <th>الراتب</th>
                           <th>الحالة</th>
+                          <th>التاريخ</th>
                           <th>اجراءات</th>
                         </tr>
                       </thead>
@@ -263,6 +264,7 @@ const Employees = () => {
                                 <td>{emp.role}</td>
                                 <td>{emp.basicSalary}</td>
                                 <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
+                                <td>{new Date(emp.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
                                     setemployeeid(emp._id); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email);setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)
@@ -292,6 +294,7 @@ const Employees = () => {
                                   <td>{emp.role}</td>
                                   <td>{emp.basicSalary}</td>
                                   <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
+                                  <td>{new Date(emp.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                   <td>
                                     <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
                                       setemployeeid(emp._id); setfullname(emp.fullname); setnumberID(emp.numberID); setusername(emp.username); setaddress(emp.address); setemail(emp.email); setisActive(emp.isActive); setphone(emp.phone); setrole(emp.role); setbasicSalary(emp.basicSalary)

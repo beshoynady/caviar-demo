@@ -50,7 +50,7 @@ const ExpenseItem = () => {
     const getAllExpenses = async () => {
         try {
             const response = await axios.get('https://caviar-api.vercel.app/api/expenses/');
-            const expenses = await response.data;
+            const expenses = await response.data.reverse();
             console.log(response.data);
             setAllExpenses(expenses);
         } catch (error) {
@@ -142,7 +142,7 @@ const ExpenseItem = () => {
                                                         <td>{i + 1}</td>
                                                         <td>{expense.description}</td>
                                                         <td>{expense.amount}</td>
-                                                        <td>{expense.date}</td>
+                                                        <td>{new Date(expense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                                         <td>
                                                             <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)
                                                             }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -165,7 +165,7 @@ const ExpenseItem = () => {
                                                             <td>{i + 1}</td>
                                                             <td>{expense.description}</td>
                                                             <td>{expense.amount}</td>
-                                                            <td>{expense.date}</td>
+                                                            <td>{new Date(expense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                                             <td>
                                                                 <a href="#editExpensesModal" className="edit" data-toggle="modal" onClick={() => { setexpenseId(expense._id); setDescription(expense.description)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                                                 <a href="#deleteExpensesModal" className="delete" data-toggle="modal" onClick={() => setexpenseId(expense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

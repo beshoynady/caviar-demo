@@ -47,7 +47,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status ,isActive
       })
-      // setupdate(!update)
+      setupdate(!update)
     } catch (error) {
       console.log(error)
     }

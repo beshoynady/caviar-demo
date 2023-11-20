@@ -36,47 +36,43 @@ const CashMovement = () => {
     }
   };
 
-  const addCashMovementAndUpdateBalance = async (e) => {
-    e.preventDefault();
-    try {
-      // Send cash movement data to the API
-      const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
-        registerId,
-        createBy,
-        amount,
-        type,
-        description,
-      });
+const addCashMovementAndUpdateBalance = async (e) => {
+  e.preventDefault();
 
-      // Check if it's a withdrawal operation
-      const isWithdrawal = type === 'Withdraw';
-      // Calculate the update amount based on the operation type
-      const updateAmount = isWithdrawal ? -amount : amount;
+  try {
+    // Send cash movement data to the API
+    const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
+      registerId,
+      createBy,
+      amount,
+      type,
+      description,
+    });
 
-      // Fetch the cash register data
-      // const cashRegisterResponse = await axios.get(`https://caviar-api.vercel.app/api/cashregister/${registerId}`);
-      // const cashRegister = cashRegisterResponse.data;
+    // Check if it's a withdrawal operation
+    const isWithdrawal = type === 'Withdraw';
+    // Calculate the update amount based on the operation type
+    const updateAmount = isWithdrawal ? -amount : amount;
 
-      // Calculate the updated balance
-      // const updatedBalance = cashRegister.balance + updateAmount;
-      const updatedBalance = balance + updateAmount;
-      // const updatedBalance = balance + amount;
+    // Update the balance locally
+    const updatedBalance = balance + updateAmount;
 
-      // Update the cash register balance on the server
-      await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
-        balance: updatedBalance,
-      });
+    // Update the cash register balance on the server
+    await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
+      balance: updatedBalance,
+    });
 
-      // Show success toast message if the process was successful
-      toast.success('Cash movement recorded successfully');
-      getCashMovement()
-      getAllCashRegisters()
+    // Show success toast message if the process was successful
+    toast.success('Cash movement recorded successfully');
 
-    } catch (error) {
-      // Show error toast message if the process failed
-      toast.error('Failed to record cash movement');
-    }
-  };
+    // Refresh the displayed cash movements and registers
+    getCashMovement();
+    getAllCashRegisters();
+  } catch (error) {
+    // Show error toast message if the process failed
+    toast.error('Failed to record cash movement');
+  }
+};
 
 
   const handelCashMovement = (id, t) => {
@@ -297,7 +293,7 @@ const CashMovement = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" Value={showdate} readOnly />
+                          <input type="text" className="form-control" value={showdate()} readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -327,7 +323,7 @@ const CashMovement = () => {
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <textarea rows="2" cols="33" className="form-control" onChange={(e) => setDescription(e.target.value)} required />
+                          <textarea rows="2" cols="80" className="form-control" onChange={(e) => setDescription(e.target.value)} required />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

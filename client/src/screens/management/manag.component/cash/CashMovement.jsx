@@ -17,7 +17,7 @@ const CashMovement = () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashmovement/');
       console.log(response.data)
-      setAllCashMovement(response.data)
+      setAllCashMovement(response.data.reverse())
 
     } catch (error) {
       console.log(error)
@@ -30,7 +30,7 @@ const CashMovement = () => {
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      setAllCashRegisters(response.data);
+      setAllCashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');
     }
@@ -106,7 +106,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                   <div className="table-title">
                     <div className="row">
                       <div className="col-sm-6">
-                        <h2>ادارة <b>المخزون</b></h2>
+                        <h2>ادارة <b>حركه النقدية</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#DepositModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashMovement(userlogininfo.employeeinfo.id, 'Deposit')}><i className="material-icons">&#xE147;</i> <span>ايداع</span></a>

@@ -36,43 +36,43 @@ const CashMovement = () => {
     }
   };
 
-const addCashMovementAndUpdateBalance = async (e) => {
-  e.preventDefault();
+  const addCashMovementAndUpdateBalance = async (e) => {
+    e.preventDefault();
 
-  try {
-    // Send cash movement data to the API
-    const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
-      registerId,
-      createBy,
-      amount,
-      type,
-      description,
-    });
+    try {
+      // Send cash movement data to the API
+      const cashMovementResponse = await axios.post('https://caviar-api.vercel.app/api/cashmovement/', {
+        registerId,
+        createBy,
+        amount,
+        type,
+        description,
+      });
 
-    // Check if it's a withdrawal operation
-    const isWithdrawal = type === 'Withdraw';
-    // Calculate the update amount based on the operation type
-    const updateAmount = isWithdrawal ? -amount : amount;
+      // Check if it's a withdrawal operation
+      const isWithdrawal = type === 'Withdraw';
+      // Calculate the update amount based on the operation type
+      const updateAmount = isWithdrawal ? -amount : amount;
 
-    // Update the balance locally
-    const updatedBalance = balance + updateAmount;
+      // Update the balance locally
+      const updatedBalance = balance + updateAmount;
 
-    // Update the cash register balance on the server
-    await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
-      balance: updatedBalance,
-    });
+      // Update the cash register balance on the server
+      await axios.put(`https://caviar-api.vercel.app/api/cashregister/${registerId}`, {
+        balance: updatedBalance,
+      });
 
-    // Show success toast message if the process was successful
-    toast.success('Cash movement recorded successfully');
+      // Show success toast message if the process was successful
+      toast.success('Cash movement recorded successfully');
 
-    // Refresh the displayed cash movements and registers
-    getCashMovement();
-    getAllCashRegisters();
-  } catch (error) {
-    // Show error toast message if the process failed
-    toast.error('Failed to record cash movement');
-  }
-};
+      // Refresh the displayed cash movements and registers
+      getCashMovement();
+      getAllCashRegisters();
+    } catch (error) {
+      // Show error toast message if the process failed
+      toast.error('Failed to record cash movement');
+    }
+  };
 
 
   const handelCashMovement = (id, t) => {
@@ -243,7 +243,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                                 <td>{movement.type}</td>
                                 <td>{movement.amount}</td>
                                 <td>{movement.description}</td>
-                                <td>{new Date(movement.createdAt).toLocaleString()}</td>
+                                <td>{new Date(movement.createdAt).toLocaleDateString('en-GB')}</td>
                                 {/* <td>
                                   <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteStockactionModal" className="delete" data-toggle="modal" onClick={() => setactionId(action._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -272,7 +272,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
               <div id="DepositModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                  <form onSubmit={addCashMovementAndUpdateBalance}>
+                    <form onSubmit={addCashMovementAndUpdateBalance}>
                       <div className="modal-header">
                         <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -280,7 +280,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value)) } />
+                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value))} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -315,7 +315,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                       <div className="modal-body">
                         <div className="form-group">
                           <label>المبلغ</label>
-                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value)) } />
+                          <input type='Number' className="form-control" required onChange={(e) => setAmount(Number(e.target.value))} />
                         </div>
                         <div className="form-group">
                           <label>الرصيد</label>
@@ -332,7 +332,7 @@ const addCashMovementAndUpdateBalance = async (e) => {
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success"  value="سحب" />
+                        <input type="submit" className="btn btn-success" value="سحب" />
                       </div>
                     </form>
                   </div>

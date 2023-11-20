@@ -180,10 +180,30 @@ const ManagerDash = () => {
     }
   };
 
+  const [userlogininfo, setuserlogininfo] = useState(null)
+  const getUserInfoFromToken = () => {
+    const employeetoken = localStorage.getItem('token_e');
+
+    let decodedToken = null;
+
+    if (employeetoken) {
+      decodedToken = jwt_decode(employeetoken);
+      console.log(decodedToken);
+      setuserlogininfo(decodedToken.employeeinfo);
+      console.log(decodedToken.employeeinfo);
+    } else {
+      setuserlogininfo(null);
+    }
+
+    return decodedToken;
+  };
+
   useEffect(() => {
     PendingOrder()
     getAllWaiter()
     getAllCashRegisters()
+    getUserInfoFromToken()
+    handelCashRegister(userlogininfo.id)
   }, [update])
 
   return (
@@ -298,7 +318,7 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userlogininfo.employeeinfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userlogininfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     تم الدفع
                                   </button>

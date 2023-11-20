@@ -81,11 +81,6 @@ const ManagerDash = () => {
 
     const indexoflastwaiter = lastwaiter != '' ? waiters.indexOf(lastwaiter) : 0
 
-    // console.log(indexoflastwaiter)
-    // console.log(indexoflastwaiter + 1)
-    // console.log(waiters.length)
-    // console.log(waiters)
-    // setwaiter(waiters[indexofwaiter+1])
     if (waiters.length == indexoflastwaiter + 1) {
       const waiter = waiters[0]
       return waiter

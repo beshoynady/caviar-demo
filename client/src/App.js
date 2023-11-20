@@ -222,7 +222,7 @@ function App() {
     const lastuserorderactive = lastuserorder.isActive
 
     if (clientid) {
-      if (lasttableorderactive) {
+      if (lasttableorderactive == true) {
         const id = await lasttableorder._id
         const oldproducts = await allorders.find((order) => order._id == id).products;
         const oldtotal = await allorders.find((order) => order._id == id).total
@@ -257,7 +257,7 @@ function App() {
         }
         setitemsincart([])
         getProducts()
-      } else if (lastuserorderactive) {
+      } else if (lastuserorderactive == true) {
         const id = await lastuserorder._id
         const oldproducts = await allorders.find((order) => order._id == id).products
         const oldtotal = await allorders.find((order) => order._id == id).total

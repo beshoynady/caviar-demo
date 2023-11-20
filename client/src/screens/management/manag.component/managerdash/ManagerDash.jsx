@@ -43,8 +43,9 @@ const ManagerDash = () => {
   const changePaymentorderstauts = async (e, id) => {
     try {
       const payment_status = e.target.value
+      const isActive =payment_status=='تم الدفع'? false : true;
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        payment_status
+        payment_status ,isActive
       })
       // setupdate(!update)
     } catch (error) {

@@ -181,7 +181,7 @@ const ManagerDash = () => {
     }
   };
 
-  const [userlogininfo, setuserlogininfo] = useState(null)
+  const [userlogininfo, setuserlogininfo] = useState({})
   const getUserInfoFromToken = () => {
     const employeetoken = localStorage.getItem('token_e');
 
@@ -205,10 +205,10 @@ const ManagerDash = () => {
     getAllCashRegisters()
     getUserInfoFromToken()
     if(userlogininfo){
-      handelCashRegister(userlogininfo.id)
+      userlogininfo.id?handelCashRegister(userlogininfo.id):''
     }
   }, [update])
-  
+
   return (
     <detacontext.Consumer>
       {

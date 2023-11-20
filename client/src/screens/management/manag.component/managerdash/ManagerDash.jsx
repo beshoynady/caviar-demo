@@ -133,8 +133,8 @@ const ManagerDash = () => {
   };
 
 
-  const RevenueRecording = async (e, id, amount, description) => {
-    e.preventDefault();
+  const RevenueRecording = async (id, amount, description) => {
+    // e.preventDefault();
     handelCashRegister(id)
     try {
       if (cashRegister) {
@@ -143,7 +143,7 @@ const ManagerDash = () => {
 
         const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
           registerId: cashRegister,
-          createBy: paidBy,
+          createBy,
           amount,
           type: 'Revenue',
           description,
@@ -197,6 +197,7 @@ const ManagerDash = () => {
         ({ userlogininfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
+              <ToastContainer/>
               <div className='container'>
                 <div className="header">
                   <div className="left">
@@ -293,7 +294,7 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(e, userlogininfo.employeeinfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userlogininfo.employeeinfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     تم الدفع
                                   </button>

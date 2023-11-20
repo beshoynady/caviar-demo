@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './ManagerDash.css'
 import { detacontext } from '../../../../App'
+import jwt_decode from 'jwt-decode';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 

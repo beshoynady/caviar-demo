@@ -192,7 +192,6 @@ const ManagerDash = () => {
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);
-      handelCashRegister(decodedToken.employeeinfo.id)
     } else {
       setuserlogininfo(null);
     }
@@ -206,6 +205,14 @@ const ManagerDash = () => {
     getAllCashRegisters()
     getUserInfoFromToken()
   }, [update])
+  
+  useEffect(() => {
+    if(userlogininfo){
+      console.log({id:userlogininfo.id})
+      handelCashRegister(userlogininfo.id)
+    }
+  }, [userlogininfo])
+  
 
   return (
     <detacontext.Consumer>

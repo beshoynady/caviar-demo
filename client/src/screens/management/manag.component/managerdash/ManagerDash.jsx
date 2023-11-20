@@ -239,9 +239,18 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p>اجمالي الخزينه اليوم</p>
+                      <p>اجمالي الاوردرات اليوم</p>
                       <h3>
                         {total_day_salse}
+                      </h3>
+                    </span>
+                    <i className='bx bx-dollar-circle'></i>
+                  </li>
+                  <li>
+                    <span className="info">
+                      <p>رصيد الخزينه اليوم</p>
+                      <h3>
+                        {balance}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

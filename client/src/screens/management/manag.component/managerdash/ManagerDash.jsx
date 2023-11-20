@@ -109,6 +109,7 @@ const ManagerDash = () => {
 
 
   const handelCashRegister = (id) => {
+    console.log({handel:id})
     const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
     setcashRegister(CashRegister._id)
     setcashRegistername(CashRegister.name)
@@ -205,7 +206,7 @@ const ManagerDash = () => {
     getAllCashRegisters()
     getUserInfoFromToken()
   }, [update])
-  
+
   useEffect(() => {
     if(userlogininfo){
       console.log({id:userlogininfo.id})

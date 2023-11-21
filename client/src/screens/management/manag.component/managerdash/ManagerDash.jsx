@@ -214,7 +214,7 @@ const ManagerDash = () => {
       await PendingOrder();
       await getAllWaiter();
       await getAllCashRegisters();
-      await getUserInfoFromToken();
+      await fetchUserInfo();
     }
     fetchData();
   }, [update]);
@@ -222,7 +222,7 @@ const ManagerDash = () => {
   useEffect(() => {
     async function fetchData() {
       await getAllCashRegisters();
-      await getUserInfoFromToken();
+      await fetchUserInfo();
       console.log({ balance: balance });
     }
     fetchData();

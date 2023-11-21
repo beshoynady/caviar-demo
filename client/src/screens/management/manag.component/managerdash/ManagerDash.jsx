@@ -16,8 +16,8 @@ const ManagerDash = () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       setallOrders(res.data);
-      const recentStatus = res.data.filter((order) => order.status === 'Pending');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+      const recentStatus = res.data.filter((order) => order.status === 'انتظار');
+      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'انتظار');
       setpending_order(recentStatus);
       setpending_payment(recentPaymentStatus);
     } catch (error) {

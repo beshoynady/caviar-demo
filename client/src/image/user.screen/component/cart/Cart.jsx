@@ -10,10 +10,10 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ itemsincart, costOrder, deleteitems }) => {
+        ({ ItemsInCart, costOrder, deleteitems }) => {
           return (
             <div className='cart' style={open ? { 'display': 'flex' } : { 'display': 'none' }}>
-              {itemsincart.map((i, index) => {
+              {ItemsInCart.map((i, index) => {
                 return (
                   <div className="cart-item" key={index}>
                     <div className="cart-img">

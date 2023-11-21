@@ -23,7 +23,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, itemsincart, costOrder, deleteitems, createclientorder, invoice, totalinvoice, list_products_order
+        ({ userlogininfo, usertitle, ItemsInCart, costOrder, deleteitems, createClientOrder, invoice, totalinvoice, list_products_order
           , orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -62,7 +62,7 @@ const Cart = (props) => {
                   <div className="cart-inner">
                     <div ref={orderside} className="order side">
                       <div className='side-content'>
-                        {itemsincart.map((i, index) => {
+                        {ItemsInCart.map((i, index) => {
                           return (
                             i.quantity > 0 ?
                               <div className="cart-item" key={index}>
@@ -92,7 +92,7 @@ const Cart = (props) => {
                       </div>
                       <div className="total-order">
 
-                        {id ? <button className='total-order-btn' onClick={() => createclientorder(id)}>تاكيد الطلب</button> : userlogininfo&&userlogininfo.userinfo ? <button className='total-order-btn' onClick={() => createclientorder(userlogininfo.userinfo.id)}>تاكيد الطلب</button>
+                        {id ? <button className='total-order-btn' onClick={() => createClientOrder(id)}>تاكيد الطلب</button> : userlogininfo&&userlogininfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrder(userlogininfo.userinfo.id)}>تاكيد الطلب</button>
                           : ''}
 
                         <div className='total-order-details'>

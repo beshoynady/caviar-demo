@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <detacontext.Consumer>
       {
-        ({userlogininfo, logout, itemsincart }) => {
+        ({userlogininfo, logout, ItemsInCart }) => {
           return (
             <header className='header-client'>
               <div className="container-lg">
@@ -58,7 +58,7 @@ const Header = () => {
                   <div className='cart-icon' onClick={(e) => { e.preventDefault(); setopencart(!opencart) }}>
                     <span className="material-symbols-rounded shopping_cart">shopping_cart
                     </span>
-                    <span className='cartcounter'>{itemsincart.length}</span>
+                    <span className='cartcounter'>{ItemsInCart.length}</span>
                   </div>
                   <LoginRegistr openlogin={openlogin} />
                   <Cart opencart={opencart} />

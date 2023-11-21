@@ -26,7 +26,7 @@ const POS = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, alltable, userlogininfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, itemsincart, costOrder, CreateWaiterOrder, CreateCasherOrder, POSinvoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
+        ({ allProducts, allcategories, allTable, userlogininfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
           if (userlogininfo) {
             return (
               <section className='pos-section'>
@@ -56,7 +56,7 @@ const POS = () => {
                       <div className="cart-inner">
                         <div ref={orderside} className="order side">
                           <div className='side-content'>
-                            {itemsincart.map((i, index) => {
+                            {ItemsInCart.map((i, index) => {
                               return (
                                 <div className="pos-cart-item" key={index}>
                                   {i._id == productid & noteArea == true ? <form className='pos-note-text' onSubmit={(e) => { addnotrstoproduct(e, i._id);; setnoteArea(!noteArea) }}>
@@ -88,8 +88,8 @@ const POS = () => {
                           </div>
                           <div className="total-order">
                             {userlogininfo.employeeinfo.role === 'waiter' ?
-                              <button className='total-order-btn' onClick={() => CreateWaiterOrder(tableID, userlogininfo.employeeinfo.id)}>تاكيد الطلب</button>
-                              : <button className='total-order-btn' onClick={() => CreateCasherOrder(userlogininfo.employeeinfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
+                              <button className='total-order-btn' onClick={() => createWaiterOrder(tableID, userlogininfo.employeeinfo.id)}>تاكيد الطلب</button>
+                              : <button className='total-order-btn' onClick={() => createCasherOrder(userlogininfo.employeeinfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
                             }
 
                             <div className='total-order-details'>
@@ -262,7 +262,7 @@ const POS = () => {
                           <label htmlFor='table'>رقم الطاولة:</label>
                           <select id='table' required onChange={(e) => { settableID(e.target.value) }}>
                             <option >اختر رقم الطاولة</option>
-                            {alltable.map((table, i) => {
+                            {allTable.map((table, i) => {
                               return <option value={table._id} key={i}>{table.tablenum}</option>
                             }
                             )}

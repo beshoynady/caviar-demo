@@ -26,7 +26,7 @@ const createQR = async (req, res) => {
     }
 }
 
-const showAllTables = async (_req, res) => {
+const showallTables = async (_req, res) => {
     try {
         const allTable = await TableModel.find();
         return res.status(200).json(allTable)
@@ -97,7 +97,7 @@ const deleteTable = async (req, res) => {
 module.exports = {
     createTable,
     createQR,
-    showAllTables,
+    showallTables,
     showOneTable,
     updateTable,
     deleteTable

@@ -66,10 +66,10 @@ const getoneuser = async (req, res) => {
 };
 
 // Function to retrieve all users
-const getallusers = async (req, res) => {
+const getallUsers = async (req, res) => {
     try {
-        const allusers = await Usermodel.find({});
-        res.status(200).json(allusers);
+        const allUsers = await Usermodel.find({});
+        res.status(200).json(allUsers);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -139,4 +139,4 @@ const deleteuser = async (req, res) => {
     }
 };
 
-module.exports = { createuser, getoneuser, getallusers, updateuser, deleteuser };
+module.exports = { createuser, getoneuser, getallUsers, updateuser, deleteuser };

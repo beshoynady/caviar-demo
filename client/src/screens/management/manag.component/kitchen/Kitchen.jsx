@@ -11,12 +11,12 @@ const Kitchen = () => {
 
 
   const [orderactive, setorderactive] = useState([])
-  const [allorders, setallorders] = useState([])
+  const [allOrders, setallOrders] = useState([])
   const GetPrductstoKit = async () => {
     try {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders.data)
-      setallorders(orders.data)
+      setallOrders(orders.data)
 
       const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'موافق' || order.status == 'جاري التحضير')
       // console.log(orderisctive)
@@ -48,7 +48,7 @@ const Kitchen = () => {
 
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
-    const ordertakewaiter = allorders.filter((order) => order.waiter != null)
+    const ordertakewaiter = allOrders.filter((order) => order.waiter != null)
     console.log(ordertakewaiter)
     const lastwaiter = ordertakewaiter.length > 0 ? ordertakewaiter[ordertakewaiter.length - 1].waiter : ''
     // console.log(lastwaiter)

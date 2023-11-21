@@ -10,12 +10,12 @@ const ManagerDash = () => {
 
   const [pending_order, setpending_order] = useState([])
   const [pending_payment, setpending_payment] = useState([])
-  const [allorders, setallorders] = useState([])
+  const [allOrders, setallOrders] = useState([])
 
   const fetchPendingOrder = async () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      setallorders(res.data);
+      setallOrders(res.data);
       const recentStatus = res.data.filter((order) => order.status === 'Pending');
       const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
       setpending_order(recentStatus);
@@ -76,7 +76,7 @@ const ManagerDash = () => {
 
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
-    const ordertakewaiter = allorders.filter((order) => order.waiter != null)
+    const ordertakewaiter = allOrders.filter((order) => order.waiter != null)
     console.log(ordertakewaiter)
     const lastwaiter = ordertakewaiter.length > 0 ? ordertakewaiter[ordertakewaiter.length - 1].waiter : ''
     console.log(lastwaiter)

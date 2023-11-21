@@ -109,10 +109,14 @@ const ManagerDash = () => {
   const [balance, setbalance] = useState();
   const [createBy, setcreateBy] = useState('');
 
+  const [AllCashRegisters, setAllCashRegisters] = useState([]);
 
-  const handelCashRegister = (id) => {
+  const handelCashRegister =async (id) => {
     console.log({handel:id})
-    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+    const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
+    setAllCashRegisters(response.data.reverse());
+    const data = response.data
+    const CashRegister = data ? data.find((cash => cash.employee == id)) : {}
     if(CashRegister){
       setcashRegister(CashRegister._id)
       setcashRegistername(CashRegister.name)
@@ -122,14 +126,20 @@ const ManagerDash = () => {
     }
   }
 
-  const [AllCashRegisters, setAllCashRegisters] = useState([]);
-  // Fetch all cash registers
-  const getAllCashRegisters = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      setAllCashRegisters(response.data.reverse());
-    } catch (err) {
-      toast.error('Error fetching cash registers');
+  const [userlogininfo, setuserlogininfo] = useState(null)
+  const getUserInfoFromToken = () => {
+    const employeetoken = localStorage.getItem('token_e');
+
+    let decodedToken = null;
+
+    if (employeetoken) {
+      decodedToken = jwt_decode(employeetoken);
+      console.log(decodedToken);
+      setuserlogininfo(decodedToken.employeeinfo);
+      console.log(decodedToken.employeeinfo);
+      handelCashRegister(decodedToken.employeeinfo.id)
+    } else {
+      setuserlogininfo(null);
     }
   };
 
@@ -186,23 +196,7 @@ const ManagerDash = () => {
     }
   };
 
-  const [userlogininfo, setuserlogininfo] = useState(null)
-  const getUserInfoFromToken = () => {
-    getAllCashRegisters()
-    const employeetoken = localStorage.getItem('token_e');
 
-    let decodedToken = null;
-
-    if (employeetoken) {
-      decodedToken = jwt_decode(employeetoken);
-      console.log(decodedToken);
-      setuserlogininfo(decodedToken.employeeinfo);
-      console.log(decodedToken.employeeinfo);
-      handelCashRegister(decodedToken.employeeinfo.id)
-    } else {
-      setuserlogininfo(null);
-    }
-  };
 
   useEffect(() => {
     PendingOrder()

@@ -8,13 +8,13 @@ const Home = () => {
   return (
     <detacontext.Consumer>
       {
-        ({askingForHelp ,userlogininfo, usertitle}) => {
+        ({askingForHelp ,userLoginInfo, usertitle}) => {
           return (
             <main className='main-home'> 
               <div className="container">
                 <div className="content">
-                  {userlogininfo&&userlogininfo.userinfo && id  ?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/>علي طاولة {usertitle(id)} <br/> في</p>
-                  : userlogininfo&&userlogininfo.userinfo?<p className='main-title'>مرحبا {usertitle(userlogininfo.userinfo.id)} <br/> في</p>
+                  {userLoginInfo&&userLoginInfo.userinfo && id  ?<p className='main-title'>مرحبا {usertitle(userLoginInfo.userinfo.id)} <br/>علي طاولة {usertitle(id)} <br/> في</p>
+                  : userLoginInfo&&userLoginInfo.userinfo?<p className='main-title'>مرحبا {usertitle(userLoginInfo.userinfo.id)} <br/> في</p>
                   : id?<p className='main-title'>مرحبا ضيوف طاولة {usertitle(id)} <br/> في</p>
                   :<p className='main-title'>مرحبا بكم  <br/> في</p>
                   }

@@ -117,7 +117,7 @@ console.log(error)
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle, userlogininfo }) => {
+        ({ usertitle, userLoginInfo }) => {
           return (
             <div className='Waiter'>
 

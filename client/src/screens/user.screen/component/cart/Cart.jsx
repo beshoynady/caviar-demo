@@ -23,7 +23,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, ItemsInCart, costOrder, deleteitems, createClientOrder, invoice, totalinvoice, list_products_order
+        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, createClientOrder, invoice, totalinvoice, list_products_order
           , orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -49,8 +49,8 @@ const Cart = (props) => {
                       orderside.current.style.marginRight = "-50%";
                       ordersText.current.style.marginRight = "-50%";
                     }}>الفاتورة</label>
-                      : userlogininfo ? <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                        invoice(userlogininfo.userinfo.id);
+                      : userLoginInfo ? <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                        invoice(userLoginInfo.userinfo.id);
                         orderside.current.style.marginRight = "-50%";
                         ordersText.current.style.marginRight = "-50%";
                       }}>الفاتورة</label>
@@ -92,7 +92,7 @@ const Cart = (props) => {
                       </div>
                       <div className="total-order">
 
-                        {id ? <button className='total-order-btn' onClick={() => createClientOrder(id)}>تاكيد الطلب</button> : userlogininfo&&userlogininfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrder(userlogininfo.userinfo.id)}>تاكيد الطلب</button>
+                        {id ? <button className='total-order-btn' onClick={() => createClientOrder(id)}>تاكيد الطلب</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrder(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
                           : ''}
 
                         <div className='total-order-details'>

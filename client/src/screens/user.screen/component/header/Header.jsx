@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <detacontext.Consumer>
       {
-        ({userlogininfo, logout, ItemsInCart }) => {
+        ({userLoginInfo, logout, ItemsInCart }) => {
           return (
             <header className='header-client'>
               <div className="container-lg">
@@ -44,7 +44,7 @@ const Header = () => {
                 <div className='right-nav'>
                   {!id && (
                     <>
-                      {userlogininfo && userlogininfo.userinfo ? (
+                      {userLoginInfo && userLoginInfo.userinfo ? (
                         <div className="nav-logout" onClick={logout}> خروج
                           <span className="material-symbols-outlined">logout</span>
                         </div>

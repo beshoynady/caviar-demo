@@ -26,8 +26,8 @@ const POS = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, allTable, userlogininfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
-          if (userlogininfo) {
+        ({ allProducts, allcategories, allTable, userLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, totalinvoice, list_products_order, orderupdate_date, myorder, checkout }) => {
+          if (userLoginInfo) {
             return (
               <section className='pos-section'>
                 <div className='pos-cart'>
@@ -45,7 +45,7 @@ const POS = () => {
                             orderside.current.style.marginRight = "-50%";
                           }}>الفاتورة</label> :
                           <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                            POSinvoice(userlogininfo.employeeinfo.id);
+                            POSinvoice(userLoginInfo.employeeinfo.id);
                             orderside.current.style.marginRight = "-50%";
                             ordersText.current.style.marginRight = "-50%";
                           }}>الفاتورة</label>}
@@ -87,9 +87,9 @@ const POS = () => {
                             }
                           </div>
                           <div className="total-order">
-                            {userlogininfo.employeeinfo.role === 'waiter' ?
-                              <button className='total-order-btn' onClick={() => createWaiterOrder(tableID, userlogininfo.employeeinfo.id)}>تاكيد الطلب</button>
-                              : <button className='total-order-btn' onClick={() => createCasherOrder(userlogininfo.employeeinfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
+                            {userLoginInfo.employeeinfo.role === 'waiter' ?
+                              <button className='total-order-btn' onClick={() => createWaiterOrder(tableID, userLoginInfo.employeeinfo.id)}>تاكيد الطلب</button>
+                              : <button className='total-order-btn' onClick={() => createCasherOrder(userLoginInfo.employeeinfo.id, clientname, clientphone, clientaddress, ordertype)}>تاكيد الطلب</button>
                             }
 
                             <div className='total-order-details'>
@@ -172,7 +172,7 @@ const POS = () => {
                               <tbody>
                                 <tr>
                                   <td rowSpan="2" className="client-name">
-                                    عميل:{userlogininfo ? usertitle(userlogininfo.id) : ''}
+                                    عميل:{userLoginInfo ? usertitle(userLoginInfo.id) : ''}
                                   </td>
                                   <td rowSpan="2">
                                     كافيار
@@ -256,7 +256,7 @@ const POS = () => {
                 </div>
                 <div className='pos-content'>
                   <div className='client-formgroup'>
-                    {userlogininfo.employeeinfo.role == 'waiter' ?
+                    {userLoginInfo.employeeinfo.role == 'waiter' ?
                       <form className="form-info">
                         <div className='formgroup'>
                           <label htmlFor='table'>رقم الطاولة:</label>

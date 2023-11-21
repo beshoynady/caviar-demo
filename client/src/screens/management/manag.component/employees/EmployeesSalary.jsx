@@ -189,7 +189,7 @@ const EmployeesSalary = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userLoginInfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -200,7 +200,7 @@ const EmployeesSalary = () => {
                         <h2>ادارة <b>الرواتب</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#addSalaryMovementModal" onClick={() => { setactionBy(userlogininfo ? userlogininfo.employeeinfo.id : '') }} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
+                        <a href="#addSalaryMovementModal" onClick={() => { setactionBy(userLoginInfo ? userLoginInfo.employeeinfo.id : '') }} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
                         <a href="#deleteSalaryMovementModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
                       </div>
                     </div>
@@ -397,7 +397,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>بواسطه</label>
-                          <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.employeeinfo.username : ''} />
+                          <input type="text" className="form-control" readOnly defaultValue={userLoginInfo ? userLoginInfo.employeeinfo.username : ''} />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -457,7 +457,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>بواسطة</label>
-                          <input type="text" className="form-control" readOnly defaultValue={userlogininfo ? userlogininfo.employeeinfo.username : ''} />
+                          <input type="text" className="form-control" readOnly defaultValue={userLoginInfo ? userLoginInfo.employeeinfo.username : ''} />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

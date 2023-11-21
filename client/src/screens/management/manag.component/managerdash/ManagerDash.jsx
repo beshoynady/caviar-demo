@@ -134,15 +134,15 @@ const ManagerDash = () => {
     }
   };
 
-  const [userlogininfo, setuserlogininfo] = useState(null)
+  const [userLoginInfo, setuserLoginInfo] = useState(null)
   const getUserInfoFromToken = () => {
     const employeetoken = localStorage.getItem('token_e');
     if (employeetoken) {
       const decodedToken = jwt_decode(employeetoken);
-      setuserlogininfo(decodedToken.employeeinfo);
+      setuserLoginInfo(decodedToken.employeeinfo);
       handleCashRegister(decodedToken.employeeinfo.id);
     } else {
-      setuserlogininfo(null);
+      setuserLoginInfo(null);
     }
   };
 
@@ -186,7 +186,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userLoginInfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
               <ToastContainer/>
@@ -295,7 +295,7 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userlogininfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     تم الدفع
                                   </button>

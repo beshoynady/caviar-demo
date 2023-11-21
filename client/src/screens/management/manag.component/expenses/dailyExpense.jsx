@@ -233,7 +233,7 @@ const DailyExpense = () => {
 
   return (
     <detacontext.Consumer>
-      {({ userlogininfo, usertitle,showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ userLoginInfo, usertitle,showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
             <ToastContainer />
@@ -245,7 +245,7 @@ const DailyExpense = () => {
                       <h2>ادارة <b>تسجيل المصروفات</b></h2>
                     </div>
                     <div className="col-sm-6 d-flex justify-content-end">
-                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashRegister(userlogininfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
+                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashRegister(userLoginInfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
 
                       <a href="#deleteDailyExpensesModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                     </div>
@@ -348,7 +348,7 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.notes}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    handelCashRegister(userlogininfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
+                                    handelCashRegister(userLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
                                     setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount); setpaidBy(dailyexpense.paidBy); setdailyexpenseID(dailyexpense._id)
                                   }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => { setdailyexpenseID(dailyexpense._id); setcashMovementId(dailyexpense.cashMovementId) }}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

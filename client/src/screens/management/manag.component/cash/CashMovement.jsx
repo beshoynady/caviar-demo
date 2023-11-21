@@ -97,7 +97,7 @@ const CashMovement = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userLoginInfo, usertitle, showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <ToastContainer />
@@ -109,9 +109,9 @@ const CashMovement = () => {
                         <h2>ادارة <b>حركه النقدية</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
-                        <a href="#DepositModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashMovement(userlogininfo.employeeinfo.id, 'Deposit')}><i className="material-icons">&#xE147;</i> <span>ايداع</span></a>
+                        <a href="#DepositModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashMovement(userLoginInfo.employeeinfo.id, 'Deposit')}><i className="material-icons">&#xE147;</i> <span>ايداع</span></a>
 
-                        <a href="#WithdrawModal" className="btn btn-danger" data-toggle="modal" onClick={() => handelCashMovement(userlogininfo.employeeinfo.id, 'Withdraw')}><i className="material-icons">&#xE15C;</i> <span>سحب</span></a>
+                        <a href="#WithdrawModal" className="btn btn-danger" data-toggle="modal" onClick={() => handelCashMovement(userLoginInfo.employeeinfo.id, 'Withdraw')}><i className="material-icons">&#xE15C;</i> <span>سحب</span></a>
                       </div>
                     </div>
                   </div>

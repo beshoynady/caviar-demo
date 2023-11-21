@@ -92,7 +92,7 @@ const StockItem = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({ userLoginInfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive mt-1">
@@ -183,7 +183,7 @@ const StockItem = () => {
               <div id="addStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createitem(e, userlogininfo.id)}>
+                    <form onSubmit={(e) => createitem(e, userLoginInfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -247,7 +247,7 @@ const StockItem = () => {
               <div id="editStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e)=>editStockItem(e,userlogininfo.id)}>
+                    <form onSubmit={(e)=>editStockItem(e,userLoginInfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

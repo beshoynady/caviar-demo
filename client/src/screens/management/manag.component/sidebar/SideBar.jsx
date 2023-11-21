@@ -25,7 +25,7 @@ const SideBar = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, employeelogout }) => {
+        ({ userLoginInfo, employeelogout }) => {
           return (
             <>
               <div ref={sidebarRef} className="sidebar close">
@@ -185,8 +185,8 @@ const SideBar = () => {
                       <i className='bx bx-log-out' onClick={employeelogout}></i>
                     </div>
                     <div className="name-job">
-                      <div className="profile_name">{userlogininfo ? userlogininfo.employeeinfo.username : ''}</div>
-                      <div className="job">{userlogininfo ? userlogininfo.employeeinfo.role : ''}</div>
+                      <div className="profile_name">{userLoginInfo ? userLoginInfo.employeeinfo.username : ''}</div>
+                      <div className="job">{userLoginInfo ? userLoginInfo.employeeinfo.role : ''}</div>
                     </div>
                   </li>
                 </ul>

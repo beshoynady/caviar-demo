@@ -156,7 +156,7 @@ const StockManag = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userlogininfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ userLoginInfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -332,7 +332,7 @@ const StockManag = () => {
               <div id="addStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createStockaction(e, userlogininfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => createStockaction(e, userLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -401,7 +401,7 @@ const StockManag = () => {
               <div id="editStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => updateStockaction(e, userlogininfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => updateStockaction(e, userLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

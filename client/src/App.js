@@ -647,52 +647,52 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
   };
 
 
-  const [userlogininfo, setuserlogininfo] = useState(null)
+  const [userLoginInfo, setuserLoginInfo] = useState(null);
+
   const getUserInfoFromToken = () => {
-    const usertoken = localStorage.getItem('token_u');
-    const employeetoken = localStorage.getItem('token_e');
-
+    const userToken = localStorage.getItem('token_u');
+    const employeeToken = localStorage.getItem('token_e');
     let decodedToken = null;
-
-    if (employeetoken) {
-      decodedToken = jwt_decode(employeetoken);
-      console.log(decodedToken);
-      setuserlogininfo(decodedToken);
+  
+    if (employeeToken) {
+      decodedToken = jwt_decode(employeeToken);
+      setuserLoginInfo(decodedToken);
       console.log(decodedToken.employeeinfo);
-    } else if (usertoken) {
-      decodedToken = jwt_decode(usertoken);
-      console.log(decodedToken);
-      setuserlogininfo(decodedToken);
+    } else if (userToken) {
+      decodedToken = jwt_decode(userToken);
+      setuserLoginInfo(decodedToken);
       console.log(decodedToken.userinfo);
     } else {
-      setuserlogininfo(null);
+      setuserLoginInfo(null);
     }
-
+  
     return decodedToken;
   };
-
-  const [islogin, setislogin] = useState(false)
+  
+  const [isLogin, setIsLogin] = useState(false);
+  
   const login = async (e, phone, password) => {
     e.preventDefault();
-    console.log({phone, password});
+    console.log({ phone, password });
+  
     try {
       if (!phone || !password) {
         toast.error('Phone and password are required.');
         return;
       }
-
+  
       const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
         phone,
         password,
       });
-
+  
       if (response && response.data) {
         const { accessToken, findUser } = response.data;
-
+  
         if (accessToken && findUser.isActive) {
           localStorage.setItem('token_u', accessToken);
-          getUserInfoFromToken()
-          setislogin(!islogin);
+          getUserInfoFromToken();
+          // setislogin(!isLogin);
           toast.success('Login successful!');
         } else {
           toast.error('User is not active.');
@@ -703,7 +703,6 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
       toast.error('Login failed. Please check your credentials.');
     }
   };
-
 
   
   const employeelogin = async (e, phone, password) => {
@@ -787,7 +786,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
 
   return (
     <detacontext.Provider value={{
-      userlogininfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
+      userLoginInfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
       allUsers, allTable, usertitle, allOrders, askingForHelp,
       setproductnote, addnotrstoproduct,

@@ -149,8 +149,8 @@ const Orders = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {OrdersFilterd.length > 0 ?
-                        OrdersFilterd.map((o, i) => {
+                      {filteredOrders.length > 0 ?
+                        filteredOrders.map((o, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -172,7 +172,7 @@ const Orders = () => {
                                 <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
@@ -200,7 +200,7 @@ const Orders = () => {
                                 <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setorederid(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
@@ -295,7 +295,7 @@ const Orders = () => {
               <div id="deleteOrderModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={deletorder}>
+                    <form onSubmit={deleteOrder}>
                       <div className="modal-header">
                         <h4 className="modal-title">Delete Order</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

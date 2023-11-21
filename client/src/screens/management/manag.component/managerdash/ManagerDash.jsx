@@ -222,7 +222,7 @@ const ManagerDash = () => {
     async function fetchData() {
       await getAllCashRegisters();
       await fetchUserInfo();
-      console.log({ balance: balance });
+      await handelCashRegister(userlogininfo.id);
     }
     fetchData();
   }, []);

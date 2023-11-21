@@ -12,15 +12,18 @@ const ManagerDash = () => {
   const [pending_payment, setpending_payment] = useState([])
   const [allorders, setallorders] = useState([])
 
-  const PendingOrder = async () => {
-    const res = await axios.get('https://caviar-api.vercel.app/api/order')
-    setallorders(res.data)
-    const recent_status = await res.data.filter((order) => order.status == 'انتظار')
-    const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
-    console.log({ recent_payment_status: recent_payment_status })
-    setpending_order(recent_status)
-    setpending_payment(recent_payment_status)
-  }
+  const fetchPendingOrder = async () => {
+    try {
+      const res = await axios.get('https://caviar-api.vercel.app/api/order');
+      setallorders(res.data);
+      const recentStatus = res.data.filter((order) => order.status === 'Pending');
+      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+      setpending_order(recentStatus);
+      setpending_payment(recentPaymentStatus);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
   const status = ['انتظار', 'موافق', 'ملغي']
@@ -56,24 +59,20 @@ const ManagerDash = () => {
 
   // ارسال ويتر 
   const [waiters, setwaiters] = useState([])
-  const getAllWaiter = async () => {
-    const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee')
-    console.log(allemployee)
-    const allwaiter = await allemployee.data.filter((employee) => employee.role == 'waiter')
-    console.log(allwaiter)
-    const waiterActive = await allwaiter.filter((waiter) => waiter.isActive == true)
-    console.log(waiterActive)
-    const listId = []
-    if (waiterActive) {
-      waiterActive.forEach((waiter) => {
-        listId.push(waiter._id)
-      })
+
+  const fetchActiveWaiters = async () => {
+    try {
+      const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee');
+      const allwaiter = allemployee.data.filter((employee) => employee.role === 'waiter');
+      const waiterActive = allwaiter.filter((waiter) => waiter.isActive === true);
+      const listId = waiterActive.map((waiter) => waiter._id);
+      if (listId.length > 0) {
+        setwaiters(listId);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    console.log(listId)
-    if (listId.length > 0) {
-      setwaiters(listId)
-    }
-  }
+  };
 
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
@@ -93,16 +92,23 @@ const ManagerDash = () => {
     }
   }
 
-  const sendwaiter = async (id) => {
+
+
+  const sendWaiter = async (id) => {
     const help = 'ارسال ويتر';
-    const waiter = specifiedWaiter()
-    const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-      waiter, help
-    })
-    PendingOrder()
-    setupdate(!update)
-    console.log(order.data)
-  }
+    const waiter = specifiedWaiter();
+    try {
+      const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        waiter,
+        help,
+      });
+      fetchPendingOrder();
+      setupdate(!update);
+      console.log(order.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [cashRegister, setcashRegister] = useState('');
   const [cashRegistername, setcashRegistername] = useState('');
@@ -111,33 +117,30 @@ const ManagerDash = () => {
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
 
-  const handelCashRegister =async (id) => {
-    console.log({handel:id})
-    const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-    setAllCashRegisters(response.data.reverse());
-    const data = response.data
-    const CashRegister = data ? data.find((cash => cash.employee == id)) : {}
-    if(CashRegister){
-      setcashRegister(CashRegister._id)
-      setcashRegistername(CashRegister.name)
-      setbalance(CashRegister.balance)
-      console.log(CashRegister.balance)
-      setcreateBy(id)
+  const handleCashRegister = async (id) => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
+      setAllCashRegisters(response.data.reverse());
+      const data = response.data;
+      const CashRegister = data ? data.find((cash) => cash.employee === id) : {};
+      if (CashRegister) {
+        setcashRegister(CashRegister._id);
+        setcashRegistername(CashRegister.name);
+        setbalance(CashRegister.balance);
+        setcreateBy(id);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const [userlogininfo, setuserlogininfo] = useState(null)
   const getUserInfoFromToken = () => {
     const employeetoken = localStorage.getItem('token_e');
-
-    let decodedToken = null;
-
     if (employeetoken) {
-      decodedToken = jwt_decode(employeetoken);
-      console.log(decodedToken);
+      const decodedToken = jwt_decode(employeetoken);
       setuserlogininfo(decodedToken.employeeinfo);
-      console.log(decodedToken.employeeinfo);
-      handelCashRegister(decodedToken.employeeinfo.id)
+      handleCashRegister(decodedToken.employeeinfo.id);
     } else {
       setuserlogininfo(null);
     }
@@ -145,13 +148,10 @@ const ManagerDash = () => {
 
 
   const RevenueRecording = async (id, amount, description) => {
-    // e.preventDefault();
-    handelCashRegister(id)
+    handleCashRegister(id);
     try {
       if (cashRegister) {
-        const updatedBalance = balance + amount; // Calculate the updated balance
-
-
+        const updatedBalance = balance + amount;
         const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
           registerId: cashRegister,
           createBy,
@@ -159,59 +159,29 @@ const ManagerDash = () => {
           type: 'Revenue',
           description,
         });
-        console.log(cashMovement)
-        console.log(cashMovement.data.cashMovement._id)
-
-        // const cashMovementId = await cashMovement.data.cashMovement._id; // Retrieve the cashMovementId from the response data
-
-        // const dailyexpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
-        //   expenseID,
-        //   expenseDescription,
-        //   cashRegister,
-        //   cashMovementId,
-        //   paidBy,
-        //   amount,
-        //   notes,
-        // });
-
         const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-          balance: updatedBalance, // Use the updated balance
+          balance: updatedBalance,
         });
-
-        // Update the state after successful updates
         if (updatecashRegister) {
           setbalance(updatedBalance);
-          // Toast notification for successful creation
           toast.success('Expense created successfully');
-
-          // getAllCashRegisters()
-          setupdate(!update)
+          setupdate(!update);
         }
       }
     } catch (error) {
       console.log(error);
-      // Toast notification for error
       toast.error('Failed to create expense');
-
     }
   };
 
 
 
   useEffect(() => {
-    PendingOrder()
-    getAllWaiter()
-    // getAllCashRegisters()
-    getUserInfoFromToken()
-  }, [update])
+    fetchPendingOrder();
+    fetchActiveWaiters();
+    getUserInfoFromToken();
+  }, [update]);
 
-  // useEffect(() => {
-  //   if(userlogininfo){
-  //     console.log({id:userlogininfo.id})
-  //     handelCashRegister(userlogininfo.id)
-  //   }
-  // }, [userlogininfo])
-  
 
   return (
     <detacontext.Consumer>

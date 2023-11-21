@@ -102,18 +102,18 @@ function App() {
 
 
   //+++++++++++ table ++++++++++++++
-  const [alltable, setalltable] = useState([])
-  const getalltable = async () => {
+  const [allTable, setallTable] = useState([])
+  const getallTable = async () => {
     const tables = await axios.get('https://caviar-api.vercel.app/api/table');
-    setalltable(tables.data)
+    setallTable(tables.data)
   }
 
 
   // +++++++++++++++ user +++++++++++++
-  const [allusers, setallusers] = useState([])
-  const getallusers = async () => {
+  const [allUsers, setallUsers] = useState([])
+  const getallUsers = async () => {
     const users = await axios.get('https://caviar-api.vercel.app/api/user');
-    setallusers(users.data)
+    setallUsers(users.data)
   }
   const [allemployees, setallemployees] = useState([])
   const getallemployees = async () => {
@@ -384,7 +384,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     const orderNum = dayOrders.length > 0 ? dayOrders[dayOrders.length - 1].orderNum + 1 : 1;
     const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
 
-    const products = [...itemsInCart];
+    const products = [...ItemsInCart];
     const total = costOrder;
     const tax = total * 0.14;
     const totalAfterTax = total + tax;
@@ -572,8 +572,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
 
 
   const usertitle = (id) => {
-    const istable = alltable ? alltable.find((table, i) => table._id == id) : null;
-    const isuser = allusers ? allusers.find((user, i) => user._id == id) : null
+    const istable = allTable ? allTable.find((table, i) => table._id == id) : null;
+    const isuser = allUsers ? allUsers.find((user, i) => user._id == id) : null
     const isemployee = allemployees ? allemployees.find((employee, i) => employee._id == id) : null
     if (istable) {
       const table_num = istable.tablenum
@@ -754,8 +754,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     getProducts()
     getCategories()
     getallOrders()
-    getalltable();
-    getallusers();
+    getallTable();
+    getallUsers();
     getallemployees()
   }, [])
 
@@ -767,8 +767,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
 
   useEffect(() => {
     costOfOrder()
-    getalltable();
-    getallusers();
+    getallTable();
+    getallUsers();
     getallOrders()
     costOfOrder()
     getUserInfoFromToken()
@@ -779,7 +779,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     <detacontext.Provider value={{
       userlogininfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
-      allusers, alltable, usertitle, allOrders, askingForHelp,
+      allUsers, allTable, usertitle, allOrders, askingForHelp,
       setproductnote, addnotrstoproduct,
       invoice, totalinvoice, list_products_order, orderupdate_date, myorder,
       list_day_order, total_day_salse,

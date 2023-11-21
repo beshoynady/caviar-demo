@@ -2,6 +2,7 @@ import './Orders.css'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { detacontext } from '../../../../App'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const Orders = () => {
@@ -11,40 +12,63 @@ const Orders = () => {
     let form_dt = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     return form_dt;
   }
-  
-  const [listofoeders, setlistofoeders] = useState([])
-  const getorders = async () => {
-    const res = await axios.get('https://caviar-api.vercel.app/api/order')
-    setlistofoeders(res.data.reverse())
-  }
-  const [orederid, setorederid] = useState()
-  const deletorder = async () => {
-    console.log(orederid)
-    const id = orederid;
-    await axios.delete('https://caviar-api.vercel.app/api/order/' + id).then((res) => console.log(res.data))
-    getorders()
-  }
-  const [OrdersFilterd, setOrdersFilterd] = useState([])
+
+  const [listOfOrders, setlistOfOrders] = useState([])
+  // Fetch orders from API
+  const getOrders = async () => {
+    try {
+      const res = await axios.get('https://caviar-api.vercel.app/api/order');
+      setlistOfOrders(res.data.reverse());
+    } catch (error) {
+      console.log(error);
+      // Display toast or handle error
+    }
+  };
+
+  // State to manage order deletion
+  const [orderId, setOrderId] = useState('');
+
+  // Delete order
+  const deleteOrder = async (e) => {
+    e.preventDefault();
+    try {
+      const id = orderId;
+      await axios.delete(`https://caviar-api.vercel.app/api/order/${id}`);
+      getOrders();
+      toast.success('Order deleted successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete order');
+    }
+  };
+
+  // State for filtered orders
+  const [filteredOrders, setFilteredOrders] = useState([]);
+
+  // Filter orders by serial number
   const searchBySerial = (serial) => {
-    const orders = listofoeders.filter((order) => order.serial.toString().startsWith(serial) == true)
-    setOrdersFilterd(orders)
-  }
-  const getemployeesByOrderType = (Type) => {
-    const orders = listofoeders.filter((order) => order.order_type == Type)
-    setOrdersFilterd(orders)
-  }
+    const orders = listOfOrders.filter((order) => order.serial.toString().startsWith(serial));
+    setFilteredOrders(orders);
+  };
 
+  // Filter orders by order type
+  const getOrdersByType = (type) => {
+    const orders = listOfOrders.filter((order) => order.order_type === type);
+    setFilteredOrders(orders);
+  };
 
-
+  // Fetch orders on component mount
   useEffect(() => {
-    getorders()
-  }, [])
+    getOrders();
+  }, []);
+
   return (
     <detacontext.Consumer>
       {
         ({ usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
+              <ToastContainer/>
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -82,7 +106,7 @@ const Orders = () => {
                         </div>
                         <div class="filter-group">
                           <label>نوع الاوردر</label>
-                          <select class="form-control" onChange={(e) => getemployeesByOrderType(e.target.value)} >
+                          <select class="form-control" onChange={(e) => getOrdersByType(e.target.value)} >
                             <option value={""}>الكل</option>
                             <option value="داخلي" >داخلي</option>
                             <option value="ديلفري" >ديلفري</option>
@@ -154,7 +178,7 @@ const Orders = () => {
                             )
                           }
                         })
-                        : listofoeders.map((o, i) => {
+                        : listOfOrders.map((o, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -187,7 +211,7 @@ const Orders = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{listofoeders.length > endpagination ? endpagination : listofoeders.length}</b> من <b>{listofoeders.length}</b> عنصر</div>
+                    <div className="hint-text text-dark">عرض <b>{listOfOrders.length > endpagination ? endpagination : listOfOrders.length}</b> من <b>{listOfOrders.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

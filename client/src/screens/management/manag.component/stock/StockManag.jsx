@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const StockManag = () => {
@@ -49,7 +50,6 @@ const StockManag = () => {
     setcashRegister(CashRegister._id)
     setbalance(CashRegister.balance)
     console.log(CashRegister.balance)
-    setpaidBy(id)
   }
 
   const [actionId, setactionId] = useState("")
@@ -78,7 +78,7 @@ const StockManag = () => {
           createBy: actionBy,
           amount,
           type: 'Withdraw',
-          description: `${movement} ${itemname(action.itemId)}`,
+          description: `${movement} ${itemname(itemId)}`,
         });
         console.log(cashMovement)
         console.log(cashMovement.data.cashMovement._id)

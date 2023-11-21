@@ -109,21 +109,20 @@ const ManagerDash = () => {
   const [balance, setbalance] = useState();
   const [createBy, setcreateBy] = useState('');
 
-
   const handelCashRegister = (id) => {
-    getAllCashRegisters()
-    console.log({handel:id})
-    if(AllCashRegisters.length>0){
-      const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
-      if(CashRegister){
-        setcashRegister(CashRegister._id)
-        setcashRegistername(CashRegister.name)
-        setbalance(CashRegister.balance)
-        console.log(CashRegister.balance)
-        setcreateBy(id)
+    getAllCashRegisters();
+    console.log({ handel: id });
+    if (AllCashRegisters.length > 0) {
+      const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {};
+      if (CashRegister) {
+        setcashRegister(CashRegister._id);
+        setcashRegistername(CashRegister.name);
+        setbalance(CashRegister.balance);
+        console.log(CashRegister.balance);
+        setcreateBy(id);
       }
     }
-  }
+  };
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
   // Fetch all cash registers

@@ -669,7 +669,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     return decodedToken;
   };
   
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setisLogin] = useState(false);
   
   const login = async (e, phone, password) => {
     e.preventDefault();
@@ -692,7 +692,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
         if (accessToken && findUser.isActive) {
           localStorage.setItem('token_u', accessToken);
           getUserInfoFromToken();
-          // setislogin(!isLogin);
+          // setisLogin(!isLogin);
           toast.success('Login successful!');
         } else {
           toast.error('User is not active.');
@@ -782,7 +782,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     costOfOrder()
     getUserInfoFromToken()
 
-  }, [count, ItemsInCart, islogin])
+  }, [count, ItemsInCart, isLogin])
 
   return (
     <detacontext.Provider value={{

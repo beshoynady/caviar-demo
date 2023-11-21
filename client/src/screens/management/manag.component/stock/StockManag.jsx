@@ -28,8 +28,29 @@ const StockManag = () => {
   const [newcost, setnewcost] = useState(0)
   const [oldBalance, setoldBalance] = useState(0)
   const [newBalance, setnewBalance] = useState(0)
+  const [amount, setamount] = useState();
+  const [balance, setbalance] = useState();
+  const [cashRegister, setcashRegister] = useState('');
 
 
+  const [AllCashRegisters, setAllCashRegisters] = useState([]);
+  // Fetch all cash registers
+  const getAllCashRegisters = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
+      setAllCashRegisters(response.data.reverse());
+    } catch (err) {
+      toast.error('Error fetching cash registers');
+    }
+  };
+
+  const handelCashRegister = (id) => {
+    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+    setcashRegister(CashRegister._id)
+    setbalance(CashRegister.balance)
+    console.log(CashRegister.balance)
+    setpaidBy(id)
+  }
 
   const [actionId, setactionId] = useState("")
   const actionAt = new Date().toLocaleString()
@@ -48,6 +69,35 @@ const StockManag = () => {
         console.log(response.data);
         getallStockaction()
         getaStockItems()
+      }
+      if(movement == 'مشتريات'){
+        const updatedBalance = balance - amount; // Calculate the updated balance
+  
+        const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
+          registerId: cashRegister,
+          createBy: actionBy,
+          amount,
+          type: 'Withdraw',
+          description: `${movement} ${itemname(action.itemId)}`,
+        });
+        console.log(cashMovement)
+        console.log(cashMovement.data.cashMovement._id)
+  
+        const cashMovementId = await cashMovement.data.cashMovement._id; // Retrieve the cashMovementId from the response data
+  
+        const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
+          balance: updatedBalance, // Use the updated balance
+        });
+  
+        // Update the state after successful updates
+        if (updatecashRegister) {
+          setbalance(updatedBalance);
+          // Toast notification for successful creation
+          toast.success('Expense created successfully');
+  
+          getAllCashRegisters()
+        }
+
       }
     } catch (error) {
       console.log(error)

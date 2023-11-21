@@ -187,13 +187,13 @@ const ManagerDash = () => {
   };
 
   const [userlogininfo, setuserlogininfo] = useState(null)
-  const getUserInfoFromToken = () => {
+  const getUserInfoFromToken =async () => {
     const employeetoken = localStorage.getItem('token_e');
 
     let decodedToken = null;
 
     if (employeetoken) {
-      decodedToken = jwt_decode(employeetoken);
+      decodedToken =await jwt_decode(employeetoken);
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);

@@ -50,7 +50,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status ,isActive
       })
-      PendingOrder()
+      fetchPendingOrder()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -342,7 +342,7 @@ const ManagerDash = () => {
                             <div className="task-title">
                               <p><i className='bx bx-check-circle'></i> {usertitle(order.table)}</p>
                               <p>{order.help}</p>
-                              {order.help == 'يطلب مساعدة' || order.help == 'يطلب الفاتورة' ? <button type="button" className="btn btn-primary" onClick={() => sendwaiter(order._id)}>ارسال ويتر</button> :
+                              {order.help == 'يطلب مساعدة' || order.help == 'يطلب الفاتورة' ? <button type="button" className="btn btn-primary" onClick={() => sendWaiter(order._id)}>ارسال ويتر</button> :
                                 <p>تم ارسال {usertitle(order.waiter)}</p>}
                             </div>
                             <i className='bx bx-dots-vertical-rounded'></i>

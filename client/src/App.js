@@ -766,6 +766,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
     getallTable();
     getallUsers();
     getallemployees()
+    getUserInfoFromToken()
   }, [])
 
 

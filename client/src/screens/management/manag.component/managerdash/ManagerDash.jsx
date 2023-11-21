@@ -111,14 +111,17 @@ const ManagerDash = () => {
 
 
   const handelCashRegister = (id) => {
+    getAllCashRegisters()
     console.log({handel:id})
-    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
-    if(CashRegister){
-      setcashRegister(CashRegister._id)
-      setcashRegistername(CashRegister.name)
-      setbalance(CashRegister.balance)
-      console.log(CashRegister.balance)
-      setcreateBy(id)
+    if(AllCashRegisters.length>0){
+      const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+      if(CashRegister){
+        setcashRegister(CashRegister._id)
+        setcashRegistername(CashRegister.name)
+        setbalance(CashRegister.balance)
+        console.log(CashRegister.balance)
+        setcreateBy(id)
+      }
     }
   }
 
@@ -127,6 +130,7 @@ const ManagerDash = () => {
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
+      console.log({registers:response.data})
       setAllCashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');

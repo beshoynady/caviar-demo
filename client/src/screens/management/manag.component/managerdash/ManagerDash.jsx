@@ -191,36 +191,42 @@ const ManagerDash = () => {
   };
 
   const [userlogininfo, setuserlogininfo] = useState(null)
-  const getUserInfoFromToken =async () => {
+  const fetchUserInfo = async () => {
     const employeetoken = localStorage.getItem('token_e');
-
+  
     let decodedToken = null;
-
+  
     if (employeetoken) {
-      decodedToken =await jwt_decode(employeetoken);
+      decodedToken = await jwt_decode(employeetoken);
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);
-      handelCashRegister(decodedToken.employeeinfo.id)
+      await handelCashRegister(decodedToken.employeeinfo.id);
     } else {
       setuserlogininfo(null);
     }
-
+  
     return decodedToken;
   };
 
   useEffect(() => {
-    PendingOrder()
-    getAllWaiter()
-    getAllCashRegisters()
-    getUserInfoFromToken()
-  }, [update])
+    async function fetchData() {
+      await PendingOrder();
+      await getAllWaiter();
+      await getAllCashRegisters();
+      await getUserInfoFromToken();
+    }
+    fetchData();
+  }, [update]);
 
   useEffect(() => {
-    getAllCashRegisters()
-    getUserInfoFromToken()
-    console.log({balance:balance})
-  }, [])
+    async function fetchData() {
+      await getAllCashRegisters();
+      await getUserInfoFromToken();
+      console.log({ balance: balance });
+    }
+    fetchData();
+  }, []);
 
   // useEffect(() => {
   //   if(userlogininfo){

@@ -667,6 +667,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
   const [islogin, setislogin] = useState(false)
   const login = async (e, phone, password) => {
     e.preventDefault();
+    console.log({phone, password});
     try {
       if (!phone || !password) {
         toast.error('Phone and password are required.');
@@ -683,7 +684,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
 
         if (accessToken && findUser.isActive) {
           localStorage.setItem('token_u', accessToken);
-          setislogin(true);
+          getUserInfoFromToken()
+          setislogin(!islogin);
           toast.success('Login successful!');
         } else {
           toast.error('User is not active.');

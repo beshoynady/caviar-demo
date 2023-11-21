@@ -184,7 +184,7 @@ const ManagerDash = () => {
           // Toast notification for successful creation
           toast.success('Expense created successfully');
 
-          getAllCashRegisters()
+          // getAllCashRegisters()
           setupdate(!update)
         }
       }
@@ -201,7 +201,7 @@ const ManagerDash = () => {
   useEffect(() => {
     PendingOrder()
     getAllWaiter()
-    getAllCashRegisters()
+    // getAllCashRegisters()
     getUserInfoFromToken()
   }, [update])
 

@@ -188,6 +188,8 @@ const StockManag = () => {
   useEffect(() => {
     getallStockaction()
     getaStockItems()
+    getAllCashRegisters()
+    handelCashRegister()
   }, [])
 
   useEffect(() => {

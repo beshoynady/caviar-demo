@@ -109,27 +109,24 @@ const ManagerDash = () => {
   const [balance, setbalance] = useState();
   const [createBy, setcreateBy] = useState('');
 
+
   const handelCashRegister = (id) => {
-    getAllCashRegisters();
-    console.log({ handel: id });
-    if (AllCashRegisters.length > 0) {
-      const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {};
-      if (CashRegister) {
-        setcashRegister(CashRegister._id);
-        setcashRegistername(CashRegister.name);
-        setbalance(CashRegister.balance);
-        console.log(CashRegister.balance);
-        setcreateBy(id);
-      }
+    console.log({handel:id})
+    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
+    if(CashRegister){
+      setcashRegister(CashRegister._id)
+      setcashRegistername(CashRegister.name)
+      setbalance(CashRegister.balance)
+      console.log(CashRegister.balance)
+      setcreateBy(id)
     }
-  };
+  }
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
   // Fetch all cash registers
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      console.log({registers:response.data})
       setAllCashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');
@@ -190,42 +187,29 @@ const ManagerDash = () => {
   };
 
   const [userlogininfo, setuserlogininfo] = useState(null)
-  const fetchUserInfo = async () => {
+  const getUserInfoFromToken = () => {
+    getAllCashRegisters()
     const employeetoken = localStorage.getItem('token_e');
-  
+
     let decodedToken = null;
-  
+
     if (employeetoken) {
-      decodedToken = await jwt_decode(employeetoken);
+      decodedToken = jwt_decode(employeetoken);
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);
-      await handelCashRegister(decodedToken.employeeinfo.id);
+      handelCashRegister(decodedToken.employeeinfo.id)
     } else {
       setuserlogininfo(null);
     }
-  
-    return decodedToken;
   };
 
   useEffect(() => {
-    async function fetchData() {
-      await PendingOrder();
-      await getAllWaiter();
-      await getAllCashRegisters();
-      await fetchUserInfo();
-    }
-    fetchData();
-  }, [update]);
-
-  useEffect(() => {
-    async function fetchData() {
-      await getAllCashRegisters();
-      await fetchUserInfo();
-      await handelCashRegister(userlogininfo.id);
-    }
-    fetchData();
-  }, []);
+    PendingOrder()
+    getAllWaiter()
+    getAllCashRegisters()
+    getUserInfoFromToken()
+  }, [update])
 
   // useEffect(() => {
   //   if(userlogininfo){
@@ -294,7 +278,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>رصيد الخزينه اليوم</p>
                       <h3>
-                        {balance}
+                        {balance?balance:''}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

@@ -197,6 +197,7 @@ const ManagerDash = () => {
       console.log(decodedToken);
       setuserlogininfo(decodedToken.employeeinfo);
       console.log(decodedToken.employeeinfo);
+      handelCashRegister(decodedToken.employeeinfo.id)
     } else {
       setuserlogininfo(null);
     }
@@ -212,11 +213,17 @@ const ManagerDash = () => {
   }, [update])
 
   useEffect(() => {
-    if(userlogininfo){
-      console.log({id:userlogininfo.id})
-      handelCashRegister(userlogininfo.id)
-    }
-  }, [userlogininfo])
+    getAllCashRegisters()
+    getUserInfoFromToken()
+
+  }, [])
+
+  // useEffect(() => {
+  //   if(userlogininfo){
+  //     console.log({id:userlogininfo.id})
+  //     handelCashRegister(userlogininfo.id)
+  //   }
+  // }, [userlogininfo])
   
 
   return (

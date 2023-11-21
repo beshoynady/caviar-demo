@@ -211,7 +211,11 @@ function App() {
   }
 
 
-
+const generateSerial = (num) => {
+  const str = num.toString();
+  const pad = '000000';
+  return pad.substring(0, pad.length - str.length) + str;
+};
 
   // Function to fetch details of an existing order
   const getOldOrderDetails = async (orderId) => {
@@ -271,8 +275,9 @@ function App() {
       const products = [...addItems, ...oldProducts];
       await updateOrder(orderId, products, total, totalAfterTax, 'انتظار', 'ديلفري');
     } else {
-      const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
-      const findUser = allUsers.find((u) => u._id === clientID);
+      const lastSerial = allOrders.length > 0 ? parseInt(allOrders[allOrders.length - 1].serial, 10) : 0;
+      const serial = generateSerial(lastSerial + 1);
+        const findUser = allUsers.find((u) => u._id === clientID);
       const user = findUser ? clientID : null;
       const table = allTable.find((t) => t._id === clientID) ? clientID : null;
       const products = [...ItemsInCart];
@@ -348,8 +353,9 @@ const createWaiterOrder = async (tableID, waiterID) => {
     await updateEmployeeOrder(orderId, products, total, totalAfterTax, 'انتظار', waiterID);
   } else {
     try {
-      const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
-      const products = [...ItemsInCart];
+      const lastSerial = allOrders.length > 0 ? parseInt(allOrders[allOrders.length - 1].serial, 10) : 0;
+      const serial = generateSerial(lastSerial + 1);
+        const products = [...ItemsInCart];
       const total = costOrder;
       const tax = total * 0.14;
       totalAfterTax = total + tax;
@@ -382,7 +388,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
   try {
     const dayOrders = getDayOrders();
     const orderNum = dayOrders.length > 0 ? dayOrders[dayOrders.length - 1].orderNum + 1 : 1;
-    const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+    const lastSerial = allOrders.length > 0 ? parseInt(allOrders[allOrders.length - 1].serial, 10) : 0;
+    const serial = generateSerial(lastSerial + 1);
 
     const products = [...ItemsInCart];
     const total = costOrder;

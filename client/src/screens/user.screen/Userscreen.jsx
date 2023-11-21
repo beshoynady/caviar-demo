@@ -6,6 +6,7 @@ import Menu from './component/menu/Menu.jsx';
 import Location from './component/location/Location.jsx';
 import Contact from './component/contact/Contact.jsx';
 import Footer from './component/footer/Footer.jsx';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -13,6 +14,7 @@ import Footer from './component/footer/Footer.jsx';
 const Userscreen = () => {
     return (
         <div className='userscreen'>
+            <ToastContainer/>
             <Header />
             <Home />
             <Offers />

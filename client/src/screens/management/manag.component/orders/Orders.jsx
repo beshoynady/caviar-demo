@@ -68,7 +68,7 @@ const Orders = () => {
         ({ usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
-              <ToastContainer/>
+              <ToastContainer />
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -138,6 +138,7 @@ const Orders = () => {
                           </span>
                         </th>
                         <th>م</th>
+                        <th>رقم الفاتورة</th>
                         <th>رقم الاوردر</th>
                         <th>العميل</th>
                         <th>المكان</th>
@@ -162,6 +163,7 @@ const Orders = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{o.serial}</td>
+                                <td>{o.ordernum}</td>
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
                                     : o.employee ? usertitle(o.employee) : ''}</td>

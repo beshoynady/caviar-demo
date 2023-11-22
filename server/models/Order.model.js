@@ -86,7 +86,7 @@ const OrderSchema = new mongoose.Schema({
             }
         }
     ],
-    supTotal: {
+    subTotal: {
         type: Number,
         required: true,
         validate: {

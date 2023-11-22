@@ -83,8 +83,26 @@ const CashMovement = () => {
     console.log(CashRegister.balance)
     setCreateBy(id)
   }
+  const [submitted, setSubmitted] = useState(false);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // منع سلوك النموذج الافتراضي
 
+    // التحقق مما إذا تم تقديم النموذج بالفعل
+    if (!submitted) {
+      // قم بتعيين submitted إلى true لمنع تقديم النموذج مرة أخرى
+      setSubmitted(true);
+
+      // القيام بالإجراءات اللازمة لعملية الإيداع من خلال context
+      await addCashMovementAndUpdateBalance();
+
+      // إغلاق النافذة المُظهَرة (المودال) هنا - يمكنك استخدام الطريقة التي تستخدمها لإغلاق المودال
+      const modal = document.getElementById('DepositModal');
+      if (modal) {
+        modal.style.display = 'none'; // أو أي طريقة أخرى لإخفاء المودال
+      }
+    }
+  };
   useEffect(() => {
     getCashMovement()
     getAllCashRegisters()
@@ -272,7 +290,7 @@ const CashMovement = () => {
               <div id="DepositModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={addCashMovementAndUpdateBalance}>
+                    <form onSubmit={handleSubmit}>
                       <div className="modal-header">
                         <h4 className="modal-title">ايداع بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -298,7 +316,7 @@ const CashMovement = () => {
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success" aria-hidden="true" value="ايداع" />
+                        <input type="submit" className="btn btn-success" value="ايداع" />
                       </div>
                     </form>
                   </div>
@@ -307,7 +325,7 @@ const CashMovement = () => {
               <div id="WithdrawModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={addCashMovementAndUpdateBalance}>
+                    <form onSubmit={handleSubmit}>
                       <div className="modal-header">
                         <h4 className="modal-title">سحب بالخزينه</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

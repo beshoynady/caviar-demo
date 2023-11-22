@@ -76,6 +76,7 @@ const CashMovement = () => {
 
 
   const handelCashMovement = (id, t) => {
+    setSubmitted(false);
     const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
     setRegisterId(CashRegister._id)
     setbalance(Number(CashRegister.balance))
@@ -83,23 +84,20 @@ const CashMovement = () => {
     console.log(CashRegister.balance)
     setCreateBy(id)
   }
+
+
   const [submitted, setSubmitted] = useState(false);
-
   const handleSubmit = async (event) => {
-    event.preventDefault(); // منع سلوك النموذج الافتراضي
+    event.preventDefault();
 
-    // التحقق مما إذا تم تقديم النموذج بالفعل
     if (!submitted) {
-      // قم بتعيين submitted إلى true لمنع تقديم النموذج مرة أخرى
       setSubmitted(true);
 
-      // القيام بالإجراءات اللازمة لعملية الإيداع من خلال context
       await addCashMovementAndUpdateBalance();
 
-      // إغلاق النافذة المُظهَرة (المودال) هنا - يمكنك استخدام الطريقة التي تستخدمها لإغلاق المودال
       const modal = document.getElementById('DepositModal');
       if (modal) {
-        modal.style.display = 'none'; // أو أي طريقة أخرى لإخفاء المودال
+        modal.style.display = 'none';
       }
     }
   };

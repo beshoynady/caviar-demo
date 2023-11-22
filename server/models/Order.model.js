@@ -26,7 +26,9 @@ const OrderSchema = new mongoose.Schema({
     },
     // Order number
     ordernum: {
-        ...defaultOptions,
+        type: Number,
+        min: 1,
+        max: 1000000,    
     },
     // Array of products in the order
     products: [
@@ -84,11 +86,15 @@ const OrderSchema = new mongoose.Schema({
             }
         }
     ],
-    // Total cost of the order
-    total: {
+    supTotal: {
         type: Number,
-        default: 0,
         required: true,
+        validate: {
+            validator: function(v) {
+                return v > 0;
+            },
+            message: '{VALUE} should be greater than zero'
+        }
     },
     // Tax for the order
     Tax: {
@@ -101,6 +107,17 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         default: 0,
         required: true
+    },
+    // Total cost of the order
+    total: {
+        type: Number,
+        required: true,
+        validate: {
+            validator: function(v) {
+                return v > 0;
+            },
+            message: '{VALUE} should be greater than zero'
+        }
     },
     // Table associated with the order
     table: {
@@ -126,7 +143,7 @@ const OrderSchema = new mongoose.Schema({
         ref: 'Employee',
         default: null
     },
-    
+
     // Customer name
     name: {
         type: String,

@@ -14,18 +14,18 @@ const createOrder = async (req, res) => {
             user,
             createBy,
             casher,
-            name: customerName,
-            address: customerAddress,
-            phone: customerPhone,
+            name,
+            address,
+            phone,
             waiter,
             deliveryMan,
             help,
             status,
-            order_type: orderType,
+            order_type,
             isActive,
-            payment_status: paymentStatus,
-            payment_method: paymentMethod,
-            payment_date: paymentDate // Include if available in req.body
+            payment_status,
+            payment_method,
+            payment_date // Include if available in req.body
         } = req.body;
 
         const newOrder = await OrderModel.create({
@@ -39,18 +39,18 @@ const createOrder = async (req, res) => {
             user,
             createBy,
             casher,
-            name: customerName,
-            address: customerAddress,
-            phone: customerPhone,
+            name,
+            address,
+            phone,
             waiter,
             deliveryMan,
             help,
             status,
-            order_type: orderType,
+            order_type,
             isActive,
-            payment_status: paymentStatus,
-            payment_method: paymentMethod,
-            payment_date: paymentDate // Include if available in req.body
+            payment_status,
+            payment_method,
+            payment_date // Include if available in req.body
         });
 
         res.status(201).json(newOrder);

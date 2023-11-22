@@ -227,11 +227,11 @@ const generateSerial = (num) => {
   };
   
   // Function to update an order
-  const updateOrder = async (id, products, total, totalAfterTax, status, order_type) => {
+  const updateOrder = async (id, products, total, Tax, status, order_type) => {
     await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, {
       products,
       total,
-      totalAfterTax,
+      Tax,
       status,
       order_type
     });
@@ -252,7 +252,7 @@ const generateSerial = (num) => {
     const lastUserOrder = userOrder.length > 0 ? userOrder[userOrder.length - 1] : {};
     const lastUserOrderActive = lastUserOrder.isActive;
   
-    let orderId, oldProducts, oldTotal, totalAfterTax;
+    let orderId, oldProducts, oldTotal, Tax;
   
     if (lastTableOrderActive) {
       orderId = lastTableOrder._id;
@@ -263,17 +263,17 @@ const generateSerial = (num) => {
     }
   
     const total = costOrder + oldTotal;
-    const tax = total * 0.14;
-    totalAfterTax = total + tax;
+    const calc_tax = total * 0.14;
+    Tax = total + calc_tax;
   
     if (lastTableOrderActive && lastTableOrder.status === 'Preparing') {
       const addItems = ItemsInCart.map(item => ({ ...item, isAdd: true }));
       const products = [...addItems, ...oldProducts];
-      await updateOrder(orderId, products, total, totalAfterTax, 'Pending');
+      await updateOrder(orderId, products, total, Tax, 'Pending');
     } else if (lastUserOrderActive && lastUserOrder.status === 'Preparing') {
       const addItems = ItemsInCart.map(item => ({ ...item, isAdd: true }));
       const products = [...addItems, ...oldProducts];
-      await updateOrder(orderId, products, total, totalAfterTax, 'Pending', 'Delivery');
+      await updateOrder(orderId, products, total, Tax, 'Pending', 'Delivery');
     } else {
       const lastSerial = allOrders.length > 0 ? parseInt(allOrders[allOrders.length - 1].serial, 10) : 0;
       const serial = generateSerial(lastSerial + 1);
@@ -282,8 +282,8 @@ const generateSerial = (num) => {
       const table = allTable.find((t) => t._id === clientID) ? clientID : null;
       const products = [...ItemsInCart];
       const total = costOrder;
-      const tax = total * 0.14;
-      totalAfterTax = total + tax;
+      const calc_tax = total * 0.14;
+      Tax = total + calc_tax;
   
       if (user) {
         await axios.post('https://caviar-api.vercel.app/api/order', {
@@ -293,7 +293,7 @@ const generateSerial = (num) => {
           address: findUser.address,
           products,
           total,
-          totalAfterTax,
+          Tax,
           order_type: 'Delivery'
         });
       } else {
@@ -303,7 +303,7 @@ const generateSerial = (num) => {
           user,
           products,
           total,
-          totalAfterTax,
+          Tax,
           order_type: 'Internal'
         });
       }
@@ -316,11 +316,11 @@ const generateSerial = (num) => {
   
 
 // Function to update an order
-const updateEmployeeOrder = async (id, products, total, totalAfterTax, status, employee) => {
+const updateEmployeeOrder = async (id, products, total, Tax, status, employee) => {
   await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, {
     products,
     total,
-    totalAfterTax,
+    Tax,
     status,
     employee
   });
@@ -337,7 +337,7 @@ const createWaiterOrder = async (tableID, waiterID) => {
   const lastTableOrder = tableOrder.length > 0 ? tableOrder[tableOrder.length - 1] : {};
   const lastTableOrderActive = lastTableOrder.isActive;
 
-  let orderId, oldProducts, oldTotal, totalAfterTax;
+  let orderId, oldProducts, oldTotal, Tax;
 
   if (lastTableOrderActive) {
     orderId = lastTableOrder._id;
@@ -345,27 +345,27 @@ const createWaiterOrder = async (tableID, waiterID) => {
   }
 
   const total = costOrder + oldTotal;
-  const tax = total * 0.14;
-  totalAfterTax = total + tax;
+  const calc_tax = total * 0.14;
+  Tax = total + calc_tax;
 
   if (lastTableOrderActive) {
     const products = [...ItemsInCart, ...oldProducts];
-    await updateEmployeeOrder(orderId, products, total, totalAfterTax, 'Pending', waiterID);
+    await updateEmployeeOrder(orderId, products, total, Tax, 'Pending', waiterID);
   } else {
     try {
       const lastSerial = allOrders.length > 0 ? parseInt(allOrders[allOrders.length - 1].serial, 10) : 0;
       const serial = generateSerial(lastSerial + 1);
         const products = [...ItemsInCart];
       const total = costOrder;
-      const tax = total * 0.14;
-      totalAfterTax = total + tax;
+      const calc_tax = total * 0.14;
+      Tax = total + calc_tax;
 
       await axios.post('https://caviar-api.vercel.app/api/order', {
         serial,
         table: tableID,
         products,
         total,
-        totalAfterTax,
+        Tax,
         order_type: 'Internal',
         employee: waiterID
       });
@@ -393,8 +393,8 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
 
     const products = [...ItemsInCart];
     const total = costOrder;
-    const tax = total * 0.14;
-    const totalAfterTax = total + tax;
+    const calc_tax = total * 0.14;
+    const calc_Tax = total + calc_tax;
 
     const name = await clientName;
     const phone = await clientPhone;
@@ -407,7 +407,7 @@ const createCasherOrder = async (casherID, clientName, clientPhone, clientAddres
       orderNum,
       products,
       total,
-      totalAfterTax,
+      Tax,
       order_type,
       employee,
       name,

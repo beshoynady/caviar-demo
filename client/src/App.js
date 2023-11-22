@@ -343,7 +343,7 @@ function App() {
             setItemsInCart([])
             getProducts()
           } else {
-            const order_type = 'داخلي'
+            const order_type = 'Internal'
             const total = subTotal + tax
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
               serial,

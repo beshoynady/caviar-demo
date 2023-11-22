@@ -3,13 +3,13 @@ const express = require("express");
 const router = express.Router();
 // router.use(verifyJWT)
 const {
-    createorder,
-    getorder,
-    getorders,
-    updateorder,
-    deleteorder,}=
-    require("../controllers/Order.controller");
+    createOrder,
+    getOrder,
+    getOrders,
+    updateOrder,
+    deleteOrder
+} = require("../controllers/Order.controller");
 
-    router.route("/").post(createorder).get(getorders);
-    router.route("/:id").get(getorder).put(updateorder).delete(deleteorder);
-    module.exports = router;
+router.route("/").post(createOrder).get(getOrders);
+router.route("/:id").get(getOrder).put(updateOrder).delete(deleteOrder);
+module.exports = router;

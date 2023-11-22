@@ -448,9 +448,9 @@ function App() {
       const serial = generateSerial(lastSerial + 1);
 
       const products = [...ItemsInCart];
-      const total = costOrder;
-      const calc_tax = total * 0.14;
-      const calc_Tax = total + calc_tax;
+      const subtotal = costOrder;
+      const tax = total * 0.14;
+      const total = total + tax;
 
       const name = await clientName;
       const phone = await clientPhone;
@@ -463,7 +463,8 @@ function App() {
         orderNum,
         products,
         total,
-        Tax,
+        subtotal,
+        tax,
         order_type,
         employee,
         name,

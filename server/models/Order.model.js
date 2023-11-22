@@ -1,79 +1,82 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema
+
+const { ObjectId } = mongoose.Schema;
+
+// Define common validation for number fields
+const defaultOptions = {
+    type: Number,
+    default: 0,
+    required: true,
+    min: 1,
+    max: 1000000,
+    trim: true,
+};
 
 const OrderSchema = new mongoose.Schema({
+    // Serial number of the order
     serial: {
-        type: Number,
+        ...defaultOptions,
         unique: true,
-        required: true,
-        min: 1,
-        max: 1000000,
-        trim: true,
         validate: {
             validator: function (v) {
                 return v >= 1 && v <= 1000000;
             },
-            message: '{VALUE} is not a valid sirial number'
-        }
+            message: '{VALUE} is not a valid serial number',
+        },
     },
+    // Order number
     ordernum: {
-        type: Number,
-        min: 1,
-        trim: true,
+        ...defaultOptions,
     },
-
+    // Array of products in the order
     products: [
         {
             productid: {
                 type: ObjectId,
                 ref: 'Product',
             },
+            // Product name
             name: {
                 type: String,
                 required: true,
                 trim: true,
             },
+            // Quantity of the product
             quantity: {
-                type: Number,
-                required: true,
-                min: 1,
-                max: 1000000,
-                trim: true,
+                ...defaultOptions,
                 validate: {
                     validator: function (v) {
                         return v >= 1 && v <= 1000000;
                     },
-                    message: '{VALUE} is not a valid quantity'
-                }
+                    message: '{VALUE} is not a valid quantity',
+                },
             },
+            // Notes for the product
             notes: {
                 type: String,
-                default: ""
+                default: "",
             },
+            // Price of the product
             price: {
-                type: Number,
-                required: true,
-                min: 1,
-                max: 1000000,
-                trim: true,
+                ...defaultOptions,
                 validate: {
                     validator: function (v) {
                         return v >= 1 && v <= 1000000;
                     },
-                    message: '{VALUE} is not a valid price'
-                }
+                    message: '{VALUE} is not a valid price',
+                },
             },
+            // Total price of the product quantity
             totalprice: {
-                type: Number,
-                min: 1,
-                max: 1000000,
-                trim: true,
+                ...defaultOptions,
             },
+            // Indicates if the product is done
             isDone: {
                 type: Boolean,
                 default: false,
                 required: true,
             },
+            // Indicates if the product is to be added
             isAdd: {
                 type: Boolean,
                 default: false,
@@ -81,95 +84,117 @@ const OrderSchema = new mongoose.Schema({
             }
         }
     ],
+    // Total cost of the order
     total: {
         type: Number,
         default: 0,
         required: true,
     },
-    totalAfterTax: {
+    // Tax for the order
+    Tax: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+    // Delivery cost of the order
+    deliveryCost: {
         type: Number,
         default: 0,
         required: true
     },
+    // Table associated with the order
     table: {
         type: ObjectId,
         ref: 'Table',
         default: null
     },
+    // User associated with the order
     user: {
         type: ObjectId,
         ref: 'User',
         default: null
     },
-    employee: {
+    // Created by employee
+    createBy: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'Employee',
         default: null
     },
+    // Cashier employee
+    casher: {
+        type: ObjectId,
+        ref: 'Employee',
+        default: null
+    },
+    // Customer name
     name: {
         type: String,
         minLength: 3
     },
+    // Customer address
     address: {
         type: String,
         default: null,
     },
+    // Customer phone number
     phone: {
         type: String,
         default: null,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true,
-    },
-
+    // Waiter serving the order
     waiter: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'Employee',
         default: null
     },
+    // Delivery person for the order
     deliveryMan: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'Employee',
         default: null
     },
+    // Help status for the order
     help: {
         type: String,
-        default: 'لم يطلب',
+        default: 'Not requested',
         required: true,
-        enum: ['لم يطلب', 'يطلب مساعدة', 'يطلب الفاتورة', 'ارسال ويتر', 'في الطريق', 'تمت المساعدة'],
+        enum: ['Not requested', 'Requests assistance', 'Requests bill', 'Send waiter', 'On the way', 'Assistance done'],
     },
+    // Status of the order
     status: {
         type: String,
-        default: 'انتظار',
+        default: 'Pending',
         required: true,
-        enum: ['انتظار', 'موافق', 'جاري التحضير', 'تم التحضير', 'في الطريق', 'تم التوصيل', 'ملغي'],
+        enum: ['Pending', 'Approved', 'Preparing', 'Prepared', 'On the way', 'Delivered', 'Cancelled'],
     },
+    // Type of order (internal, delivery, takeout)
     order_type: {
         type: String,
-        enum: ['داخلي', 'ديلفري', 'تيك اوي'],
-        default: 'داخلي',
+        enum: ['Internal', 'Delivery', 'Takeout'],
+        default: 'Internal',
         required: true
     },
+    // Indicates if the order is active
     isActive: {
         type: Boolean,
         default: true,
         required: true,
     },
-
+    // Payment status of the order
     payment_status: {
         type: String,
-        default: 'انتظار',
+        default: 'Pending',
         required: true,
-        enum: ['انتظار', 'تم الدفع'],
+        enum: ['Pending', 'Paid'],
         trim: true,
     },
+    // Date of payment
     payment_date: {
         type: Date,
         default: Date.now,
         required: true,
     },
+    // Payment method used
     payment_method: {
         type: String,
         default: 'Cash',
@@ -183,9 +208,8 @@ const OrderSchema = new mongoose.Schema({
             message: '{VALUE} is not a valid payment method'
         }
     },
-}, { timestamps: true }
-);
-
+}, { timestamps: true });
 
 const OrderModel = mongoose.model('Order', OrderSchema);
-module.exports = OrderModel
+
+module.exports = OrderModel;

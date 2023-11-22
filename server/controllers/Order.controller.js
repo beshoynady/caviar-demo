@@ -1,138 +1,120 @@
-const OrderModel = require('../models/Order.model')
+const OrderModel = require('../models/Order.model');
 
-
-const createorder = async (req, res) => {
-    const serial = await req.body.serial;
-    const ordernum = await req.body.ordernum;
-    const products = await req.body.products;
-    const table = await req.body.table;
-    const user = await req.body.user;
-    const total = await req.body.total;
-    const totalAfterTax = await req.body.totalAfterTax;
-    const order_type = await req.body.order_type;
-    const notes = await req.body.notes;
-    const help = await req.body.help;
-    const employee = await req.body.employee
-    const name = await req.body.name
-    const phone = await req.body.phone
-    const address = await req.body.address
-
+// Create a new order
+const createOrder = async (req, res) => {
     try {
-        const neworder = await OrderModel.create({
+        const {
             serial,
             ordernum,
             products,
+            total,
+            Tax,
+            deliveryCost,
             table,
             user,
-            total,
-            totalAfterTax,
-            order_type,
-            notes,
+            createBy,
+            casher,
+            name: customerName,
+            address: customerAddress,
+            phone: customerPhone,
+            waiter,
+            deliveryMan,
             help,
-            employee,
-            name,
-            phone,
-            address
-        });
-        neworder.save();
-        res.status(200).json(neworder)
-    } catch (err) {
-        res.json(err).status(400)
-    }
-}
-
-
-const getorder = async (req, res) => {
-    const orderid = await req.params.id
-    try {
-        const order = await OrderModel.findById(orderid)
-        res.status(200).json(order)
-    } catch (err) {
-        res.status(400).json(err)
-    }
-}
-
-
-
-const getorders = async (req, res) => {
-    try {
-        const orders = await OrderModel.find()
-        res.status(200).json(orders)
-    } catch (err) {
-        res.status(400).json(err)
-    }
-}
-const updateorder = async (req, res) => {
-    const orderid = await req.params.id;
-    const products = await req.body.products;
-    const table = await req.body.tableid;
-    const user = await req.body.userid;
-    const total = await req.body.total;
-    const totalAfterTax = await req.body.totalAfterTax;
-    const status = await req.body.status;
-    const payment_status = await req.body.payment_status;
-    const isActive = await req.body.isActive;
-    const isAdd = await req.body.isAdd;
-    const order_type = await req.body.order_type
-    const notes = await req.body.notes
-    const waiter = await req.body.waiter
-    const help = await req.body.help
-    const employee = await req.body.employee
-    try {
-        const updatedorder = await OrderModel.findByIdAndUpdate(orderid, {
-            products,
-            table,
-            user,
-            total,
-            totalAfterTax,
             status,
-            payment_status,
-            help,
+            order_type: orderType,
             isActive,
-            isAdd,
-            employee,
-            order_type,
-            notes,
-            waiter
-        })
-        await updatedorder.save();
-        res.status(200).json(updatedorder)
+            payment_status: paymentStatus,
+            payment_method: paymentMethod,
+            payment_date: paymentDate // Include if available in req.body
+        } = req.body;
+
+        const newOrder = await OrderModel.create({
+            serial,
+            ordernum,
+            products,
+            total,
+            Tax,
+            deliveryCost,
+            table,
+            user,
+            createBy,
+            casher,
+            name: customerName,
+            address: customerAddress,
+            phone: customerPhone,
+            waiter,
+            deliveryMan,
+            help,
+            status,
+            order_type: orderType,
+            isActive,
+            payment_status: paymentStatus,
+            payment_method: paymentMethod,
+            payment_date: paymentDate // Include if available in req.body
+        });
+
+        res.status(201).json(newOrder);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ error: err.message });
     }
-}
+};
 
-// const addproduct=async()=>{
-//     const orderid = req.params.id;
-//     const products = req.body.products;
-//     try{
-//         const addorder = await OrderModel.findByIdAndUpdate(orderid,{$push:{
-//             products:products}
-//             })
-//             addorder.save();
-//             res.status(200).json(addorder)
-//     }catch(err){
-//         res.status(400).json(err)
-//         }
-// }
-
-const deleteorder = async (req, res) => {
-    const orderid = req.params.id;
+// Get an order by ID
+const getOrder = async (req, res) => {
     try {
-        const deletedorder = await OrderModel.findByIdAndDelete(orderid)
-        res.status(200).json(deletedorder)
+        const orderId = req.params.id;
+        const order = await OrderModel.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        res.status(200).json(order);
     } catch (err) {
-        res.status(400).json(err)
+        res.status(400).json({ error: err.message });
     }
-}
+};
+
+// Get all orders
+const getOrders = async (req, res) => {
+    try {
+        const orders = await OrderModel.find();
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+// Update an order by ID
+const updateOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const updatedOrder = await OrderModel.findByIdAndUpdate(orderId, req.body, { new: true });
+        if (!updatedOrder) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        res.status(200).json(updatedOrder);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+// Delete an order by ID
+const deleteOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const deletedOrder = await OrderModel.findByIdAndDelete(orderId);
+        if (!deletedOrder) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        res.status(200).json(deletedOrder);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
 
 module.exports = {
-    createorder,
-    getorder,
-    getorders,
-    updateorder,
-    deleteorder
-}
-
-
-
+    createOrder,
+    getOrder,
+    getOrders,
+    updateOrder,
+    deleteOrder
+};

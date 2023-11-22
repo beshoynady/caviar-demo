@@ -834,7 +834,7 @@ function App() {
     getallTable();
     getallUsers();
     getallemployees()
-    getUserInfoFromToken()
+    // getUserInfoFromToken()
   }, [])
 
 

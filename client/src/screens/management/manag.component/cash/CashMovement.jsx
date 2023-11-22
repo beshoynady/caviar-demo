@@ -298,7 +298,7 @@ const CashMovement = () => {
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-success" value="ايداع" />
+                        <input type="submit" className="btn btn-success"  data-dismiss="modal" value="ايداع" />
                       </div>
                     </form>
                   </div>

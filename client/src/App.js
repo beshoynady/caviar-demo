@@ -329,15 +329,12 @@ function App() {
             const total = subTotal + tax + deliveryCost
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
               serial,
-              ordernum,
               products,
               subTotal,
               tax,
               deliveryCost,
               total,
               user,
-              createBy,
-              casher,
               name,
               address,
               phone,
@@ -356,9 +353,6 @@ function App() {
               total,
               table,
               user,
-              createBy,
-              casher,
-              help,
               order_type,
           })
           }
@@ -401,10 +395,10 @@ function App() {
 
     let orderId, oldProducts, oldTotal, Tax;
 
-    if (lastTableOrderActive) {
-      orderId = lastTableOrder._id;
-      ({ products: oldProducts, total: oldTotal } = await getOldOrderDetails(orderId));
-    }
+    // if (lastTableOrderActive) {
+    //   orderId = lastTableOrder._id;
+    //   ({ products: oldProducts, total: oldTotal } = await getOldOrderDetails(orderId));
+    // }
 
     const total = costOrder + oldTotal;
     const calc_tax = total * 0.14;

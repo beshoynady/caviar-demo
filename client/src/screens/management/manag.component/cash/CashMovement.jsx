@@ -36,8 +36,8 @@ const CashMovement = () => {
     }
   };
 
-  const addCashMovementAndUpdateBalance = async (e) => {
-    e.preventDefault();
+  const addCashMovementAndUpdateBalance = async () => {
+    // e.preventDefault();
 
     try {
       // Send cash movement data to the API

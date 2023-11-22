@@ -321,7 +321,7 @@ function App() {
           const products = [...ItemsInCart]
           const subTotal = costOrder;
           const tax = subTotal * 0.14
-          const name = finduser ? finduser.name : ''
+          const name = finduser ? finduser.fullname : ''
           const phone = finduser ? finduser.phone : ''
           const address = finduser ? finduser.address : ''
           if (user) {
@@ -516,9 +516,8 @@ function App() {
         setordertotal(data.total)
         setordersubtotal(data.subtotal)
         setordertax(data.tax)
-        setorderdeliveryCost(data.deliveryCost)
         setItemsInCart([])
-
+        
       } else if (lastuserorderactive) {
         const id = await lastuserorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
@@ -532,6 +531,7 @@ function App() {
         setordertotal(data.total)
         setordersubtotal(data.subtotal)
         setordertax(data.tax)
+        setorderdeliveryCost(data.deliveryCost)
         setItemsInCart([])
       }
     } else {

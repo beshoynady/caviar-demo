@@ -321,7 +321,7 @@ function App() {
           const products = [...ItemsInCart]
           const subTotal = costOrder;
           const tax = subTotal * 0.14
-          const name = finduser ? finduser.fullname : ''
+          const name = finduser ? finduser.username : ''
           const phone = finduser ? finduser.phone : ''
           const address = finduser ? finduser.address : ''
           if (user) {

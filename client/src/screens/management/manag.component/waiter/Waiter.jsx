@@ -12,8 +12,8 @@ const Waiter = () => {
   const [pending_payment, setpending_payment] = useState([])
   const PendingOrder = async () => {
     const res = await axios.get('https://caviar-api.vercel.app/api/order')
-    const recent_status = await res.data.filter((order) => order.status == 'انتظار')
-    const recent_payment_status = await res.data.filter((order) => order.payment_status == 'انتظار')
+    const recent_status = await res.data.filter((order) => order.status == 'Pending')
+    const recent_payment_status = await res.data.filter((order) => order.payment_status == 'Pending')
     setpending_order(recent_status)
     setpending_payment(recent_payment_status)
   }
@@ -24,7 +24,7 @@ const Waiter = () => {
     try {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders)
-      const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'تم التحضير' || order.status == 'في الطريق')
+      const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'Prepared' || order.status == 'On the way')
       console.log(orderisctive)
       setorderactive(orderisctive)
 
@@ -36,7 +36,7 @@ const Waiter = () => {
   const orderOnWay = async (id) => {
     // const waiter = waiterid;
     try {
-      const status = 'في الطريق'
+      const status = 'On the way'
       const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         status
       })
@@ -51,7 +51,7 @@ console.log(error)
   }
   const helpOnWay = async (id) => {
     try {
-      const help = 'في الطريق'
+      const help = 'On the way'
       const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         help
       })
@@ -68,7 +68,7 @@ console.log(error)
 
   const helpDone = async (id) => {
     try {
-      const help = 'تمت المساعدة'
+      const help = 'Assistance done'
       const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         help
       })
@@ -95,7 +95,7 @@ console.log(error)
     }
     console.log(products)
     if(products.length == cloneproduct.length){
-      const status = 'تم التوصيل'
+      const status = 'Delivered'
       const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         products,
         status
@@ -121,7 +121,7 @@ console.log(error)
           return (
             <div className='Waiter'>
 
-              {pending_payment.filter((order) => order.isActive == false || order.help == 'ارسال ويتر' ||order.help == 'في الطريق').map((order, i) => {
+              {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' ||order.help == 'On the way').map((order, i) => {
                 return (
                   <div className="wai-card" key={i}>
                     <div className="card-info">
@@ -136,16 +136,16 @@ console.log(error)
                       <ul className='card-ul'>
                         <li className="card-li">
                             <p className='product-name' >{order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                            <p className='product-name' >{order.help!= 'لم يطلب' ? 'يحتاج المساعدة' : order.isActive == false ? 'يحتاج الفاتورة' : ''}</p>
+                            <p className='product-name' >{order.help!= 'Not requested' ? 'يحتاج المساعدة' : order.isActive == false ? 'يحتاج الفاتورة' : ''}</p>
 
                         </li>
 
                       </ul>
                     </div>
                     <div className='card-btn'>
-                      {order.help == 'ارسال ويتر' ?
+                      {order.help == 'Send waiter' ?
                         <button ref={ready} className='btn-ready' onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
-                        :order.help == 'في الطريق' ? <button ref={start} className='btn-start' onClick={() => helpDone(order._id)}>تم</button>
+                        :order.help == 'On the way' ? <button ref={start} className='btn-start' onClick={() => helpDone(order._id)}>تم</button>
                       :''}
                     </div>
                   </div>
@@ -180,7 +180,7 @@ console.log(error)
                         </ul>
                       </div>
                       <div className='card-btn'>
-                        {order.status == 'تم التحضير' ?
+                        {order.status == 'Prepared' ?
                           <button ref={ready} className='btn-ready' onClick={() => { orderOnWay(order._id) }}>استلام الاوردر</button>
                           : <button ref={start} className='btn-start' onClick={() => orderDelivered(order._id)}>تم التسليم</button>
                         }

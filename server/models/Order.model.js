@@ -126,6 +126,7 @@ const OrderSchema = new mongoose.Schema({
         ref: 'Employee',
         default: null
     },
+    
     // Customer name
     name: {
         type: String,
@@ -170,7 +171,7 @@ const OrderSchema = new mongoose.Schema({
     // Type of order (internal, delivery, takeout)
     order_type: {
         type: String,
-        enum: ['Internal', 'Delivery', 'Takeout'],
+        enum: ['Internal', 'Delivery', 'Takeaway'],
         default: 'Internal',
         required: true
     },

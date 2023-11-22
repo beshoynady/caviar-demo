@@ -207,7 +207,7 @@ const Employees = () => {
                             <select class="form-control" onChange={(e) => getemployeesByJob(e.target.value)} >
                               <option>الكل</option>
                               <option value="manager">مدير</option>
-                              <option value="casher">كاشير</option>
+                              <option value="casher">Cashير</option>
                               <option value="waiter">ويتر</option>
                               <option value="Chef">شيف</option>
                             </select>
@@ -375,7 +375,7 @@ const Employees = () => {
                             <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
                               <option>اختار وظيفة</option>
                               <option value="manager">مدير</option>
-                              <option value="casher">كاشير</option>
+                              <option value="casher">Cashير</option>
                               <option value="waiter">ويتر</option>
                               <option value="Chef">شيف</option>
                             </select>
@@ -448,7 +448,7 @@ const Employees = () => {
                             <select name={role} form="carform" defaultValue={role} required onChange={(e) => setrole(e.target.value)}>
                               <option>اختار وظيفة</option>
                               <option value="manager">مدير</option>
-                              <option value="casher">كاشير</option>
+                              <option value="casher">Cashير</option>
                               <option value="waiter">ويتر</option>
                               <option value="Chef">شيف</option>
                             </select>

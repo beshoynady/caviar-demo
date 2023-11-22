@@ -18,7 +18,7 @@ const Kitchen = () => {
       // console.log(orders.data)
       setallOrders(orders.data)
 
-      const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'موافق' || order.status == 'جاري التحضير')
+      const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'Approved' || order.status == 'Preparing')
       // console.log(orderisctive)
       setorderactive(orderisctive)
     } catch (error) {
@@ -71,7 +71,7 @@ const Kitchen = () => {
   const orderInprogress = async (id) => {
     // await specifiedWaiter();
     const waiter = await specifiedWaiter()
-    const status = 'جاري التحضير'
+    const status = 'Preparing'
     const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       status, waiter
     })
@@ -82,7 +82,7 @@ const Kitchen = () => {
 
 
   const orderDone = async (id) => {
-    const status = 'تم التحضير'
+    const status = 'Prepared'
     const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
       status
     })
@@ -136,8 +136,8 @@ const Kitchen = () => {
                         <p className="info-p">نوع الطلب {order.order_type}</p>
                         {order.waiter ? <p className="info-p">الويتر {usertitle(order.waiter)}</p> : ""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
-                        {/* <p className="info-p">الانتظار {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الانتظار {Waitingtime(order.createdAt)} دقيقه</p>
+                        {/* <p className="info-p">الPending {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
+                        <p className="info-p">الPending {Waitingtime(order.createdAt)} دقيقه</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>
@@ -157,7 +157,7 @@ const Kitchen = () => {
                         </ul>
                       </div>
                       <div className='card-btn'>
-                        {order.status == 'جاري التحضير' ? <button ref={ready} className='btn-ready' onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                        {order.status == 'Preparing' ? <button ref={ready} className='btn-ready' onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
                           : <button ref={start} className='btn-start' onClick={() => orderInprogress(order._id)}>بدء التنفيذ</button>
 
                         }

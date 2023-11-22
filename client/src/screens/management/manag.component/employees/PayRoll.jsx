@@ -554,7 +554,7 @@ const PayRoll = () => {
                           <select class="form-control" >
                             <option>الكل</option>
                             <option value="manager">مدير</option>
-                            <option value="casher">كاشير</option>
+                            <option value="casher">Cashير</option>
                             <option value="waiter">ويتر</option>
                             <option value="Chef">شيف</option>
                           </select>
@@ -700,7 +700,7 @@ const PayRoll = () => {
                           <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
-                            <option value="casher">كاشير</option>
+                            <option value="casher">Cashير</option>
                             <option value="waiter">ويتر</option>
                             <option value="Chef">شيف</option>
                           </select>
@@ -766,7 +766,7 @@ const PayRoll = () => {
                           <select form="carform" required defaultValue={role} onChange={(e) => setrole(e.target.value)}>
                             <option>اختار وظيفة</option>
                             <option value="manager">مدير</option>
-                            <option value="casher">كاشير</option>
+                            <option value="casher">Cashير</option>
                             <option value="waiter">ويتر</option>
                             <option value="Chef">شيف</option>
                           </select>

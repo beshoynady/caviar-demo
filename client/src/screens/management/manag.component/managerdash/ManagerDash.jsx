@@ -16,8 +16,8 @@ const ManagerDash = () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       setallOrders(res.data);
-      const recentStatus = res.data.filter((order) => order.status === 'انتظار');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'انتظار');
+      const recentStatus = res.data.filter((order) => order.status === 'Pending');
+      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
       setpending_order(recentStatus);
       setpending_payment(recentPaymentStatus);
     } catch (error) {
@@ -26,7 +26,7 @@ const ManagerDash = () => {
   };
 
 
-  const status = ['انتظار', 'موافق', 'ملغي']
+  const status = ['Pending', 'Approved', 'Cancelled']
   const [update, setupdate] = useState(false)
 
   const changeorderstauts = async (e, id) => {
@@ -42,11 +42,11 @@ const ManagerDash = () => {
     }
 
   }
-  const paymentstatus = ['انتظار', 'تم الدفع']
+  const paymentstatus = ['Pending', 'Paid']
   const changePaymentorderstauts = async (e, id) => {
     try {
       const payment_status = e.target.value
-      const isActive =payment_status=='تم الدفع'? false : true;
+      const isActive =payment_status=='Paid'? false : true;
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status ,isActive
       })
@@ -57,7 +57,7 @@ const ManagerDash = () => {
     }
   }
 
-  // ارسال ويتر 
+  // Send waiter 
   const [waiters, setwaiters] = useState([])
 
   const fetchActiveWaiters = async () => {
@@ -95,7 +95,7 @@ const ManagerDash = () => {
 
 
   const sendWaiter = async (id) => {
-    const help = 'ارسال ويتر';
+    const help = 'Send waiter';
     const waiter = specifiedWaiter();
     try {
       const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
@@ -213,7 +213,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p>في الانتظار</p>
+                      <p>في الPending</p>
                       <h3>
                         {pending_order.length}
                       </h3>
@@ -222,7 +222,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p> انتظار الدفع</p>
+                      <p> Pending الدفع</p>
                       <h3>
                         {pending_payment.length}
                       </h3>
@@ -295,9 +295,9 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'تم الدفع' } }, recent._id); RevenueRecording(userLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id); RevenueRecording(userLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
-                                    تم الدفع
+                                    Paid
                                   </button>
                                 </td>
                                 {/* <td>
@@ -336,13 +336,13 @@ const ManagerDash = () => {
                       <i className='bx bx-filter'></i>
                     </div>
                     <ul className="task-list">
-                      {pending_payment.filter((order) => order.payment_status == 'انتظار' && order.order_type == 'داخلي' && order.isActive == false || order.help !== 'لم يطلب').map((order, i) => {
+                      {pending_payment.filter((order) => order.payment_status == 'Pending' && order.order_type == 'Internal' && order.isActive == false || order.help !== 'Not requested').map((order, i) => {
                         return (
                           <li className="completed" key={i}>
                             <div className="task-title">
                               <p><i className='bx bx-check-circle'></i> {usertitle(order.table)}</p>
                               <p>{order.help}</p>
-                              {order.help == 'يطلب مساعدة' || order.help == 'يطلب الفاتورة' ? <button type="button" className="btn btn-primary" onClick={() => sendWaiter(order._id)}>ارسال ويتر</button> :
+                              {order.help == 'Requests assistance' || order.help == 'Requests bill' ? <button type="button" className="btn btn-primary" onClick={() => sendWaiter(order._id)}>Send waiter</button> :
                                 <p>تم ارسال {usertitle(order.waiter)}</p>}
                             </div>
                             <i className='bx bx-dots-vertical-rounded'></i>

@@ -13,7 +13,7 @@ const Kit_card = () => {
         </span>رقم الطلب</p>
         <p><span class="material-symbols-outlined">
           hourglass_top
-        </span>الانتظار</p>
+        </span>الPending</p>
         <p><span class="material-symbols-outlined">
           timelapse
         </span>التحضير</p>

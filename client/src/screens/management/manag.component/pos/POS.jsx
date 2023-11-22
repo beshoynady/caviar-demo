@@ -275,11 +275,11 @@ const POS = () => {
                           <label htmlFor="name">نوع الاوردر</label>
                           <select id='table' required onChange={(e) => { setordertype(e.target.value) }}>
                             <option >اختر نوع الاوردر</option>
-                            <option value='ديلفري'>ديلفري</option>
-                            <option value='تيك اوي'>تيك اوي</option>
+                            <option value='Delivery'>Delivery</option>
+                            <option value='Takeaway'>Takeaway</option>
                           </select>
                         </div>
-                        {ordertype ? ordertype == 'ديلفري' ?
+                        {ordertype ? ordertype == 'Delivery' ?
                           <><div className='formgroup'>
                             <label htmlFor="name">اسم العميل</label>
                             <input type='text' className="info-input" required onChange={(e) => setclientname(e.target.value)} />

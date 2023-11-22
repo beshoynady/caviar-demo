@@ -108,9 +108,9 @@ const Orders = () => {
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => getOrdersByType(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="داخلي" >داخلي</option>
-                            <option value="ديلفري" >ديلفري</option>
-                            <option value="تيك اوي" >تيك اوي</option>
+                            <option value="Internal" >Internal</option>
+                            <option value="Delivery" >Delivery</option>
+                            <option value="Takeaway" >Takeaway</option>
                           </select>
                         </div>
                         {/* <div class="filter-group">
@@ -167,7 +167,7 @@ const Orders = () => {
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
                                     : o.employee ? usertitle(o.employee) : ''}</td>
-                                <td>{o.order_type == 'داخلي' ? usertitle(o.table) : o.order_type}</td>
+                                <td>{o.order_type == 'Internal' ? usertitle(o.table) : o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
                                 <td>{o.payment_status}</td>
@@ -195,7 +195,7 @@ const Orders = () => {
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
                                     : o.employee ? usertitle(o.employee) : ''}</td>
-                                <td>{o.order_type == 'داخلي' ? usertitle(o.table) : o.order_type}</td>
+                                <td>{o.order_type == 'Internal' ? usertitle(o.table) : o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
                                 <td>{o.payment_status}</td>

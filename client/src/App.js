@@ -323,9 +323,10 @@ function App() {
           const name = finduser ? finduser.name : ''
           const phone = finduser ? finduser.phone : ''
           const address = finduser ? finduser.address : ''
-          const total = subTotal + tax
           if (user) {
             const order_type = 'Delivery'
+            const deliveryCost = 10
+            const total = subTotal + tax + deliveryCost
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
               serial,
               ordernum,
@@ -346,6 +347,7 @@ function App() {
             getProducts()
           } else {
             const order_type = 'داخلي'
+            const total = subTotal + tax
             const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
               serial,
               products,

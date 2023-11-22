@@ -237,6 +237,7 @@ function App() {
       total: order.data.total
     };
   };
+  
   // Main function to create a client's order
   const createClientOrder = async (clientID) => {
     if (!clientID) {

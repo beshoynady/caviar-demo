@@ -44,7 +44,7 @@ const Header = () => {
                 <div className='right-nav'>
                   {!id && (
                     <>
-                      {userLoginInfo & userLoginInfo.userinfo ? (
+                      {userLoginInfo && userLoginInfo.userinfo ? (
                         <div className="nav-logout" onClick={logout}> خروج
                           <span className="material-symbols-outlined">logout</span>
                         </div>

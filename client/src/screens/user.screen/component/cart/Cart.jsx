@@ -23,7 +23,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, createClientOrder, invoice, totalinvoice, list_products_order
+        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, createClientOrder, invoice, totalinvoice, list_products_order,ordertotal, ordersubtotal, ordertax, orderdeliveryCost
           , orderupdate_date, myorder, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -147,21 +147,25 @@ const Cart = (props) => {
 
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>المجموع</h2></td>
-                                  <td className="payment"><h2>{totalinvoice}</h2></td>
+                                  <td className="payment"><h2>{ordersubtotal}</h2></td>
                                 </tr>
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
-                                  <td className="payment"><h2>{totalinvoice * 0.14}</h2></td>
+                                  <td className="payment"><h2>{ordertax}</h2></td>
                                 </tr>
-                                {}
+                                {orderdeliveryCost?<tr className="tabletitle">
+                                  <td className="Rate" colspan="3"><h2>الديلفري</h2></td>
+                                  <td className="payment"><h2>{orderdeliveryCost}</h2></td>
+                                </tr>
+                                :''}
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
-                                  <td className="payment"><h2>{totalinvoice * 0.14}</h2></td>
+                                  <td className="payment"><h2>{ordertax}</h2></td>
                                 </tr>
 
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>
-                                  <td className="payment"><h2>{totalinvoice + totalinvoice * 0.14}</h2></td>
+                                  <td className="payment"><h2>{ordertotal}</h2></td>
                                 </tr>
 
                               </table>

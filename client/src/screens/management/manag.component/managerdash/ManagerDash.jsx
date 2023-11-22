@@ -213,7 +213,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p>في الPending</p>
+                      <p>في الانتظار</p>
                       <h3>
                         {pending_order.length}
                       </h3>
@@ -222,7 +222,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p> Pending الدفع</p>
+                      <p> انتظار الدفع</p>
                       <h3>
                         {pending_payment.length}
                       </h3>

@@ -486,6 +486,10 @@ function App() {
   const [list_products_order, setlist_products_order] = useState([])
   const [orderupdate_date, setorderupdate_date] = useState('')
   const [myorderid, setmyorderid] = useState()
+  const [ordertax, setordertax] = useState()
+  const [ordertotal, setordertotal] = useState()
+  const [ordersubtotal, setordersubtotal] = useState()
+  const [orderdeliveryCost, setorderdeliveryCost] = useState()
 
   const invoice = async (clientid) => {
     console.log(clientid)
@@ -509,6 +513,10 @@ function App() {
         setmyorderid(data._id)
         setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
+        setordertotal(data.total)
+        setordersubtotal(data.subtotal)
+        setordertax(data.tax)
+        setorderdeliveryCost(data.deliveryCost)
         setItemsInCart([])
 
       } else if (lastuserorderactive) {
@@ -521,6 +529,9 @@ function App() {
         settotalinvoice(data.total)
         setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
+        setordertotal(data.total)
+        setordersubtotal(data.subtotal)
+        setordertax(data.tax)
         setItemsInCart([])
       }
     } else {
@@ -839,6 +850,7 @@ function App() {
     getallOrders()
     costOfOrder()
     getUserInfoFromToken()
+    Payment_pending_orders()
 
   }, [count, ItemsInCart, isLogin])
 
@@ -854,7 +866,8 @@ function App() {
       createClientOrder, checkout, calcTotalSalesOfCategory, updatecountofsales,
       createWaiterOrder, createCasherOrder, POSinvoice,
       EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid,
-      showdate
+      showdate,
+      ordertotal, ordersubtotal, ordertax, orderdeliveryCost
     }}>
       <BrowserRouter>
         <Routes>

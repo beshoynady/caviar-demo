@@ -153,6 +153,11 @@ const Cart = (props) => {
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
                                   <td className="payment"><h2>{totalinvoice * 0.14}</h2></td>
                                 </tr>
+                                {}
+                                <tr className="tabletitle">
+                                  <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
+                                  <td className="payment"><h2>{totalinvoice * 0.14}</h2></td>
+                                </tr>
 
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>

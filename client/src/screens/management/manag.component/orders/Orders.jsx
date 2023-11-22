@@ -192,6 +192,7 @@ const Orders = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{o.serial}</td>
+                                <td>{o.ordernum}</td>
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
                                     : o.employee ? usertitle(o.employee) : ''}</td>

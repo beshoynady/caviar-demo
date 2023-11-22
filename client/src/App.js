@@ -514,7 +514,7 @@ function App() {
         setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)
         setordertotal(data.total)
-        setordersubtotal(data.subtotal)
+        setordersubtotal(data.subTotal)
         setordertax(data.tax)
         setItemsInCart([])
         

@@ -386,15 +386,15 @@ function App() {
   const createWaiterOrder = async (tableid, waiterid) => {
     console.log(tableid)
     console.log(waiterid)
-    const tableorder = allorders.filter((o, i) => o.table == tableid);
+    const tableorder = allOrders.filter((o, i) => o.table == tableid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
 
     if (lasttableorderactive) {
       const id = await lasttableorder._id
-      const oldproducts = await allorders.find((order) => order._id == id).products;
-      const oldtotal = await allorders.find((order) => order._id == id).total
-      const products = [...itemsincart, ...oldproducts]
+      const oldproducts = await allOrders.find((order) => order._id == id).products;
+      const oldtotal = await allOrders.find((order) => order._id == id).total
+      const products = [...ItemsInCart, ...oldproducts]
       const total = costOrder + oldtotal
       const tax = total * 0.14
       const totalAfterTax = total + tax
@@ -405,11 +405,11 @@ function App() {
       })
       console.log(employee)
       console.log(neworder)
-      setitemsincart([])
+      setItemsInCart([])
     } else {
       try {
-        const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
-        const products = [...itemsincart]
+        const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+        const products = [...ItemsInCart]
         const total = costOrder;
         const tax = total * 0.14
         const totalAfterTax = total + tax
@@ -428,7 +428,7 @@ function App() {
           employee
         })
         console.log(neworder)
-        setitemsincart([])
+        setItemsInCart([])
 
       } catch (error) {
         console.log(error)
@@ -438,12 +438,12 @@ function App() {
 
   const createCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype) => {
     try {
-      const dayorders = allorders.length > 0 ? allorders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()) : ''
+      const dayorders = allOrders.length > 0 ? allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()) : ''
       // const ordernum =  new Date().getHours() == 0 && new Date().getMinutes() >= 0 ?
-      //  allorders.find(order => order.createdAt.
+      //  allOrders.find(order => order.createdAt.
       const ordernum = dayorders.length > 0 ? dayorders[dayorders.length - 1].ordernum + 1 : 1
-      const serial = allorders.length > 0 ? allorders[allorders.length - 1].serial + 1 : 1;
-      const products = [...itemsincart]
+      const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+      const products = [...ItemsInCart]
       const total = costOrder;
       const tax = total * 0.14
       const totalAfterTax = total + tax
@@ -465,7 +465,7 @@ function App() {
         address
       })
       console.log(neworder)
-      setitemsincart([])
+      setItemsInCart([])
 
     } catch (error) {
       console.log(error)

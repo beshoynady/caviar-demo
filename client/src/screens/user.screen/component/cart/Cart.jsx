@@ -92,7 +92,7 @@ const Cart = (props) => {
                       </div>
                       <div className="total-order">
 
-                        {id ? <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrder(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
+                        {id ? <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب الطاوله</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrder(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
                           : ''}
 
                         <div className='total-order-details'>

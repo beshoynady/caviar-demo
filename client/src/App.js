@@ -203,7 +203,7 @@ function App() {
     if (ItemsInCart.length > 0) {
       let total = 0;
       ItemsInCart.map((item) => {
-        item.totalprice = item.discount > 0 ? item.priceAfterDiscount * item.quantity : item.price * item.quantity;
+        item.totalprice = item.priceAfterDiscount > 0 ? item.priceAfterDiscount * item.quantity : item.price * item.quantity;
         total += item.totalprice
         setcostOrder(total)
       })

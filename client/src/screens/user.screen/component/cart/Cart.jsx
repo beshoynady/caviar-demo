@@ -138,7 +138,7 @@ const Cart = (props) => {
                                     <tr className="service">
                                       <td className="tableitem"><p className="itemtext">{item.name}</p></td>
                                       <td className="tableitem"><p className="itemtext">{item.quantity}</p></td>
-                                      <td className="tableitem"><p className="itemtext">{item.price}</p></td>
+                                      <td className="tableitem"><p className="itemtext">{item.priceAfterDiscount? item.priceAfterDiscount:item.price}</p></td>
                                       <td className="tableitem"><p className="itemtext">{item.totalprice}</p></td>
                                     </tr>)
                                 }

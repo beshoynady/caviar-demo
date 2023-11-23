@@ -232,13 +232,14 @@ function App() {
         const id = await lasttableorder._id
         const oldproducts = await allOrders.find((order) => order._id == id).products;
         const oldsubTotal = await allOrders.find((order) => order._id == id).subTotal
+        const status = lasttableorder.status
         // const products = [...ItemsInCart, ...oldproducts]
         const subTotal = costOrder + oldsubTotal
         const tax = total * 0.14
         const total = subTotal + tax
         console.log(ItemsInCart)
 
-        if (lasttableorder.status == 'Preparing') {
+        if (status === 'Pending' || status === 'Approved' || status === 'Preparing') {
           const additem = []
           for (let i = 0; i < ItemsInCart.length; i++) {
             ItemsInCart[i].isAdd = true;
@@ -249,7 +250,7 @@ function App() {
           console.log(products)
           const status = 'Pending'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products,subTotal, total, tax, status
+            products, subTotal, total, tax, status
           })
           setItemsInCart([])
           getProducts()
@@ -258,7 +259,7 @@ function App() {
           console.log(products)
           const status = 'Pending'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products,subTotal, total, tax, status
+            products, subTotal, total, tax, status
           })
         }
         setItemsInCart([])
@@ -284,7 +285,7 @@ function App() {
           const status = 'Pending'
           const order_type = 'Delivery'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products,subTotal, total, tax,deliveryCost, status, order_type
+            products, subTotal, total, tax, deliveryCost, status, order_type
           })
           setItemsInCart([])
           getProducts()
@@ -294,7 +295,7 @@ function App() {
           const status = 'Pending'
           const order_type = 'Delivery'
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-            products,subTotal, total, tax,deliveryCost, status, order_type
+            products, subTotal, total, tax, deliveryCost, status, order_type
           })
         }
 
@@ -329,7 +330,7 @@ function App() {
               address,
               phone,
               order_type,
-          })
+            })
             setItemsInCart([])
             getProducts()
           } else {
@@ -344,7 +345,7 @@ function App() {
               table,
               user,
               order_type,
-          })
+            })
           }
           // console.log(await neworder.data);
           setItemsInCart([])
@@ -384,37 +385,37 @@ function App() {
       const oldproducts = await allOrders.find((order) => order._id == id).products;
       const oldtotal = await allOrders.find((order) => order._id == id).total
       const products = [...ItemsInCart, ...oldproducts]
-      const total = costOrder + oldtotal
-      const tax = total * 0.14
-      const totalAfterTax = total + tax
+      const subTotal = costOrder + oldtotal
+      const tax = subTotal * 0.14
+      const total = subTotal + tax
       const status = 'Pending'
-      const employee = waiterid
+      const createBy = waiterid
       const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        products, total, totalAfterTax, status, employee
+        products, total, totalAfterTax, status, createBy
       })
-      console.log(employee)
+      console.log(createBy)
       console.log(neworder)
       setItemsInCart([])
     } else {
       try {
         const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
         const products = [...ItemsInCart]
-        const total = costOrder;
-        const tax = total * 0.14
-        const totalAfterTax = total + tax
+        const subTotal = costOrder;
+        const tax = subTotal * 0.14
+        const total = subTotal + tax
         const table = await tableid
-        const employee = await waiterid;
-        const order_type = 'داخلي';
+        const createBy = await waiterid;
+        const order_type = 'Internal';
         console.log(table)
-        console.log(employee)
+        console.log(createBy)
         const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
           serial,
           table,
           products,
+          subTotal,
           total,
-          totalAfterTax,
           order_type,
-          employee
+          createBy
         })
         console.log(neworder)
         setItemsInCart([])
@@ -498,7 +499,7 @@ function App() {
         setordersubtotal(data.subTotal)
         setordertax(data.tax)
         setItemsInCart([])
-        
+
       } else if (lastuserorderactive) {
         const id = await lastuserorder._id
         const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)

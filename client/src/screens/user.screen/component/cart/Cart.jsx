@@ -150,7 +150,7 @@ const Cart = (props) => {
                                   <td className="payment"><h2>{ordersubtotal}</h2></td>
                                 </tr>
                                 {orderdeliveryCost?<tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>الديلفري</h2></td>
+                                  <td className="Rate" colspan="3"><h2>الDelivery</h2></td>
                                   <td className="payment"><h2>{orderdeliveryCost}</h2></td>
                                 </tr>
                                 :''}

@@ -309,7 +309,7 @@ function App() {
             const status = lasttableorder.status;
             const subTotal = costOrder + oldsubTotal;
             console.log(subTotal)
-            const tax = total * 0.14;
+            const tax = subTotal * 0.14;
             const total = subTotal + tax;
 
             if (status === 'Preparing') {

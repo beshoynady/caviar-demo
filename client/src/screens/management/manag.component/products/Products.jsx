@@ -249,8 +249,10 @@ const Products = () => {
                         <th>الاسم</th>
                         <th>الوصف</th>
                         <th>التصنيف</th>
+                        <th>التكلفة</th>
                         <th>السعر</th>
                         <th>التخفيض</th>
+                        <th>بعد التخفيض</th>
                         <th>عدد المبيعات</th>
                         <th>اجراءات</th>
                       </tr>
@@ -272,8 +274,10 @@ const Products = () => {
                                 <td>{p.name}</td>
                                 <td>{p.description}</td>
                                 <td>{listofcategories.length > 0 ? listofcategories.find(c => c._id == p.category).name : ""}</td>
+                                <td>{p.totalcost}</td>
                                 <td>{p.price}</td>
                                 <td>{p.discount}</td>
+                                <td>{p.priceAfterDiscount}</td>
                                 <td>{p.sales}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -301,8 +305,10 @@ const Products = () => {
                                 <td>{p.name}</td>
                                 <td>{p.description}</td>
                                 <td>{listofcategories.length > 0 ? listofcategories.find(c => c._id == p.category).name : ""}</td>
+                                <td>{p.totalcost}</td>
                                 <td>{p.price}</td>
                                 <td>{p.discount}</td>
+                                <td>{p.priceAfterDiscount}</td>
                                 <td>{p.sales}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

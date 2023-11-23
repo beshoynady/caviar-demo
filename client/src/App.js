@@ -304,10 +304,11 @@ function App() {
 
         if (lasttableorderactive === true) {
             const id = lasttableorder._id;
-            const oldproducts = (await allOrders.find((order) => order._id === id)).products;
-            const oldsubTotal = (await allOrders.find((order) => order._id === id)).subTotal;
+            const oldproducts = (allOrders.find((order) => order._id === id)).products;
+            const oldsubTotal = (allOrders.find((order) => order._id === id)).subTotal;
             const status = lasttableorder.status;
             const subTotal = costOrder + oldsubTotal;
+            console.log(subTotal)
             const tax = total * 0.14;
             const total = subTotal + tax;
 

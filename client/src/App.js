@@ -217,6 +217,163 @@ function App() {
     return pad.substring(0, pad.length - str.length) + str;
   };
 
+  const createClientOrderForUser = async (clientid, ItemsInCart, costOrder, allOrders, allTable, allUsers, axios, setItemsInCart, getProducts) => {
+    try {
+      const userorder = allOrders.filter((o, i) => o.user == clientid);
+      const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : {};
+      const lastuserorderactive = lastuserorder.isActive
+
+      if (lastuserorderactive === true) {
+        const id = await lasttableorder._id
+        const oldproducts = await allOrders.find((order) => order._id == id).products;
+        const oldsubTotal = await allOrders.find((order) => order._id == id).subTotal
+        const status = lasttableorder.status
+        // const products = [...ItemsInCart, ...oldproducts]
+        const subTotal = costOrder + oldsubTotal
+        const tax = total * 0.14
+        const total = subTotal + tax
+        console.log(ItemsInCart)
+
+        if (status === 'Pending' || status === 'Approved' || status === 'Preparing') {
+          const additem = []
+          for (let i = 0; i < ItemsInCart.length; i++) {
+            ItemsInCart[i].isAdd = true;
+            additem.push(ItemsInCart[i])
+          }
+          console.log(additem)
+          const products = [...additem, ...oldproducts]
+          console.log(products)
+          const status = 'Pending'
+          const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+            products, subTotal, total, tax, status
+          })
+          setItemsInCart([])
+          getProducts()
+        } else {
+          const products = [...ItemsInCart, ...oldproducts]
+          console.log(products)
+          const status = 'Pending'
+          const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+            products, subTotal, total, tax, status
+          })
+        }
+        setItemsInCart([])
+        getProducts()
+      } else {
+        const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+        const finduser = allUsers.find((u, i) => u._id == clientid);
+        const user = finduser ? clientid : null;
+        const products = [...ItemsInCart]
+        const subTotal = costOrder;
+        const tax = subTotal * 0.14
+        const name = finduser ? finduser.username : ''
+        const phone = finduser ? finduser.phone : ''
+        const address = finduser ? finduser.address : ''
+        const order_type = 'Delivery'
+        const deliveryCost = 10
+        const total = subTotal + tax + deliveryCost
+        const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
+          serial,
+          products,
+          subTotal,
+          tax,
+          deliveryCost,
+          total,
+          user,
+          name,
+          address,
+          phone,
+          order_type,
+        })
+        setItemsInCart([])
+        getProducts()
+      }
+    } catch (error) {
+      console.log(error);
+      // Display an error toast here
+      toast.error("An error occurred while creating the order");
+    }
+  };
+
+
+  const createClientOrderForTable = async (tableId) => {
+    try {
+        const tableorder = allOrders.filter((o) => o.table === tableId);
+        const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : {};
+        const lasttableorderactive = lasttableorder.isActive;
+
+        if (lasttableorderactive === true) {
+            const id = lasttableorder._id;
+            const oldproducts = (await allOrders.find((order) => order._id === id)).products;
+            const oldsubTotal = (await allOrders.find((order) => order._id === id)).subTotal;
+            const status = lasttableorder.status;
+            const subTotal = costOrder + oldsubTotal;
+            const tax = total * 0.14;
+            const total = subTotal + tax;
+
+            if (status === 'Preparing') {
+                const additem = [];
+                for (let i = 0; i < ItemsInCart.length; i++) {
+                    ItemsInCart[i].isAdd = true;
+                    additem.push(ItemsInCart[i]);
+                }
+                const products = [...additem, ...oldproducts];
+                const status = 'Pending';
+                const neworder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, {
+                    products,
+                    subTotal,
+                    total,
+                    tax,
+                    status,
+                });
+                setItemsInCart([]);
+                getProducts();
+                // Toast success message for updating order
+                toast.success('Order updated successfully!');
+            } else {
+                const products = [...ItemsInCart, ...oldproducts];
+                const status = 'Pending';
+                const neworder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, {
+                    products,
+                    subTotal,
+                    total,
+                    tax,
+                    status,
+                });
+                // Toast success message for updating order
+                toast.success('Order updated successfully!');
+            }
+        } else {
+            const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+            const table = allTable.find((t) => t._id === tableId) ? tableId : null;
+            const finduser = allUsers.find((u) => u._id === tableId);
+            const user = finduser ? tableId : null;
+            const products = [...ItemsInCart];
+            const subTotal = costOrder;
+            const tax = subTotal * 0.14;
+            const total = subTotal + tax;
+            const order_type = 'Internal';
+
+            const neworder = await axios.post('https://caviar-api.vercel.app/api/order', {
+                serial,
+                products,
+                subTotal,
+                tax,
+                total,
+                table,
+                user,
+                order_type,
+            });
+
+            // Toast success message for creating a new order
+            toast.success('New order created successfully!');
+        }
+    } catch (error) {
+        console.log(error);
+        // Display an error toast here
+        toast.error('An error occurred while creating/updating the order');
+    }
+};
 
   const createClientOrder = async (clientid) => {
     const tableorder = allOrders.filter((o, i) => o.table == clientid);
@@ -412,8 +569,8 @@ function App() {
           serial,
           table,
           products,
-          subTotal, 
-          total, 
+          subTotal,
+          total,
           tax,
           order_type,
           createBy
@@ -851,7 +1008,8 @@ function App() {
       createWaiterOrder, createCasherOrder, POSinvoice,
       EditPagination, startpagination, endpagination, setstartpagination, setendpagination, itemid, setitemid,
       showdate,
-      ordertotal, ordersubtotal, ordertax, orderdeliveryCost
+      ordertotal, ordersubtotal, ordertax, orderdeliveryCost,
+      createClientOrderForTable
     }}>
       <BrowserRouter>
         <Routes>

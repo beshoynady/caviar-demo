@@ -147,8 +147,10 @@ function App() {
     // console.log(product.quantity)
     if (product.quantity < 1) {
       product.quantity = 0
+      quantityzero(id)
     } else {
       product.quantity = product.quantity - 1
+
     }
   };
   const [productnote, setproductnote] = useState('')

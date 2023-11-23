@@ -92,8 +92,10 @@ const Cart = (props) => {
                       </div>
                       <div className="total-order">
 
-                        {id ? <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب الطاوله</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
-                          : ''}
+                        {ItemsInCart.length>0?
+                        id ? <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب الطاوله</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
+                          : ''
+                          :''}
 
                         <div className='total-order-details'>
                           <h2>المجموع</h2>
@@ -150,7 +152,7 @@ const Cart = (props) => {
                                   <td className="payment"><h2>{ordersubtotal}</h2></td>
                                 </tr>
                                 {orderdeliveryCost?<tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>الDelivery</h2></td>
+                                  <td className="Rate" colspan="3"><h2>الديلفري</h2></td>
                                   <td className="payment"><h2>{orderdeliveryCost}</h2></td>
                                 </tr>
                                 :''}

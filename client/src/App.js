@@ -340,6 +340,9 @@ function App() {
                     tax,
                     status,
                 });
+                setItemsInCart([]);
+                getProducts();
+
                 // Toast success message for updating order
                 toast.success('Order updated successfully!');
             }
@@ -364,7 +367,8 @@ function App() {
                 user,
                 order_type,
             });
-
+            setItemsInCart([]);
+            getProducts();
             // Toast success message for creating a new order
             toast.success('New order created successfully!');
         }

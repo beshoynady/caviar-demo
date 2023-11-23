@@ -3,14 +3,14 @@ const path = require("path");
 // const verifyJWT = require('../middleware/verifyjwt');
 
 const {
-  createproduct,
-  getAllproducts,
+  createProduct,
   addRecipe,
-  getproductbycategory,
-  getoneproduct,
-  updateproduct,
-  deleteproduct,
-  updateproductwithoutimage
+  getAllProducts,
+  getProductByCategory,
+  getOneProduct,
+  updateProduct,
+  updateProductWithoutImage,
+  deleteProduct
 } = require("../controllers/product.controller");
 
 const multer = require("multer");
@@ -30,10 +30,10 @@ const router = express.Router();
 
 // router.use(verifyJWT)
 
-router.route('/').post(upload.single("image"), createproduct).get(getAllproducts);
-router.route('/getproductbycategory/:categoryid').get(getproductbycategory)
-router.route('/:productid').get(getoneproduct).put(upload.single("image"), updateproduct).delete(deleteproduct);
-router.route('/withoutimage/:productid').put(updateproductwithoutimage)
+router.route('/').post(upload.single("image"), createProduct).get(getAllProducts);
+router.route('/getproductbycategory/:categoryid').get(getProductByCategory)
+router.route('/:productid').get(getOneProduct).put(upload.single("image"), updateProduct).delete(deleteProduct);
+router.route('/withoutimage/:productid').put(updateProductWithoutImage)
 router.route('/addrecipe/:productid').put(addRecipe)
 // router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
 

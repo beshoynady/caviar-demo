@@ -8,7 +8,7 @@ const MenuCard = () => {
    return (
       <detacontext.Consumer>
          {
-            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid}) => {
+            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid }) => {
                return (
                   <div className="card-group">
                      {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
@@ -37,7 +37,9 @@ const MenuCard = () => {
                                        <span className='num'>{product.quantity}</span>
                                        <button className='symb' onClick={() => increment(product._id)}>+</button>
                                     </div>
-                                    <p>{product.price}ج</p>
+                                    {product.discount > 0 ?
+                                       <p>{product.price - product.discount}<sup><del>{product.price}</del></sup></p> :
+                                       <p>{product.price} ج</p>}
                                  </div>
                                  <div className='card-btn'>
                                     {itemid.filter((i) => i == product._id).length > 0 && product.quantity > 0 ?

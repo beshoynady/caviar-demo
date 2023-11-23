@@ -134,15 +134,15 @@ const ManagerDash = () => {
     }
   };
 
-  const [userLoginInfo, setuserLoginInfo] = useState(null)
+  const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
   const getUserInfoFromToken = () => {
     const employeetoken = localStorage.getItem('token_e');
     if (employeetoken) {
       const decodedToken = jwt_decode(employeetoken);
-      setuserLoginInfo(decodedToken.employeeinfo);
+      setemployeeLoginInfo(decodedToken.employeeinfo);
       handleCashRegister(decodedToken.employeeinfo.id);
     } else {
-      setuserLoginInfo(null);
+      setemployeeLoginInfo(null);
     }
   };
 
@@ -186,7 +186,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ userLoginInfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ employeeLoginInfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
               <ToastContainer/>
@@ -295,7 +295,7 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id); RevenueRecording(userLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id); RevenueRecording(employeeLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     Paid
                                   </button>

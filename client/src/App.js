@@ -867,6 +867,7 @@ function App() {
 
 
       const [userLoginInfo, setuserLoginInfo] = useState(null);
+      const [employeeLoginInfo, setemployeeLoginInfo] = useState(null);
 
       const getUserInfoFromToken = () => {
         const userToken = localStorage.getItem('token_u');
@@ -875,7 +876,7 @@ function App() {
 
         if (employeeToken) {
           decodedToken = jwt_decode(employeeToken);
-          setuserLoginInfo(decodedToken);
+          setemployeeLoginInfo(decodedToken);
           console.log(decodedToken.employeeinfo);
         } else if (userToken) {
           decodedToken = jwt_decode(userToken);
@@ -883,6 +884,7 @@ function App() {
           console.log(decodedToken.userinfo);
         } else {
           setuserLoginInfo(null);
+          setemployeeLoginInfo(null);
         }
 
         return decodedToken;
@@ -1006,7 +1008,7 @@ function App() {
 
       return (
         <detacontext.Provider value={{
-          userLoginInfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
+          userLoginInfo,employeeLoginInfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
           allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,
           allUsers, allTable, usertitle, allOrders, askingForHelp,
           setproductnote, addnotrstoproduct,

@@ -18,12 +18,12 @@ const Cart = (props) => {
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
-  
+
   const { id } = useParams()
   return (
     <detacontext.Consumer>
       {
-        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice, totalinvoice, list_products_order,ordertotal, ordersubtotal, ordertax, orderdeliveryCost
+        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice, totalinvoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost
           , createClientOrderForUser, createClientOrderForTable, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -76,10 +76,10 @@ const Cart = (props) => {
                                   </div>
                                   <div className="del-cost">
                                     <div className='cart-price'>
-                                      <p>{i.discount? i.priceAfterDiscount:i.price} ج</p>
+                                      <p>{i.discount ? i.priceAfterDiscount : i.price} ج</p>
                                       <p>×{i.quantity}</p>
                                     </div>
-                                    <p>{i.discount?i.priceAfterDiscount * i.quantity:i.price * i.quantity}</p>
+                                    <p>{i.discount ? i.priceAfterDiscount * i.quantity : i.price * i.quantity}</p>
                                   </div>
                                   {i.notes ? <div className='cart-note'>{i.notes}</div> : ''}
                                 </div>
@@ -92,16 +92,25 @@ const Cart = (props) => {
                       </div>
                       <div className="total-order">
 
-                        {ItemsInCart.length>0?
-                        id ? <>
-                        <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب الطاوله</button> : userLoginInfo&&userLoginInfo.userinfo ? <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
-                        <div className='total-order-details'>
-                          <h2>المجموع</h2>
-                          <p>{costOrder}</p>
-                        </div>
-                        </>
-                          : ''
-                          :''}
+                        {ItemsInCart.length > 0 ? (
+                          <>
+                            {id ? (
+                              <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تاكيد الطلب الطاولة</button>
+                            ) : (
+                              userLoginInfo && userLoginInfo.userinfo ? (
+                                <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تاكيد الطلب</button>
+                              ) : (
+                                ''
+                              )
+                            )}
+                            <div className='total-order-details'>
+                              <h2>المجموع</h2>
+                              <p>{costOrder}</p>
+                            </div>
+                          </>
+                        ) : (
+                          ''
+                        )}
 
                       </div>
                     </div>
@@ -142,7 +151,7 @@ const Cart = (props) => {
                                     <tr className="service">
                                       <td className="tableitem"><p className="itemtext">{item.name}</p></td>
                                       <td className="tableitem"><p className="itemtext">{item.quantity}</p></td>
-                                      <td className="tableitem"><p className="itemtext">{item.priceAfterDiscount? item.priceAfterDiscount:item.price}</p></td>
+                                      <td className="tableitem"><p className="itemtext">{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</p></td>
                                       <td className="tableitem"><p className="itemtext">{item.totalprice}</p></td>
                                     </tr>)
                                 }
@@ -153,11 +162,11 @@ const Cart = (props) => {
                                   <td className="Rate" colspan="3"><h2>المجموع</h2></td>
                                   <td className="payment"><h2>{ordersubtotal}</h2></td>
                                 </tr>
-                                {orderdeliveryCost?<tr className="tabletitle">
+                                {orderdeliveryCost ? <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>الديلفري</h2></td>
                                   <td className="payment"><h2>{orderdeliveryCost}</h2></td>
                                 </tr>
-                                :''}
+                                  : ''}
                                 <tr className="tabletitle">
                                   <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
                                   <td className="payment"><h2>{ordertax}</h2></td>
@@ -185,7 +194,7 @@ const Cart = (props) => {
                         <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                         <div className='total-order-details'>
                           <h2>الاجمالي</h2>
-                          <p>{totalinvoice + (totalinvoice*.14)}</p>
+                          <p>{totalinvoice + (totalinvoice * .14)}</p>
                         </div>
 
                       </div>

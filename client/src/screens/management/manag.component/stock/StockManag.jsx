@@ -45,87 +45,66 @@ const StockManag = () => {
     }
   };
 
-  const handelCashRegister = (id) => {
-    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
-    setcashRegister(CashRegister._id)
-    setbalance(CashRegister.balance)
-    console.log(CashRegister.balance)
-  }
-
   const [actionId, setactionId] = useState("")
   const actionAt = new Date().toLocaleString()
 
-  const createStockaction = async (e, employeeId) => {
-    e.preventDefault();
-    try {
-      handelCashRegister(employeeId)
-      const actionBy = employeeId;
+const createStockaction = async (e, employeeId) => {
+  e.preventDefault();
+  try {
+    const actionBy = employeeId;
 
-      console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
-      console.log(changeItem)
+    // Update the stock item's movement
+    const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
 
-      if (changeItem.status == 200) {
-        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
-        console.log(response.data);
-        getallStockaction()
-        getaStockItems()
-      }
-      if(movement == 'Purchase'){
-        const updatedBalance = balance - amount; // Calculate the updated balance
-  
-        const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
-          registerId: cashRegister,
-          createBy: actionBy,
-          amount,
-          type: 'Withdraw',
-          description: `${movement} ${itemname(itemId)}`,
-        });
-        console.log(cashMovement)
-        console.log(cashMovement.data.cashMovement._id)
-  
-        const cashMovementId = await cashMovement.data.cashMovement._id; // Retrieve the cashMovementId from the response data
-  
-        const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-          balance: updatedBalance, // Use the updated balance
-        });
-  
-        // Update the state after successful updates
-        if (updatecashRegister) {
-          setbalance(updatedBalance);
-          // Toast notification for successful creation
-          toast.success('Expense created successfully');
-  
-          getAllCashRegisters()
-        }
+    if (changeItem.status === 200) {
+      // Create a new stock action
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
+      console.log(response.data);
 
-      }
-    } catch (error) {
-      console.log(error)
+      // Update the stock actions list and stock items
+      getallStockaction();
+      getaStockItems();
+
+      // Toast notification for successful creation
+      toast.success('Stock action created successfully');
     }
+  } catch (error) {
+    console.log(error);
+    // Toast notification for error
+    toast.error('Error creating stock action');
   }
+}
 
 
-  const updateStockaction = async (e, employeeId) => {
-    e.preventDefault();
-    try {
-      const actionBy = employeeId;
 
-      console.log(actionBy)
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
-      console.log(changeItem)
+const updateStockaction = async (e, employeeId) => {
+  e.preventDefault();
+  try {
+    const actionBy = employeeId;
 
-      if (changeItem.status == 200) {
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
-        console.log(response.data);
-        getallStockaction()
-        getaStockItems()
-      }
-    } catch (error) {
-      console.log(error)
+    // Update the stock item's movement
+    const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
+
+    if (changeItem.status === 200) {
+      // Update the existing stock action
+      const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
+      console.log(response.data);
+
+      // Update the stock actions list and stock items
+      getallStockaction();
+      getaStockItems();
+
+      // Toast notification for successful update
+      toast.success('Stock action updated successfully');
     }
+  } catch (error) {
+    console.log(error);
+    // Toast notification for error
+    toast.error('Error updating stock action');
   }
-  
+}
+
+
 
   const [AllStockactions, setAllStockactions] = useState([]);
 
@@ -144,15 +123,24 @@ const StockManag = () => {
   const deleteStockaction = async (e) => {
     e.preventDefault();
     try {
+      // Delete the selected stock action
       const response = await axios.delete(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`);
       console.log(response);
+  
       if (response) {
+        // Update the stock actions list after successful deletion
         getallStockaction();
+  
+        // Toast notification for successful deletion
+        toast.success('Stock action deleted successfully');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      // Toast notification for error
+      toast.error('Error deleting stock action');
     }
   }
+  
 
   const itemname = (id) => {
     const item = StockItems.filter(item => item._id == id)[0]

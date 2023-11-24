@@ -1,78 +1,124 @@
 const StockManagModel = require('../models/StockManag.model');
 
-
-
 const createStockAction = async (req, res, next) => {
     try {
-        const itemId = await req.body.itemId
-        const unit = await req.body.unit
-        const movement = await req.body.movement;
-        const Quantity = await req.body.Quantity;
-        const oldCost = await req.body.oldCost;
-        const oldBalance = await req.body.oldBalance;
-        const Balance = await req.body.newBalance;
-        const price = await req.body.price;
-        const cost = await req.body.cost;
-        const actionBy = await req.body.actionBy;
-        const actionAt = await req.body.actionAt;
-        
-        const itemadded =await StockManagModel.create({itemId, movement, Quantity,cost,oldCost, unit, Balance,oldBalance, price,actionBy,actionAt })
-        res.status(200).json(itemadded)
+        const {
+            itemId,
+            unit,
+            movement,
+            Quantity,
+            oldCost,
+            oldBalance,
+            newBalance,
+            price,
+            cost,
+            actionBy,
+            actionAt
+        } = req.body;
+
+        const itemAdded = await StockManagModel.create({
+            itemId,
+            movement,
+            Quantity,
+            cost,
+            oldCost,
+            unit,
+            Balance: newBalance,
+            oldBalance,
+            price,
+            actionBy,
+            actionAt
+        });
+
+        res.status(201).json(itemAdded);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-const UpdateStockAction = async (req, res, next) => {
+const updateStockAction = async (req, res, next) => {
     try {
-        const actionid =await req.params.actionid
-        const itemId = await req.body.itemId
-        const unit = await req.body.unit
-        const movement = await req.body.movement;
-        const Quantity = await req.body.Quantity;
-        const oldCost = await req.body.oldCost;
-        const cost = await req.body.cost;
-        const oldBalance = await req.body.oldBalance;
-        const Balance = await req.body.Balance;
-        const price = await req.body.price;
-        const actionBy = await req.body.actionBy;
+        const {
+            itemId,
+            unit,
+            movement,
+            Quantity,
+            oldCost,
+            cost,
+            oldBalance,
+            Balance,
+            price,
+            actionBy
+        } = req.body;
 
-        const updatedActon =await StockManagModel.findByIdAndUpdate({ _id: actionid }, {itemId, movement, Quantity,cost,oldCost, unit, Balance,oldBalance, price,actionBy })
-        res.status(200).json(updatedActon);
+        const actionId = req.params.actionid;
+
+        const updatedAction = await StockManagModel.findByIdAndUpdate(actionId, {
+            itemId,
+            movement,
+            Quantity,
+            cost,
+            oldCost,
+            unit,
+            Balance,
+            oldBalance,
+            price,
+            actionBy
+        });
+
+        if (!updatedAction) {
+            return res.status(404).json({ message: 'Action not found' });
+        }
+
+        res.status(200).json(updatedAction);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-const getAllStockActions =async (req, res) =>{
+const getAllStockActions = async (req, res, next) => {
     try {
-        const allaction =await StockManagModel.find({})
-        res.status(200).json(allaction)
+        const allActions = await StockManagModel.find({});
+        res.status(200).json(allActions);
     } catch (error) {
-        res.status(404).json({ message : error.message});
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-
-const getoneStockActions =async (req, res) =>{
+const getOneStockAction = async (req, res, next) => {
     try {
-        const actionid =await req.params.actionid;
-        const action = await StockManagModel.findById(actionid)
-        res.status(200).json(action)
+        const actionId = req.params.actionid;
+        const action = await StockManagModel.findById(actionId);
+
+        if (!action) {
+            return res.status(404).json({ message: 'Action not found' });
+        }
+
+        res.status(200).json(action);
     } catch (error) {
-        res.status(404).json({ message : error.message});
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
-const DeleteStockAction= async (req, res) => {
+const deleteStockAction = async (req, res, next) => {
     try {
-        const actionid = await req.params.actionid;
-        const deletedAction =await StockManagModel.findByIdAndDelete(actionid)
-        res.status(200).json(deletedAction)
+        const actionId = req.params.actionid;
+        const deletedAction = await StockManagModel.findByIdAndDelete(actionId);
+
+        if (!deletedAction) {
+            return res.status(404).json({ message: 'Action not found' });
+        }
+
+        res.status(200).json(deletedAction);
     } catch (error) {
-        res.status( 404 ).json({message: error.message});
-  }
-}
+        res.status(500).json({ message: error.message });
+    }
+};
 
-
-module.exports = {createStockAction, UpdateStockAction,getoneStockActions, getAllStockActions, DeleteStockAction }
+module.exports = {
+    createStockAction,
+    updateStockAction,
+    getOneStockAction,
+    getAllStockActions,
+    deleteStockAction,
+};

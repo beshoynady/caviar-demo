@@ -13,17 +13,19 @@ const defaultOptions = {
 };
 
 const OrderSchema = new mongoose.Schema({
-    // Serial number of the order
-    serial: {
-        ...defaultOptions,
-        unique: true,
-        validate: {
-            validator: function (v) {
-                return v >= 1 && v <= 1000000;
-            },
-            message: '{VALUE} is not a valid serial number',
+   // Serial number of the order
+   serial: {
+    type: String,
+    default: '000001',
+    required: true,
+    unique: true,
+    validate: {
+        validator: function(v) {
+            return /^[0-9]{6}$/.test(v);
         },
-    },
+        message: '{VALUE} is not a valid serial number'
+    }
+},
     // Order number
     ordernum: {
         type: Number,

@@ -1,63 +1,70 @@
 import React, { useState } from 'react';
 import './Menu-card.css';
 import { detacontext } from '../../../../../App';
+import { Card, Button } from 'react-bootstrap';
 
 const MenuCard = () => {
-   const [noteArea, setnoteArea] = useState(false)
-   const [productid, setproductid] = useState('')
-   return (
-      <detacontext.Consumer>
-         {
-            ({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid }) => {
-               return (
-                  <div className="card-group">
-                     {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
-                        return (
-                           <div className="menu-card" key={index}>
-                              <img className='img-card' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
-                              {product._id == productid & noteArea == true ? <form onSubmit={(e) => { addnotrstoproduct(e, product._id);; setnoteArea(!noteArea) }}>
-                                 <textarea placeholder='اضف تعليماتك الخاصة بهذا الطبق' name="note" cols="100" rows="3" onChange={(e) => { setproductnote(e.target.value) }}></textarea>
-                                 <div className='note-btn'>
-                                    <button>تاكيد</button>
-                                    <button onClick={() => setnoteArea(!noteArea)}>الغاء</button>
-                                 </div>
-                              </form> : ''}
+  const [noteArea, setNoteArea] = useState(false);
+  const [productid, setProductid] = useState('');
 
-                              <div className="detalis">
-                                 <div className='product-det'>
-                                    <div className='product-name'>
-                                       <h2>{product.name}</h2>
-                                       <span className="material-symbols-outlined" onClick={() => { setnoteArea(!noteArea); setproductid(product._id) }}>note_alt</span>
-                                    </div>
-                                    <p>{product.description}</p>
-                                 </div>
-                                 <div className="price">
-                                    <div className="counter">
-                                       <button className='symb' onClick={() => descrement(product._id)}>-</button>
-                                       <span className='num'>{product.quantity}</span>
-                                       <button className='symb' onClick={() => increment(product._id)}>+</button>
-                                    </div>
-                                    {product.discount > 0 ?
-                                       <p>{product.price - product.discount}<sup><del>{product.price}</del></sup></p> :
-                                       <p>{product.price} ج</p>}
-                                 </div>
-                                 <div className='card-btn'>
-                                    {itemid.filter((i) => i == product._id).length > 0 && product.quantity > 0 ?
-                                       <button className='delfromcart' onClick={() => { deleteitems(product._id) }}>احذف من الطلبات</button>
-                                       : <button className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) } }}>اضف الي طلباتي</button>}
-                                 </div>
-                              </div>
-                           </div>
-                        )
-                     }
-                     )}
+  return (
+    <detacontext.Consumer>
+      {({ allProducts, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, itemid }) => (
+        <div className="card-group">
+          {allProducts.filter(pro => pro.category === categoryid).map((product, index) => (
+            <Card className="menu-card" key={index}>
+              <Card.Img variant="top" src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} />
+              {product._id === productid && noteArea === true ? (
+                <Card.Body>
+                  <form onSubmit={(e) => { addnotrstoproduct(e, product._id); setNoteArea(!noteArea) }}>
+                    <textarea
+                      placeholder='Add your special instructions for this dish'
+                      name="note"
+                      cols="100"
+                      rows="3"
+                      onChange={(e) => { setproductnote(e.target.value) }}
+                    ></textarea>
+                    <div className='note-btn'>
+                      <Button type="submit">Confirm</Button>
+                      <Button variant="secondary" onClick={() => setNoteArea(!noteArea)}>Cancel</Button>
+                    </div>
+                  </form>
+                </Card.Body>
+              ) : null}
+              <Card.Body>
+                <div className="details">
+                  <div className='product-name'>
+                    <Card.Title>{product.name}</Card.Title>
+                    <span className="material-symbols-outlined" onClick={() => { setNoteArea(!noteArea); setProductid(product._id) }}>note_alt</span>
                   </div>
-               )
-            }
-         }
-      </detacontext.Consumer>
-
-   )
+                  <Card.Text>{product.description}</Card.Text>
+                </div>
+                <div className="price">
+                  <div className="counter">
+                    <Button variant="outline-secondary" className='symb' onClick={() => descrement(product._id)}>-</Button>
+                    <span className='num'>{product.quantity}</span>
+                    <Button variant="outline-secondary" className='symb' onClick={() => increment(product._id)}>+</Button>
+                  </div>
+                  <Card.Text>
+                    {product.discount > 0 ?
+                      <>{product.price - product.discount}<sup><del>{product.price}</del></sup></> :
+                      <>{product.price} ج</>}
+                  </Card.Text>
+                </div>
+                <div className='card-btn'>
+                  {itemid.filter((i) => i === product._id).length > 0 && product.quantity > 0 ? (
+                    <Button variant="danger" className='delfromcart' onClick={() => { deleteitems(product._id) }}>Remove from Orders</Button>
+                  ) : (
+                    <Button variant="success" className='addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) } }}>Add to My Orders</Button>
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      )}
+    </detacontext.Consumer>
+  )
 }
 
-export default MenuCard
+export default MenuCard;

@@ -137,7 +137,7 @@ const Kitchen = () => {
                         {order.waiter ? <p className="info-p">الويتر {usertitle(order.waiter)}</p> : ""}
                         <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
                         {/* <p className="info-p">الPending {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
-                        <p className="info-p">الPending {Waitingtime(order.createdAt)} دقيقه</p>
+                        <p className="info-p">الانتظار: {Waitingtime(order.createdAt)} دقيقه</p>
                       </div>
                       <div className="card-product">
                         <ul className='card-ul'>

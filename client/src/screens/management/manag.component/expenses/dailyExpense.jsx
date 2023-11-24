@@ -309,7 +309,7 @@ const DailyExpense = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{allExpenses ? allExpenses.find(ex => ex._id == dailyexpense.expenseexpenseDescription).description : ''}</td>
+                              <td>{allExpenses ? allExpenses.find(ex => ex._id == dailyexpense.expenseDescription).description : ''}</td>
                               <td>{dailyexpense.amount}</td>
                               <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                               <td>{dailyexpense.cashMovementId}</td>

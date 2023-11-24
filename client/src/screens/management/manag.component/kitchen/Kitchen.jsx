@@ -134,7 +134,37 @@ const Kitchen = () => {
                     <Row key={i} className="kit-card">
                       <Col>
                         <div className="card-info">
-                          {/* ... الكود الحالي ... */}
+                          <div className="card-info">
+                            <p className="info-p">
+                              {order.table != null ? (
+                                `طاولة: ${usertitle(order.table)}`
+                              ) : order.user ? (
+                                `العميل: ${usertitle(order.user)}`
+                              ) : (
+                                ''
+                              )}
+                            </p>
+                            <p className="info-p">
+                              رقم الطلب: {order.serial}
+                            </p>
+                            <p className="info-p">
+                              نوع الطلب: {order.order_type}
+                            </p>
+                            {order.waiter && (
+                              <p className="info-p">
+                                الويتر: {usertitle(order.waiter)}
+                              </p>
+                            )}
+                            <p className="info-p">
+                              وقت الاستلام:{' '}
+                              {`${new Date(order.createdAt).getHours()}:${new Date(
+                                order.createdAt
+                              ).getMinutes()}`}
+                            </p>
+                            <p className="info-p">
+                              الانتظار: {Waitingtime(order.createdAt)} دقيقة
+                            </p>
+                          </div>
                         </div>
                       </Col>
                       <Col>

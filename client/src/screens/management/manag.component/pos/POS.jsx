@@ -347,66 +347,58 @@
 // export default POS
 
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import './POS.css'; // ملف أنماط CSS
 
 const POS = () => {
   const [categories, setCategories] = useState([
-    { id: 1, name: 'Category 1' },
-    { id: 2, name: 'Category 2' },
-    // ... more categories
-  ]);
+    { id: 1, name: 'تصنيف 1' },
+    { id: 2, name: 'تصنيف 2' },
+    { id: 3, name: 'تصنيف 3' },
+  ]); // قائمة التصنيفات
 
   const [products, setProducts] = useState([
-    { id: 1, name: 'Product 1', price: 10, categoryId: 1, image: 'product1.jpg' },
-    { id: 2, name: 'Product 2', price: 15, categoryId: 1, image: 'product2.jpg' },
-    // ... more products
-  ]);
+    { id: 1, name: 'منتج 1', description: 'وصف المنتج 1', price: 10, image: 'https://via.placeholder.com/150' },
+    { id: 2, name: 'منتج 2', description: 'وصف المنتج 2', price: 15, image: 'https://via.placeholder.com/150' },
+    { id: 3, name: 'منتج 3', description: 'وصف المنتج 3', price: 20, image: 'https://via.placeholder.com/150' },
+  ]); // قائمة المنتجات
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [cart, setCart] = useState([]); // عربة التسوق
 
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategory(categoryId);
-    const filteredProducts = products.filter(product => product.categoryId === categoryId);
-    setSelectedProducts(filteredProducts);
-  };
-
-  const handleProductClick = (productId) => {
-    // Logic to add product to order/finalize sale
-    // You can implement this based on your requirements
+  // دالة لإضافة منتج إلى عربة التسوق
+  const addToCart = (product) => {
+    setCart([...cart, product]);
   };
 
   return (
-    <Container>
+    <Container className="pos-container">
       <Row>
-        <Col md={4}>
+        <Col md={3}>
+          {/* قائمة التصنيفات */}
           <Card>
-            <Card.Header>Categories</Card.Header>
-            <ListGroup variant="flush">
-              {categories.map(category => (
-                <ListGroup.Item
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
-                  active={selectedCategory === category.id}
-                >
-                  {category.name}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+            <Card.Body>
+              <Card.Title>التصنيفات</Card.Title>
+              <ul>
+                {categories.map((category) => (
+                  <li key={category.id}>{category.name}</li>
+                ))}
+              </ul>
+            </Card.Body>
           </Card>
         </Col>
-        <Col md={8}>
+        <Col md={6}>
+          {/* عرض المنتجات */}
           <Card>
-            <Card.Header>Products</Card.Header>
             <Card.Body>
               <Row>
-                {selectedProducts.map(product => (
-                  <Col key={product.id} md={4}>
-                    <Card onClick={() => handleProductClick(product.id)}>
-                      <Card.Img variant="top" src={product.image} alt={product.name} />
+                {products.map((product) => (
+                  <Col md={4} key={product.id}>
+                    <Card>
+                      <Card.Img variant="top" src={product.image} />
                       <Card.Body>
                         <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>Price: ${product.price}</Card.Text>
+                        <Card.Text>{product.description}</Card.Text>
+                        <Button onClick={() => addToCart(product)}>إضافة إلى السلة</Button>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -415,8 +407,27 @@ const POS = () => {
             </Card.Body>
           </Card>
         </Col>
+        <Col md={3}>
+          {/* عربة التسوق */}
+          <Card>
+            <Card.Body>
+              <Card.Title>عربة التسوق</Card.Title>
+              <ul>
+                {cart.map((item, index) => (
+                  <li key={index}>
+                    {item.name} - {item.price}
+                  </li>
+                ))}
+              </ul>
+              <Button>تأكيد الطلب</Button>
+            </Card.Body>
+          </Card>
+          {/* عرض الفاتورة */}
+          <Card>
+            {/* ... */}
+          </Card>
+        </Col>
       </Row>
-      {/* Order summary or invoice section can be added here */}
     </Container>
   );
 };

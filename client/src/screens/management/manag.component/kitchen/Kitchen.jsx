@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Button, Badge } from 'react-bootstrap';
-import './Kitchen.css';
-import axios from 'axios';
-
+import React, { useState, useEffect, useRef } from 'react'
 import { detacontext } from '../../../../App'
+import './Kitchen.css'
+import axios from 'axios'
 
 
 
@@ -122,120 +120,60 @@ const Kitchen = () => {
 
   return (
     <detacontext.Consumer>
-      {({ usertitle, updatecountofsales }) => {
-        return (
-          <Container>
-            {orderactive &&
-              orderactive.map((order, i) => {
-                if (
-                  order.products.filter((pr) => pr.isDone === false).length > 0
-                ) {
+      {
+        ({ usertitle, updatecountofsales }) => {
+          return (
+            <div className='Kitchen'>
+              {orderactive && orderactive.map((order, i) => {
+                if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <Row key={i} className="kit-card">
-                      <Col>
-                        <div className="card-info">
-                          <div className="card-info">
-                            <p className="info-p">
-                              {order.table != null ? (
-                                `طاولة: ${usertitle(order.table)}`
-                              ) : order.user ? (
-                                `العميل: ${usertitle(order.user)}`
-                              ) : (
-                                ''
-                              )}
-                            </p>
-                            <p className="info-p">
-                              رقم الطلب: {order.serial}
-                            </p>
-                            <p className="info-p">
-                              نوع الطلب: {order.order_type}
-                            </p>
-                            {order.waiter && (
-                              <p className="info-p">
-                                الويتر: {usertitle(order.waiter)}
-                              </p>
-                            )}
-                            <p className="info-p">
-                              وقت الاستلام:{' '}
-                              {`${new Date(order.createdAt).getHours()}:${new Date(
-                                order.createdAt
-                              ).getMinutes()}`}
-                            </p>
-                            <p className="info-p">
-                              الانتظار: {Waitingtime(order.createdAt)} دقيقة
-                            </p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col>
-                        <div className="card-product">
-                          <ul className="list-group">
-                            {order.products
-                              .filter((pr) => pr.isDone === false)
-                              .map((product, j) => {
-                                return (
-                                  <li
-                                    key={j}
-                                    className="list-group-item d-flex justify-content-between align-items-center"
-                                    style={{
-                                      backgroundColor: product.isAdd
-                                        ? 'red'
-                                        : 'inherit',
-                                    }}
-                                  >
-                                    <div className="product-card-det">
-                                      <span className="badge rounded-pill bg-primary">
-                                        {j + 1}
-                                      </span>
-                                      <span className="product-name">
-                                        {product.name}
-                                      </span>
-                                      <span className="product-quantity">
-                                        × {product.quantity}
-                                      </span>
-                                    </div>
-                                    <div className="product-note">
-                                      {product.notes}
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                          </ul>
-                        </div>
-                      </Col>
-                      <Col>
-                        <div className="card-btn">
-                          {order.status === 'Preparing' ? (
-                            <Button
-                              ref={ready}
-                              className="btn btn-success"
-                              onClick={() => {
-                                orderDone(order._id);
-                                updatecountofsales(order._id);
-                              }}
-                            >
-                              تم التنفيذ
-                            </Button>
-                          ) : (
-                            <Button
-                              ref={start}
-                              className="btn btn-danger"
-                              onClick={() => orderInprogress(order._id)}
-                            >
-                              بدء التنفيذ
-                            </Button>
-                          )}
-                        </div>
-                      </Col>
-                    </Row>
-                  );
-                }
-              })}
-          </Container>
-        );
-      }}
-    </detacontext.Consumer>
-  );
-};
+                    <div className="kit-card" key={i}>
+                      <div className="card-info">
+                        {order.table != null ? <p className="info-p">طاولة:{usertitle(order.table)}</p>
+                          : order.user ? <p className="info-p">العميل:{usertitle(order.user)}</p>
+                            : ''}
+                        <p className="info-p">رقم الطلب {order.serial}</p>
+                        <p className="info-p">نوع الطلب {order.order_type}</p>
+                        {order.waiter ? <p className="info-p">الويتر {usertitle(order.waiter)}</p> : ""}
+                        <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
+                        {/* <p className="info-p">الPending {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p> */}
+                        <p className="info-p">الانتظار: {Waitingtime(order.createdAt)} دقيقه</p>
+                      </div>
+                      <div className="card-product">
+                        <ul className='card-ul'>
+                          {order.products.filter((pr) => pr.isDone == false) && order.products.filter((pr) => pr.isDone == false).map((product, i) => {
+                            return (
+                              <li className='card-li' key={i} style={product.isAdd?{backgroundColor:'red'}:{}}>
+                                <div className='product-card-det'>
+                                  <p className='product-name'>{i + 1}- {product.name}</p>
+                                  <span className='product-quantity'> × {product.quantity}</span>
+                                </div>
+                                <div className='product-note'>{product.notes}</div>
+                              </li>
+                            )
+                          })
+                          }
 
-export default Kitchen;
+                        </ul>
+                      </div>
+                      <div className='card-btn'>
+                        {order.status == 'Preparing' ? <button ref={ready} className='btn-ready' onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                          : <button ref={start} className='btn-start' onClick={() => orderInprogress(order._id)}>بدء التنفيذ</button>
+
+                        }
+                      </div>
+                    </div>
+                  )
+                }
+
+              })}
+            </div>
+          )
+        }
+      }
+    </detacontext.Consumer>
+  )
+
+}
+
+export default Kitchen

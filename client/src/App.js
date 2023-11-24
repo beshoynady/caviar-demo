@@ -1042,7 +1042,7 @@ function App() {
       additemtocart, increment, descrement,
 
       // Functions related to creating different types of orders
-      createClientOrder, checkout, calcTotalSalesOfCategory, updatecountofsales,
+      checkout, calcTotalSalesOfCategory, updatecountofsales,
       createWaiterOrder, createCasherOrder, POSinvoice,
 
       // Functions related to pagination

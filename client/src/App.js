@@ -261,7 +261,7 @@ function App() {
         toast.success("Order updated successfully!");
       } else {
         try {
-          const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+          const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
           const finduser = allUsers.find((u, i) => u._id == userId);
           const user = finduser ? userId : null;
           const products = [...ItemsInCart];
@@ -354,7 +354,7 @@ function App() {
           toast.success('Order updated successfully!');
         }
       } else {
-        const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+        const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
         const table = allTable.find((t) => t._id === tableId) ? tableId : null;
         const finduser = allUsers.find((u) => u._id === tableId);
         const user = finduser ? tableId : null;
@@ -472,7 +472,7 @@ function App() {
 
   //     } else {
   //       try {
-  //         const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+  //         const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
   //         const table = allTable.find((t, i) => t._id == clientid) ? clientid : null;
   //         const finduser = allUsers.find((u, i) => u._id == clientid);
   //         const user = finduser ? clientid : null;
@@ -569,7 +569,7 @@ function App() {
         getProducts();
       } else {
         // Create a new order
-        const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+        const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
         const products = [...ItemsInCart];
         const subTotal = costOrder;
         const tax = subTotal * 0.14;
@@ -602,7 +602,7 @@ function App() {
       const dayOrders = allOrders.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
       const ordernum = dayOrders.length > 0 ? dayOrders[dayOrders.length - 1].ordernum + 1 : 1;
 
-      const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+      const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
       const products = [...ItemsInCart];
       const subTotal = costOrder;
       const tax = subTotal * 0.14;
@@ -786,7 +786,7 @@ function App() {
 
     const id = await lasttableorder._id
     console.log(id)
-    const serial = allOrders.length > 0 ? allOrders[allOrders.length - 1].serial + 1 : 1;
+    const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
     console.log(serial)
     const help = 'Requests assistance';
     const table = tablenum

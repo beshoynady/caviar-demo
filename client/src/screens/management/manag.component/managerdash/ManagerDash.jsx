@@ -231,7 +231,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p>اجمالي الاوردرات اليوم</p>
+                      <p>ايراد اليوم</p>
                       <h3>
                         {total_day_salse}
                       </h3>
@@ -240,7 +240,7 @@ const ManagerDash = () => {
                   </li>
                   <li>
                     <span className="info">
-                      <p>رصيد الخزينه اليوم</p>
+                      <p>رصيد الخزينه </p>
                       <h3>
                         {balance?balance:''}
                       </h3>

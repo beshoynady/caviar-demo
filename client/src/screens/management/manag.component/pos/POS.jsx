@@ -349,7 +349,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
 
-const POSPage = () => {
+const POS = () => {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Category 1' },
     { id: 2, name: 'Category 2' },

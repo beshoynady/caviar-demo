@@ -18,7 +18,7 @@ const StockManag = () => {
 
   }
 
-  const Stockmovement = ["مشتريات", "منصرف", "راجع", "هالك"];
+  const Stockmovement = ["Purchase", "Expense", "Return", "Wastage"];
   const [movement, setmovement] = useState('');
   const [itemId, setitemId] = useState("");
   const [unit, setunit] = useState('')
@@ -55,10 +55,11 @@ const StockManag = () => {
   const [actionId, setactionId] = useState("")
   const actionAt = new Date().toLocaleString()
 
-  const createStockaction = async (e, userid) => {
+  const createStockaction = async (e, employeeId) => {
     e.preventDefault();
     try {
-      const actionBy = userid;
+      handelCashRegister(employeeId)
+      const actionBy = employeeId;
 
       console.log(actionBy)
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
@@ -70,7 +71,7 @@ const StockManag = () => {
         getallStockaction()
         getaStockItems()
       }
-      if(movement == 'مشتريات'){
+      if(movement == 'Purchase'){
         const updatedBalance = balance - amount; // Calculate the updated balance
   
         const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
@@ -105,10 +106,10 @@ const StockManag = () => {
   }
 
 
-  const updateStockaction = async (e, userid) => {
+  const updateStockaction = async (e, employeeId) => {
     e.preventDefault();
     try {
-      const actionBy = userid;
+      const actionBy = employeeId;
 
       console.log(actionBy)
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price })
@@ -124,6 +125,7 @@ const StockManag = () => {
       console.log(error)
     }
   }
+  
 
   const [AllStockactions, setAllStockactions] = useState([]);
 
@@ -175,7 +177,7 @@ const StockManag = () => {
   //   console.log('+++++++++')
   //   console.log(quantity)
   //   const quantity = Number(qu)
-  //   if (movement == 'منصرف') {
+  //   if (movement == 'Expense') {
   //     setnewBalance(oldBalance - quantity)
   //     setnewcost(oldCost - cost)
   //   } else {
@@ -189,11 +191,10 @@ const StockManag = () => {
     getallStockaction()
     getaStockItems()
     getAllCashRegisters()
-    handelCashRegister()
   }, [])
 
   useEffect(() => {
-    if (movement == "منصرف" || movement == "هالك") {
+    if (movement == "Expense" || movement == "Wastage") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
       setnewcost(oldCost - cost)
     } else {
@@ -251,10 +252,10 @@ const StockManag = () => {
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="مشتريات" >مشتريات</option>
-                            <option value="راجع" >راجع</option>
-                            <option value="منصرف" >منصرف</option>
-                            <option value="هالك" >هالك</option>
+                            <option value="Purchase" >Purchase</option>
+                            <option value="Return" >Return</option>
+                            <option value="Expense" >Expense</option>
+                            <option value="Wastage" >Wastage</option>
                           </select>
                         </div>
                         {/* <div class="filter-group">
@@ -420,7 +421,7 @@ const StockManag = () => {
 
                         <div className="form-group">
                           <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" || movement == "راجع" ?
+                          {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
                             <input type='Number' className="form-control" readOnly required defaultValue={price} />
                             : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
                           }
@@ -485,7 +486,7 @@ const StockManag = () => {
 
                         <div className="form-group">
                           <label>السعر</label>
-                          {movement == "منصرف" || movement == "هالك" ?
+                          {movement == "Expense" || movement == "Wastage" ?
                             <input type='Number' className="form-control" readOnly required defaultValue={price} />
                             : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
                           }

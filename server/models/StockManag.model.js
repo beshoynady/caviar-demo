@@ -10,11 +10,11 @@ const StockManagSchema = new mongoose.Schema(
     },
     unit: {
       type: String,
-      require: true,
+      require: true
     },
     movement: {
       type: String,
-      enum: ['مشتريات', 'منصرف', 'راجع','هالك'],
+      enum: ['Purchase', 'Expense', 'Return','Wastage'],
       require: true
     },
     Quantity: {

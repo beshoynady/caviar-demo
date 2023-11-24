@@ -157,10 +157,10 @@ const CashMovement = () => {
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="مشتريات" >مشتريات</option>
-                            <option value="راجع" >راجع</option>
-                            <option value="منصرف" >منصرف</option>
-                            <option value="هالك" >هالك</option>
+                            <option value="Purchase" >Purchase</option>
+                            <option value="Return" >Return</option>
+                            <option value="Expense" >Expense</option>
+                            <option value="Wastage" >Wastage</option>
                           </select>
                         </div> */}
                         {/* <div class="filter-group">

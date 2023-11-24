@@ -47,7 +47,7 @@
 }
 .dashboard .container .insights {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 10px;
   margin-top: 20px;
 }
@@ -83,6 +83,10 @@
   color: var(--success);
 }
 .dashboard .container .insights li:nth-child(4) .bx {
+  background: var(--light-danger);
+  color: var(--danger);
+}
+.dashboard .container .insights li:nth-child(5) .bx {
   background: var(--light-danger);
   color: var(--danger);
 }

@@ -56,7 +56,7 @@ $color_7: var(--danger);
 		}
 		.insights {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 			grid-gap: 10px;
 			margin-top: 20px;
 			li {
@@ -96,6 +96,12 @@ $color_7: var(--danger);
 					}
 				}
 				&:nth-child(4) {
+					.bx {
+						background: var(--light-danger);
+						color: $color_7;
+					}
+				}
+				&:nth-child(5) {
 					.bx {
 						background: var(--light-danger);
 						color: $color_7;

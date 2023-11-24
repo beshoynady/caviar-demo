@@ -289,10 +289,10 @@ const DailyExpense = () => {
                       <th>اسم المصروف</th>
                       <th>المبلغ </th>
                       <th>الحزينه </th>
-                      <th>رقم الحركه </th>
                       <th>بواسطه </th>
                       <th>اضف في</th>
                       <th>ملاحظات</th>
+                      <th>رقم الحركه </th>
                       <th>اجراءات</th>
                     </tr>
                   </thead>
@@ -309,13 +309,13 @@ const DailyExpense = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{allExpenses ? allExpenses.find(ex => ex._id == dailyexpense.expenseDescription).description : ''}</td>
+                              <td>{dailyexpense.expenseDescription}</td>
                               <td>{dailyexpense.amount}</td>
-                              <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                               <td>{dailyexpense.cashMovementId}</td>
-                              <td>{dailyexpense.paidBy}</td>
+                              <td>{usertitle(dailyexpense.paidBy)}</td>
                               <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{dailyexpense.notes}</td>
+                              <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                               <td>
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                   setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount)
@@ -341,11 +341,11 @@ const DailyExpense = () => {
                                 <td>{i + 1}</td>
                                 <td>{dailyexpense.expenseDescription}</td>
                                 <td>{dailyexpense.amount}</td>
-                                <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                                 <td>{dailyexpense.cashMovementId}</td>
-                                <td>{dailyexpense.paidBy}</td>
+                                <td>{usertitle(dailyexpense.paidBy)}</td>
                                 <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{dailyexpense.notes}</td>
+                                <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                     handelCashRegister(employeeLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);

@@ -536,7 +536,6 @@ function App() {
 
 
   const [myorder, setmyorder] = useState({})
-  const [totalinvoice, settotalinvoice] = useState(0)
   const [list_products_order, setlist_products_order] = useState([])
   const [orderupdate_date, setorderupdate_date] = useState('')
   const [myorderid, setmyorderid] = useState()
@@ -563,7 +562,6 @@ function App() {
         console.log(data)
         console.log(data._id)
         setmyorder(data)
-        settotalinvoice(data.total)
         setmyorderid(data._id)
         setlist_products_order(data.products)
         setorderupdate_date(data.updatedAt)

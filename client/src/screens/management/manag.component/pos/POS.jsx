@@ -179,15 +179,15 @@ const POS = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="total-order">
+                          {/* <div className="total-order">
                             <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button>
                             <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                             <div className='total-order-details'>
                               <h2>الاجمالي</h2>
-                              <p>{totalinvoice}</p>
+                              <p>{ordertotal}</p>
                             </div>
 
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

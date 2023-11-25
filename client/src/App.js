@@ -727,41 +727,32 @@ const [posOrderId, setposOrderId] = useState('')
     }
   };
 
-  // const POSinvoice = async (posOrderId) => {
-  //   // console.log(allOrders)
-  //   const tableorder = allOrders.filter((o, i) => o.table == checkid);
-  //   const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
-  //   const lasttableorderactive = await lasttableorder.isActive
-
-  //   const employeeorder = allOrders.filter((o, i) => o.employee == checkid);
-  //   const lastemployeeorder = employeeorder.length > 0 ? employeeorder[employeeorder.length - 1] : [];
-  //   const lastemployeeorderactive = await lastemployeeorder.isActive
-
-  //   if (lasttableorderactive) {
-  //     const id = await lasttableorder._id
-  //     const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-  //     const data = await myorder.data
-  //     setmyorder(data)
-  //     setmyorderid(data._id)
-  //     setlist_products_order(data.products)
-  //     setorderupdate_date(data.updatedAt)
-  //     setItemsInCart([])
-  //   } else if (lastemployeeorderactive) {
-  //     const id = await lastemployeeorder._id
-  //     const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
-  //     const data = await myorder.data
-  //     console.log(data)
-  //     setmyorder(data)
-  //     setmyorderid(data._id)
-  //     setlist_products_order(data.products)
-  //     setorderupdate_date(data.updatedAt)
-  //     setItemsInCart([])
-  //   }
-  // }
-  const POSinvoice = async (posOrderId) => {
+  const POSinvoice = async (checkid) => {
     // console.log(allOrders)
+    const tableorder = allOrders.filter((o, i) => o.table == checkid);
+    const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
+    const lasttableorderactive = await lasttableorder.isActive
 
-      const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + posOrderId)
+    const employeeorder = allOrders.filter((o, i) => o.createBy == checkid);
+    const lastemployeeorder = employeeorder.length > 0 ? employeeorder[employeeorder.length - 1] : [];
+    const lastemployeeorderactive = await lastemployeeorder.isActive
+
+    if (lasttableorderactive) {
+      const id = await lasttableorder._id
+      const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
+      const data = await myorder.data
+      setmyorder(data)
+      setmyorderid(data._id)
+      setlist_products_order(data.products)
+      setorderupdate_date(data.updatedAt)
+      setordertotal(data.total)
+      setordersubtotal(data.subtotal)
+      setordertax(data.tax)
+      setorderdeliveryCost(data.deliveryCost)
+  setItemsInCart([])
+    } else if (lastemployeeorderactive) {
+      const id = await lastemployeeorder._id
+      const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
       const data = await myorder.data
       console.log(data)
       setmyorder(data)
@@ -771,9 +762,25 @@ const [posOrderId, setposOrderId] = useState('')
       setordertotal(data.total)
       setordersubtotal(data.subtotal)
       setordertax(data.tax)
-      setorderdeliveryCost(data.deliveryCost)
-      setItemsInCart([])
+      setorderdeliveryCost(data.deliveryCost)      setItemsInCart([])
+    }
   }
+  // const POSinvoice = async (posOrderId) => {
+  //   // console.log(allOrders)
+
+  //     const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + posOrderId)
+  //     const data = await myorder.data
+  //     console.log(data)
+  //     setmyorder(data)
+  //     setmyorderid(data._id)
+  //     setlist_products_order(data.products)
+  //     setorderupdate_date(data.updatedAt)
+  //     setordertotal(data.total)
+  //     setordersubtotal(data.subtotal)
+  //     setordertax(data.tax)
+  //     setorderdeliveryCost(data.deliveryCost)
+  //     setItemsInCart([])
+  // }
 
   const updatecountofsales = async (id) => {
     const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)

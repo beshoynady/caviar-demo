@@ -41,12 +41,7 @@ const POS = () => {
                         <label htmlFor="order-radio" className="slide order" onClick={() => {
                           orderside.current.style.marginRight = "0%";
                         }}>طلباتك الحالية</label>
-                        <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                            POSinvoice();
-                            orderside.current.style.marginRight = "-50%";
-                          }}>الفاتورة</label>
-
-                        {/* {tableID ?
+                        {tableID ?
                           <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
                             POSinvoice(tableID);
                             orderside.current.style.marginRight = "-50%";
@@ -55,7 +50,7 @@ const POS = () => {
                             POSinvoice(employeeLoginInfo.employeeinfo.id);
                             orderside.current.style.marginRight = "-50%";
                             ordersText.current.style.marginRight = "-50%";
-                          }}>الفاتورة</label>} */}
+                          }}>الفاتورة</label>}
                         <div className="slider-tab">
 
                         </div>

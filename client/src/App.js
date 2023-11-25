@@ -762,7 +762,8 @@ const [posOrderId, setposOrderId] = useState('')
       setordertotal(data.total)
       setordersubtotal(data.subtotal)
       setordertax(data.tax)
-      setorderdeliveryCost(data.deliveryCost)      setItemsInCart([])
+      setorderdeliveryCost(data.deliveryCost)      
+      setItemsInCart([])
     }
   }
   // const POSinvoice = async (posOrderId) => {

@@ -116,7 +116,7 @@ const Cart = (props) => {
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
-                      <div className="container">
+                        <div className="container">
                           {/* Buttons */}
                           <div>
                             <button className="btn btn-primary mr-2" onClick={() => {/* Function for download invoice */ }}>Download Invoice</button>
@@ -149,13 +149,13 @@ const Cart = (props) => {
                             <tbody>
                               {/* Example rows, replace with dynamic data */}
                               {list_products_order.map((item, i) => (
-                                    <tr key={i}>
-                                      <td>{item.name}</td>
-                                      <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td>{item.quantity}</td>
-                                      <td>{item.totalprice}</td>
-                                    </tr>
-                                  ))}
+                                <tr key={i}>
+                                  <td>{item.name}</td>
+                                  <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                  <td>{item.quantity}</td>
+                                  <td>{item.totalprice}</td>
+                                </tr>
+                              ))}
                             </tbody>
                             <tfoot>
                               <tr>
@@ -163,11 +163,11 @@ const Cart = (props) => {
                                 <td>{ordersubtotal}</td>
                               </tr>
                               {orderdeliveryCost && (
-                                    <tr>
-                                      <td colSpan="3">Delivery</td>
-                                      <td>{orderdeliveryCost}</td>
-                                    </tr>
-                                  )}
+                                <tr>
+                                  <td colSpan="3">Delivery</td>
+                                  <td>{orderdeliveryCost}</td>
+                                </tr>
+                              )}
                               <tr>
                                 <td colSpan="3">Tax</td>
                                 <td>{ordertax}</td>

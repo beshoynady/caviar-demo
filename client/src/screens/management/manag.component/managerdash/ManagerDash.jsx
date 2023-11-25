@@ -29,7 +29,7 @@ const ManagerDash = () => {
   const status = ['Pending', 'Approved', 'Cancelled']
   const [update, setupdate] = useState(false)
 
-  const changeorderstauts = async (e, id) => {
+  const changeorderstauts = async (e, id ) => {
     try {
       const status = await e.target.value
       const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
@@ -43,12 +43,12 @@ const ManagerDash = () => {
 
   }
   const paymentstatus = ['Pending', 'Paid']
-  const changePaymentorderstauts = async (e, id) => {
+  const changePaymentorderstauts = async (e, id ,casher) => {
     try {
       const payment_status = e.target.value
       const isActive =payment_status=='Paid'? false : true;
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        payment_status ,isActive
+        payment_status ,isActive , casher
       })
       fetchPendingOrder()
       setupdate(!update)
@@ -295,7 +295,7 @@ const ManagerDash = () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id); RevenueRecording(employeeLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id , employeeLoginInfo.employeeinfo.id ); RevenueRecording(employeeLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     Paid
                                   </button>

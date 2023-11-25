@@ -170,7 +170,7 @@ const Cart = (props) => {
                               )}
                               <tr>
                                 <td colSpan="3">Tax</td>
-                                <td>{ordertax}</td>
+                                <td>{Math.round(ordertax * 100) / 100}</td>
                               </tr>
                               <tr>
                                 <td colSpan="3">Total</td>

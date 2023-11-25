@@ -118,10 +118,10 @@ const Cart = (props) => {
                       <div ref={printContainer} className="side-content">
                         <div className="container">
                           {/* Buttons */}
-                          <div>
-                            <button className="btn btn-primary mr-2" onClick={() => {/* Function for download invoice */ }}>Download Invoice</button>
-                            <button className="btn btn-success" onClick={() => {/* Function for printing invoice */ }}>Print Invoice</button>
-                          </div>
+                          {/* <div>
+                            <button className="btn btn-primary mr-2" onClick={() => { }}>Download Invoice</button>
+                            <button className="btn btn-success" onClick={() => {}}>Print Invoice</button>
+                          </div> */}
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>

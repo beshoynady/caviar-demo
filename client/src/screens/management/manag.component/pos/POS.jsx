@@ -42,7 +42,7 @@ const POS = () => {
                           orderside.current.style.marginRight = "0%";
                         }}>طلباتك الحالية</label>
                         <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
-                            POSinvoice;
+                            POSinvoice();
                             orderside.current.style.marginRight = "-50%";
                           }}>الفاتورة</label>
 

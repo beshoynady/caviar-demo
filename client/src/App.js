@@ -741,7 +741,6 @@ const [posOrderId, setposOrderId] = useState('')
   //     const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
   //     const data = await myorder.data
   //     setmyorder(data)
-  //     settotalinvoice(data.total)
   //     setmyorderid(data._id)
   //     setlist_products_order(data.products)
   //     setorderupdate_date(data.updatedAt)
@@ -753,7 +752,6 @@ const [posOrderId, setposOrderId] = useState('')
   //     console.log(data)
   //     setmyorder(data)
   //     setmyorderid(data._id)
-  //     settotalinvoice(data.total)
   //     setlist_products_order(data.products)
   //     setorderupdate_date(data.updatedAt)
   //     setItemsInCart([])
@@ -765,7 +763,6 @@ const [posOrderId, setposOrderId] = useState('')
       const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + posOrderId)
       const data = await myorder.data
       setmyorder(data)
-      settotalinvoice(data.total)
       setmyorderid(data._id)
       setlist_products_order(data.products)
       setorderupdate_date(data.updatedAt)
@@ -1055,7 +1052,7 @@ const [posOrderId, setposOrderId] = useState('')
       setproductnote, addnotrstoproduct,
 
       // Functions related to order processing and calculations
-      invoice, totalinvoice, list_products_order, orderupdate_date, myorder,
+      invoice, list_products_order, orderupdate_date, myorder,
       list_day_order, total_day_salse, categoryid, ItemsInCart, costOrder,
       additemtocart, increment, descrement,
 

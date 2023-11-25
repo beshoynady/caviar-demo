@@ -247,7 +247,7 @@
   .page-container {
     display: none;
   }
-  #invoice-POS {
+  /* #invoice-POS {
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding: 5px;
     margin: 0 auto;
@@ -285,7 +285,7 @@
   }
   #invoice-POS #top, #invoice-POS #mid, #invoice-POS #bot {
     /* Targets all id with 'col-' */
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee;
   }
   #invoice-POS #top {
     min-height: 100px;
@@ -350,5 +350,5 @@
   }
   #invoice-POS #legalcopy {
     margin-top: 5mm;
-  }
+  } */ 
   

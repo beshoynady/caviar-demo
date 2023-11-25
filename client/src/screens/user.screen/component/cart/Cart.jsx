@@ -114,91 +114,9 @@ const Cart = (props) => {
 
                       </div>
                     </div>
-                    {/* <div className="invoice side" >
+                    <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
-                        <div id="invoice-POS">
-                          <center id="top">
-                            <div className="logo"></div>
-                            <div className="info">
-                              <h2>SBISTechs Inc</h2>
-                            </div>
-                          </center>
-
-                          <div id="mid">
-                            <div className="info">
-                              <h2>Contact Info</h2>
-                              <p>
-                                Address : street city, state 0000
-                                Email   : JohnDoe@gmail.com
-                                Phone   : 555-555-5555
-                              </p>
-                            </div>
-                          </div>
-
-                          <div id="bot">
-
-                            <div id="table">
-                              <table className="table table-striped">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">المنتج</th>
-                                    <th scope="col">الكمية</th>
-                                    <th scope="col">السعر</th>
-                                    <th scope="col">التكلفة</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {list_products_order.map((item, i) => (
-                                    <tr key={i}>
-                                      <td>{item.name}</td>
-                                      <td>{item.quantity}</td>
-                                      <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td>{item.totalprice}</td>
-                                    </tr>
-                                  ))}
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">المجموع</td>
-                                    <td className="payment">{ordersubtotal}</td>
-                                  </tr>
-                                  {orderdeliveryCost && (
-                                    <tr className="tabletitle">
-                                      <td className="Rate" colSpan="3">الديلفري</td>
-                                      <td className="payment">{orderdeliveryCost}</td>
-                                    </tr>
-                                  )}
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">ضرائب</td>
-                                    <td className="payment">{ordertax}</td>
-                                  </tr>
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">الإجمالي</td>
-                                    <td className="payment">{ordertotal}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-
-
-                            <div id="legalcopy">
-                              <p className="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
-                              </p>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div className="total-order">
-                        {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}
-
-                        <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
-                        <div className='total-order-details'>
-                          <h2>الاجمالي</h2>
-                          <p>{totalinvoice + (totalinvoice * .14)}</p>
-                        </div>
-
-                      </div>
-                    </div> */}
-                    <div className="container">
+                      <div className="container">
                       {/* Invoice Header */}
                       <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                         <h2>Restaurant Name</h2>
@@ -276,6 +194,19 @@ const Cart = (props) => {
                         <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
                       </div>
                     </div>
+                      </div>
+                      <div className="total-order">
+                        {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}
+
+                        <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
+                        <div className='total-order-details'>
+                          <h2>الاجمالي</h2>
+                          <p>{totalinvoice + (totalinvoice * .14)}</p>
+                        </div>
+
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div >

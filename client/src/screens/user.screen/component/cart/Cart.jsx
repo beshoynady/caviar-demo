@@ -107,7 +107,7 @@ const Cart = (props) => {
                             </div>
                           </>
                         : 
-                          ''
+                          <></>
                         }
 
                       </div>

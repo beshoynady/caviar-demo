@@ -138,47 +138,46 @@ const Cart = (props) => {
                           <div id="bot">
 
                             <div id="table">
-                              <table>
-                                <tr className="tabletitle">
-                                  <td className="item"><h2>المنتج</h2></td>
-                                  <td className="Hours"><h2>الكمية</h2></td>
-                                  <td className="Hours"><h2>السعر</h2></td>
-                                  <td className="Rate"><h2>التكلفه</h2></td>
-                                </tr>
-                                {list_products_order.map((item, i) => {
-                                  console.log(`list_products_order ${list_products_order}`)
-                                  return (
-                                    <tr className="service">
-                                      <td className="tableitem"><p className="itemtext">{item.name}</p></td>
-                                      <td className="tableitem"><p className="itemtext">{item.quantity}</p></td>
-                                      <td className="tableitem"><p className="itemtext">{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</p></td>
-                                      <td className="tableitem"><p className="itemtext">{item.totalprice}</p></td>
-                                    </tr>)
-                                }
-                                )}
-
-
-                                <tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>المجموع</h2></td>
-                                  <td className="payment"><h2>{ordersubtotal}</h2></td>
-                                </tr>
-                                {orderdeliveryCost ? <tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>الديلفري</h2></td>
-                                  <td className="payment"><h2>{orderdeliveryCost}</h2></td>
-                                </tr>
-                                  : ''}
-                                <tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>ضرائب</h2></td>
-                                  <td className="payment"><h2>{ordertax}</h2></td>
-                                </tr>
-
-                                <tr className="tabletitle">
-                                  <td className="Rate" colspan="3"><h2>الاجمالي</h2></td>
-                                  <td className="payment"><h2>{ordertotal}</h2></td>
-                                </tr>
-
+                              <table className="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">المنتج</th>
+                                    <th scope="col">الكمية</th>
+                                    <th scope="col">السعر</th>
+                                    <th scope="col">التكلفة</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {list_products_order.map((item, i) => (
+                                    <tr key={i}>
+                                      <td>{item.name}</td>
+                                      <td>{item.quantity}</td>
+                                      <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                      <td>{item.totalprice}</td>
+                                    </tr>
+                                  ))}
+                                  <tr className="tabletitle">
+                                    <td className="Rate" colSpan="3">المجموع</td>
+                                    <td className="payment">{ordersubtotal}</td>
+                                  </tr>
+                                  {orderdeliveryCost && (
+                                    <tr className="tabletitle">
+                                      <td className="Rate" colSpan="3">الديلفري</td>
+                                      <td className="payment">{orderdeliveryCost}</td>
+                                    </tr>
+                                  )}
+                                  <tr className="tabletitle">
+                                    <td className="Rate" colSpan="3">ضرائب</td>
+                                    <td className="payment">{ordertax}</td>
+                                  </tr>
+                                  <tr className="tabletitle">
+                                    <td className="Rate" colSpan="3">الإجمالي</td>
+                                    <td className="payment">{ordertotal}</td>
+                                  </tr>
+                                </tbody>
                               </table>
                             </div>
+
 
                             <div id="legalcopy">
                               <p className="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.

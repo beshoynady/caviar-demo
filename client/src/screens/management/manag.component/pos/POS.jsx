@@ -23,10 +23,12 @@ const POS = () => {
   const [clientphone, setclientphone] = useState('')
   const [clientaddress, setclientaddress] = useState('')
   const [ordertype, setordertype] = useState('')
+
+  
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost, checkout }) => {
+        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost }) => {
           if (employeeLoginInfo) {
             return (
               <section className='pos-section'>
@@ -39,7 +41,12 @@ const POS = () => {
                         <label htmlFor="order-radio" className="slide order" onClick={() => {
                           orderside.current.style.marginRight = "0%";
                         }}>طلباتك الحالية</label>
-                        {tableID ?
+                        <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
+                            POSinvoice;
+                            orderside.current.style.marginRight = "-50%";
+                          }}>الفاتورة</label>
+
+                        {/* {tableID ?
                           <label htmlFor="invoice-radio" className="slide invoice" onClick={() => {
                             POSinvoice(tableID);
                             orderside.current.style.marginRight = "-50%";
@@ -48,7 +55,7 @@ const POS = () => {
                             POSinvoice(employeeLoginInfo.employeeinfo.id);
                             orderside.current.style.marginRight = "-50%";
                             ordersText.current.style.marginRight = "-50%";
-                          }}>الفاتورة</label>}
+                          }}>الفاتورة</label>} */}
                         <div className="slider-tab">
 
                         </div>

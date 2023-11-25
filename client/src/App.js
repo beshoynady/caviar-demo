@@ -696,7 +696,7 @@ const [posOrderId, setposOrderId] = useState('')
       const name = await clientname;
       const phone = await clientphone;
       const address = await clientaddress;
-      const employee = await casherid;
+      const createBy = await casherid;
       const orderType = await ordertype;
 
       const newOrder = await axios.post('https://caviar-api.vercel.app/api/order', {
@@ -708,12 +708,13 @@ const [posOrderId, setposOrderId] = useState('')
         deliveryCost,
         total,
         orderType,
-        employee,
+        createBy,
         name,
         phone,
         address
       });
       if(newOrder){
+        console.log(newOrder.data._id)
         setposOrderId(newOrder.data._id)
       }
 
@@ -762,6 +763,7 @@ const [posOrderId, setposOrderId] = useState('')
 
       const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + posOrderId)
       const data = await myorder.data
+      console.log(data)
       setmyorder(data)
       setmyorderid(data._id)
       setlist_products_order(data.products)

@@ -111,71 +111,7 @@ const Cart = (props) => {
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
-                        <div className="container">
-                          <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
-                            <h2>Restaurant Name</h2>
-                            <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
-                          </div>
-
-                          <div className="customer-info" style={{ marginBottom: '20px' }}>
-                            <h4>Customer Details</h4>
-                            <p>Name: John Doe</p>
-                            <p>Mobile: 123-456-7890</p>
-                            <p>Address: 123 Main St, City</p>
-                          </div>
-
-                          <table className="table table-bordered">
-                            <thead className="thead-dark">
-                              <tr>
-                                <th scope="col">Item</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {list_products_order.map((item, i) => (
-                                <tr key={i}>
-                                  <td>{item.name}</td>
-                                  <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                  <td>{item.quantity}</td>
-                                  <td>{item.totalprice}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td colSpan="3">Subtotal</td>
-                                <td>{ordersubtotal}</td>
-                              </tr>
-                              {orderdeliveryCost && (
-                                <tr>
-                                  <td colSpan="3">Delivery</td>
-                                  <td>{orderdeliveryCost}</td>
-                                </tr>
-                              )}
-                              <tr>
-                                <td colSpan="3">Tax</td>
-                                <td>{Math.round(ordertax * 100) / 100}</td>
-                              </tr>
-                              <tr>
-                                <td colSpan="3">Total</td>
-                                <td>{ordertotal}</td>
-                              </tr>
-                            </tfoot>
-                          </table>
-
-                          <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
-                            <h4>Restaurant Details</h4>
-                            <p>Restaurant Name</p>
-                            <p>Mobile: 987-654-3210</p>
-                            <p>Address: 456 Street, City</p>
-                          </div>
-
-                          <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
-                            <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
-                          </div>
-                        </div>
+            
                         {/* <div id="invoice-POS">
                           <center id="top">
                             <div className="logo"></div>

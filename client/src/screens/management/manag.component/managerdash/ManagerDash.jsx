@@ -186,7 +186,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ employeeLoginInfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ employeeLoginInfo, usertitle, list_day_order, total_day_sales, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
               <ToastContainer/>
@@ -233,7 +233,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>ايراد اليوم</p>
                       <h3>
-                        {total_day_salse}
+                        {total_day_sales}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

@@ -21,6 +21,7 @@ const ManagerDash = () => {
       const recentPaymentStatus = res.data.filter(order => order.payment_status === 'Pending');
       setpending_order(recentStatus);
       setpending_payment(recentPaymentStatus);
+      Payment_pending_orders()
     } catch (error) {
       console.log(error);
       // Handle errors here as needed

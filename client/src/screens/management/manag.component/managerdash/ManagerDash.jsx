@@ -12,18 +12,55 @@ const ManagerDash = () => {
   const [pending_payment, setpending_payment] = useState([])
   const [allOrders, setallOrders] = useState([])
 
-  const fetchPendingOrder = async () => {
+  // Fetch pending orders from the API
+  const fetchPendingOrders = async () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       setallOrders(res.data);
-      const recentStatus = res.data.filter((order) => order.status === 'Pending');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+      const recentStatus = res.data.filter(order => order.status === 'Pending');
+      const recentPaymentStatus = res.data.filter(order => order.payment_status === 'Pending');
       setpending_order(recentStatus);
       setpending_payment(recentPaymentStatus);
     } catch (error) {
       console.log(error);
+      // Handle errors here as needed
     }
   };
+
+  const [list_day_order, setlist_day_order] = useState([]);
+  const [total_day_sales, settotal_day_sales] = useState(0);
+  
+  const Payment_pending_orders = async () => {
+    try {  
+      // Get orders created today
+      const currentDate = new Date();
+      const dayOrders = allOrders.filter(order => {
+        const orderDate = new Date(order.createdAt);
+        return (
+          orderDate.getDate() === currentDate.getDate() &&
+          orderDate.getMonth() === currentDate.getMonth() &&
+          orderDate.getFullYear() === currentDate.getFullYear()
+        );
+      });
+  
+      // Set the list of orders for the day
+      setlist_day_order(dayOrders);
+  
+      // Check for paid orders and calculate total sales
+      if (dayOrders.length > 0) {
+        const paidOrders = dayOrders.filter(order => order.payment_status === 'Paid');
+  
+        if (paidOrders.length > 0) {
+          const totalSales = paidOrders.reduce((total, order) => total + order.total, 0);
+          settotal_day_sales(totalSales);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      // Handle errors here as needed
+    }
+  };
+
 
 
   const status = ['Pending', 'Approved', 'Cancelled']
@@ -50,7 +87,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status ,isActive , casher
       })
-      fetchPendingOrder()
+      fetchPendingOrders()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -102,7 +139,7 @@ const ManagerDash = () => {
         waiter,
         help,
       });
-      fetchPendingOrder();
+      fetchPendingOrders();
       setupdate(!update);
       console.log(order.data);
     } catch (error) {
@@ -111,39 +148,7 @@ const ManagerDash = () => {
   };
 
 
-  const [list_day_order, setlist_day_order] = useState([]);
-  const [total_day_sales, settotal_day_sales] = useState(0);
-  
-  const Payment_pending_orders = async () => {
-    try {  
-      // Get orders created today
-      const currentDate = new Date();
-      const dayOrders = allOrders.filter(order => {
-        const orderDate = new Date(order.createdAt);
-        return (
-          orderDate.getDate() === currentDate.getDate() &&
-          orderDate.getMonth() === currentDate.getMonth() &&
-          orderDate.getFullYear() === currentDate.getFullYear()
-        );
-      });
-  
-      // Set the list of orders for the day
-      setlist_day_order(dayOrders);
-  
-      // Check for paid orders and calculate total sales
-      if (dayOrders.length > 0) {
-        const paidOrders = dayOrders.filter(order => order.payment_status === 'Paid');
-  
-        if (paidOrders.length > 0) {
-          const totalSales = paidOrders.reduce((total, order) => total + order.total, 0);
-          settotal_day_sales(totalSales);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-      // Handle errors here as needed
-    }
-  };
+
 
   const [cashRegister, setcashRegister] = useState('');
   const [cashRegistername, setcashRegistername] = useState('');
@@ -169,18 +174,18 @@ const ManagerDash = () => {
     }
   };
 
-  const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
-  const getUserInfoFromToken = () => {
-    const employeetoken = localStorage.getItem('token_e');
-    if (employeetoken) {
-      const decodedToken = jwt_decode(employeetoken);
-      setemployeeLoginInfo(decodedToken.employeeinfo);
-      handleCashRegister(decodedToken.employeeinfo.id);
+  // const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
+  // const getUserInfoFromToken = () => {
+  //   const employeetoken = localStorage.getItem('token_e');
+  //   if (employeetoken) {
+  //     const decodedToken = jwt_decode(employeetoken);
+  //     setemployeeLoginInfo(decodedToken.employeeinfo);
+  //     handleCashRegister(decodedToken.employeeinfo.id);
 
-    } else {
-      setemployeeLoginInfo(null);
-    }
-  };
+  //   } else {
+  //     setemployeeLoginInfo(null);
+  //   }
+  // };
 
 
   const RevenueRecording = async (id, amount, description) => {
@@ -214,7 +219,7 @@ const ManagerDash = () => {
 
 
   useEffect(() => {
-    fetchPendingOrder();
+    fetchPendingOrders();
     fetchActiveWaiters();
     getUserInfoFromToken();
     Payment_pending_orders()

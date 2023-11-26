@@ -32,6 +32,7 @@ const ManagerDash = () => {
   const [total_day_sales, settotal_day_sales] = useState(0);
 
   const Payment_pending_orders = async () => {
+    setlist_day_order(allOrders)
     const dayorder = allOrders?allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()):[]
     setlist_day_order(dayorder)
     console.log(dayorder)

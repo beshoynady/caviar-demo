@@ -244,7 +244,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>اوردرات اليوم</p>
                       <h3>
-                        {list_day_order.length}
+                        {list_day_order?list_day_order.length:0}
                       </h3>
                     </span>
                     <i className='bx bx-calendar-check'></i>
@@ -253,7 +253,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>في الانتظار</p>
                       <h3>
-                        {pending_order.length}
+                        {pending_order?pending_order.length:0}
                       </h3>
                     </span>
                     <i className='bx bx-show-alt'></i>

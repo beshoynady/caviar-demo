@@ -93,19 +93,19 @@ const Cart = (props) => {
                       <div className="total-order">
 
                         <div className="total-order">
-                          {ItemsInCart.length > 0 ? (
-                            <>
+                          {ItemsInCart.length > 0 && (
+                            <div className="total-order">
                               {id ? (
                                 <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تأكيد الطلب للطاولة</button>
-                              ) : userLoginInfo && userLoginInfo.userinfo ? (
+                              ) : (userLoginInfo && userLoginInfo.userinfo) && (
                                 <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تأكيد الطلب</button>
-                              ) : null}
+                              )}
                               <div className='total-order-details'>
                                 <h2>المجموع</h2>
                                 <p>{costOrder}</p>
                               </div>
-                            </>
-                          ) : null}
+                            </div>
+                          )}
                         </div>
 
                       </div>

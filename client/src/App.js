@@ -848,7 +848,7 @@ const [posOrderId, setposOrderId] = useState('')
 
   const [list_day_order, setlist_day_order] = useState([])
   const [total_day_salse, settotal_day_salse] = useState(0)
-
+ 
   const Payment_pending_orders = async () => {
     const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay())
     setlist_day_order(dayorder)

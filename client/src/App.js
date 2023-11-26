@@ -847,12 +847,13 @@ const [posOrderId, setposOrderId] = useState('')
   }
 
   const [list_day_order, setlist_day_order] = useState([])
-  const [total_day_salse, settotal_day_salse] = useState(0)
+  const [total_day_sales, settotal_day_sales] = useState(0)
 
   const Payment_pending_orders = async () => {
+    console.log(allOrders)
     const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay())
     setlist_day_order(dayorder)
-    // console.log(dayorder)
+    console.log(dayorder)
     if (dayorder.length > 0) {
       const order_day_paid = dayorder.filter((order) => order.payment_status == 'Paid')
       //  console.log(order_day_paid)
@@ -860,9 +861,9 @@ const [posOrderId, setposOrderId] = useState('')
       if (order_day_paid.length > 0) {
         for (let i = 0; i < order_day_paid.length; i++) {
           total = order_day_paid[i].total + total
-          settotal_day_salse(total)
+          settotal_day_sales(total)
         }
-        // console.log(total_day_salse)
+        // console.log(total_day_sales)
       }
     }
   }
@@ -1063,7 +1064,7 @@ const [posOrderId, setposOrderId] = useState('')
 
       // Functions related to order processing and calculations
       invoice, list_products_order, orderupdate_date, myorder,
-      list_day_order, total_day_salse, categoryid, ItemsInCart, costOrder,
+      list_day_order, total_day_sales, categoryid, ItemsInCart, costOrder,
       additemtocart, increment, descrement,
 
       // Functions related to creating different types of orders

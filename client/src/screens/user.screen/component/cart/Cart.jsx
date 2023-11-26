@@ -249,12 +249,12 @@ const Cart = (props) => {
                         </div> */}
                       </div>
                       <div className="total-order">
-                        {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}
+                        {id ? <button className='total-order-btn' onClick={checkout}>طلب الحساب</button> : ""}
 
                         <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                         <div className='total-order-details'>
                           <h2>الاجمالي</h2>
-                          <p>{totalinvoice + (totalinvoice * .14)}</p>
+                          <p>{ordertotal}</p>
                         </div>
 
                       </div>

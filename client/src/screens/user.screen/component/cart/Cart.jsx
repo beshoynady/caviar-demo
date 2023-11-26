@@ -91,31 +91,33 @@ const Cart = (props) => {
                         }
                       </div>
                       <div className="total-order">
-                        {ItemsInCart.length > 0 ? (
-                          <> 
-                        {id ?
-                          <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تأكيد الطلب للطاولة</button>
-                          : userLoginInfo && userLoginInfo.userinfo ?
-                            <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تأكيد الطلب</button>
-                            : null}
-                        <div className='total-order-details'>
-                          <h2>المجموع</h2>
-                          <p>{costOrder}</p>
+
+                        <div className="total-order">
+                          {ItemsInCart.length > 0 ? (
+                            <>
+                              {id ? (
+                                <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تأكيد الطلب للطاولة</button>
+                              ) : userLoginInfo && userLoginInfo.userinfo ? (
+                                <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تأكيد الطلب</button>
+                              ) : null}
+                              <div className='total-order-details'>
+                                <h2>المجموع</h2>
+                                <p>{costOrder}</p>
+                              </div>
+                            </>
+                          ) : null}
                         </div>
-                         </>
-                        ) : null}
+
                       </div>
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
                         <div className="container">
-                          {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>
                             <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
                           </div>
 
-                          {/* Customer Information */}
                           <div className="customer-info" style={{ marginBottom: '20px' }}>
                             <h4>Customer Details</h4>
                             <p>Name: John Doe</p>
@@ -123,7 +125,6 @@ const Cart = (props) => {
                             <p>Address: 123 Main St, City</p>
                           </div>
 
-                          {/* Order Details Table */}
                           <table className="table table-bordered">
                             <thead className="thead-dark">
                               <tr>
@@ -134,7 +135,6 @@ const Cart = (props) => {
                               </tr>
                             </thead>
                             <tbody>
-                              {/* Example rows, replace with dynamic data */}
                               {list_products_order.map((item, i) => (
                                 <tr key={i}>
                                   <td>{item.name}</td>
@@ -166,7 +166,6 @@ const Cart = (props) => {
                             </tfoot>
                           </table>
 
-                          {/* Restaurant Information */}
                           <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
                             <h4>Restaurant Details</h4>
                             <p>Restaurant Name</p>
@@ -174,7 +173,6 @@ const Cart = (props) => {
                             <p>Address: 456 Street, City</p>
                           </div>
 
-                          {/* Footer */}
                           <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
                             <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
                           </div>

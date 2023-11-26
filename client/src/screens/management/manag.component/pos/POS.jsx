@@ -24,7 +24,7 @@ const POS = () => {
   const [clientaddress, setclientaddress] = useState('')
   const [ordertype, setordertype] = useState('')
 
-
+  
   return (
     <detacontext.Consumer>
       {
@@ -245,37 +245,26 @@ const POS = () => {
                   </div>
                   <div className='categ-menu'>
                     <div className='pos-menu'>
-                      <div className='container'>
-                        <div className='row row-cols-1 row-cols-md-3 g-4'>
-                          {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
-                            return (
-                              <div className='col mb-4' key={index}>
-                                <div className="card border-0 rounded-3 shadow-sm h-100" style={{ width: '100%' }} onClick={() => additemtocart(product._id)}>
-                                  <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '6rem', objectFit: 'cover' }} />
-                                  <div className="card-body bg-dark text-white d-flex flex-column justify-content-between">
-                                    <div>
-                                      <h6 className='card-title text-center mb-0 font-weight-bold'>{product.name}</h6>
-                                      <div className='text-center'>
-                                        {product.priceAfterDiscount ?
-                                          <div>
-                                            <p className='text-muted small mb-0'><del>{product.price}ج</del></p>
-                                            <p className='mb-1 font-weight-bold'>{product.priceAfterDiscount}ج</p>
-                                          </div>
-                                          :
-                                          <p className='mb-1 font-weight-bold'>{product.price}ج</p>
-                                        }
-                                      </div>
-                                    </div>
-                                    <p className='card-text text-center small overflow-hidden' style={{ maxHeight: '3rem' }}>{product.description}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    </div>
+                      {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
+                        return (
+                          <div className="pos-card" key={index} onClick={() => additemtocart(product._id)}>
+                            <img className='pos-img-card' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
+                            <div className="pos-card-detalis">
+                              <div className='card-name'>
+                                <div className='product-name'>{product.name}</div>
+                                <div className='product-price'>{product.price}ج</div>
 
+                              </div>
+                              <div className='card-discription'>{product.description}</div>
+
+                              <div className='pos-btn'>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      }
+                      )}
+                    </div>
                     <nav className='pos-category'>
                       <ul className='category-ul'>
                         {allcategories.map((c, i) => <li key={i} className='category-li' onClick={() => setcategoryid(c._id)}>

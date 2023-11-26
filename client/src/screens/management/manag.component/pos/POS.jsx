@@ -249,12 +249,12 @@ const POS = () => {
                         {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                           return (
                             <div className='col-md-4 mb-4' key={index}>
-                              <div className="card" onClick={() => additemtocart(product._id)}>
+                              <div className="card" style={{ width: '18rem' }} onClick={() => additemtocart(product._id)}>
                                 <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
-                                <div className="card-body">
-                                  <h5 className='card-title'>{product.name}</h5>
-                                  <p className='card-text'>{product.description}</p>
-                                  <p className='card-text'>{product.price}ج</p>
+                                <div className="card-body bg-dark">
+                                  <h5 className='card-title text-white'>{product.name}</h5>
+                                  <p className='card-text text-white'>{product.description}</p>
+                                  <p className='card-text text-white'>{product.price}ج</p>
                                   {/* إضافة زر أو عنصر هنا إذا كنت ترغب */}
                                 </div>
                               </div>
@@ -263,6 +263,7 @@ const POS = () => {
                         })}
                       </div>
                     </div>
+
 
                     <nav className='pos-category'>
                       <ul className='category-ul'>

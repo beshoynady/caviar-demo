@@ -174,18 +174,18 @@ const ManagerDash = () => {
     }
   };
 
-  // const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
-  // const getUserInfoFromToken = () => {
-  //   const employeetoken = localStorage.getItem('token_e');
-  //   if (employeetoken) {
-  //     const decodedToken = jwt_decode(employeetoken);
-  //     setemployeeLoginInfo(decodedToken.employeeinfo);
-  //     handleCashRegister(decodedToken.employeeinfo.id);
+  const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
+  const getUserInfoFromToken = () => {
+    const employeetoken = localStorage.getItem('token_e');
+    if (employeetoken) {
+      const decodedToken = jwt_decode(employeetoken);
+      setemployeeLoginInfo(decodedToken.employeeinfo);
+      handleCashRegister(decodedToken.employeeinfo.id);
 
-  //   } else {
-  //     setemployeeLoginInfo(null);
-  //   }
-  // };
+    } else {
+      setemployeeLoginInfo(null);
+    }
+  };
 
 
   const RevenueRecording = async (id, amount, description) => {
@@ -221,7 +221,7 @@ const ManagerDash = () => {
   useEffect(() => {
     fetchPendingOrders();
     fetchActiveWaiters();
-    // getUserInfoFromToken();
+    getUserInfoFromToken();
     Payment_pending_orders()
   }, [update]);
 

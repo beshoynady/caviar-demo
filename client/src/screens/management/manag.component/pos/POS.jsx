@@ -249,7 +249,7 @@ const POS = () => {
                         {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                           return (
                             <div className='col-md-3 mb-4' key={index}>
-                              <div className="card border-0 rounded-3 shadow-sm" style={{ width: '10rem', height: '15rem' }} onClick={() => additemtocart(product._id)}>
+                              <div className="card border-0 rounded-3 shadow-sm" style={{ width: '13rem', height: '13rem' }} onClick={() => additemtocart(product._id)}>
                                 <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '8rem', objectFit: 'cover' }} />
                                 <div className="card-body bg-dark text-white d-flex flex-column">
                                   <div className='d-flex justify-content-between align-items-center mb-2'>

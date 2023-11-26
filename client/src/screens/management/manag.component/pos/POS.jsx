@@ -108,7 +108,7 @@ const POS = () => {
                               {/* Buttons */}
                               <div>
 
-                                <button className="btn btn-success" onClick={() => {handlePrint}}>Print Invoice</button>
+                                <button className="btn btn-success" onClick={handlePrint}>Print Invoice</button>
                               </div>
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>

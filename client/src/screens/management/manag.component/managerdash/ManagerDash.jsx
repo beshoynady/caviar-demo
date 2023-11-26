@@ -221,7 +221,7 @@ const ManagerDash = () => {
   useEffect(() => {
     fetchPendingOrders();
     fetchActiveWaiters();
-    getUserInfoFromToken();
+    // getUserInfoFromToken();
     Payment_pending_orders()
   }, [update]);
 

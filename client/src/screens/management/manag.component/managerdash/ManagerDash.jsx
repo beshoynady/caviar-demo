@@ -33,7 +33,14 @@ const ManagerDash = () => {
 
   const Payment_pending_orders = async () => {
     setlist_day_order(allOrders)
-    const dayorder = allOrders?allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay()):[]
+    const currentDate = new Date().getDate(); // Get the current day
+
+    const dayorder = allOrders
+      ? allOrders.filter(order => {
+          const orderDate = new Date(order.createdAt).getDate(); // Get the day of the order
+          return orderDate === currentDate; // Filter orders for today
+        })
+      : [];
     setlist_day_order(dayorder)
     console.log(dayorder)
     if (dayorder.length > 0) {

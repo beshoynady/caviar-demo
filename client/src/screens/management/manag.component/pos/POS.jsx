@@ -244,7 +244,7 @@ const POS = () => {
                       </form>}
                   </div>
                   <div className='categ-menu'>
-                    <div className='container'>
+                    <div className='container-lg'>
                       <div className='row'>
                         {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                           return (

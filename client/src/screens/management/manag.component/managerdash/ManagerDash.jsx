@@ -233,7 +233,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>ايراد اليوم</p>
                       <h3>
-                        {total_day_sales}
+                        {total_day_sales?Math.round(total_day_sales * 100) / 100 :''}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

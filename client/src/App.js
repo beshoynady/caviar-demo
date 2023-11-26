@@ -1044,7 +1044,7 @@ const [posOrderId, setposOrderId] = useState('')
 
       // Functions related to order processing and calculations
       invoice, list_products_order, orderupdate_date, myorder,
-      list_day_order, total_day_sales, categoryid, ItemsInCart, costOrder,
+      list_day_order, categoryid, ItemsInCart, costOrder,
       additemtocart, increment, descrement,
 
       // Functions related to creating different types of orders

@@ -21,7 +21,29 @@ const ManagerDash = () => {
       const recentPaymentStatus = res.data.filter(order => order.payment_status === 'Pending');
       setpending_order(recentStatus);
       setpending_payment(recentPaymentStatus);
-      Payment_pending_orders()
+      
+      const currentDate = new Date().getDate(); // Get the current day
+
+      const dayorder = res.data
+        ? res.data.filter(order => {
+          const orderDate = new Date(order.createdAt).getDate(); // Get the day of the order
+          return orderDate === currentDate; // Filter orders for today
+        })
+        : [];
+      setlist_day_order(dayorder)
+      console.log(dayorder)
+      if (dayorder.length > 0) {
+        const order_day_paid = dayorder.filter((order) => order.payment_status == 'Paid')
+        console.log(order_day_paid)
+        let total = 0;
+        if (order_day_paid.length > 0) {
+          for (let i = 0; i < order_day_paid.length; i++) {
+            total = order_day_paid[i].total + total
+            settotal_day_sales(total)
+          }
+          // console.log(total_day_salse)
+        }
+      }
     } catch (error) {
       console.log(error);
       // Handle errors here as needed
@@ -37,9 +59,9 @@ const ManagerDash = () => {
 
     const dayorder = allOrders
       ? allOrders.filter(order => {
-          const orderDate = new Date(order.createdAt).getDate(); // Get the day of the order
-          return orderDate === currentDate; // Filter orders for today
-        })
+        const orderDate = new Date(order.createdAt).getDate(); // Get the day of the order
+        return orderDate === currentDate; // Filter orders for today
+      })
       : [];
     setlist_day_order(dayorder)
     console.log(dayorder)
@@ -50,7 +72,7 @@ const ManagerDash = () => {
       if (order_day_paid.length > 0) {
         for (let i = 0; i < order_day_paid.length; i++) {
           total = order_day_paid[i].total + total
-          settotal_day_sales(total)
+          // settotal_day_sales(total)
         }
         // console.log(total_day_salse)
       }

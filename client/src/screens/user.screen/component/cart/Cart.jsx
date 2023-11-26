@@ -91,9 +91,9 @@ const Cart = (props) => {
                         }
                       </div>
                       <div className="total-order">
-                        {/* {ItemsInCart.length > 0 ? (
-                          <> */}
-                        {/* {id ?
+                        {ItemsInCart.length > 0 ? (
+                          <> 
+                        {id ?
                           <button className='total-order-btn' onClick={() => createClientOrderForTable(id)}>تأكيد الطلب للطاولة</button>
                           : userLoginInfo && userLoginInfo.userinfo ?
                             <button className='total-order-btn' onClick={() => createClientOrderForUser(userLoginInfo.userinfo.id)}>تأكيد الطلب</button>
@@ -101,19 +101,14 @@ const Cart = (props) => {
                         <div className='total-order-details'>
                           <h2>المجموع</h2>
                           <p>{costOrder}</p>
-                        </div> */}
-                        {/* </>
-                        ) : null} */}
+                        </div>
+                         </>
+                        ) : null}
                       </div>
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} className="side-content">
                         <div className="container">
-                          {/* Buttons */}
-                           <div>
-                            <button className="btn btn-primary mr-2">Download Invoice</button>
-                            <button className="btn btn-success">Print Invoice</button>
-                          </div> 
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>

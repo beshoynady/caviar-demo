@@ -249,21 +249,21 @@ const POS = () => {
                         {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                           return (
                             <div className='col-md-3 mb-4' key={index}>
-                              <div className="card border shadow-sm" style={{ width: '14rem', height: '18rem' }} onClick={() => additemtocart(product._id)}>
-                                <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '10rem' }} />
+                              <div className="card border-0 rounded-3 shadow-sm" style={{ width: '10rem', height: '15rem' }} onClick={() => additemtocart(product._id)}>
+                                <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '8rem', objectFit: 'cover' }} />
                                 <div className="card-body bg-dark text-white d-flex flex-column">
-                                  <div className='d-flex justify-content-between align-items-center mb-3'>
-                                    <h5 className='card-title text-right mb-0 font-weight-bold'>{product.name}</h5>
+                                  <div className='d-flex justify-content-between align-items-center mb-2'>
+                                    <h6 className='card-title text-center mb-0 font-weight-bold'>{product.name}</h6>
                                     {product.priceAfterDiscount ?
-                                      <div className='text-right'>
-                                        <p className='mb-0 font-weight-bold'>{product.priceAfterDiscount}ج</p>
-                                        <del className='text-muted small'>{product.price}ج</del>
+                                      <div className='text-center'>
+                                        <p className='mb-1 font-weight-bold'>{product.priceAfterDiscount}ج</p>
+                                        <p className='text-muted small mb-0'><del>{product.price}ج</del></p>
                                       </div>
                                       :
-                                      <p className='card-text mb-0 font-weight-bold'>{product.price}ج</p>
+                                      <p className='mb-1 font-weight-bold'>{product.price}ج</p>
                                     }
                                   </div>
-                                  <p className='card-text flex-grow-1 text-justify'>{product.description}</p>
+                                  <p className='card-text text-center small'>{product.description}</p>
                                 </div>
                               </div>
                             </div>

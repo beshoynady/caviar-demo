@@ -9,6 +9,7 @@ const Tables = () => {
 
   const [tableid, settableid] = useState("")
   const [qrimage, setqrimage] = useState("")
+  
   const createQR = async (e) => {
     e.preventDefault();
     const URL = `https://${window.location.hostname}/${tableid}`;

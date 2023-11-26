@@ -262,7 +262,7 @@ const Cart = (props) => {
                         <button className='total-order-btn' onClick={handlePrint}>طباعه</button>
                         <div className='total-order-details'>
                           <h2>الاجمالي</h2>
-                          <p>{totalinvoice + (totalinvoice * .14)}</p>
+                          <p>{ordertotal}</p>
                         </div>
 
                       </div>

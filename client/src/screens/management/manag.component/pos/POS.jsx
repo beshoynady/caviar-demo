@@ -24,7 +24,7 @@ const POS = () => {
   const [clientaddress, setclientaddress] = useState('')
   const [ordertype, setordertype] = useState('')
 
-  
+
   return (
     <detacontext.Consumer>
       {
@@ -244,27 +244,26 @@ const POS = () => {
                       </form>}
                   </div>
                   <div className='categ-menu'>
-                    <div className='pos-menu'>
-                      {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
-                        return (
-                          <div className="pos-card" key={index} onClick={() => additemtocart(product._id)}>
-                            <img className='pos-img-card' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
-                            <div className="pos-card-detalis">
-                              <div className='card-name'>
-                                <div className='product-name'>{product.name}</div>
-                                <div className='product-price'>{product.price}ج</div>
-
-                              </div>
-                              <div className='card-discription'>{product.description}</div>
-
-                              <div className='pos-btn'>
+                    <div className='container'>
+                      <div className='row'>
+                        {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
+                          return (
+                            <div className='col-md-4 mb-4' key={index}>
+                              <div className="card" onClick={() => additemtocart(product._id)}>
+                                <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
+                                <div className="card-body">
+                                  <h5 className='card-title'>{product.name}</h5>
+                                  <p className='card-text'>{product.description}</p>
+                                  <p className='card-text'>{product.price}ج</p>
+                                  {/* إضافة زر أو عنصر هنا إذا كنت ترغب */}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )
-                      }
-                      )}
+                          )
+                        })}
+                      </div>
                     </div>
+
                     <nav className='pos-category'>
                       <ul className='category-ul'>
                         {allcategories.map((c, i) => <li key={i} className='category-li' onClick={() => setcategoryid(c._id)}>

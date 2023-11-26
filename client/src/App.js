@@ -1008,14 +1008,9 @@ const [posOrderId, setposOrderId] = useState('')
     getallTable();
     getallUsers();
     getallemployees()
-    Payment_pending_orders()
   }, [])
 
 
-
-  useEffect(() => {
-    Payment_pending_orders()
-  }, [allOrders])
 
   useEffect(() => {
     costOfOrder()
@@ -1024,7 +1019,6 @@ const [posOrderId, setposOrderId] = useState('')
     getallOrders()
     costOfOrder()
     getUserInfoFromToken()
-    Payment_pending_orders()
 
   }, [count, ItemsInCart, isLogin])
 
@@ -1044,7 +1038,7 @@ const [posOrderId, setposOrderId] = useState('')
 
       // Functions related to order processing and calculations
       invoice, list_products_order, orderupdate_date, myorder,
-      list_day_order, categoryid, ItemsInCart, costOrder,
+       categoryid, ItemsInCart, costOrder,
       additemtocart, increment, descrement,
 
       // Functions related to creating different types of orders

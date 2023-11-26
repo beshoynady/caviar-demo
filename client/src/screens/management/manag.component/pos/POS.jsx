@@ -245,15 +245,15 @@ const POS = () => {
                   </div>
                   <div className='categ-menu'>
                     <div className='container'>
-                      <div className='row row-cols-1 row-cols-md-3 g-4'>
+                      <div className='row'>
                         {allProducts.filter(pro => pro.category === categoryid).map((product, index) => {
                           return (
-                            <div className='col mb-4' key={index}>
-                              <div className="card border shadow-sm" style={{ width: '12rem', height: '15rem' }} onClick={() => additemtocart(product._id)}>
-                                <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '8rem', objectFit: 'cover' }} />
-                                <div className="card-body bg-dark text-white d-flex flex-column justify-content-between">
-                                  <div>
-                                    <h6 className='card-title text-right mb-2 font-weight-bold'>{product.name}</h6>
+                            <div className='col-md-3 mb-4' key={index}>
+                              <div className="card border shadow-sm" style={{ width: '14rem', height: '18rem' }} onClick={() => additemtocart(product._id)}>
+                                <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '10rem' }} />
+                                <div className="card-body bg-dark text-white d-flex flex-column">
+                                  <div className='d-flex justify-content-between align-items-center mb-3'>
+                                    <h5 className='card-title text-right mb-0 font-weight-bold'>{product.name}</h5>
                                     {product.priceAfterDiscount ?
                                       <div className='text-right'>
                                         <p className='mb-0 font-weight-bold'>{product.priceAfterDiscount}ج</p>
@@ -263,7 +263,7 @@ const POS = () => {
                                       <p className='card-text mb-0 font-weight-bold'>{product.price}ج</p>
                                     }
                                   </div>
-                                  <p className='card-text text-right small'>{product.description}</p>
+                                  <p className='card-text flex-grow-1 text-justify'>{product.description}</p>
                                 </div>
                               </div>
                             </div>
@@ -271,6 +271,7 @@ const POS = () => {
                         })}
                       </div>
                     </div>
+
                     <nav className='pos-category'>
                       <ul className='category-ul'>
                         {allcategories.map((c, i) => <li key={i} className='category-li' onClick={() => setcategoryid(c._id)}>

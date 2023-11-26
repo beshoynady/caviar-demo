@@ -251,19 +251,21 @@ const POS = () => {
                             <div className='col-md-3 mb-4' key={index}>
                               <div className="card border-0 rounded-3 shadow-sm" style={{ width: '13rem', height: '13rem' }} onClick={() => additemtocart(product._id)}>
                                 <img className='card-img-top' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" style={{ height: '8rem', objectFit: 'cover' }} />
-                                <div className="card-body bg-dark text-white d-flex flex-column">
-                                  <div className='d-flex justify-content-between align-items-center mb-2'>
+                                <div className="card-body bg-dark text-white d-flex flex-column justify-content-between">
+                                  <div>
                                     <h6 className='card-title text-center mb-0 font-weight-bold'>{product.name}</h6>
-                                    {product.priceAfterDiscount ?
-                                      <div className='text-center'>
-                                        <p className='mb-1 font-weight-bold'>{product.priceAfterDiscount}ج</p>
-                                        <p className='text-muted small mb-0'><del>{product.price}ج</del></p>
-                                      </div>
-                                      :
-                                      <p className='mb-1 font-weight-bold'>{product.price}ج</p>
-                                    }
+                                    <div className='text-center'>
+                                      {product.priceAfterDiscount ?
+                                        <div>
+                                          <p className='mb-1 font-weight-bold'>{product.priceAfterDiscount}ج</p>
+                                          <p className='text-muted small mb-0'><del>{product.price}ج</del></p>
+                                        </div>
+                                        :
+                                        <p className='mb-1 font-weight-bold'>{product.price}ج</p>
+                                      }
+                                    </div>
                                   </div>
-                                  <p className='card-text text-center small'>{product.description}</p>
+                                  <p className='card-text text-center small overflow-hidden' style={{ maxHeight: '3rem' }}>{product.description}</p>
                                 </div>
                               </div>
                             </div>
@@ -271,7 +273,6 @@ const POS = () => {
                         })}
                       </div>
                     </div>
-
                     <nav className='pos-category'>
                       <ul className='category-ul'>
                         {allcategories.map((c, i) => <li key={i} className='category-li' onClick={() => setcategoryid(c._id)}>

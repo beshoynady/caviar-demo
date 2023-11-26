@@ -847,15 +847,15 @@ const [posOrderId, setposOrderId] = useState('')
   }
 
   const [list_day_order, setlist_day_order] = useState([])
-  const [total_day_salse, settotal_day_salse] = useState(0)
+  const [total_day_salse, settotal_day_salse] = useState()
 
   const Payment_pending_orders = async () => {
     const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay())
     setlist_day_order(dayorder)
-    // console.log(dayorder)
+    console.log(dayorder)
     if (dayorder.length > 0) {
       const order_day_paid = dayorder.filter((order) => order.payment_status == 'Paid')
-      //  console.log(order_day_paid)
+       console.log(order_day_paid)
       let total = 0;
       if (order_day_paid.length > 0) {
         for (let i = 0; i < order_day_paid.length; i++) {
@@ -1027,7 +1027,7 @@ const [posOrderId, setposOrderId] = useState('')
     getallTable();
     getallUsers();
     getallemployees()
-    // getUserInfoFromToken()
+    Payment_pending_orders()
   }, [])
 
 

@@ -233,7 +233,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>ايراد اليوم</p>
                       <h3>
-                        {total_day_salse}
+                        {total_day_salse?Math.round(total_day_salse / 10) * 10:0}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>
@@ -242,7 +242,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>رصيد الخزينه </p>
                       <h3>
-                        {balance?balance:''}
+                        {balance?Math.round(balance / 10) * 10:0}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>

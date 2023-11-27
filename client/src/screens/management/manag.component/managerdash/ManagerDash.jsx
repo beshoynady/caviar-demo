@@ -225,7 +225,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p>اوردرات اليوم</p>
                       <h3>
-                        {list_day_order.length}
+                        {list_day_order?list_day_order.length:0}
                       </h3>
                     </span>
                     <i className='bx bx-calendar-check'></i>

@@ -294,6 +294,7 @@ function App() {
           toast.error("An error occurred while creating the order");
         }
       }
+      setItemsInCart([]);
     } catch (error) {
       console.log(error);
       toast.error("An error occurred while processing the order");
@@ -379,6 +380,9 @@ function App() {
         // Toast success message for creating a new order
         toast.success('New order created successfully!');
       }
+      setItemsInCart([]);
+      getProducts();
+
     } catch (error) {
       console.log(error);
       // Display an error toast here

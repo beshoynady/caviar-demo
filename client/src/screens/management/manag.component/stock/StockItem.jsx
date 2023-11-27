@@ -9,6 +9,7 @@ const StockItem = () => {
 
 
   const [itemName, setitemName] = useState('');
+  const [stockItemId, setstockItemId] = useState('');
   const [categoryId, setcategoryId] = useState('');
   const [largeUnit, setlargeUnit] = useState('');
   const [smallUnit, setsmallUnit] = useState('');

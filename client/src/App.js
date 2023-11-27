@@ -850,22 +850,21 @@ const [posOrderId, setposOrderId] = useState('')
   const [total_day_salse, settotal_day_salse] = useState(0)
  
   const Payment_pending_orders = async () => {
-    const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay())
-    setlist_day_order(dayorder)
-    // console.log(dayorder)
+    const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
+    setlist_day_order(dayorder);
+  
     if (dayorder.length > 0) {
-      const order_day_paid = dayorder.filter((order) => order.payment_status == 'Paid')
-      //  console.log(order_day_paid)
+      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
       let total = 0;
+  
       if (order_day_paid.length > 0) {
         for (let i = 0; i < order_day_paid.length; i++) {
-          total = order_day_paid[i].total + total
-          settotal_day_salse(total)
+          total += order_day_paid[i].total; // تم تغيير هنا
         }
-        // console.log(total_day_salse)
+        settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
       }
     }
-  }
+  };
   //++++++++++++++++++++++++++ AUTH ++++++++++++++++++++++++++++
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

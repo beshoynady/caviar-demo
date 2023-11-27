@@ -66,6 +66,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status, isActive, casher
       })
+      fetchData()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -148,18 +149,6 @@ const ManagerDash = () => {
     }
   };
 
-  const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
-  const getUserInfoFromToken = () => {
-    const employeetoken = localStorage.getItem('token_e');
-    if (employeetoken) {
-      const decodedToken = jwt_decode(employeetoken);
-      setemployeeLoginInfo(decodedToken.employeeinfo);
-      handleCashRegister(decodedToken.employeeinfo.id);
-    } else {
-      setemployeeLoginInfo(null);
-    }
-  };
-
 
   const RevenueRecording = async (id, amount, description) => {
     handleCashRegister(id);
@@ -178,6 +167,7 @@ const ManagerDash = () => {
         });
         if (updatecashRegister) {
           setbalance(updatedBalance);
+          fetchData()
           toast.success('Expense created successfully');
           setupdate(!update);
         }
@@ -188,6 +178,18 @@ const ManagerDash = () => {
     }
   };
 
+
+  const [employeeLoginInfo, setemployeeLoginInfo] = useState(null)
+  const getUserInfoFromToken = () => {
+    const employeetoken = localStorage.getItem('token_e');
+    if (employeetoken) {
+      const decodedToken = jwt_decode(employeetoken);
+      setemployeeLoginInfo(decodedToken.employeeinfo);
+      handleCashRegister(decodedToken.employeeinfo.id);
+    } else {
+      setemployeeLoginInfo(null);
+    }
+  };
 
   useEffect(() => {
     fetchData()

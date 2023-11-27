@@ -283,8 +283,8 @@ const DailyExpense = () => {
                       <th>المبلغ </th>
                       <th>الحزينه </th>
                       <th>بواسطه </th>
-                      <th>اضف في</th>
                       <th>ملاحظات</th>
+                      <th>اضف في</th>
                       <th>رقم الحركه </th>
                       <th>اجراءات</th>
                     </tr>
@@ -309,8 +309,8 @@ const DailyExpense = () => {
                                   AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
                               </td>
                               <td>{usertitle(dailyexpense.paidBy)}</td>
-                              <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{dailyexpense.notes}</td>
+                              <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{dailyexpense.cashMovementId}</td>
                               <td>
 
@@ -343,8 +343,8 @@ const DailyExpense = () => {
                                     AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
                                 </td>
                                 <td>{usertitle(dailyexpense.paidBy)}</td>
-                                <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{dailyexpense.notes}</td>
+                                <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{dailyexpense.cashMovementId}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {

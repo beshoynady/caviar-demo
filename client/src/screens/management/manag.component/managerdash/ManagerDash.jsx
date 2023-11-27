@@ -8,62 +8,44 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const ManagerDash = () => {
   const [pending_order, setpending_order] = useState([]);
-const [pending_payment, setpending_payment] = useState([]);
-const [allOrders, setallOrders] = useState([]);
-const [list_day_order, setlist_day_order] = useState([]);
-const [total_day_salse, settotal_day_salse] = useState(0);
+  const [pending_payment, setpending_payment] = useState([]);
+  const [allOrders, setallOrders] = useState([]);
+  const [list_day_order, setlist_day_order] = useState([]);
+  const [total_day_salse, settotal_day_salse] = useState(0);
 
-const fetchData = async () => {
-  try {
-    const res = await axios.get('https://caviar-api.vercel.app/api/order');
-    setallOrders(res.data);
-    const recentStatus = res.data.filter((order) => order.status === 'Pending');
-    const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
-    setpending_order(recentStatus);
-    setpending_payment(recentPaymentStatus);
+  const fetchData = async () => {
+    try {
+      const res = await axios.get('https://caviar-api.vercel.app/api/order');
+      setallOrders(res.data);
+      const recentStatus = res.data.filter((order) => order.status === 'Pending');
+      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+      setpending_order(recentStatus);
+      setpending_payment(recentPaymentStatus);
 
-    const dayorder = res.data.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
-    setlist_day_order(dayorder);
+      const dayorder = res.data.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
+      setlist_day_order(dayorder);
 
-    if (dayorder.length > 0) {
-      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
-      let total = 0;
+      if (dayorder.length > 0) {
+        const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
+        let total = 0;
 
-      if (order_day_paid.length > 0) {
-        for (let i = 0; i < order_day_paid.length; i++) {
-          total += order_day_paid[i].total;
+        if (order_day_paid.length > 0) {
+          for (let i = 0; i < order_day_paid.length; i++) {
+            total += order_day_paid[i].total;
+          }
+          settotal_day_salse(total);
         }
-        settotal_day_salse(total);
       }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-  // const [pending_order, setpending_order] = useState([])
-  // const [pending_payment, setpending_payment] = useState([])
-  // const [allOrders, setallOrders] = useState([])
-
-  // const fetchPendingOrder = async () => {
-  //   try {
-  //     const res = await axios.get('https://caviar-api.vercel.app/api/order');
-  //     setallOrders(res.data);
-  //     const recentStatus = res.data.filter((order) => order.status === 'Pending');
-  //     const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
-  //     setpending_order(recentStatus);
-  //     setpending_payment(recentPaymentStatus);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  };
 
 
   const status = ['Pending', 'Approved', 'Cancelled']
   const [update, setupdate] = useState(false)
 
-  const changeorderstauts = async (e, id ) => {
+  const changeorderstauts = async (e, id) => {
     try {
       const status = await e.target.value
       const order = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
@@ -77,14 +59,13 @@ const fetchData = async () => {
 
   }
   const paymentstatus = ['Pending', 'Paid']
-  const changePaymentorderstauts = async (e, id ,casher) => {
+  const changePaymentorderstauts = async (e, id, casher) => {
     try {
       const payment_status = e.target.value
-      const isActive =payment_status=='Paid'? false : true;
+      const isActive = payment_status == 'Paid' ? false : true;
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        payment_status ,isActive , casher
+        payment_status, isActive, casher
       })
-      // fetchPendingOrder()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -136,7 +117,6 @@ const fetchData = async () => {
         waiter,
         help,
       });
-      // fetchPendingOrder();
       setupdate(!update);
       console.log(order.data);
     } catch (error) {
@@ -208,29 +188,8 @@ const fetchData = async () => {
     }
   };
 
-  // const [list_day_order, setlist_day_order] = useState([])
-  // const [total_day_salse, settotal_day_salse] = useState(0)
- 
-  // const Payment_pending_orders = async () => {
-  //   const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
-  //   setlist_day_order(dayorder);
-  
-  //   if (dayorder.length > 0) {
-  //     const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
-  //     let total = 0;
-  
-  //     if (order_day_paid.length > 0) {
-  //       for (let i = 0; i < order_day_paid.length; i++) {
-  //         total += order_day_paid[i].total; // تم تغيير هنا
-  //       }
-  //       settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
-    // fetchPendingOrder();
-    // Payment_pending_orders()
     fetchData()
     fetchActiveWaiters();
     getUserInfoFromToken();
@@ -243,7 +202,7 @@ const fetchData = async () => {
         ({ employeeLoginInfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
-              <ToastContainer/>
+              <ToastContainer />
               <div className='container'>
                 <div className="header">
                   <div className="left">
@@ -260,7 +219,7 @@ const fetchData = async () => {
                     <span className="info">
                       <p>اوردرات اليوم</p>
                       <h3>
-                        {list_day_order?list_day_order.length:0}
+                        {list_day_order ? list_day_order.length : 0}
                       </h3>
                     </span>
                     <i className='bx bx-calendar-check'></i>
@@ -269,7 +228,7 @@ const fetchData = async () => {
                     <span className="info">
                       <p>في الانتظار</p>
                       <h3>
-                        {pending_order?pending_order.length:0}
+                        {pending_order ? pending_order.length : 0}
                       </h3>
                     </span>
                     <i className='bx bx-show-alt'></i>
@@ -278,7 +237,7 @@ const fetchData = async () => {
                     <span className="info">
                       <p> انتظار الدفع</p>
                       <h3>
-                        {pending_payment?pending_payment.length:0}
+                        {pending_payment ? pending_payment.length : 0}
                       </h3>
                     </span>
                     <i className='bx bx-line-chart'></i>
@@ -287,7 +246,7 @@ const fetchData = async () => {
                     <span className="info">
                       <p>ايراد اليوم</p>
                       <h3>
-                        {total_day_salse?Math.round(total_day_salse / 10) * 10:0}
+                        {total_day_salse ? Math.round(total_day_salse / 10) * 10 : 0}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>
@@ -296,7 +255,7 @@ const fetchData = async () => {
                     <span className="info">
                       <p>رصيد الخزينه </p>
                       <h3>
-                        {balance?Math.round(balance / 10) * 10:0}
+                        {balance ? Math.round(balance / 10) * 10 : 0}
                       </h3>
                     </span>
                     <i className='bx bx-dollar-circle'></i>
@@ -349,7 +308,7 @@ const fetchData = async () => {
                                 <td>
                                   <button
                                     className="btn btn-primary"
-                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id , employeeLoginInfo.employeeinfo.id ); RevenueRecording(employeeLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
+                                    onClick={() => { changePaymentorderstauts({ target: { value: 'Paid' } }, recent._id, employeeLoginInfo.employeeinfo.id); RevenueRecording(employeeLoginInfo.id, recent.total, `${recent.serial} ${recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}`) }}
                                   >
                                     Paid
                                   </button>

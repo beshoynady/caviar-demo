@@ -84,7 +84,7 @@ const fetchData = async () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status ,isActive , casher
       })
-      fetchPendingOrder()
+      // fetchPendingOrder()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -136,7 +136,7 @@ const fetchData = async () => {
         waiter,
         help,
       });
-      fetchPendingOrder();
+      // fetchPendingOrder();
       setupdate(!update);
       console.log(order.data);
     } catch (error) {

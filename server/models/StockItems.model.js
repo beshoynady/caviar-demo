@@ -46,7 +46,7 @@ const StockItemSchema = new mongoose.Schema(
     },
     createBy: {
       type: ObjectId,
-      ref: 'User',
+      ref: 'Employee',
       required: true
     },
     createdAt: {

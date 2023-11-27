@@ -109,7 +109,7 @@ const [AllStockItems, setAllStockItems] = useState([])
   const getStockItems = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      const stockItems = await response.data;
+      const stockItems = await response.data.reverse();
       console.log(response.data);
       setAllStockItems(stockItems);
     } catch (error) {

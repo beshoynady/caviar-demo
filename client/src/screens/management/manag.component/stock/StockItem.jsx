@@ -102,6 +102,8 @@ const StockItem = () => {
     }
   };
   
+
+const [AllStockItems, setAllStockItems] = useState([])
   // Function to retrieve all stock items
   const getStockItems = async () => {
     try {
@@ -117,6 +119,7 @@ const StockItem = () => {
     }
   };
   
+  const [AllCategoryStock, setAllCategoryStock] = useState([])
   // Function to retrieve all category stock
   const getAllCategoryStock = async () => {
     try {
@@ -193,7 +196,7 @@ const StockItem = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>{item.itemName}</td>
-                              <td>{allCategoryStock.length > 0 ? allCategoryStock.filter(c=>c._id==item.categoryId)[0].name:''}</td>
+                              <td>{AllCategoryStock.length > 0 ? AllCategoryStock.filter(c=>c._id==item.categoryId)[0].name:''}</td>
                               <td>{item.Balance}</td>
                               <td>{item.largeUnit}</td>
                               <td>{item.price}</td>
@@ -244,7 +247,7 @@ const StockItem = () => {
                           <label>نوع المخزن</label>
                           <select name="category" id="category" form="carform" onChange={(e) => setcategoryId(e.target.value)}>
                           <option>اختر نوع المخزن</option>
-                            {allCategoryStock.map((category, i) => {
+                            {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
                             }
@@ -307,8 +310,8 @@ const StockItem = () => {
                         <div className="form-group">
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                            {/* <option>{allCategoryStock.length>0?allCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
-                            {allCategoryStock.map((category, i) => {
+                            {/* <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
+                            {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
                             }

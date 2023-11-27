@@ -20,7 +20,6 @@ const StockItem = () => {
   const createItem = async (e, userId) => {
     e.preventDefault();
     const createBy = userId;
-    const createAt = new Date().toLocaleString();
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', {
         itemName,
@@ -337,7 +336,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type='text' className="form-control" Value={createAt} required readOnly />
+                          <input type='text' className="form-control" Value={new Date().toLocaleDateString()} required readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -402,7 +401,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type='text' className="form-control" defaultValue={new Date()} required readOnly />
+                          <input type='text' className="form-control" defaultValue={new Date().toLocaleDateString()} required readOnly />
                         </div>
                       </div>
                       <div className="modal-footer">

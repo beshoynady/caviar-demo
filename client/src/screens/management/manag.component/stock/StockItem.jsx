@@ -16,7 +16,6 @@ const StockItem = () => {
   const [totalCost, settotalCost] = useState('');
   const [parts, setparts] = useState('');
   const [costOfPart, setcostOfPart] = useState('');
-  const createAt = new Date().toLocaleString()
 
   const createItem = async (e, userId) => {
     e.preventDefault();
@@ -34,7 +33,6 @@ const StockItem = () => {
         Balance,
         price,
         createBy,
-        createAt,
       });
       console.log(response.data);
       getStockItems(); // Update the list of stock items after creating a new one
@@ -234,8 +232,8 @@ const StockItem = () => {
                         <th>الاجزاء</th>
                         <th>الوحدة صغيرة</th>
                         <th>تكلفة الجزء</th>
-                        <th>تاريخ الاضافه</th>
                         <th>اضيف بواسطه</th>
+                        <th>تاريخ الاضافه</th>
                         <th>اجراءات</th>
                       </tr>
                     </thead>
@@ -260,8 +258,8 @@ const StockItem = () => {
                               <td>{item.parts}</td>
                               <td>{item.smallUnit}</td>
                               <td>{item.costOfPart}</td>
-                              <td>{item.createAt}</td>
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                              <td>{item.createdAt}</td>
                               <td>
                                 <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

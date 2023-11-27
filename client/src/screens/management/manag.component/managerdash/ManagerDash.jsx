@@ -7,23 +7,57 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const ManagerDash = () => {
+  const [pending_order, setpending_order] = useState([]);
+const [pending_payment, setpending_payment] = useState([]);
+const [allOrders, setallOrders] = useState([]);
+const [list_day_order, setlist_day_order] = useState([]);
+const [total_day_salse, settotal_day_salse] = useState(0);
 
-  const [pending_order, setpending_order] = useState([])
-  const [pending_payment, setpending_payment] = useState([])
-  const [allOrders, setallOrders] = useState([])
+const fetchData = async () => {
+  try {
+    const res = await axios.get('https://caviar-api.vercel.app/api/order');
+    setallOrders(res.data);
+    const recentStatus = res.data.filter((order) => order.status === 'Pending');
+    const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+    setpending_order(recentStatus);
+    setpending_payment(recentPaymentStatus);
 
-  const fetchPendingOrder = async () => {
-    try {
-      const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      setallOrders(res.data);
-      const recentStatus = res.data.filter((order) => order.status === 'Pending');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
-      setpending_order(recentStatus);
-      setpending_payment(recentPaymentStatus);
-    } catch (error) {
-      console.log(error);
+    const dayorder = res.data.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
+    setlist_day_order(dayorder);
+
+    if (dayorder.length > 0) {
+      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
+      let total = 0;
+
+      if (order_day_paid.length > 0) {
+        for (let i = 0; i < order_day_paid.length; i++) {
+          total += order_day_paid[i].total;
+        }
+        settotal_day_salse(total);
+      }
     }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+  // const [pending_order, setpending_order] = useState([])
+  // const [pending_payment, setpending_payment] = useState([])
+  // const [allOrders, setallOrders] = useState([])
+
+  // const fetchPendingOrder = async () => {
+  //   try {
+  //     const res = await axios.get('https://caviar-api.vercel.app/api/order');
+  //     setallOrders(res.data);
+  //     const recentStatus = res.data.filter((order) => order.status === 'Pending');
+  //     const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+  //     setpending_order(recentStatus);
+  //     setpending_payment(recentPaymentStatus);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
   const status = ['Pending', 'Approved', 'Cancelled']
@@ -174,29 +208,30 @@ const ManagerDash = () => {
     }
   };
 
-  const [list_day_order, setlist_day_order] = useState([])
-  const [total_day_salse, settotal_day_salse] = useState(0)
+  // const [list_day_order, setlist_day_order] = useState([])
+  // const [total_day_salse, settotal_day_salse] = useState(0)
  
-  const Payment_pending_orders = async () => {
-    const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
-    setlist_day_order(dayorder);
+  // const Payment_pending_orders = async () => {
+  //   const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
+  //   setlist_day_order(dayorder);
   
-    if (dayorder.length > 0) {
-      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
-      let total = 0;
+  //   if (dayorder.length > 0) {
+  //     const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
+  //     let total = 0;
   
-      if (order_day_paid.length > 0) {
-        for (let i = 0; i < order_day_paid.length; i++) {
-          total += order_day_paid[i].total; // تم تغيير هنا
-        }
-        settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
-      }
-    }
-  };
+  //     if (order_day_paid.length > 0) {
+  //       for (let i = 0; i < order_day_paid.length; i++) {
+  //         total += order_day_paid[i].total; // تم تغيير هنا
+  //       }
+  //       settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
-    fetchPendingOrder();
-    Payment_pending_orders()
+    // fetchPendingOrder();
+    // Payment_pending_orders()
+    fetchData()
     fetchActiveWaiters();
     getUserInfoFromToken();
   }, [update]);
@@ -243,7 +278,7 @@ const ManagerDash = () => {
                     <span className="info">
                       <p> انتظار الدفع</p>
                       <h3>
-                        {pending_payment.length}
+                        {pending_payment?pending_payment.length:0}
                       </h3>
                     </span>
                     <i className='bx bx-line-chart'></i>

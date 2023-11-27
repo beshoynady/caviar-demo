@@ -9,7 +9,7 @@ const StockItem = () => {
 
 
   const [itemName, setitemName] = useState('');
-  const [stockItemId, setstockItemId] = useState('');
+  const [stockItemId, setStockItemid] = useState('');
   const [categoryId, setcategoryId] = useState('');
   const [largeUnit, setlargeUnit] = useState('');
   const [smallUnit, setsmallUnit] = useState('');
@@ -136,7 +136,7 @@ const [AllStockItems, setAllStockItems] = useState([])
   
 
   useEffect(() => {
-    getallStockItem()
+    getStockItems()
     getAllCategoryStock()
   }, [])
   return (

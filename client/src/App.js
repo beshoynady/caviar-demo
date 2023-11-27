@@ -846,25 +846,25 @@ const [posOrderId, setposOrderId] = useState('')
     }
   }
 
-  const [list_day_order, setlist_day_order] = useState([])
-  const [total_day_salse, settotal_day_salse] = useState(0)
+  // const [list_day_order, setlist_day_order] = useState([])
+  // const [total_day_salse, settotal_day_salse] = useState(0)
  
-  const Payment_pending_orders = async () => {
-    const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
-    setlist_day_order(dayorder);
+  // const Payment_pending_orders = async () => {
+  //   const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
+  //   setlist_day_order(dayorder);
   
-    if (dayorder.length > 0) {
-      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
-      let total = 0;
+  //   if (dayorder.length > 0) {
+  //     const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
+  //     let total = 0;
   
-      if (order_day_paid.length > 0) {
-        for (let i = 0; i < order_day_paid.length; i++) {
-          total += order_day_paid[i].total; // تم تغيير هنا
-        }
-        settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
-      }
-    }
-  };
+  //     if (order_day_paid.length > 0) {
+  //       for (let i = 0; i < order_day_paid.length; i++) {
+  //         total += order_day_paid[i].total; // تم تغيير هنا
+  //       }
+  //       settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
+  //     }
+  //   }
+  // };
   //++++++++++++++++++++++++++ AUTH ++++++++++++++++++++++++++++
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -1031,9 +1031,9 @@ const [posOrderId, setposOrderId] = useState('')
 
 
 
-  useEffect(() => {
-    Payment_pending_orders()
-  }, [allOrders])
+  // useEffect(() => {
+  //   Payment_pending_orders()
+  // }, [allOrders])
 
   useEffect(() => {
     costOfOrder()
@@ -1042,7 +1042,7 @@ const [posOrderId, setposOrderId] = useState('')
     getallOrders()
     costOfOrder()
     getUserInfoFromToken()
-    Payment_pending_orders()
+    // Payment_pending_orders()
 
   }, [count, ItemsInCart, isLogin])
 
@@ -1062,7 +1062,7 @@ const [posOrderId, setposOrderId] = useState('')
 
       // Functions related to order processing and calculations
       invoice, list_products_order, orderupdate_date, myorder,
-      list_day_order, total_day_salse, categoryid, ItemsInCart, costOrder,
+      categoryid, ItemsInCart, costOrder,
       additemtocart, increment, descrement,
 
       // Functions related to creating different types of orders

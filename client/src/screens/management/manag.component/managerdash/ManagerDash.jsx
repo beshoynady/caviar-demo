@@ -174,10 +174,29 @@ const ManagerDash = () => {
     }
   };
 
-
+  const [list_day_order, setlist_day_order] = useState([])
+  const [total_day_salse, settotal_day_salse] = useState(0)
+ 
+  const Payment_pending_orders = async () => {
+    const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
+    setlist_day_order(dayorder);
+  
+    if (dayorder.length > 0) {
+      const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
+      let total = 0;
+  
+      if (order_day_paid.length > 0) {
+        for (let i = 0; i < order_day_paid.length; i++) {
+          total += order_day_paid[i].total; // تم تغيير هنا
+        }
+        settotal_day_salse(total); // تم نقل هذا السطر خارج حلقة الـ for
+      }
+    }
+  };
 
   useEffect(() => {
     fetchPendingOrder();
+    Payment_pending_orders()
     fetchActiveWaiters();
     getUserInfoFromToken();
   }, [update]);
@@ -186,7 +205,7 @@ const ManagerDash = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ employeeLoginInfo, usertitle, list_day_order, total_day_salse, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ employeeLoginInfo, usertitle, list_day_order, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <section className='dashboard'>
               <ToastContainer/>

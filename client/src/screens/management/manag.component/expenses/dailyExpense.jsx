@@ -4,41 +4,41 @@ import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
 
 const DailyExpense = () => {
-  const [expenseID, setExpenseID] = useState('');
+  const [expenseID, setexpenseID] = useState('');
   const [cashMovementId, setCashMovementId] = useState('');
-  const [dailyexpenseID, setDailyExpenseID] = useState('');
-  const [expenseDescription, setExpenseDescription] = useState('');
-  const [amount, setAmount] = useState();
-  const [balance, setBalance] = useState();
-  const [cashRegister, setCashRegister] = useState('');
-  const [cashRegistername, setCashRegistername] = useState('');
-  const [paidBy, setPaidBy] = useState('');
-  const [notes, setNotes] = useState('');
-  const [allExpenses, setAllExpenses] = useState([]);
-  const [allDailyExpenses, setAllDailyExpenses] = useState([]);
-  const [AllCashRegisters, setAllCashRegisters] = useState([]);
+  const [dailyexpenseID, setdailyexpenseID] = useState('');
+  const [expenseDescription, setexpenseDescription] = useState('');
+  const [amount, setamount] = useState();
+  const [balance, setbalance] = useState();
+  const [cashRegister, setcashRegister] = useState('');
+  const [cashRegistername, setcashRegistername] = useState('');
+  const [paidBy, setpaidBy] = useState('');
+  const [notes, setnotes] = useState('');
+  const [allExpenses, setallExpenses] = useState([]);
+  const [allDailyExpenses, setallDailyExpenses] = useState([]);
+  const [AllcashRegisters, setAllcashRegisters] = useState([]);
 
-  const getAllCashRegisters = async () => {
+  const getAllcashRegisters = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      setAllCashRegisters(response.data.reverse());
+      const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
+      setAllcashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');
     }
   };
 
-  const handleCashRegister = (id) => {
-    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash) => cash.employee === id) : {};
-    setCashRegister(CashRegister._id);
-    setCashRegistername(CashRegister.name);
-    setBalance(CashRegister.balance);
-    setPaidBy(id);
+  const handlecashRegister = (id) => {
+    const cashRegister = AllcashRegisters ? AllcashRegisters.find((cash) => cash.employee === id) : {};
+    setcashRegister(cashRegister._id);
+    setcashRegistername(cashRegister.name);
+    setbalance(cashRegister.balance);
+    setpaidBy(id);
   };
 
-  const getAllExpenses = async () => {
+  const getallExpenses = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/expenses/');
-      setAllExpenses(response.data);
+      setallExpenses(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +46,7 @@ const DailyExpense = () => {
 
   const createDailyExpense = async (e) => {
     e.preventDefault();
-    const updatedBalance = balance - amount; // Calculate the updated balance
+    const updatedbalance = balance - amount; // Calculate the updated balance
 
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
@@ -71,19 +71,19 @@ const DailyExpense = () => {
         notes,
       });
 
-      const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-        balance: updatedBalance, // Use the updated balance
+      const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashRegister/${cashRegister}`, {
+        balance: updatedbalance, // Use the updated balance
       });
 
       // Update the state after successful updates
       if (updatecashRegister) {
-        setbalance(updatedBalance);
+        setbalance(updatedbalance);
         // Toast notification for successful creation
         toast.success('Expense created successfully');
 
-        getAllExpenses();
-        getAllCashRegisters()
-        getAllDailyExpenses()
+        getallExpenses();
+        getAllcashRegisters()
+        getallDailyExpenses()
       }
     } catch (error) {
       console.log(error);
@@ -103,7 +103,7 @@ const DailyExpense = () => {
       // Calculate the difference between the new amount and the previous amount
       const amountDifference = amount - prevExpenseData.amount < 0 ? (amount - prevExpenseData.amount) * -1 : amount - prevExpenseData.amount;
 
-      const updatedBalance = balance + prevExpenseData.amount - amountDifference;
+      const updatedbalance = balance + prevExpenseData.amount - amountDifference;
 
       if (cashMovementId) { // Ensure cashMovementId has a value before sending the request
         const response = await axios.put(`https://caviar-api.vercel.app/api/dailyexpense/${dailyexpenseID}`, {
@@ -127,16 +127,16 @@ const DailyExpense = () => {
         });
 
         if (data) {
-          const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-            balance: updatedBalance,
+          const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashRegister/${cashRegister}`, {
+            balance: updatedbalance,
           });
-          if (updateCashRegister) {
+          if (updatecashRegister) {
             // Toast notification for successful edit
             toast.success('Expense updated successfully');
 
-            getAllExpenses();
-            getAllCashRegisters()
-            getAllDailyExpenses()
+            getallExpenses();
+            getAllcashRegisters()
+            getallDailyExpenses()
 
           }
         }
@@ -161,7 +161,7 @@ const DailyExpense = () => {
       const prevExpenseData = prevExpense.data;
 
       // Calculate the difference between the new balance and the previous amount
-      const updatedBalance = balance + prevExpenseData.amount;
+      const updatedbalance = balance + prevExpenseData.amount;
 
       if (cashMovementId) { // Ensure cashMovementId has a value before sending the request
         // Delete the expense record after extracting previous expense data
@@ -169,19 +169,19 @@ const DailyExpense = () => {
         const data = deleteExpenseRecord.data;
 
         if (data) {
-          // Update the cash register balance with the updatedBalance
-          const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashregister/${cashRegister}`, {
-            balance: updatedBalance,
+          // Update the cash register balance with the updatedbalance
+          const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashRegister/${cashRegister}`, {
+            balance: updatedbalance,
           });
 
-          if (updateCashRegister) {
+          if (updatecashRegister) {
             // Toast notification for successful deletion
             toast.success('Expense deleted successfully');
 
             // Fetch all daily expenses after the update
-            getAllExpenses();
-            getAllCashRegisters()
-            getAllDailyExpenses()
+            getallExpenses();
+            getAllcashRegisters()
+            getallDailyExpenses()
 
           }
         }
@@ -198,12 +198,12 @@ const DailyExpense = () => {
 
 
 
-  const getAllDailyExpenses = async () => {
+  const getallDailyExpenses = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/dailyexpense/');
       const dailyExpenses = await response.data;
       console.log(response.data);
-      setAllDailyExpenses(dailyExpenses);
+      setallDailyExpenses(dailyExpenses);
     } catch (error) {
       console.log(error);
     }
@@ -219,9 +219,9 @@ const DailyExpense = () => {
   }
 
   useEffect(() => {
-    getAllExpenses();
-    getAllCashRegisters();
-    getAllDailyExpenses();
+    getallExpenses();
+    getAllcashRegisters();
+    getallDailyExpenses();
   }, []);
 
   return (
@@ -238,7 +238,7 @@ const DailyExpense = () => {
                       <h2>ادارة <b>تسجيل المصروفات</b></h2>
                     </div>
                     <div className="col-sm-6 d-flex justify-content-end">
-                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={() => handelCashRegister(employeeLoginInfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
+                      <a href="#addDailyExpensesModal" className="btn btn-success" data-toggle="modal" onClick={() => handelcashRegister(employeeLoginInfo.employeeinfo.id)}><i className="material-icons">&#xE147;</i> <span>اضافه مصروف جديد</span></a>
 
                       <a href="#deleteDailyExpensesModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                     </div>
@@ -305,8 +305,8 @@ const DailyExpense = () => {
                               <td>{dailyexpense.expenseDescription}</td>
                               <td>{dailyexpense.amount}</td>
                               <td>
-                                {AllCashRegisters && AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
-                                  AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
+                                {AllcashRegisters && AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
+                                  AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
                               </td>
                               <td>{usertitle(dailyexpense.paidBy)}</td>
                               <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
@@ -316,7 +316,7 @@ const DailyExpense = () => {
 
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                   setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount)
-                                  setamount(dailyexpense.totalAmount - dailyexpense.amount); setdailyexpenseID(dailyexpense._id)
+                                  setamount(dailyexpense.totalamount - dailyexpense.amount); setdailyexpenseID(dailyexpense._id)
                                 }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => setdailyexpenseID(dailyexpense._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
@@ -339,8 +339,8 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.expenseDescription}</td>
                                 <td>{dailyexpense.amount}</td>
                                 <td>
-                                  {AllCashRegisters && AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
-                                    AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
+                                  {AllcashRegisters && AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
+                                    AllcashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
                                 </td>
                                 <td>{usertitle(dailyexpense.paidBy)}</td>
                                 <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
@@ -348,7 +348,7 @@ const DailyExpense = () => {
                                 <td>{dailyexpense.cashMovementId}</td>
                                 <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
-                                    handelCashRegister(employeeLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
+                                    handelcashRegister(employeeLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
                                     setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount); setpaidBy(dailyexpense.paidBy); setdailyexpenseID(dailyexpense._id)
                                   }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteDailyExpensesModal" className="delete" data-toggle="modal" onClick={() => { setdailyexpenseID(dailyexpense._id); setcashMovementId(dailyexpense.cashMovementId) }}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -410,7 +410,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
-                        <textarea className="form-control" rows={2} cols={50} onChange={(e) => { setNotes(e.target.value) }} />
+                        <textarea className="form-control" rows={2} cols={50} onChange={(e) => { setnotes(e.target.value) }} />
                       </div>
                     </div>
                     <div className="modal-footer">
@@ -458,7 +458,7 @@ const DailyExpense = () => {
                       </div>
                       <div className="form-group w-100">
                         <label>ملاحظات</label>
-                        <textarea className="form-control" rows={2} cols={100} onChange={(e) => { setNotes(e.target.value) }} />
+                        <textarea className="form-control" rows={2} cols={100} onChange={(e) => { setnotes(e.target.value) }} />
                       </div>
                     </div>
                     <div className="modal-footer">

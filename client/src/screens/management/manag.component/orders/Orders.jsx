@@ -163,11 +163,12 @@ const Orders = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{o.serial}</td>
-                                <td>{o.ordernum}</td>
+                                <td>{o.ordernum ? o.ordernum : '--'}</td>
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
-                                    : o.employee ? usertitle(o.employee) : ''}</td>
-                                <td>{o.order_type == 'Internal' ? usertitle(o.table) : o.order_type}</td>
+                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
+
+                                <td>{o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
                                 <td>{o.payment_status}</td>
@@ -192,12 +193,12 @@ const Orders = () => {
                                 </td>
                                 <td>{i + 1}</td>
                                 <td>{o.serial}</td>
-                                <td>{o.ordernum}</td>
+                                <td>{o.ordernum ? o.ordernum : '--'}</td>
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
-                                    : o.employee ? usertitle(o.employee) : ''}</td>
+                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
 
-                                <td>{o.order_type == 'Internal' ? usertitle(o.table) : o.order_type}</td>
+                                <td>{o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
                                 <td>{o.payment_status}</td>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App'
-import { toast , ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
 const StockItem = () => {
-
-
   const [itemName, setitemName] = useState('');
   const [stockItemId, setStockItemid] = useState('');
   const [categoryId, setcategoryId] = useState('');
@@ -18,7 +16,7 @@ const StockItem = () => {
   const [totalCost, settotalCost] = useState('');
   const [parts, setparts] = useState('');
   const [costOfPart, setcostOfPart] = useState('');
-  const createAt =new Date().toLocaleString()
+  const createAt = new Date().toLocaleString()
 
   const createItem = async (e, userId) => {
     e.preventDefault();
@@ -40,17 +38,17 @@ const StockItem = () => {
       });
       console.log(response.data);
       getStockItems(); // Update the list of stock items after creating a new one
-  
+
       // Notify on success
       toast.success('Stock item created successfully');
     } catch (error) {
       console.log(error);
-  
+
       // Notify on error
       toast.error('Failed to create stock item');
     }
   };
-  
+
   // Function to edit a stock item
   const editStockItem = async (e, userId) => {
     e.preventDefault();
@@ -72,17 +70,17 @@ const StockItem = () => {
       if (response) {
         getStockItems(); // Update the list of stock items after editing
       }
-  
+
       // Notify on success
       toast.success('Stock item updated successfully');
     } catch (error) {
       console.log(error);
-  
+
       // Notify on error
       toast.error('Failed to update stock item');
     }
   };
-  
+
   // Function to delete a stock item
   const deleteStockItem = async (e) => {
     e.preventDefault();
@@ -91,20 +89,20 @@ const StockItem = () => {
       if (response.status === 200) {
         console.log(response);
         getStockItems(); // Update the list of stock items after deletion
-  
+
         // Notify on success
         toast.success('Stock item deleted successfully');
       }
     } catch (error) {
       console.log(error);
-  
+
       // Notify on error
       toast.error('Failed to delete stock item');
     }
   };
-  
 
-const [AllStockItems, setAllStockItems] = useState([])
+
+  const [AllStockItems, setAllStockItems] = useState([])
   // Function to retrieve all stock items
   const getStockItems = async () => {
     try {
@@ -114,12 +112,12 @@ const [AllStockItems, setAllStockItems] = useState([])
       setAllStockItems(stockItems);
     } catch (error) {
       console.log(error);
-  
+
       // Notify on error
       toast.error('Failed to retrieve stock items');
     }
   };
-  
+
   const [AllCategoryStock, setAllCategoryStock] = useState([])
   // Function to retrieve all category stock
   const getAllCategoryStock = async () => {
@@ -128,12 +126,12 @@ const [AllStockItems, setAllStockItems] = useState([])
       setAllCategoryStock(res.data);
     } catch (error) {
       console.log(error);
-  
+
       // Notify on error
       toast.error('Failed to retrieve category stock');
     }
   };
-  
+
 
   useEffect(() => {
     getStockItems()
@@ -142,10 +140,10 @@ const [AllStockItems, setAllStockItems] = useState([])
   return (
     <detacontext.Consumer>
       {
-        ({ employeeLoginInfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
+        ({ employeeLoginInfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
-              <ToastContainer/>
+              <ToastContainer />
               <div className="table-responsive mt-1">
                 <div className="table-wrapper p-3 mw-100">
                   <div className="table-title">
@@ -157,6 +155,63 @@ const [AllStockItems, setAllStockItems] = useState([])
                         <a href="#addStockItemModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
                         <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-filter">
+                    <div class="row text-dark">
+                      <div class="col-sm-3">
+                        <div class="show-entries">
+                          <span>عرض</span>
+                          <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
+                            <option value={20}>20</option>
+                            <option value={25}>25</option>
+                            <option value={30}>30</option>
+                          </select>
+                          <span>صفوف</span>
+                        </div>
+                      </div>
+                      <div class="col-sm-9">
+                        {/* <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <div class="filter-group">
+                          <label>اسم الصنف</label>
+                          <input type="text" class="form-control" onChange={(e) => searchByitem(e.target.value)} />
+                        </div> */}
+                        {/* <div class="filter-group">
+                          <label>نوع الاوردر</label>
+                          <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
+                            <option value={""}>الكل</option>
+                            <option value="Purchase" >Purchase</option>
+                            <option value="Return" >Return</option>
+                            <option value="Expense" >Expense</option>
+                            <option value="Wastage" >Wastage</option>
+                          </select>
+                        </div> */}
+                        {/* <div class="filter-group">
+                          <label>Location</label>
+                          <select class="form-control">
+                            <option>All</option>
+                            <option>Berlin</option>
+                            <option>London</option>
+                            <option>Madrid</option>
+                            <option>New York</option>
+                            <option>Paris</option>
+                          </select>
+                        </div>
+                        <div class="filter-group">
+                          <label>Status</label>
+                          <select class="form-control">
+                            <option>Any</option>
+                            <option>Delivered</option>
+                            <option>Shipped</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
+                          </select>
+                        </div>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span> */}
                       </div>
                     </div>
                   </div>
@@ -186,8 +241,8 @@ const [AllStockItems, setAllStockItems] = useState([])
                     </thead>
                     <tbody>
                       {AllStockItems && AllStockItems.map((item, i) => {
-                          if (i >= startpagination & i < endpagination) {
-                            return (
+                        if (i >= startpagination & i < endpagination) {
+                          return (
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
@@ -197,7 +252,7 @@ const [AllStockItems, setAllStockItems] = useState([])
                               </td>
                               <td>{i + 1}</td>
                               <td>{item.itemName}</td>
-                              <td>{AllCategoryStock.length > 0 ? AllCategoryStock.filter(c=>c._id==item.categoryId)[0].name:''}</td>
+                              <td>{AllCategoryStock.length > 0 ? AllCategoryStock.filter(c => c._id == item.categoryId)[0].name : ''}</td>
                               <td>{item.Balance}</td>
                               <td>{item.largeUnit}</td>
                               <td>{item.price}</td>
@@ -208,7 +263,7 @@ const [AllStockItems, setAllStockItems] = useState([])
                               <td>{item.createAt}</td>
                               <td>{usertitle(item.createBy)}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price);setparts(item.parts);setcostOfPart(item.costOfPart)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -247,7 +302,7 @@ const [AllStockItems, setAllStockItems] = useState([])
                         <div className="form-group">
                           <label>نوع المخزن</label>
                           <select name="category" id="category" form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                          <option>اختر نوع المخزن</option>
+                            <option>اختر نوع المخزن</option>
                             {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
@@ -268,19 +323,19 @@ const [AllStockItems, setAllStockItems] = useState([])
                         </div>
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" required onChange={(e) => {setprice(e.target.value); settotalCost(e.target.value * Balance)} }/>
+                          <input type='Number' className="form-control" required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" required  defaultValue={totalCost} readOnly/>
+                          <input type='Number' className="form-control" required defaultValue={totalCost} readOnly />
                         </div>
                         <div className="form-group">
                           <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" required  onChange={(e)=>{setparts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                          <input type='Number' className="form-control" required onChange={(e) => { setparts(e.target.value); setcostOfPart(price / e.target.value) }} />
                         </div>
                         <div className="form-group">
                           <label>تكلفة الوحده</label>
-                          <input type='Number' className="form-control" required  defaultValue={costOfPart} readOnly/>
+                          <input type='Number' className="form-control" required defaultValue={costOfPart} readOnly />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -298,7 +353,7 @@ const [AllStockItems, setAllStockItems] = useState([])
               <div id="editStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e)=>editStockItem(e,employeeLoginInfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => editStockItem(e, employeeLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -333,19 +388,19 @@ const [AllStockItems, setAllStockItems] = useState([])
                         </div>
                         <div className="form-group">
                           <label>السعر</label>
-                          <input type='Number' className="form-control" defaultValue={price} required onChange={(e) => {setprice(e.target.value); settotalCost(e.target.value * Balance)} }/>
+                          <input type='Number' className="form-control" defaultValue={price} required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" required  defaultValue={totalCost} readOnly/>
+                          <input type='Number' className="form-control" required defaultValue={totalCost} readOnly />
                         </div>
                         <div className="form-group">
                           <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" defaultValue required  onChange={(e)=>{setparts(e.target.value);setcostOfPart(price / e.target.value)}}/>
+                          <input type='Number' className="form-control" defaultValue required onChange={(e) => { setparts(e.target.value); setcostOfPart(price / e.target.value) }} />
                         </div>
                         <div className="form-group">
                           <label>تكلفة الوحده</label>
-                          <input type='Number' className="form-control" required  defaultValue={costOfPart} readOnly/>
+                          <input type='Number' className="form-control" required defaultValue={costOfPart} readOnly />
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>

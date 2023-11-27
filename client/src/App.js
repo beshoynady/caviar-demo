@@ -697,7 +697,7 @@ const [posOrderId, setposOrderId] = useState('')
       const phone = await clientphone;
       const address = await clientaddress;
       const createBy = await casherid;
-      const orderType = await ordertype;
+      const order_type = await ordertype;
 
       const newOrder = await axios.post('https://caviar-api.vercel.app/api/order', {
         serial,
@@ -707,7 +707,7 @@ const [posOrderId, setposOrderId] = useState('')
         tax,
         deliveryCost,
         total,
-        orderType,
+        order_type,
         createBy,
         name,
         phone,

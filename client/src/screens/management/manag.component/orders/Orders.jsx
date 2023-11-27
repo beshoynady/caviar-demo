@@ -196,6 +196,7 @@ const Orders = () => {
                                 <td>{o.table != null ? usertitle(o.table)
                                   : o.user ? usertitle(o.user)
                                     : o.employee ? usertitle(o.employee) : ''}</td>
+
                                 <td>{o.order_type == 'Internal' ? usertitle(o.table) : o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>

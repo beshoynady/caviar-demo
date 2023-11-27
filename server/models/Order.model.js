@@ -122,11 +122,13 @@ const OrderSchema = new mongoose.Schema({
         }
     },
     // Table associated with the order
+
     table: {
         type: ObjectId,
         ref: 'Table',
         default: null
     },
+    
     // User associated with the order
     user: {
         type: ObjectId,

@@ -10,7 +10,7 @@ const StockManag = () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
       console.log(response.data)
-      setStockItems(response.data)
+      setStockItems(response.data.reverse())
 
     } catch (error) {
       console.log(error)
@@ -48,61 +48,61 @@ const StockManag = () => {
   const [actionId, setactionId] = useState("")
   const actionAt = new Date().toLocaleString()
 
-const createStockaction = async (e, employeeId) => {
-  e.preventDefault();
-  try {
-    const actionBy = employeeId;
+  const createStockaction = async (e, employeeId) => {
+    e.preventDefault();
+    try {
+      const actionBy = employeeId;
 
-    // Update the stock item's movement
-    const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
+      // Update the stock item's movement
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
 
-    if (changeItem.status === 200) {
-      // Create a new stock action
-      const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
-      console.log(response.data);
+      if (changeItem.status === 200) {
+        // Create a new stock action
+        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
+        console.log(response.data);
 
-      // Update the stock actions list and stock items
-      getallStockaction();
-      getaStockItems();
+        // Update the stock actions list and stock items
+        getallStockaction();
+        getaStockItems();
 
-      // Toast notification for successful creation
-      toast.success('Stock action created successfully');
+        // Toast notification for successful creation
+        toast.success('Stock action created successfully');
+      }
+    } catch (error) {
+      console.log(error);
+      // Toast notification for error
+      toast.error('Error creating stock action');
     }
-  } catch (error) {
-    console.log(error);
-    // Toast notification for error
-    toast.error('Error creating stock action');
   }
-}
 
 
 
-const updateStockaction = async (e, employeeId) => {
-  e.preventDefault();
-  try {
-    const actionBy = employeeId;
+  const updateStockaction = async (e, employeeId) => {
+    e.preventDefault();
+    try {
+      const actionBy = employeeId;
 
-    // Update the stock item's movement
-    const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
+      // Update the stock item's movement
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
 
-    if (changeItem.status === 200) {
-      // Update the existing stock action
-      const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
-      console.log(response.data);
+      if (changeItem.status === 200) {
+        // Update the existing stock action
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
+        console.log(response.data);
 
-      // Update the stock actions list and stock items
-      getallStockaction();
-      getaStockItems();
+        // Update the stock actions list and stock items
+        getallStockaction();
+        getaStockItems();
 
-      // Toast notification for successful update
-      toast.success('Stock action updated successfully');
+        // Toast notification for successful update
+        toast.success('Stock action updated successfully');
+      }
+    } catch (error) {
+      console.log(error);
+      // Toast notification for error
+      toast.error('Error updating stock action');
     }
-  } catch (error) {
-    console.log(error);
-    // Toast notification for error
-    toast.error('Error updating stock action');
   }
-}
 
 
 
@@ -126,11 +126,11 @@ const updateStockaction = async (e, employeeId) => {
       // Delete the selected stock action
       const response = await axios.delete(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`);
       console.log(response);
-  
+
       if (response) {
         // Update the stock actions list after successful deletion
         getallStockaction();
-  
+
         // Toast notification for successful deletion
         toast.success('Stock action deleted successfully');
       }
@@ -140,7 +140,7 @@ const updateStockaction = async (e, employeeId) => {
       toast.error('Error deleting stock action');
     }
   }
-  
+
 
   const itemname = (id) => {
     const item = StockItems.filter(item => item._id == id)[0]
@@ -314,7 +314,7 @@ const updateStockaction = async (e, employeeId) => {
                               <td>{action.cost}</td>
                               <td>{action.oldBalance}</td>
                               <td>{action.Balance}</td>
-                              <td>{Date(action.actionAt).toLocaleString}</td>
+                              <td>{new Date(action.actionAt).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{usertitle(action.actionBy)}</td>
                               <td>
                                 <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -343,7 +343,7 @@ const updateStockaction = async (e, employeeId) => {
                                 <td>{action.cost}</td>
                                 <td>{action.oldBalance}</td>
                                 <td>{action.Balance}</td>
-                                <td>{Date(action.actionAt).toLocaleString}</td>
+                                <td>{new Date(action.actionAt).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{usertitle(action.actionBy)}</td>
                                 <td>
                                   <a href="#editStockactionModal" className="edit" data-toggle="modal" onClick={() => { setactionId(action._id); setoldBalance(action.oldBalance); setoldCost(action.oldCost); setprice(action.price) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

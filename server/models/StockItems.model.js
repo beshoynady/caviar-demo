@@ -5,52 +5,53 @@ const StockItemSchema = new mongoose.Schema(
   {
     itemName: {
       type: String,
-      require: true,
+      required: true,
       unique: true
     },
     categoryId: {
       type: ObjectId,
       ref: 'CategoryStock',
-      required: true
+      required: true,
     },
     largeUnit: {
       type: String,
-      require: true,
+      required: true,
     },
     Balance: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     price: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     totalCost: {
       type: Number,
-      require: true,
+      required: true,
       default: 0,
     },
     smallUnit:{
       type: String,
-      require: true,
+      required: true,
     },
     parts: {
       type: Number,
-      require: true,
+      required: true,
     },
     costOfPart: { 
       type : Number,
       require: true
     },
-    createAt: {
-      type: Date,
-    },
     createBy: {
       type: ObjectId,
       ref: 'User',
       required: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
     updatedAt: {
       type: Date,

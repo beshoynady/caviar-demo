@@ -1,93 +1,139 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App'
+import { toast , ToastContainer} from 'react-toastify';
+
 
 
 const StockItem = () => {
 
 
-  const [itemName, setitemName] = useState("");
-  const [categoryId, setcategoryId] = useState("");
+  const [itemName, setitemName] = useState('');
+  const [categoryId, setcategoryId] = useState('');
   const [largeUnit, setlargeUnit] = useState('');
   const [smallUnit, setsmallUnit] = useState('');
-  const [Balance, setBalance] = useState();
-  const [price, setprice] = useState();
-  const [totalCost, settotalCost] = useState();
-  const [parts, setparts] = useState();
-  const [costOfPart, setcostOfPart] = useState();
+  const [Balance, setBalance] = useState('');
+  const [price, setprice] = useState('');
+  const [totalCost, settotalCost] = useState('');
+  const [parts, setparts] = useState('');
+  const [costOfPart, setcostOfPart] = useState('');
   const createAt =new Date().toLocaleString()
 
-  const createitem = async (e, userid) => {
-    console.log(userid)
+  const createItem = async (e, userId) => {
     e.preventDefault();
+    const createBy = userId;
+    const createAt = new Date().toLocaleString();
     try {
-      const createBy = userid;
-      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', { itemName,categoryId,smallUnit,parts,totalCost,costOfPart, largeUnit, Balance, price,createBy, createAt });
+      const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', {
+        itemName,
+        categoryId,
+        smallUnit,
+        parts,
+        totalCost,
+        costOfPart,
+        largeUnit,
+        Balance,
+        price,
+        createBy,
+        createAt,
+      });
       console.log(response.data);
-      getallStockItem()
+      getStockItems(); // Update the list of stock items after creating a new one
+  
+      // Notify on success
+      toast.success('Stock item created successfully');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+  
+      // Notify on error
+      toast.error('Failed to create stock item');
     }
-  }
-
-  const [StockItemid, setStockItemid] = useState("")
-
-  const editStockItem = async (e,userid) => {
-    e.preventDefault()
-    const createBy = userid
-      try {
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`, {itemName,categoryId,smallUnit,parts,totalCost,costOfPart, largeUnit, Balance, price,createBy
-        });
-        console.log(response.data);
-        if (response) {
-          getallStockItem()
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    
-
-  }
-
-
-  const [AllStockItems, setAllStockItems] = useState([]);
-
-  const getallStockItem = async () => {
+  };
+  
+  // Function to edit a stock item
+  const editStockItem = async (e, userId) => {
+    e.preventDefault();
+    const createBy = userId;
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      const StockItems = await response.data;
-      console.log(response.data)
-      setAllStockItems(StockItems)
-
+      const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${stockItemId}`, {
+        itemName,
+        categoryId,
+        smallUnit,
+        parts,
+        totalCost,
+        costOfPart,
+        largeUnit,
+        Balance,
+        price,
+        createBy,
+      });
+      console.log(response.data);
+      if (response) {
+        getStockItems(); // Update the list of stock items after editing
+      }
+  
+      // Notify on success
+      toast.success('Stock item updated successfully');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+  
+      // Notify on error
+      toast.error('Failed to update stock item');
     }
-
-  }
-
+  };
+  
+  // Function to delete a stock item
   const deleteStockItem = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`https://caviar-api.vercel.app/api/stockitem/${StockItemid}`);
-      if (response.status == 200) {
+      const response = await axios.delete(`https://caviar-api.vercel.app/api/stockitem/${stockItemId}`);
+      if (response.status === 200) {
         console.log(response);
-        getallStockItem();
+        getStockItems(); // Update the list of stock items after deletion
+  
+        // Notify on success
+        toast.success('Stock item deleted successfully');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+  
+      // Notify on error
+      toast.error('Failed to delete stock item');
     }
-  }
-
-  const [allCategoryStock, setallCategoryStock] = useState([])
-
-  const getallCategoryStock = async () => {
-    const res = await axios.get("https://caviar-api.vercel.app/api/categoryStock/");
-    setallCategoryStock(res.data)
-  }
+  };
+  
+  // Function to retrieve all stock items
+  const getStockItems = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+      const stockItems = await response.data;
+      console.log(response.data);
+      setAllStockItems(stockItems);
+    } catch (error) {
+      console.log(error);
+  
+      // Notify on error
+      toast.error('Failed to retrieve stock items');
+    }
+  };
+  
+  // Function to retrieve all category stock
+  const getAllCategoryStock = async () => {
+    try {
+      const res = await axios.get('https://caviar-api.vercel.app/api/categoryStock/');
+      setAllCategoryStock(res.data);
+    } catch (error) {
+      console.log(error);
+  
+      // Notify on error
+      toast.error('Failed to retrieve category stock');
+    }
+  };
+  
 
   useEffect(() => {
     getallStockItem()
-    getallCategoryStock()
+    getAllCategoryStock()
   }, [])
   return (
     <detacontext.Consumer>
@@ -95,6 +141,7 @@ const StockItem = () => {
         ({ employeeLoginInfo, usertitle, EditPagination, startpagination,endpagination,setstartpagination,setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
+              <ToastContainer/>
               <div className="table-responsive mt-1">
                 <div className="table-wrapper p-3 mw-100">
                   <div className="table-title">
@@ -183,7 +230,7 @@ const StockItem = () => {
               <div id="addStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createitem(e, employeeLoginInfo.id)}>
+                    <form onSubmit={(e) => createItem(e, employeeLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -247,7 +294,7 @@ const StockItem = () => {
               <div id="editStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e)=>editStockItem(e,employeeLoginInfo.id)}>
+                    <form onSubmit={(e)=>editStockItem(e,employeeLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">تعديل صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -4,23 +4,20 @@ import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
 
 const DailyExpense = () => {
-  const [expenseID, setexpenseID] = useState('');
-  const [cashMovementId, setcashMovementId] = useState('');
-
-  const [dailyexpenseID, setdailyexpenseID] = useState('');
-  const [expenseDescription, setexpenseDescription] = useState('');
-  const [amount, setamount] = useState();
-  const [balance, setbalance] = useState();
-  const [cashRegister, setcashRegister] = useState('');
-  const [cashRegistername, setcashRegistername] = useState('');
-  const [paidBy, setpaidBy] = useState('');
+  const [expenseID, setExpenseID] = useState('');
+  const [cashMovementId, setCashMovementId] = useState('');
+  const [dailyexpenseID, setDailyExpenseID] = useState('');
+  const [expenseDescription, setExpenseDescription] = useState('');
+  const [amount, setAmount] = useState();
+  const [balance, setBalance] = useState();
+  const [cashRegister, setCashRegister] = useState('');
+  const [cashRegistername, setCashRegistername] = useState('');
+  const [paidBy, setPaidBy] = useState('');
   const [notes, setNotes] = useState('');
   const [allExpenses, setAllExpenses] = useState([]);
   const [allDailyExpenses, setAllDailyExpenses] = useState([]);
-
-
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
-  // Fetch all cash registers
+
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
@@ -30,22 +27,18 @@ const DailyExpense = () => {
     }
   };
 
-  const handelCashRegister = (id) => {
-    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash => cash.employee == id)) : {}
-    setcashRegister(CashRegister._id)
-    setcashRegistername(CashRegister.name)
-    setbalance(CashRegister.balance)
-    console.log(CashRegister.balance)
-    setpaidBy(id)
-  }
-
+  const handleCashRegister = (id) => {
+    const CashRegister = AllCashRegisters ? AllCashRegisters.find((cash) => cash.employee === id) : {};
+    setCashRegister(CashRegister._id);
+    setCashRegistername(CashRegister.name);
+    setBalance(CashRegister.balance);
+    setPaidBy(id);
+  };
 
   const getAllExpenses = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/expenses/');
-      const expenses = await response.data;
-      console.log(response.data);
-      setAllExpenses(expenses);
+      setAllExpenses(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -227,9 +220,9 @@ const DailyExpense = () => {
 
   useEffect(() => {
     getAllExpenses();
-    getAllCashRegisters()
-    getAllDailyExpenses()
-  }, [])
+    getAllCashRegisters();
+    getAllDailyExpenses();
+  }, []);
 
   return (
     <detacontext.Consumer>
@@ -311,12 +304,16 @@ const DailyExpense = () => {
                               <td>{i + 1}</td>
                               <td>{dailyexpense.expenseDescription}</td>
                               <td>{dailyexpense.amount}</td>
-                              <td>{dailyexpense.cashMovementId}</td>
+                              <td>
+                                {AllCashRegisters && AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
+                                  AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
+                              </td>
                               <td>{usertitle(dailyexpense.paidBy)}</td>
                               <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>{dailyexpense.notes}</td>
-                              <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
+                              <td>{dailyexpense.cashMovementId}</td>
                               <td>
+
                                 <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                   setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount)
                                   setamount(dailyexpense.totalAmount - dailyexpense.amount); setdailyexpenseID(dailyexpense._id)
@@ -341,14 +338,15 @@ const DailyExpense = () => {
                                 <td>{i + 1}</td>
                                 <td>{dailyexpense.expenseDescription}</td>
                                 <td>{dailyexpense.amount}</td>
-                                <td>{dailyexpense.cashMovementId}</td>
-                                <td>{usertitle(dailyexpense.paidBy)}</td>
-                                <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
-                                <td>{dailyexpense.notes}</td>
                                 <td>
                                   {AllCashRegisters && AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
                                     AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
-                                </td>                                <td>
+                                </td>
+                                <td>{usertitle(dailyexpense.paidBy)}</td>
+                                <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
+                                <td>{dailyexpense.notes}</td>
+                                <td>{dailyexpense.cashMovementId}</td>
+                                <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                     handelCashRegister(employeeLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
                                     setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount); setpaidBy(dailyexpense.paidBy); setdailyexpenseID(dailyexpense._id)

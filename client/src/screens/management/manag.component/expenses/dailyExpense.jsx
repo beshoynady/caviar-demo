@@ -233,7 +233,7 @@ const DailyExpense = () => {
 
   return (
     <detacontext.Consumer>
-      {({ employeeLoginInfo, usertitle,showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+      {({ employeeLoginInfo, usertitle, showdate, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
         return (
           <div className="container-xl mlr-auto">
             <ToastContainer />
@@ -345,8 +345,10 @@ const DailyExpense = () => {
                                 <td>{usertitle(dailyexpense.paidBy)}</td>
                                 <td>{new Date(dailyexpense.date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>{dailyexpense.notes}</td>
-                                <td>{AllCashRegisters ? AllCashRegisters.find(cash => cash._id == dailyexpense.cashRegister).name : ''}</td>
                                 <td>
+                                  {AllCashRegisters && AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister) ?
+                                    AllCashRegisters.find(cash => cash._id === dailyexpense.cashRegister).name : ''}
+                                </td>                                <td>
                                   <a href="#editDailyExpensesModal" className="edit" data-toggle="modal" onClick={() => {
                                     handelCashRegister(employeeLoginInfo.employeeinfo.id); setcashMovementId(dailyexpense.cashMovementId);
                                     setexpenseID(dailyexpense._id); setexpenseDescription(dailyexpense.expenseexpenseDescription); setamount(dailyexpense.amount); setpaidBy(dailyexpense.paidBy); setdailyexpenseID(dailyexpense._id)

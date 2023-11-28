@@ -191,21 +191,21 @@ const Orders = () => {
                                     <label htmlFor="checkbox1"></label>
                                   </span>
                                 </td>
-                                <a href="#invoiceOrderModal" >
 
-                                  <td>{i + 1}</td>
-                                  <td>{o.serial}</td>
-                                  <td>{o.ordernum ? o.ordernum : '--'}</td>
-                                  <td>{o.table != null ? usertitle(o.table)
-                                    : o.user ? usertitle(o.user)
-                                      : o.createBy ? usertitle(o.createBy) : '--'}</td>
+                                <td>{i + 1}</td>
+                                <td><a href="#invoiceOrderModal" >{o.serial} </a></td>
 
-                                  <td>{o.order_type}</td>
-                                  <td>{o.total}</td>
-                                  <td>{o.status}</td>
-                                  <td>{o.payment_status}</td>
-                                  <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
-                                </a>
+                                <td>{o.ordernum ? o.ordernum : '--'}</td>
+                                <td>{o.table != null ? usertitle(o.table)
+                                  : o.user ? usertitle(o.user)
+                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
+
+                                <td>{o.order_type}</td>
+                                <td>{o.total}</td>
+                                <td>{o.status}</td>
+                                <td>{o.payment_status}</td>
+                                <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
+
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

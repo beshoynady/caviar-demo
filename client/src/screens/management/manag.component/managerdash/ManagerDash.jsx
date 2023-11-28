@@ -400,6 +400,7 @@ const ManagerDash = () => {
                   </div>
 
                 </div>
+              </div>
                 <div id="invoiceOrderModal" className="modal fade">
                   <div className="modal-dialog">
                     <div className="modal-content">
@@ -493,7 +494,6 @@ const ManagerDash = () => {
 
                   </div>
                 </div>
-              </div>
             </section>
           )
         }

@@ -50,6 +50,8 @@ const Orders = () => {
       // Display toast or handle error
     }
   };
+
+  
   const printContainer = useRef()
 
   const handlePrint = useReactToPrint({

@@ -25,6 +25,8 @@ const Orders = () => {
     }
   };
   const [list_products_order, setlist_products_order] = useState([])
+  const [serial, setserial] = useState('')
+  const [ivocedate, setivocedate] = useState('')
   const [ordertax, setordertax] = useState()
   const [ordertotal, setordertotal] = useState()
   const [ordersubtotal, setordersubtotal] = useState()
@@ -40,7 +42,8 @@ const Orders = () => {
       setordersubtotal(order.subTotal)
       setordertax(order.tax)
       setorderdeliveryCost(order.deliveryCost)
-
+      setserial(order.serial)
+      setivocedate(order.createAt)
     } catch (error) {
       console.log(error);
       // Display toast or handle error
@@ -272,11 +275,11 @@ const Orders = () => {
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>
-                            <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
+                            <p>Invoice #{serial} | Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
                           </div>
 
                           {/* Customer Information */}
-                          <div className="customer-info" style={{ marginBottom: '20px' }}>
+                          <div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
                             <h4>Customer Details</h4>
                             <p>Name: John Doe</p>
                             <p>Mobile: 123-456-7890</p>

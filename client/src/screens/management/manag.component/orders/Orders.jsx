@@ -25,12 +25,22 @@ const Orders = () => {
     }
   };
   const [list_products_order, setlist_products_order] = useState([])
+  const [ordertax, setordertax] = useState()
+  const [ordertotal, setordertotal] = useState()
+  const [ordersubtotal, setordersubtotal] = useState()
+  const [orderdeliveryCost, setorderdeliveryCost] = useState()
+
   // Fetch orders from API
   const getProductsOrder = async (serial) => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      const order = res.find(o=>o.serial == serial)
+      const order = res.data.find(o=>o.serial == serial)
       setlist_products_order(order.products)
+      setordertotal(order.total)
+      setordersubtotal(order.subTotal)
+      setordertax(order.tax)
+      setorderdeliveryCost(order.deliveryCost)
+
     } catch (error) {
       console.log(error);
       // Display toast or handle error
@@ -78,7 +88,7 @@ const Orders = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination,list_products_order }) => {
+        ({ usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <ToastContainer />

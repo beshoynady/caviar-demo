@@ -23,7 +23,7 @@ const Cart = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice, totalinvoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost
+        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost
           , createClientOrderForUser, createClientOrderForTable, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>

@@ -195,11 +195,18 @@ const ManagerDash = () => {
 
   const [list_products_order, setlist_products_order] = useState([])
   const [serial, setserial] = useState('')
-  const [ivocedate, setivocedate] = useState()
+  const [ordertype, setordertype] = useState('')
+  const [name, setname] = useState('')
+  const [address, setaddress] = useState('')
+  const [phone, setphone] = useState('')
   const [ordertax, setordertax] = useState()
   const [ordertotal, setordertotal] = useState()
   const [ordersubtotal, setordersubtotal] = useState()
   const [orderdeliveryCost, setorderdeliveryCost] = useState()
+  const [ordernum, setordernum] = useState()
+  const [table, settable] = useState()
+  const [casher, setcasher] = useState()
+  const [ivocedate, setivocedate] = useState('')
 
   // Fetch orders from API
   const getProductsOrder = async (serial) => {
@@ -213,11 +220,22 @@ const ManagerDash = () => {
       setorderdeliveryCost(order.deliveryCost)
       setserial(order.serial)
       setivocedate(order.createdAt)
+      setcasher(order.casher)
+      settable(order.order_type == 'Internal' ? order.table : '')
+      setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
+      setordertype(order.order_type)
+      if (order.order_type == 'Delivery') {
+        setname(order.name)
+        setaddress(order.address)
+        setphone(order.phone)
+      }
+
     } catch (error) {
       console.log(error);
       // Display toast or handle error
     }
   };
+
 
   const printContainer = useRef()
 
@@ -400,16 +418,23 @@ const ManagerDash = () => {
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>
-                                <p>Invoice #{serial} | Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                                <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                               </div>
 
                               {/* Customer Information */}
-                              <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                              {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                 <h4>Customer Details</h4>
-                                <p>Name: John Doe</p>
-                                <p>Mobile: 123-456-7890</p>
-                                <p>Address: 123 Main St, City</p>
-                              </div>
+                                <p>Name: {name}</p>
+                                <p>Mobile: {phone}</p>
+                                <p>Address: {address}</p>
+                              </div> : ordertype == 'Takeaway' ?
+                                <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                                  <h4>Customer Details</h4>
+                                  <p>Name: {name}</p>
+                                  <p>Mobile: {phone}</p>
+                                  <p>order num: {ordernum}</p>
+                                </div>
+                                : ''}
 
                               {/* Order Details Table */}
                               <table className="table table-bordered">

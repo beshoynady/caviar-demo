@@ -52,7 +52,7 @@ const Orders = () => {
       setserial(order.serial)
       setivocedate(order.createdAt)
       setcasher(order.casher)
-      setordernum(order.order_type == 'Internal'?order.ordernum:'')
+      setordernum(order.order_type == 'Takeaway'?order.ordernum:'')
       setordertype(order.order_type)
       if(order.order_type == 'Delivery'){
         setname(order.name)
@@ -302,7 +302,7 @@ const Orders = () => {
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>
-                            <p>Casher {usertitle(casher)}|Invoice #{serial} |{ordertype == 'Internal'? `Ordernum ${ordernum} `:''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
+                            <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Takeaway'? `Ordernum ${ordernum} `:''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
                           </div>
 
                           {/* Customer Information */}

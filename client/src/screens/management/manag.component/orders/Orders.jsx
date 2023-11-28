@@ -53,8 +53,8 @@ const Orders = () => {
       setivocedate(order.createdAt)
       setcasher(order.casher)
       setordernum(order.order_type == 'Internal'?order.ordernum:'')
+      setordertype(order.order_type)
       if(order.order_type == 'Delivery'){
-        setordertype(order.order_type)
         setname(order.name)
         setaddress(order.address) 
         setphone(order.phone) 
@@ -260,6 +260,7 @@ const Orders = () => {
                                 <td>{o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
+                                <td>{usertitle(o.casher)}</td>
                                 <td>{o.payment_status}</td>
                                 <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
 

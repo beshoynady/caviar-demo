@@ -191,18 +191,21 @@ const Orders = () => {
                                     <label htmlFor="checkbox1"></label>
                                   </span>
                                 </td>
-                                <td>{i + 1}</td>
-                                <td>{o.serial}</td>
-                                <td>{o.ordernum ? o.ordernum : '--'}</td>
-                                <td>{o.table != null ? usertitle(o.table)
-                                  : o.user ? usertitle(o.user)
-                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
+                                <a href="#invoiceOrderModal" >
 
-                                <td>{o.order_type}</td>
-                                <td>{o.total}</td>
-                                <td>{o.status}</td>
-                                <td>{o.payment_status}</td>
-                                <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
+                                  <td>{i + 1}</td>
+                                  <td>{o.serial}</td>
+                                  <td>{o.ordernum ? o.ordernum : '--'}</td>
+                                  <td>{o.table != null ? usertitle(o.table)
+                                    : o.user ? usertitle(o.user)
+                                      : o.createBy ? usertitle(o.createBy) : '--'}</td>
+
+                                  <td>{o.order_type}</td>
+                                  <td>{o.total}</td>
+                                  <td>{o.status}</td>
+                                  <td>{o.payment_status}</td>
+                                  <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
+                                </a>
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -227,6 +230,24 @@ const Orders = () => {
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
                     </ul>
                   </div>
+                </div>
+              </div>
+              <div id="invoiceOrderModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form>
+                      <div className="modal-header">
+                        <h4 className="modal-title"></h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" className="btn btn-success" value="Add" />
+                      </div>
+                    </form>
+                  </div>
+
                 </div>
               </div>
               <div id="addOrderModal" className="modal fade">

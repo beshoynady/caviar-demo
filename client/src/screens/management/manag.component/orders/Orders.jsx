@@ -53,13 +53,17 @@ const Orders = () => {
 
   
   const printContainer = useRef()
-
-  const handlePrint = useReactToPrint({
+  
+  const Print = useReactToPrint({
     content: () => printContainer.current,
     copyStyles: true,
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
+  const handlePrint = (e)=>{
+    e.preventDefault()
+    Print()
+  }
 
   // State to manage order deletion
   const [orderId, setOrderId] = useState('');
@@ -277,11 +281,6 @@ const Orders = () => {
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div ref={printContainer} className="container">
-                          {/* Buttons */}
-                          {/* <div>
-                            <button className="btn btn-primary mr-2" onClick={() => { }}>Download Invoice</button>
-                            <button className="btn btn-success" onClick={() => {}}>Print Invoice</button>
-                          </div> */}
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>

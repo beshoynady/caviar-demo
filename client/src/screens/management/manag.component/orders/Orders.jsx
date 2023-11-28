@@ -44,7 +44,7 @@ const Orders = () => {
       setordertax(order.tax)
       setorderdeliveryCost(order.deliveryCost)
       setserial(order.serial)
-      setivocedate(order.createAt)
+      setivocedate(order.createdAt)
     } catch (error) {
       console.log(error);
       // Display toast or handle error

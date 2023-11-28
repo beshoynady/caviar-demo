@@ -195,7 +195,7 @@ const ManagerDash = () => {
 
   const [list_products_order, setlist_products_order] = useState([])
   const [serial, setserial] = useState('')
-  const [ivocedate, setivocedate] = useState('')
+  const [ivocedate, setivocedate] = useState()
   const [ordertax, setordertax] = useState()
   const [ordertotal, setordertotal] = useState()
   const [ordersubtotal, setordersubtotal] = useState()
@@ -212,7 +212,7 @@ const ManagerDash = () => {
       setordertax(order.tax)
       setorderdeliveryCost(order.deliveryCost)
       setserial(order.serial)
-      setivocedate(order.createAt)
+      setivocedate(order.createdAt)
     } catch (error) {
       console.log(error);
       // Display toast or handle error
@@ -400,7 +400,7 @@ const ManagerDash = () => {
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>
-                                <p>Invoice #{serial} | Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
+                                <p>Invoice #{serial} | Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                               </div>
 
                               {/* Customer Information */}

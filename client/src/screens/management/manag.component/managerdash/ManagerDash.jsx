@@ -4,6 +4,8 @@ import { detacontext } from '../../../../App'
 import jwt_decode from 'jwt-decode';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+import { useReactToPrint } from 'react-to-print';
+
 
 
 const ManagerDash = () => {

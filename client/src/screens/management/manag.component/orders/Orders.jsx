@@ -338,7 +338,7 @@ const Orders = () => {
                           </table>
 
                           {/* Restaurant Information */}
-                          <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
+                          <div className="restaurant-info text-dark" style={{ marginTop: '20px', textAlign: 'center' }}>
                             <h4>Restaurant Details</h4>
                             <p>Restaurant Name</p>
                             <p>Mobile: 987-654-3210</p>

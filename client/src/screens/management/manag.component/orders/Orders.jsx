@@ -1,7 +1,8 @@
 import './Orders.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { detacontext } from '../../../../App'
+import { useReactToPrint } from 'react-to-print';
 import { ToastContainer, toast } from 'react-toastify';
 
 

@@ -318,8 +318,11 @@ const ManagerDash = () => {
                             return (
                               <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td><a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(recent.serial)}>{recent.serial}</a></td>
-                                <td>{recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}</td>
+                                <td>
+                                  <a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(recent.serial)}>
+                                    {recent.serial}
+                                  </a>
+                                </td>                                <td>{recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}</td>
                                 <td>{recent.total}</td>
                                 <td>
                                   <select name="status" id="status" form="carform" onChange={(e) => { changeorderstauts(e, recent._id) }}>

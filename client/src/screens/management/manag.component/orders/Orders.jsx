@@ -36,6 +36,7 @@ const Orders = () => {
   const [ordersubtotal, setordersubtotal] = useState()
   const [orderdeliveryCost, setorderdeliveryCost] = useState()
   const [ordernum, setordernum] = useState()
+  const [table, settable] = useState()
   const [casher, setcasher] = useState()
   const [ivocedate, setivocedate] = useState('')
 
@@ -43,7 +44,7 @@ const Orders = () => {
   const getProductsOrder = async (serial) => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      const order = res.data.find(o=>o.serial == serial)
+      const order = res.data.find(o => o.serial == serial)
       setlist_products_order(order.products)
       setordertotal(order.total)
       setordersubtotal(order.subTotal)
@@ -52,30 +53,31 @@ const Orders = () => {
       setserial(order.serial)
       setivocedate(order.createdAt)
       setcasher(order.casher)
-      setordernum(order.order_type == 'Takeaway'?order.ordernum:'')
+      setcasher(order.order_type == 'Internal' ? order.table : '')
+      settable(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
-      if(order.order_type == 'Delivery'){
+      if (order.order_type == 'Delivery') {
         setname(order.name)
-        setaddress(order.address) 
-        setphone(order.phone) 
+        setaddress(order.address)
+        setphone(order.phone)
       }
-      
+
     } catch (error) {
       console.log(error);
       // Display toast or handle error
     }
   };
 
-  
+
   const printContainer = useRef()
-  
+
   const Print = useReactToPrint({
     content: () => printContainer.current,
     copyStyles: true,
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
-  const handlePrint = (e)=>{
+  const handlePrint = (e) => {
     e.preventDefault()
     Print()
   }
@@ -250,7 +252,7 @@ const Orders = () => {
                                 </td>
 
                                 <td>{i + 1}</td>
-                                <td><a href="#invoiceOrderModal" data-toggle="modal" onClick={()=>getProductsOrder(o.serial)}>{o.serial} </a></td>
+                                <td><a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(o.serial)}>{o.serial} </a></td>
 
                                 <td>{o.ordernum ? o.ordernum : '--'}</td>
                                 <td>{o.table != null ? usertitle(o.table)
@@ -299,86 +301,86 @@ const Orders = () => {
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div ref={printContainer} className="container">
-                          {/* Invoice Header */}
-                          <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
-                            <h2>Restaurant Name</h2>
-                            <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Takeaway'? `Ordernum ${ordernum} `:''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
-                          </div>
+                        {/* Invoice Header */}
+                        <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
+                          <h2>Restaurant Name</h2>
+                          <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Takeaway' ? `Ordernum ${ordernum} ` : ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                        </div>
 
-                          {/* Customer Information */}
-                          {ordertype == 'Delivery'?<div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
-                            <h4>Customer Details</h4>
-                            <p>Name: {name}</p>
-                            <p>Mobile: {phone}</p>
-                            <p>Address: {address}</p>
-                          </div>:ordertype == 'Takeaway'?
-                          <div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
+                        {/* Customer Information */}
+                        {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                           <h4>Customer Details</h4>
                           <p>Name: {name}</p>
                           <p>Mobile: {phone}</p>
-                          <p>order num: {ordernum}</p>
-                        </div>
-                          :''}
-                          
-                          {/* Order Details Table */}
-                          <table className="table table-bordered">
-                            <thead className="thead-dark">
-                              <tr>
-                                <th scope="col">Item</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {/* Example rows, replace with dynamic data */}
-                              {list_products_order.map((item, i) => (
-                                <tr key={i}>
-                                  <td>{item.name}</td>
-                                  <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                  <td>{item.quantity}</td>
-                                  <td>{item.totalprice}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td colSpan="3">Subtotal</td>
-                                <td>{ordersubtotal}</td>
-                              </tr>
-                              {orderdeliveryCost>0 && (
-                                <tr>
-                                  <td colSpan="3">Delivery</td>
-                                  <td>{orderdeliveryCost}</td>
-                                </tr>
-                              )}
-                              <tr>
-                                <td colSpan="3">Tax</td>
-                                <td>{Math.round(ordertax * 100) / 100}</td>
-                              </tr>
-                              <tr>
-                                <td colSpan="3">Total</td>
-                                <td>{ordertotal}</td>
-                              </tr>
-                            </tfoot>
-                          </table>
-
-                          {/* Restaurant Information */}
-                          <div className="restaurant-info text-dark" style={{ marginTop: '20px', textAlign: 'center' }}>
-                            <h4>Restaurant Details</h4>
-                            <p>Restaurant Name</p>
-                            <p>Mobile: 987-654-3210</p>
-                            <p>Address: 456 Street, City</p>
+                          <p>Address: {address}</p>
+                        </div> : ordertype == 'Takeaway' ?
+                          <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                            <h4>Customer Details</h4>
+                            <p>Name: {name}</p>
+                            <p>Mobile: {phone}</p>
+                            <p>order num: {ordernum}</p>
                           </div>
+                          : ''}
 
-                          {/* Footer */}
-                          <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
-                            <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
-                          </div>
+                        {/* Order Details Table */}
+                        <table className="table table-bordered">
+                          <thead className="thead-dark">
+                            <tr>
+                              <th scope="col">Item</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* Example rows, replace with dynamic data */}
+                            {list_products_order.map((item, i) => (
+                              <tr key={i}>
+                                <td>{item.name}</td>
+                                <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                <td>{item.quantity}</td>
+                                <td>{item.totalprice}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td colSpan="3">Subtotal</td>
+                              <td>{ordersubtotal}</td>
+                            </tr>
+                            {orderdeliveryCost > 0 && (
+                              <tr>
+                                <td colSpan="3">Delivery</td>
+                                <td>{orderdeliveryCost}</td>
+                              </tr>
+                            )}
+                            <tr>
+                              <td colSpan="3">Tax</td>
+                              <td>{Math.round(ordertax * 100) / 100}</td>
+                            </tr>
+                            <tr>
+                              <td colSpan="3">Total</td>
+                              <td>{ordertotal}</td>
+                            </tr>
+                          </tfoot>
+                        </table>
+
+                        {/* Restaurant Information */}
+                        <div className="restaurant-info text-dark" style={{ marginTop: '20px', textAlign: 'center' }}>
+                          <h4>Restaurant Details</h4>
+                          <p>Restaurant Name</p>
+                          <p>Mobile: 987-654-3210</p>
+                          <p>Address: 456 Street, City</p>
                         </div>
+
+                        {/* Footer */}
+                        <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
+                          <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
+                        </div>
+                      </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="Cancel" />
-                        <input type="submit" className="btn btn-success" value="Print" onClick={handlePrint}/>
+                        <input type="submit" className="btn btn-success" value="Print" onClick={handlePrint} />
                       </div>
                     </form>
                   </div>

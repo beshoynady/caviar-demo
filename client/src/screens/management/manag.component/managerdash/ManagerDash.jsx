@@ -221,12 +221,16 @@ const ManagerDash = () => {
 
   const printContainer = useRef()
 
-  const handlePrint = useReactToPrint({
+  const Print = useReactToPrint({
     content: () => printContainer.current,
     copyStyles: true,
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
+  const handlePrint = (e)=>{
+    e.preventDefault()
+    Print()
+  }
 
   useEffect(() => {
     fetchData()

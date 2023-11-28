@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import './ManagerDash.css'
 import { detacontext } from '../../../../App'
 import jwt_decode from 'jwt-decode';
@@ -216,6 +216,15 @@ const ManagerDash = () => {
       // Display toast or handle error
     }
   };
+
+  const printContainer = useRef()
+
+  const handlePrint = useReactToPrint({
+    content: () => printContainer.current,
+    copyStyles: true,
+    removeAfterPrint: true,
+    bodyClass: 'printpage'
+  });
 
   useEffect(() => {
     fetchData()

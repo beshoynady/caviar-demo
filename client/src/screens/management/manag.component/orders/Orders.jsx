@@ -35,6 +35,8 @@ const Orders = () => {
   const [ordertotal, setordertotal] = useState()
   const [ordersubtotal, setordersubtotal] = useState()
   const [orderdeliveryCost, setorderdeliveryCost] = useState()
+  const [ordernum, setordernum] = useState()
+  const [casher, setcasher] = useState()
   const [ivocedate, setivocedate] = useState('')
 
   // Fetch orders from API
@@ -49,12 +51,15 @@ const Orders = () => {
       setorderdeliveryCost(order.deliveryCost)
       setserial(order.serial)
       setivocedate(order.createdAt)
+      setcasher(order.casher)
+      setordernum(order.order_type == 'Internal'?order.ordernum:'')
       if(order.order_type == 'Delivery'){
         setordertype(order.order_type)
         setname(order.name)
         setaddress(order.address) 
         setphone(order.phone) 
       }
+      
     } catch (error) {
       console.log(error);
       // Display toast or handle error
@@ -194,6 +199,7 @@ const Orders = () => {
                         <th>المكان</th>
                         <th>الاجمالي</th>
                         <th>حالة الطلب</th>
+                        <th>الكاشير</th>
                         <th>حالة الدفع</th>
                         <th>تاريخ الدفع</th>
                         <th>اجراءات</th>
@@ -221,6 +227,7 @@ const Orders = () => {
                                 <td>{o.order_type}</td>
                                 <td>{o.total}</td>
                                 <td>{o.status}</td>
+                                <td>{usertitle(o.casher)}</td>
                                 <td>{o.payment_status}</td>
                                 <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
@@ -294,16 +301,23 @@ const Orders = () => {
                           {/* Invoice Header */}
                           <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                             <h2>Restaurant Name</h2>
-                            <p>Invoice #{serial} | Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
+                            <p>Casher {usertitle(casher)}|Invoice #{serial} |{ordertype == 'Internal'? `Ordernum ${ordernum} `:''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}|</p>
                           </div>
 
                           {/* Customer Information */}
-                          {ordertype&&<div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
+                          {ordertype == 'Delivery'?<div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
                             <h4>Customer Details</h4>
                             <p>Name: {name}</p>
                             <p>Mobile: {phone}</p>
                             <p>Address: {address}</p>
-                          </div>}
+                          </div>:ordertype == 'Takeaway'?
+                          <div className="customer-info text-dark" style={{ marginBottom: '20px'}}>
+                          <h4>Customer Details</h4>
+                          <p>Name: {name}</p>
+                          <p>Mobile: {phone}</p>
+                          <p>order num: {ordernum}</p>
+                        </div>
+                          :''}
                           
                           {/* Order Details Table */}
                           <table className="table table-bordered">

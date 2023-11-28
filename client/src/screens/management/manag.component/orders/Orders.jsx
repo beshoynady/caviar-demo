@@ -321,7 +321,7 @@ const Orders = () => {
                                 <td colSpan="3">Subtotal</td>
                                 <td>{ordersubtotal}</td>
                               </tr>
-                              {orderdeliveryCost && (
+                              {orderdeliveryCost>0 && (
                                 <tr>
                                   <td colSpan="3">Delivery</td>
                                   <td>{orderdeliveryCost}</td>

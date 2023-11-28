@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './ManagerDash.css'
 import { detacontext } from '../../../../App'
 import jwt_decode from 'jwt-decode';
@@ -227,7 +227,7 @@ const ManagerDash = () => {
     removeAfterPrint: true,
     bodyClass: 'printpage'
   });
-  const handlePrint = (e)=>{
+  const handlePrint = (e) => {
     e.preventDefault()
     Print()
   }
@@ -442,7 +442,7 @@ const ManagerDash = () => {
                                     <td colSpan="3">Subtotal</td>
                                     <td>{ordersubtotal}</td>
                                   </tr>
-                                  {orderdeliveryCost && (
+                                  {orderdeliveryCost > 0 && (
                                     <tr>
                                       <td colSpan="3">Delivery</td>
                                       <td>{orderdeliveryCost}</td>

@@ -193,7 +193,7 @@ const Orders = () => {
                                 </td>
 
                                 <td>{i + 1}</td>
-                                <td><a href="#invoiceOrderModal" >{o.serial} </a></td>
+                                <td><a href="#invoiceOrderModal" data-toggle="modal">{o.serial} </a></td>
 
                                 <td>{o.ordernum ? o.ordernum : '--'}</td>
                                 <td>{o.table != null ? usertitle(o.table)

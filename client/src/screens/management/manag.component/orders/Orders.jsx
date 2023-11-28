@@ -304,7 +304,7 @@ const Orders = () => {
                         {/* Invoice Header */}
                         <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                           <h2>Restaurant Name</h2>
-                          <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Takeaway' ? `Ordernum ${ordernum} ` : ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                          <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                         </div>
 
                         {/* Customer Information */}

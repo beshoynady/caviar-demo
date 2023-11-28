@@ -53,8 +53,8 @@ const Orders = () => {
       setserial(order.serial)
       setivocedate(order.createdAt)
       setcasher(order.casher)
-      setcasher(order.order_type == 'Internal' ? order.table : '')
-      settable(order.order_type == 'Takeaway' ? order.ordernum : '')
+      settable(order.order_type == 'Internal' ? order.table : '')
+      setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
       if (order.order_type == 'Delivery') {
         setname(order.name)

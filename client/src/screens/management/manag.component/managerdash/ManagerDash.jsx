@@ -397,11 +397,6 @@ const ManagerDash = () => {
                               <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div ref={printContainer} className="container">
-                              {/* Buttons */}
-                              {/* <div>
-                            <button className="btn btn-primary mr-2" onClick={() => { }}>Download Invoice</button>
-                            <button className="btn btn-success" onClick={() => {}}>Print Invoice</button>
-                          </div> */}
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>

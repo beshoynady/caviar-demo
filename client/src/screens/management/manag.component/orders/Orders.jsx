@@ -49,7 +49,14 @@ const Orders = () => {
       // Display toast or handle error
     }
   };
+  const printContainer = useRef()
 
+  const handlePrint = useReactToPrint({
+    content: () => printContainer.current,
+    copyStyles: true,
+    removeAfterPrint: true,
+    bodyClass: 'printpage'
+  });
 
   // State to manage order deletion
   const [orderId, setOrderId] = useState('');
@@ -266,7 +273,7 @@ const Orders = () => {
                         <h4 className="modal-title"></h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
-                      <div className="container">
+                      <div ref={printContainer} className="container">
                           {/* Buttons */}
                           {/* <div>
                             <button className="btn btn-primary mr-2" onClick={() => { }}>Download Invoice</button>
@@ -344,7 +351,7 @@ const Orders = () => {
                         </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="Cancel" />
-                        <input type="submit" className="btn btn-success" value="Add" />
+                        <input type="submit" className="btn btn-success" value="Print" onClick={handlePrint}/>
                       </div>
                     </form>
                   </div>

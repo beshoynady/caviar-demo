@@ -56,9 +56,9 @@ const Orders = () => {
       settable(order.order_type == 'Internal' ? order.table : '')
       setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
-      if (order.order_type == 'Delivery') {
+      setaddress(order.order_type == 'Delivery' ?order.address:"")
+      if (order.order_type != 'Internal') {
         setname(order.name)
-        setaddress(order.address)
         setphone(order.phone)
       }
 

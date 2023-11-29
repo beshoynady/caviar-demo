@@ -456,22 +456,22 @@ const ManagerDash = () => {
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>
-                                <p>الكاشير {usertitle(casher)} |رقم الفاتوره #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |التاريخ: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                                <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                               </div>
 
                               {/* Customer Information */}
                               {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                 <h4>Customer Details</h4>
-                                <p> {name}الاسم:</p>
-                                <p> {phone}الموبايل:</p>
-                                <p> {address}العنوان:</p>
-                                <p> {usertitle(deliveryMan)}الديلفري:</p>
+                                <p>Name: {name}</p>
+                                <p>Mobile: {phone}</p>
+                                <p>Address: {address}</p>
+                                <p>Delivery Man: {usertitle(deliveryMan)}</p>
                               </div> : ordertype == 'Takeaway' ?
                                 <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                   <h4>Customer Details</h4>
-                                  <p> {name}الاسم:</p>
-                                <p> {phone}الموبايل:</p>
-                                  <p>رقم الاوردر: {ordernum}</p>
+                                  <p>Name: {name}</p>
+                                  <p>Mobile: {phone}</p>
+                                  <p>order num: {ordernum}</p>
                                 </div>
                                 : ''}
 

@@ -57,8 +57,8 @@ const Orders = () => {
       settable(order.order_type == 'Internal' ? order.table : '')
       setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
-      setaddress(order.order_type == 'Delivery' ? order.address : "")
-      setdeliveryMan(order.order_type == 'Delivery' ? order.deliveryMan : "")
+      setaddress(order.order_type == 'Delivery' ?order.address:"")
+      setdeliveryMan(order.order_type == 'Delivery' ?order.deliveryMan:"")
       if (order.order_type != 'Internal') {
         setname(order.name)
         setphone(order.phone)
@@ -306,22 +306,22 @@ const Orders = () => {
                         {/* Invoice Header */}
                         <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                           <h2>Restaurant Name</h2>
-                          <p>الكاشير {usertitle(casher)} |رقم الفاتوره #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |التاريخ: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                          <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                         </div>
 
                         {/* Customer Information */}
                         {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                           <h4>Customer Details</h4>
-                          <p> {name}الاسم:</p>
-                          <p> {phone}الموبايل:</p>
-                          <p> {address}العنوان:</p>
-                          <p> {usertitle(deliveryMan)}الديلفري:</p>
+                          <p>Name: {name}</p>
+                          <p>Mobile: {phone}</p>
+                          <p>Address: {address}</p>
+                          <p>Delivery Man: {deliveryMan}</p>
                         </div> : ordertype == 'Takeaway' ?
                           <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                             <h4>Customer Details</h4>
-                            <p> {name}الاسم:</p>
-                            <p> {phone}الموبايل:</p>
-                            <p>رقم الاوردر: {ordernum}</p>
+                            <p>Name: {name}</p>
+                            <p>Mobile: {phone}</p>
+                            <p>order num: {ordernum}</p>
                           </div>
                           : ''}
 
@@ -329,10 +329,10 @@ const Orders = () => {
                         <table className="table table-bordered">
                           <thead className="thead-dark">
                             <tr>
-                              <th scope="col">الصنف</th>
-                              <th scope="col">السعر</th>
-                              <th scope="col">الكمية</th>
-                              <th scope="col">الاجمالي</th>
+                              <th scope="col">Item</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Total</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -348,21 +348,21 @@ const Orders = () => {
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colSpan="3">المجموع</td>
+                              <td colSpan="3">Subtotal</td>
                               <td>{ordersubtotal}</td>
                             </tr>
                             {orderdeliveryCost > 0 && (
                               <tr>
-                                <td colSpan="3">خدمة التوصيل</td>
+                                <td colSpan="3">Delivery</td>
                                 <td>{orderdeliveryCost}</td>
                               </tr>
                             )}
                             <tr>
-                              <td colSpan="3">الضريبه</td>
+                              <td colSpan="3">Tax</td>
                               <td>{Math.round(ordertax * 100) / 100}</td>
                             </tr>
                             <tr>
-                              <td colSpan="3">الاجمالي</td>
+                              <td colSpan="3">Total</td>
                               <td>{ordertotal}</td>
                             </tr>
                           </tfoot>

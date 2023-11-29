@@ -396,7 +396,7 @@ const ManagerDash = () => {
                                 <td>
                                   {recent.order_type == 'Delivery'?
                                   <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
-                                    <option value={recent.status}>{recent.status}</option>
+                                    <option value={recent.deliveryman}>{recent.deliveryman? usertitle(recent.deliveryman):"لم يحدد"}</option>
                                     {deliveryman.map((man, i) => {
                                       return (
                                         <option value={man} key={i}>{usertitle(man)}</option>

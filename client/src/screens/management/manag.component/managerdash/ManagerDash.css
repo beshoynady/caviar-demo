@@ -132,7 +132,7 @@
 }
 .dashboard .container .bottom-data .orders {
   flex-grow: 1;
-  flex-basis: 500px;
+  flex-basis: 650px;
 }
 .dashboard .container .bottom-data .orders table {
   width: 100%;
@@ -141,7 +141,7 @@
 .dashboard .container .bottom-data .orders table th {
   padding-bottom: 12px;
   font-size: 13px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid var(--grey);
 }
 .dashboard .container .bottom-data .orders table td {
@@ -161,7 +161,7 @@
 }
 .dashboard .container .bottom-data .orders table tr td .status {
   font-size: 10px;
-  padding: 6px 16px;
+  padding: 5px 5px;
   color: var(--light);
   border-radius: 20px;
   font-weight: 700;

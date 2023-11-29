@@ -150,14 +150,14 @@ $color_7: var(--danger);
 			}
 			.orders {
 				flex-grow: 1;
-				flex-basis: 500px;
+				flex-basis: 650px;
 				table {
 					width: 100%;
 					border-collapse: collapse;
 					th {
 						padding-bottom: 12px;
 						font-size: 13px;
-						text-align: left;
+						text-align: center;
 						border-bottom: 1px solid var(--grey);
 					}
 					td {
@@ -179,7 +179,7 @@ $color_7: var(--danger);
 							}
 							.status {
 								font-size: 10px;
-								padding: 6px 16px;
+								padding: 5px 5px;
 								color: $color_4;
 								border-radius: 20px;
 								font-weight: 700;

@@ -91,9 +91,10 @@ const OrderSchema = new mongoose.Schema({
     subTotal: {
         type: Number,
         required: true,
+        default:0,
         validate: {
             validator: function(v) {
-                return v > 0;
+                return v >= 0;
             },
             message: '{VALUE} should be greater than zero'
         }
@@ -114,9 +115,10 @@ const OrderSchema = new mongoose.Schema({
     total: {
         type: Number,
         required: true,
+        default:0,
         validate: {
             validator: function(v) {
-                return v > 0;
+                return v >= 0;
             },
             message: '{VALUE} should be greater than zero'
         }

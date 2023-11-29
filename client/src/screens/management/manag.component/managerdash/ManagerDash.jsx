@@ -203,6 +203,7 @@ const ManagerDash = () => {
   const [ordertotal, setordertotal] = useState()
   const [ordersubtotal, setordersubtotal] = useState()
   const [orderdeliveryCost, setorderdeliveryCost] = useState()
+  const [deliveryMan, setdeliveryMan] = useState()
   const [ordernum, setordernum] = useState()
   const [table, settable] = useState()
   const [casher, setcasher] = useState()
@@ -225,6 +226,7 @@ const ManagerDash = () => {
       setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
       setaddress(order.order_type == 'Delivery' ?order.address:"")
+      setdeliveryMan(order.order_type == 'Delivery' ?order.deliveryMan:"")
       if (order.order_type != 'Internal') {
         setname(order.name)
         setphone(order.phone)
@@ -427,6 +429,7 @@ const ManagerDash = () => {
                                 <p>Name: {name}</p>
                                 <p>Mobile: {phone}</p>
                                 <p>Address: {address}</p>
+                                <p>Delivery Man: {deliveryMan}</p>
                               </div> : ordertype == 'Takeaway' ?
                                 <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                   <h4>Customer Details</h4>

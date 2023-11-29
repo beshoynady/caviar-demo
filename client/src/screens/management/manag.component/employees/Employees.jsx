@@ -37,25 +37,25 @@ const Employees = () => {
     });
   };
 
-  const EmployeeSchema = Joi.object({
-    fullname: Joi.string().min(3).max(100),
-    numberID: Joi.string().length(14),
-    username: Joi.string().min(3).max(100),
-    email: Joi.string().email(),
-    address: Joi.string().min(3).max(150),
-    phone: Joi.string().length(11),
-    password: Joi.string().min(3),
-    basicSalary: Joi.number().min(0),
-    role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'Chef'),
-    isActive: Joi.boolean(),
-});
+//   const EmployeeSchema = Joi.object({
+//     fullname: Joi.string().min(3).max(100),
+//     numberID: Joi.string().length(14),
+//     username: Joi.string().min(3).max(100),
+//     email: Joi.string().email(),
+//     address: Joi.string().min(3).max(150),
+//     phone: Joi.string().length(11),
+//     password: Joi.string().min(3),
+//     basicSalary: Joi.number().min(0),
+//     role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'Chef'),
+//     isActive: Joi.boolean(),
+// });
   const createEmployee = async (e) => {
     e.preventDefault()
-    const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
-    if (error) {
-        notify(error.details[0].message, 'error');
-        return;
-    }
+    // const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+    // if (error) {
+    //     notify(error.details[0].message, 'error');
+    //     return;
+    // }
     if (
       !fullname ||
       !basicSalary ||

@@ -37,25 +37,25 @@ const Employees = () => {
     });
   };
 
-//   const EmployeeSchema = Joi.object({
-//     fullname: Joi.string().min(3).max(100),
-//     numberID: Joi.string().length(14),
-//     username: Joi.string().min(3).max(100),
-//     email: Joi.string().email(),
-//     address: Joi.string().min(3).max(150),
-//     phone: Joi.string().length(11),
-//     password: Joi.string().min(3),
-//     basicSalary: Joi.number().min(0),
-//     role: Joi.string().valid('manager', 'casher', 'waiter', 'Chef'),
-//     isActive: Joi.boolean(),
-// });
+  const EmployeeSchema = Joi.object({
+    fullname: Joi.string().min(3).max(100),
+    numberID: Joi.string().length(14),
+    username: Joi.string().min(3).max(100),
+    email: Joi.string().email(),
+    address: Joi.string().min(3).max(150),
+    phone: Joi.string().length(11),
+    password: Joi.string().min(3),
+    basicSalary: Joi.number().min(0),
+    role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'Chef'),
+    isActive: Joi.boolean(),
+});
   const createEmployee = async (e) => {
     e.preventDefault()
-    // const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
-    // if (error) {
-    //     notify(error.details[0].message, 'error');
-    //     return;
-    // }
+    const { error } = EmployeeSchema.validate({ fullname, numberID, username, email, address, phone, password, basicSalary, role, isActive });
+    if (error) {
+        notify(error.details[0].message, 'error');
+        return;
+    }
     if (
       !fullname ||
       !basicSalary ||
@@ -73,7 +73,7 @@ const Employees = () => {
       return;
     }
     try {
-      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', { fullname, basicSalary, numberID, payRoll, username, password, address, phone, email, isActive, role })
+      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', { fullname, basicSalary, numberID, username, password, address, phone, email, isActive, role })
       console.log(newemployee)
       notify('Employee created successfully', 'success');
       getemployees();
@@ -375,7 +375,8 @@ const Employees = () => {
                             <select name={role} form="carform" required onChange={(e) => setrole(e.target.value)}>
                               <option>اختار وظيفة</option>
                               <option value="manager">مدير</option>
-                              <option value="casher">Cashير</option>
+                              <option value="casher">كاشير</option>
+                              <option value="deliveryman">الديلفري</option>
                               <option value="waiter">ويتر</option>
                               <option value="Chef">شيف</option>
                             </select>
@@ -446,9 +447,10 @@ const Employees = () => {
                           <div className="form-group">
                             <label>الوظيفة</label>
                             <select name={role} form="carform" defaultValue={role} required onChange={(e) => setrole(e.target.value)}>
-                              <option>اختار وظيفة</option>
+                            <option>اختار وظيفة</option>
                               <option value="manager">مدير</option>
-                              <option value="casher">Cashير</option>
+                              <option value="casher">كاشير</option>
+                              <option value="deliveryman">الديلفري</option>
                               <option value="waiter">ويتر</option>
                               <option value="Chef">شيف</option>
                             </select>

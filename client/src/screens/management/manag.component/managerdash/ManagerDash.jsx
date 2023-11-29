@@ -398,7 +398,7 @@ const ManagerDash = () => {
                                 <td>
                                   {recent.order_type == 'Delivery'?
                                   <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
-                                    <option value={recent.deliverymen}>{recent.deliverymen? usertitle(recent.deliveryman):"لم يحدد"}</option>
+                                    <option value={recent.deliveryMan}>{recent.deliveryMan? usertitle(recent.deliveryMan):"لم يحدد"}</option>
                                     {deliverymen.map((man, i) => {
                                       return (
                                         <option value={man} key={i}>{usertitle(man)}</option>
@@ -465,7 +465,7 @@ const ManagerDash = () => {
                                 <p>Name: {name}</p>
                                 <p>Mobile: {phone}</p>
                                 <p>Address: {address}</p>
-                                <p>Delivery Man: {deliveryMan}</p>
+                                <p>Delivery Man: {usertitle(deliveryMan)}</p>
                               </div> : ordertype == 'Takeaway' ?
                                 <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                   <h4>Customer Details</h4>

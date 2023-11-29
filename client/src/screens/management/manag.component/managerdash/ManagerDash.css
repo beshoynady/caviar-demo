@@ -146,6 +146,7 @@
 }
 .dashboard .container .bottom-data .orders table td {
   padding: 16px 0;
+  text-align: center;
 }
 .dashboard .container .bottom-data .orders table td img {
   width: 36px;

@@ -75,29 +75,32 @@ const ManagerDash = () => {
     }
   }
 
-  // Send waiter 
-  const [waiters, setwaiters] = useState([])
-  const [deliveryman, setdeliveryman] = useState([])
-
-  const fetchActiveWaiters = async () => {
+  const [waiters, setWaiters] = useState([]);
+  const [deliverymen, setDeliverymen] = useState([]);
+  
+  const fetchActiveEmployees = async () => {
     try {
-      const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee');
-      const allemployeeActive = allemployee.filter((employee) => employee.isActive === true);
-      const allwaiter = allemployeeActive.data.filter((waiter) => waiter.role === 'waiter');
-      const alldeliveryman = allemployeeActive.data.filter((deliveryman) => deliveryman.role === 'deliveryman');
-      const listwaiterId = allwaiter.map((waiter) => waiter._id);
-      if (listwaiterId.length > 0) {
-        setwaiters(listwaiterId);
+      const response = await axios.get('https://caviar-api.vercel.app/api/employee');
+      const activeEmployees = response.data.filter((employee) => employee.isActive === true);
+  
+      const waiters = activeEmployees.filter((employee) => employee.role === 'waiter');
+      const waiterIds = waiters.map((waiter) => waiter._id);
+      if (waiterIds.length > 0) {
+        console.log(waiterIds);
+        setWaiters(waiterIds);
       }
-      const listdeliverymanId = alldeliveryman.map((deliveryman) => deliveryman._id);
-      if (listdeliverymanId.length > 0) {
-        setdeliveryman(listdeliverymanId);
+  
+      const deliverymen = activeEmployees.filter((employee) => employee.role === 'deliveryman');
+      const deliverymenIds = deliverymen.map((deliveryman) => deliveryman._id);
+      if (deliverymenIds.length > 0) {
+        console.log(deliverymenIds);
+        setDeliverymen(deliverymenIds);
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching employees:', error);
     }
   };
-
+  
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
     const ordertakewaiter = allOrders.filter((order) => order.waiter != null)
@@ -274,7 +277,7 @@ const ManagerDash = () => {
 
   useEffect(() => {
     fetchData()
-    fetchActiveWaiters();
+    fetchActiveEmployees();
     getUserInfoFromToken();
   }, [update]);
 
@@ -396,8 +399,8 @@ const ManagerDash = () => {
                                 <td>
                                   {recent.order_type == 'Delivery'?
                                   <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
-                                    <option value={recent.deliveryman}>{recent.deliveryman? usertitle(recent.deliveryman):"لم يحدد"}</option>
-                                    {deliveryman.map((man, i) => {
+                                    <option value={recent.deliverymen}>{recent.deliverymen? usertitle(recent.deliveryman):"لم يحدد"}</option>
+                                    {deliverymen.map((man, i) => {
                                       return (
                                         <option value={man} key={i}>{usertitle(man)}</option>
                                       )

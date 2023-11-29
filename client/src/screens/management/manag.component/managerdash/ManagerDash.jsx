@@ -58,8 +58,8 @@ const ManagerDash = () => {
     } catch (error) {
       console.log(error)
     }
-
   }
+
   const paymentstatus = ['Pending', 'Paid']
   const changePaymentorderstauts = async (e, id, casher) => {
     try {
@@ -77,15 +77,21 @@ const ManagerDash = () => {
 
   // Send waiter 
   const [waiters, setwaiters] = useState([])
+  const [deliveryman, setdeliveryman] = useState([])
 
   const fetchActiveWaiters = async () => {
     try {
       const allemployee = await axios.get('https://caviar-api.vercel.app/api/employee');
-      const allwaiter = allemployee.data.filter((employee) => employee.role === 'waiter');
-      const waiterActive = allwaiter.filter((waiter) => waiter.isActive === true);
-      const listId = waiterActive.map((waiter) => waiter._id);
-      if (listId.length > 0) {
-        setwaiters(listId);
+      const allemployeeActive = allemployee.filter((employee) => employee.isActive === true);
+      const allwaiter = allemployeeActive.data.filter((waiter) => waiter.role === 'waiter');
+      const alldeliveryman = allemployeeActive.data.filter((deliveryman) => deliveryman.role === 'deliveryman');
+      const listwaiterId = allwaiter.map((waiter) => waiter._id);
+      if (listwaiterId.length > 0) {
+        setwaiters(listwaiterId);
+      }
+      const listdeliverymanId = alldeliveryman.map((deliveryman) => deliveryman._id);
+      if (listdeliverymanId.length > 0) {
+        setdeliveryman(listdeliverymanId);
       }
     } catch (error) {
       console.log(error);
@@ -127,13 +133,27 @@ const ManagerDash = () => {
     }
   };
 
+  const putdeliveryman = async (e, orderid) => {
+    e.defualtValue()
+    try {
+      const deliveryman = await e.target.value
+      const order = await axios.put('https://caviar-api.vercel.app/api/order/' + orderid , {
+        deliveryman
+      });
+      setupdate(!update);
+      console.log(order.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [cashRegister, setcashRegister] = useState('');
   const [cashRegistername, setcashRegistername] = useState('');
   const [balance, setbalance] = useState();
   const [createBy, setcreateBy] = useState('');
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
-
+  
   const handleCashRegister = async (id) => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
@@ -151,7 +171,7 @@ const ManagerDash = () => {
     }
   };
 
-
+  
   const RevenueRecording = async (id, amount, description) => {
     handleCashRegister(id);
     try {
@@ -342,8 +362,9 @@ const ManagerDash = () => {
                           <th>الاجمالي</th>
                           <th>حالة الاوردر</th>
                           <th>الويتر</th>
-                          <th>حاله الدفع</th>
+                          <th>الديلفري</th>
                           <th>مكان الاوردر</th>
+                          <th>حاله الدفع</th>
 
                         </tr>
                       </thead>
@@ -372,6 +393,19 @@ const ManagerDash = () => {
                                   </select>
                                 </td>
                                 <td>{recent.waiter ? usertitle(recent.waiter) : ''}</td>
+                                <td>
+                                  {recent.order_type == 'Delivery'?
+                                  <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
+                                    <option value={recent.status}>{recent.status}</option>
+                                    {deliveryman.map((man, i) => {
+                                      return (
+                                        <option value={man} key={i}>{usertitle(man)}</option>
+                                      )
+                                    })
+                                    }
+                                  </select>
+                                  :''}
+                                </td>
                                 <td>
                                   <button
                                     className="btn btn-primary"

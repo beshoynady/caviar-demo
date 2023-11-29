@@ -61,7 +61,7 @@ const employeeSchema = new mongoose.Schema({
   role: {
     type: String,
     trim: true,
-    enum: ['manager', 'casher', 'waiter', 'Chef'],
+    enum: ['manager', 'casher', 'waiter', 'deliveryman', 'Chef'],
     required: [true, 'Role is required'],
   },
   basicSalary: {

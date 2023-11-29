@@ -137,7 +137,6 @@ const ManagerDash = () => {
   };
 
   const putdeliveryman = async (e, orderid) => {
-    e.defualtValue()
     try {
       const deliveryman = await e.target.value
       const order = await axios.put('https://caviar-api.vercel.app/api/order/' + orderid , {

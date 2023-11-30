@@ -156,11 +156,8 @@ const Waiter = () => {
               {orderactive && orderactive.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <div className="card text-white bg-success" style={{ width: "450px" }}>
-                      <div className="card-header text-right">
-                        <h5 className="mb-0">تفاصيل الطلب</h5>
-                      </div>
-                      <div className="card-body">
+                    <div className="card text-white bg-success" style={{ width: "300px" }}>
+                      <div className="card-body text-right">
                         <p className="card-text">اسم العميل: {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
                         <p className="card-text">رقم الطلب: {order.serial}</p>
                         <p className="card-text">نوع الطلب: {order.order_type}</p>
@@ -171,20 +168,21 @@ const Waiter = () => {
                       <ul className="list-group list-group-flush">
                         {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                           return (
-                            <li className="list-group-item d-flex justify-content-between align-items-center bg-light text-dark" key={i}>
-                              <span>{i + 1}- {product.name}</span>
-                              <span className="badge bg-secondary rounded-pill"> × {product.quantity}</span>
+                            <li className="list-group-item bg-light text-dark" key={i}>
+                              <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
+                              <span className="badge bg-secondary rounded-pill ml-2" style={{ fontSize: "16px" }}> × {product.quantity}</span>
                             </li>
                           )
                         })}
                       </ul>
                       <div className="card-footer text-center">
                         {order.status === 'Prepared' ?
-                          <button className="btn btn-warning btn-block" onClick={() => { orderOnWay(order._id) }}>استلام الطلب</button>
-                          : <button className="btn btn-success btn-block" onClick={() => orderDelivered(order._id)}>تم التسليم</button>
+                          <button className="btn btn-warning btn-lg btn-block" onClick={() => { orderOnWay(order._id) }}>استلام الطلب</button>
+                          : <button className="btn btn-success btn-lg btn-block" onClick={() => orderDelivered(order._id)}>تم التسليم</button>
                         }
                       </div>
                     </div>
+
 
 
 

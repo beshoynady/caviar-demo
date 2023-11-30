@@ -125,7 +125,7 @@ const Waiter = () => {
               {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
                   <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
-                    <div className="card-body text-right d-flex justify-content-between">
+                    <div className="card-body text-right d-flex justify-content-between p-3">
                       <div style={{ maxWidth: "50%" }}>
                         <p className="card-text">الطاولة: {usertitle(order.table)}</p>
                         <p className="card-text">رقم الفاتورة: {order.serial}</p>
@@ -186,7 +186,7 @@ const Waiter = () => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
                     <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
-                      <div className="card-body text-right d-flex justify-content-between">
+                      <div className="card-body text-right d-flex justify-content-between p-3">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text">الطاولة: {usertitle(order.table)}</p>
                           <p className="card-text">رقم الفاتورة: {order.serial}</p>

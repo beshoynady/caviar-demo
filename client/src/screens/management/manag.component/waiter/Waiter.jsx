@@ -25,7 +25,7 @@ const Waiter = () => {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders)
       const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'Prepared' || order.status == 'On the way')
-      const internalOrder = orderisctive.filter(order=> order.order_type == 'Internal')
+      const internalOrder = orderisctive.filter(order => order.order_type == 'Internal')
       console.log(orderisctive)
       setlistInternalOrder(internalOrder)
 
@@ -124,36 +124,34 @@ const Waiter = () => {
 
               {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
-                  <div className="card text-white bg-success" style={{ maxWidth: "300px" }}>
-                  <div className="card-body text-right d-flex justify-content-between">
-                    <div style={{ maxWidth: "50%" }}>
-                      <p className="card-text">الطاولة: {usertitle(order.table)}</p>
-                      <p className="card-text">رقم الفاتورة: {order.serial}</p>
-                      <p className="card-text">نوع الطلب: {order.order_type}</p>
+                  <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
+                    <div className="card-body text-right d-flex justify-content-between">
+                      <div style={{ maxWidth: "50%" }}>
+                        <p className="card-text">الطاولة: {usertitle(order.table)}</p>
+                        <p className="card-text">رقم الفاتورة: {order.serial}</p>
+                        <p className="card-text">نوع الطلب: {order.order_type}</p>
+                      </div>
+                      <div style={{ maxWidth: "50%" }}>
+                        <p className="card-text">اسم الويتر: {usertitle(order.waiter)}</p>
+                        <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                        <p className="card-text">التنفيذ: {new Date(order.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                      </div>
                     </div>
-                    <div style={{ maxWidth: "50%" }}>
-                      <p className="card-text">اسم الويتر: {usertitle(order.waiter)}</p>
-                      <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                      <p className="card-text">التنفيذ: {new Date(order.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                    <ul className="list-group list-group-flush">
+
+                      <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i}>
+                        <span style={{ fontSize: "18px" }}>{i + 1}- {usertitle(order.table)}</span>
+                        <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}>{order.help == 'Requests assistance' ? 'يحتاج المساعدة' : order.help == 'Requests bill' ? 'يحتاج الفاتورة' : ''}</span>
+                      </li>
+
+                    </ul>
+                    <div className="card-footer text-center">
+                      {order.status === 'Prepared' ?
+                        <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
+                        : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => helpDone(order._id)}>تم</button>
+                      }
                     </div>
                   </div>
-                  <ul className="list-group list-group-flush">
-                    {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
-                      return (
-                        <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i}>
-                          <span style={{ fontSize: "18px" }}>{i + 1}- {usertitle(order.table)}</span>
-                          <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}>{order.help == 'Requests assistance' ? 'يحتاج المساعدة' : order.help == 'Requests bill' ? 'يحتاج الفاتورة' : ''}</span>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                  <div className="card-footer text-center">
-                    {order.status === 'Prepared' ?
-                      <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
-                      : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => helpDone(order._id)}>تم</button>
-                    }
-                  </div>
-                </div>
                   // <div className="wai-card" key={i}>
                   //   <div className="card-info">
                   //     <p className="info-p">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
@@ -187,7 +185,7 @@ const Waiter = () => {
               {listInternalOrder && listInternalOrder.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <div className="card text-white bg-success" style={{ maxWidth: "300px" }}>
+                    <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
                       <div className="card-body text-right d-flex justify-content-between">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text">الطاولة: {usertitle(order.table)}</p>

@@ -261,6 +261,7 @@ function App() {
         toast.success("Order updated successfully!");
       } else {
         try {
+          cosole.log([...ItemsInCart])
           const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
           const finduser = allUsers.find((u, i) => u._id == userId);
           const user = finduser ? userId : null;

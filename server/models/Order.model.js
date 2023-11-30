@@ -70,6 +70,15 @@ const OrderSchema = new mongoose.Schema({
                     message: '{VALUE} is not a valid price',
                 },
             },
+            priceAfterDiscount:{
+                ...defaultOptions,
+                validate: {
+                    validator: function (v) {
+                        return v >= 1 && v <= 1000000;
+                    },
+                    message: '{VALUE} is not a valid price',
+                },
+            },
             // Total price of the product quantity
             totalprice: {
                 ...defaultOptions,

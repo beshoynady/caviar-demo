@@ -7,7 +7,7 @@ const defaultOptions = {
     type: Number,
     default: 0,
     required: true,
-    min: 1,
+    min: 0,
     max: 1000000,
     trim: true,
 };

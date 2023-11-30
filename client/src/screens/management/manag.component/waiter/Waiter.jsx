@@ -123,32 +123,36 @@ const Waiter = () => {
 
               {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
-                  <div className="wai-card" key={i}>
-                    <div className="card-info">
-                      <p className="info-p">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                      <p className="info-p">رقم الطلب {order.serial}</p>
-                      <p className="info-p">نوع الطلب {order.order_type}</p>
-                      <p className="info-p">اسم الويتر {usertitle(order.waiter)}</p>
-                      <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours() + ":" + new Date(order.createdAt).getMinutes()}</p>
-                      <p className="info-p">وقت التنفيذ {new Date(order.updatedAt).getHours() + ":" + new Date(order.updatedAt).getMinutes()}</p>
+                  <div className="card mb-3">
+                    <div className="card-header bg-primary text-white">
+                      <h5 className="card-title">تفاصيل الأوردر</h5>
                     </div>
-                    <div className="card-product">
-                      <ul className='card-ul'>
-                        <li className="card-li">
-                          <p className='product-name' >{order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                          <p className='product-name' >{order.help != 'Not requested' ? 'يحتاج المساعدة' : order.isActive == false ? 'يحتاج الفاتورة' : ''}</p>
-
-                        </li>
-
-                      </ul>
+                    <div className="card-body">
+                      <p className="card-text">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
+                      <p className="card-text">رقم الطلب {order.serial}</p>
+                      <p className="card-text">نوع الطلب {order.order_type}</p>
+                      <p className="card-text">اسم الويتر {usertitle(order.waiter)}</p>
+                      <p className="card-text">وقت الاستلام {new Date(order.createdAt).toLocaleTimeString()}</p>
+                      <p className="card-text">وقت التنفيذ {new Date(order.updatedAt).toLocaleTimeString()}</p>
                     </div>
-                    <div className='card-btn'>
-                      {order.help == 'Send waiter' ?
-                        <button ref={ready} className='btn-ready' onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
-                        : order.help == 'On the way' ? <button ref={start} className='btn-start' onClick={() => helpDone(order._id)}>تم</button>
-                          : ''}
+                    <ul className="list-group list-group-flush">
+                      {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
+                        return (
+                          <li className="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                            {i + 1}- {product.name}
+                            <span className="badge bg-secondary rounded-pill"> × {product.quantity}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    <div className="card-footer text-center">
+                      {order.status === 'Prepared' ?
+                        <button className="btn btn-warning" onClick={() => { orderOnWay(order._id) }}>استلام الأوردر</button>
+                        : <button className="btn btn-success" onClick={() => orderDelivered(order._id)}>تم التسليم</button>
+                      }
                     </div>
                   </div>
+
                 )
               })
               }

@@ -19,14 +19,15 @@ const Waiter = () => {
   }
 
 
-  const [orderactive, setorderactive] = useState([])
+  const [listInternalOrder, setlistInternalOrder] = useState([])
   const GetPrductstowaiter = async () => {
     try {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       // console.log(orders)
       const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'Prepared' || order.status == 'On the way')
+      const internalOrder = orderisctive.filter(order=> order.order_type == 'Internal')
       console.log(orderisctive)
-      setorderactive(orderisctive)
+      setlistInternalOrder(internalOrder)
 
     } catch (error) {
       console.log(error)
@@ -153,20 +154,20 @@ const Waiter = () => {
               })
               }
 
-              {orderactive && orderactive.map((order, i) => {
+              {listInternalOrder && listInternalOrder.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
                     <div className="card text-white bg-success" style={{ maxWidth: "300px" }}>
                       <div className="card-body text-right d-flex justify-content-between">
                         <div style={{ maxWidth: "50%" }}>
-                          <p className="card-text">اسم العميل: {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                          <p className="card-text">رقم الطلب: {order.serial}</p>
+                          <p className="card-text">الطاولة: {usertitle(order.table)}</p>
+                          <p className="card-text">رقم الفاتورة: {order.serial}</p>
                           <p className="card-text">نوع الطلب: {order.order_type}</p>
                         </div>
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text">اسم الويتر: {usertitle(order.waiter)}</p>
-                          <p className="card-text">وقت الاستلام: {new Date(order.createdAt).toLocaleTimeString()}</p>
-                          <p className="card-text">وقت التنفيذ: {new Date(order.updatedAt).toLocaleTimeString()}</p>
+                          <p className="card-text">وقت الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                          <p className="card-text">وقت التنفيذ: {new Date(order.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                         </div>
                       </div>
                       <ul className="list-group list-group-flush">

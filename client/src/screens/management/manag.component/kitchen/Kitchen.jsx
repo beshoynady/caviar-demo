@@ -135,7 +135,7 @@ const Kitchen = () => {
                         <ul className='list-group list-group-flush'>
                           {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                             return (
-                              <div key={i}>
+                              <div key={i} className={`${product.isAdd ? 'bg-red' : ''}`}>
                                 <li className={`list-group-item bg-light text-dark d-flex justify-content-between align-items-center ${product.isAdd ? 'bg-red' : ''}`}>
                                   <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
                                   <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}> × {product.quantity}</span>

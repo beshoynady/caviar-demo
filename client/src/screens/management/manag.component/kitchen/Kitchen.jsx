@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import './Kitchen.css'
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Importing toast from 'react-toastify' for notifications
+import { detacontext } from '../../../../App'
+import { toast,ToastContainer } from 'react-toastify'; // Importing toast from 'react-toastify' for notifications
 import 'react-toastify/dist/ReactToastify.css'; // Importing default CSS for toast notifications
 
 const Kitchen = () => {

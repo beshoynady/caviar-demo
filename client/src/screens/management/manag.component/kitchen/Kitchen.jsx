@@ -165,6 +165,6 @@ const Kitchen = () => {
     </detacontext.Consumer>
   )
 
-}
+} 
 
 export default Kitchen

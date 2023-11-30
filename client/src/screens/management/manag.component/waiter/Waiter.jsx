@@ -113,7 +113,7 @@ const Waiter = () => {
               <ToastContainer/>
               {pendingPayments.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
-                  <div className="card text-white bg-success" style={{ width: "265pxpx" }}>
+                  <div className="card text-white bg-success" style={{ width: "265px" }}>
                     <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                       <div style={{ maxWidth: "50%" }}>
                         <p className="card-text">الطاولة: {usertitle(order.table)}</p>
@@ -174,7 +174,7 @@ const Waiter = () => {
               {internalOrders && internalOrders.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <div className="card text-white bg-success" style={{ width: "265pxpx" }}>
+                    <div className="card text-white bg-success" style={{ width: "265px" }}>
                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text">الطاولة: {usertitle(order.table)}</p>

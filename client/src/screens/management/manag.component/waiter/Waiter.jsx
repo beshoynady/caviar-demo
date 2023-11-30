@@ -2,130 +2,119 @@ import React, { useState, useEffect, useRef } from 'react'
 import { detacontext } from '../../../../App'
 import './Waiter.css'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
+
 
 
 const Waiter = () => {
-  const start = useRef()
-  const ready = useRef()
+ // Refs for buttons
+ const start = useRef();
+ const ready = useRef();
 
-  const [pending_order, setpending_order] = useState([])
-  const [pending_payment, setpending_payment] = useState([])
-  const PendingOrder = async () => {
-    const res = await axios.get('https://caviar-api.vercel.app/api/order')
-    const recent_status = await res.data.filter((order) => order.status == 'Pending')
-    const recent_payment_status = await res.data.filter((order) => order.payment_status == 'Pending')
-    setpending_order(recent_status)
-    setpending_payment(recent_payment_status)
-  }
+ // State for pending orders and payments
+ const [pendingOrders, setPendingOrders] = useState([]);
+ const [pendingPayments, setPendingPayments] = useState([]);
 
+ // Function to fetch pending orders and payments
+ const fetchPendingData = async () => {
+   try {
+     const res = await axios.get('https://caviar-api.vercel.app/api/order');
+     const recentStatus = res.data.filter((order) => order.status === 'Pending');
+     const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+     setPendingOrders(recentStatus);
+     setPendingPayments(recentPaymentStatus);
+   } catch (error) {
+     console.log(error);
+   }
+ };
 
-  const [listInternalOrder, setlistInternalOrder] = useState([])
-  const GetPrductstowaiter = async () => {
+ // State for internal orders
+ const [internalOrders, setInternalOrders] = useState([]);
+
+ // Function to fetch internal orders
+ const fetchInternalOrders = async () => {
+   try {
+     const orders = await axios.get('https://caviar-api.vercel.app/api/order');
+     const activeOrders = orders.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
+     const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
+     setInternalOrders(internalOrdersData);
+   } catch (error) {
+     console.log(error);
+   }
+ };
+
+  const updateOrderOnWay = async (id) => {
     try {
-      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-      // console.log(orders)
-      const orderisctive = await orders.data.filter((order) => order.isActive == true && order.status == 'Prepared' || order.status == 'On the way')
-      const internalOrder = orderisctive.filter(order => order.order_type == 'Internal')
-      console.log(orderisctive)
-      setlistInternalOrder(internalOrder)
-
+      const status = 'On the way';
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
+      fetchInternalOrders();
+      fetchPendingData();
+      toast.success('Order is on the way!');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error('Error updating order status!');
     }
-  }
+  };
 
-  const orderOnWay = async (id) => {
-    // const waiter = waiterid;
+  const updateOrderDelivered = async (id) => {
     try {
-      const status = 'On the way'
-      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        status
-      })
-      if (done) {
-        GetPrductstowaiter()
-        PendingOrder()
-      }
-
+      const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
+      const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
+      const status = 'Delivered';
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      fetchInternalOrders();
+      fetchPendingData();
+      toast.success('Order has been delivered!');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error('Error delivering order!');
     }
-  }
+  };
+
   const helpOnWay = async (id) => {
     try {
-      const help = 'On the way'
-      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        help
-      })
-      if (done) {
-        console.log(done)
-        GetPrductstowaiter()
-        PendingOrder()
-      }
-
+      const help = 'On the way';
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { help });
+      fetchInternalOrders();
+      fetchPendingData();
+      toast.success('Help is on the way!');
     } catch (error) {
-      console.log(error.message)
+      console.log(error);
+      toast.error('Error sending help!');
     }
-  }
+  };
 
   const helpDone = async (id) => {
     try {
-      const help = 'Assistance done'
-      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        help
-      })
-      if (done) {
-        PendingOrder()
-        GetPrductstowaiter()
-      }
-
+      const help = 'Assistance done';
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { help });
+      fetchPendingData();
+      fetchInternalOrders();
+      toast.success('Assistance has been provided!');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error('Error providing assistance!');
     }
-  }
+  };
 
 
-  const orderDelivered = async (id) => {
-    const order = await axios.get('https://caviar-api.vercel.app/api/order/' + id)
-    // console.log(order)
-    const cloneproduct = await order.data.products
-    // console.log(cloneproduct)
-    const products = []
-    for (let i = 0; i < cloneproduct.length; i++) {
-      cloneproduct[i].isDone = true;
-      products.push(cloneproduct[i])
-    }
-    console.log(products)
-    if (products.length == cloneproduct.length) {
-      const status = 'Delivered'
-      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-        products,
-        status
-      })
-      if (done) {
-        GetPrductstowaiter()
-        PendingOrder()
-      }
-    }
-  }
-
-
-
+ // Fetch initial data on component mount
   useEffect(() => {
-    PendingOrder()
-    GetPrductstowaiter()
-  }, [])
+    fetchPendingData();
+    fetchInternalOrders();
+  }, []);
 
   return (
     <detacontext.Consumer>
       {
         ({ usertitle, employeeLoginInfo }) => {
           return (
-            <div className='Waiter'>
-
-              {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
+            <div className='container-fluid h-100 overflow-auto bg-transparent py-5 px-3'>
+              <ToastContainer/>
+              {pendingPayments.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
-                  <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
-                    <div className="card-body text-right d-flex justify-content-between p-3">
+                  <div className="card text-white bg-success" style={{ width: "265pxpx" }}>
+                    <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                       <div style={{ maxWidth: "50%" }}>
                         <p className="card-text">الطاولة: {usertitle(order.table)}</p>
                         <p className="card-text">رقم الفاتورة: {order.serial}</p>
@@ -182,11 +171,11 @@ const Waiter = () => {
               })
               }
 
-              {listInternalOrder && listInternalOrder.map((order, i) => {
+              {internalOrders && internalOrders.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <div className="card text-white bg-success" style={{ Width: "265pxpx" }}>
-                      <div className="card-body text-right d-flex justify-content-between p-3">
+                    <div className="card text-white bg-success" style={{ width: "265pxpx" }}>
+                      <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text">الطاولة: {usertitle(order.table)}</p>
                           <p className="card-text">رقم الفاتورة: {order.serial}</p>
@@ -210,8 +199,8 @@ const Waiter = () => {
                       </ul>
                       <div className="card-footer text-center">
                         {order.status === 'Prepared' ?
-                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderOnWay(order._id) }}>استلام الطلب</button>
-                          : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => orderDelivered(order._id)}>تم التسليم</button>
+                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { updateOrderOnWay(order._id) }}>استلام الطلب</button>
+                          : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() =>{ updateOrderDelivered(order._id)}}>تم التسليم</button>
                         }
                       </div>
                     </div>

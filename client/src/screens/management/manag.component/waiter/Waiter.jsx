@@ -123,36 +123,32 @@ const Waiter = () => {
 
               {pending_payment.filter((order) => order.isActive == false || order.help == 'Send waiter' || order.help == 'On the way').map((order, i) => {
                 return (
-                  <div className="card mb-3" style={{ maxWidth: "500px" }}>
-                    <div className="card-header bg-success text-white">
-                      <h5 className="card-title mb-0">تفاصيل الطلب</h5>
+                  <div className="wai-card" key={i}>
+                    <div className="card-info">
+                      <p className="info-p">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
+                      <p className="info-p">رقم الطلب {order.serial}</p>
+                      <p className="info-p">نوع الطلب {order.order_type}</p>
+                      <p className="info-p">اسم الويتر {usertitle(order.waiter)}</p>
+                      <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours() + ":" + new Date(order.createdAt).getMinutes()}</p>
+                      <p className="info-p">وقت التنفيذ {new Date(order.updatedAt).getHours() + ":" + new Date(order.updatedAt).getMinutes()}</p>
                     </div>
-                    <div className="card-body">
-                      <p className="card-text text-dark"><strong>اسم العميل:</strong> {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                      <p className="card-text text-dark"><strong>رقم الطلب:</strong> {order.serial}</p>
-                      <p className="card-text text-dark"><strong>نوع الطلب:</strong> {order.order_type}</p>
-                      <p className="card-text text-dark"><strong>اسم الويتر:</strong> {usertitle(order.waiter)}</p>
-                      <p className="card-text text-dark"><strong>وقت الاستلام:</strong> {new Date(order.createdAt).toLocaleTimeString()}</p>
-                      <p className="card-text text-dark"><strong>وقت التنفيذ:</strong> {new Date(order.updatedAt).toLocaleTimeString()}</p>
+                    <div className="card-product">
+                      <ul className='card-ul'>
+                        <li className="card-li">
+                          <p className='product-name' >{order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
+                          <p className='product-name' >{order.help != 'Not requested' ? 'يحتاج المساعدة' : order.isActive == false ? 'يحتاج الفاتورة' : ''}</p>
+
+                        </li>
+
+                      </ul>
                     </div>
-                    <ul className="list-group list-group-flush">
-                      {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
-                        return (
-                          <li className="list-group-item d-flex justify-content-between align-items-center bg-white text-dark" key={i}>
-                            <span>{i + 1}- {product.name}</span>
-                            <span className="badge bg-secondary rounded-pill"> × {product.quantity}</span>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                    <div className="card-footer text-center">
-                      {order.status === 'Prepared' ?
-                        <button className="btn btn-warning" onClick={() => { orderOnWay(order._id) }}>استلام الطلب</button>
-                        : <button className="btn btn-success" onClick={() => orderDelivered(order._id)}>تم التسليم</button>
-                      }
+                    <div className='card-btn'>
+                      {order.help == 'Send waiter' ?
+                        <button ref={ready} className='btn-ready' onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
+                        : order.help == 'On the way' ? <button ref={start} className='btn-start' onClick={() => helpDone(order._id)}>تم</button>
+                          : ''}
                     </div>
                   </div>
-
                 )
               })
               }
@@ -160,32 +156,36 @@ const Waiter = () => {
               {orderactive && orderactive.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
                   return (
-                    <div className="card mb-3" key={i}>
+                    <div className="card mb-3" style={{ maxWidth: "500px" }}>
+                      <div className="card-header bg-success text-white">
+                        <h5 className="card-title mb-0">تفاصيل الطلب</h5>
+                      </div>
                       <div className="card-body">
-                        <p className="card-text">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                        <p className="card-text">رقم الطلب {order.serial}</p>
-                        <p className="card-text">نوع الطلب {order.order_type}</p>
-                        <p className="card-text">اسم الويتر {usertitle(order.waiter)}</p>
-                        <p className="card-text">وقت الاستلام {new Date(order.createdAt).getHours() + ":" + new Date(order.createdAt).getMinutes()}</p>
-                        <p className="card-text">وقت التنفيذ {new Date(order.updatedAt).getHours() + ":" + new Date(order.updatedAt).getMinutes()}</p>
+                        <p className="card-text text-dark"><strong>اسم العميل:</strong> {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
+                        <p className="card-text text-dark"><strong>رقم الطلب:</strong> {order.serial}</p>
+                        <p className="card-text text-dark"><strong>نوع الطلب:</strong> {order.order_type}</p>
+                        <p className="card-text text-dark"><strong>اسم الويتر:</strong> {usertitle(order.waiter)}</p>
+                        <p className="card-text text-dark"><strong>وقت الاستلام:</strong> {new Date(order.createdAt).toLocaleTimeString()}</p>
+                        <p className="card-text text-dark"><strong>وقت التنفيذ:</strong> {new Date(order.updatedAt).toLocaleTimeString()}</p>
                       </div>
                       <ul className="list-group list-group-flush">
                         {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                           return (
-                            <li className="list-group-item" key={i}>
-                              <p>{i + 1}- {product.name}</p>
-                              <span> × {product.quantity}</span>
+                            <li className="list-group-item d-flex justify-content-between align-items-center bg-white text-dark" key={i}>
+                              <span>{i + 1}- {product.name}</span>
+                              <span className="badge bg-secondary rounded-pill"> × {product.quantity}</span>
                             </li>
                           )
                         })}
                       </ul>
-                      <div className="card-body">
+                      <div className="card-footer text-center">
                         {order.status === 'Prepared' ?
-                          <button className="btn btn-primary" onClick={() => { orderOnWay(order._id) }}>استلام الاوردر</button>
+                          <button className="btn btn-warning" onClick={() => { orderOnWay(order._id) }}>استلام الطلب</button>
                           : <button className="btn btn-success" onClick={() => orderDelivered(order._id)}>تم التسليم</button>
                         }
                       </div>
                     </div>
+
                   )
                 }
 

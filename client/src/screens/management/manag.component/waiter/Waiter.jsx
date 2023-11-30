@@ -49,38 +49,38 @@ const Waiter = () => {
       console.log(error)
     }
   }
-  // const helpOnWay = async (id) => {
-  //   try {
-  //     const help = 'On the way'
-  //     const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-  //       help
-  //     })
-  //     if (done) {
-  //       console.log(done)
-  //       GetPrductstowaiter()
-  //       PendingOrder()
-  //     }
+  const helpOnWay = async (id) => {
+    try {
+      const help = 'On the way'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        help
+      })
+      if (done) {
+        console.log(done)
+        GetPrductstowaiter()
+        PendingOrder()
+      }
 
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
-  // }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
-  // const helpDone = async (id) => {
-  //   try {
-  //     const help = 'Assistance done'
-  //     const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
-  //       help
-  //     })
-  //     if (done) {
-  //       PendingOrder()
-  //       GetPrductstowaiter()
-  //     }
+  const helpDone = async (id) => {
+    try {
+      const help = 'Assistance done'
+      const done = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
+        help
+      })
+      if (done) {
+        PendingOrder()
+        GetPrductstowaiter()
+      }
 
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   const orderDelivered = async (id) => {

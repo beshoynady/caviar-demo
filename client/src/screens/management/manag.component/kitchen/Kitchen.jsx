@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { detacontext } from '../../../../App'
-import './Kitchen.css'
-import axios from 'axios'
-
-
-
 import { useState, useEffect, useRef } from 'react';
+import './Kitchen.css'
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Importing toast from 'react-toastify' for notifications
 import 'react-toastify/dist/ReactToastify.css'; // Importing default CSS for toast notifications
@@ -117,7 +111,7 @@ const Kitchen = () => {
         ({ usertitle, updatecountofsales }) => {
           return (
             <div className='container-fluid h-100 overflow-auto bg-transparent py-5 px-3'>
-              <ToastContainer/>
+              <ToastContainer />
               {
                 orderactive && orderactive.map((order, i) => {
                   if (order.products.filter((pr) => pr.isDone == false).length > 0) {
@@ -133,19 +127,20 @@ const Kitchen = () => {
                           <ul className='list-group list-group-flush'>
                             {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                               return (
-                                <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
+                                <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
                                   <div>
-                                    <p>{i + 1}- {product.name}</p>
-                                    <span> × {product.quantity}</span>
+                                    <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
+                                    <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}> × {product.quantity}</span>
                                   </div>
                                   <div>{product.notes}</div>
                                 </li>
                               )
                             })}
                           </ul>
-                          <div>
-                            {order.status === 'Preparing' ? <button className="btn btn-warning" onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
-                              : <button className="btn btn-success" onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
+                          <div className="card-footer text-center">
+                            {order.status === 'Preparing' ? 
+                            <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                              : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
                             }
                           </div>
                         </div>

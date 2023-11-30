@@ -120,15 +120,14 @@ const Kitchen = () => {
                       <div className="card text-white bg-success" style={{ width: "265px" }}>
                         <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                           <div style={{ maxWidth: "50%" }}>
-
                             <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
-                            <p className="card-text">رقم الطلب: {order.serial}</p>
+                            <p className="card-text">الفاتورة: {order.serial}</p>
                             <p className="card-text">نوع الطلب: {order.order_type}</p>
                           </div>
 
                           <div style={{ maxWidth: "50%" }}>
                             {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
-                            <p className="card-text">وقت الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                            <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                             <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
                           </div>
                         </div>
@@ -136,13 +135,13 @@ const Kitchen = () => {
                         <ul className='list-group list-group-flush'>
                           {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                             return (
-                              <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
-                                <div>
+                              <div key={i}>
+                                <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center"  style={product.isAdd ? { backgroundColor: 'red' } : {}}>
                                   <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
                                   <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}> × {product.quantity}</span>
-                                </div>
+                                </li>
                                 <div>{product.notes}</div>
-                              </li>
+                              </div>
                             )
                           })}
                         </ul>

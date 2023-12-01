@@ -89,6 +89,16 @@ const SideBar = () => {
                     </ul>
                   </li>
 
+                  {/* Users */}
+                  <li>
+                    <Link to="users">
+                      <span className="material-symbols-outlined icon">concierge</span>
+                      <span className="link_name">المستخدمين</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="users" className="link_name">المستخدمين</Link></li>
+                    </ul>
+                  </li>
                   {/* Orders */}
                   <li>
                     <Link to="orders">

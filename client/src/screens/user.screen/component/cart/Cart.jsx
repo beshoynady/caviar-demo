@@ -108,7 +108,7 @@ const Cart = (props) => {
                       </div>
                     </div>
                     <div className="invoice side" >
-                      <div ref={printContainer} className="side-content">
+                      <div ref={printContainer} style={{ maxWidth: '400px', padding: '5px' }}>
                         <div className="container">
                           {/* Buttons */}
                           {/* <div>
@@ -133,40 +133,40 @@ const Cart = (props) => {
                           <table className="table table-bordered">
                             <thead className="thead-dark">
                               <tr>
-                                <th scope="col">Item</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
+                                <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
+                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
+                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
+                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
                               </tr>
                             </thead>
                             <tbody>
                               {/* Example rows, replace with dynamic data */}
                               {list_products_order.map((item, i) => (
                                 <tr key={i}>
-                                  <td>{item.name}</td>
-                                  <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                  <td>{item.quantity}</td>
-                                  <td>{item.totalprice}</td>
+                                  <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
+                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
+                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
                                 </tr>
                               ))}
                             </tbody>
                             <tfoot>
                               <tr>
-                                <td colSpan="3">Subtotal</td>
+                                <td colSpan="3">المجموع</td>
                                 <td>{ordersubtotal}</td>
                               </tr>
                               {orderdeliveryCost && (
-                                <tr>
-                                  <td colSpan="3">Delivery</td>
+                                <tr style={{ fontSize: '20px' }}>
+                                  <td colSpan="3">خدمة التوصيل</td>
                                   <td>{orderdeliveryCost}</td>
                                 </tr>
                               )}
-                              <tr>
-                                <td colSpan="3">Tax</td>
+                              <tr style={{ fontSize: '20px' }}>
+                                <td colSpan="3">الضريبه</td>
                                 <td>{Math.round(ordertax * 100) / 100}</td>
                               </tr>
-                              <tr>
-                                <td colSpan="3">Total</td>
+                              <tr style={{ fontSize: '20px' }}>
+                                <td colSpan="3">الاجمالي</td>
                                 <td>{ordertotal}</td>
                               </tr>
                             </tfoot>
@@ -209,7 +209,7 @@ const Cart = (props) => {
                             <div id="table">
                               <table className="table table-striped">
                                 <thead>
-                                  <tr>
+                                  <tr style={{ fontSize: '20px' }}>
                                     <th scope="col">المنتج</th>
                                     <th scope="col">الكمية</th>
                                     <th scope="col">السعر</th>

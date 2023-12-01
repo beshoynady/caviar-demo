@@ -11,12 +11,3 @@ const router = express.Router();
 router.route('/').post(createuser).get(getallUsers);
 router.route('/:userid').get(getoneuser).put(updateuser).delete(deleteuser);
 module.exports = router;
-
-
-// route.post("/create", createuser);
-// route.get("/allUsers", getallUsers);
-// route.get("/:userid", getoneuser);
-// route.put("/update/:userid", updateuser);
-// route.delete("/delete/:userid", deleteuser);
-
-// module.exports = route;

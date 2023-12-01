@@ -28,8 +28,11 @@ import ExpenseItem from './screens/management/manag.component/expenses/Expense';
 import DailyExpense from './screens/management/manag.component/expenses/dailyExpense';
 import CashRegister from './screens/management/manag.component/cash/CashRegister';
 import CashMovement from './screens/management/manag.component/cash/CashMovement';
+import Users from './screens/management/manag.component/users/Users';
 
 export const detacontext = createContext({});
+
+
 
 function App() {
   //++++++++++++++++++++ pagination ++++++++++
@@ -1112,6 +1115,7 @@ function App() {
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
+            <Route path='users' element={<Users/>} />
             <Route path='deliveryman' element={<DeliveryMan/>} />
             <Route path='pos' element={<POS />} />
             <Route path='categoryStock' element={<CategoryStock />} />

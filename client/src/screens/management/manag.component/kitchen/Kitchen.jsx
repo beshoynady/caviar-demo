@@ -120,6 +120,7 @@ const Kitchen = () => {
                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
+                          <p className="card-text">رقم الطلب: {order.ordernum?order.ordernum:''}</p>
                           <p className="card-text">الفاتورة: {order.serial}</p>
                           <p className="card-text">نوع الطلب: {order.order_type}</p>
                         </div>

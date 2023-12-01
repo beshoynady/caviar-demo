@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { detacontext } from '../../../../App'
 // import './Waiter.css'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const DeliveryMan = () => {

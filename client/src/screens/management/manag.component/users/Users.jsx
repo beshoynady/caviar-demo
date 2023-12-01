@@ -131,11 +131,16 @@ const Users = () => {
                                 <td>{user.isActive ? 'متاح' : "غير متاح"}</td>
                                 <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
-                                  <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                                    setuserloyeeid(user._id); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
-                                  }}>&#xE254;</i></a>
-                                  <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserloyeeid(user._id)}>&#xE872;</i></a>
-                                </td>
+                                <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                    //    onClick={() => {
+                                    //     setuserloyeeid(user._id); setfullname(user.fullname); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
+                                    //   }}
+                                    >&#xE254;</i></a>
+                                    <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                    //    onClick={() => setuserloyeeid(user._id)}
+                                    >&#xE872;</i></a>
+                                  </td>
+
                               </tr>
                             )
                           }

@@ -11,11 +11,17 @@ const Users = () => {
     const getAllUsers = async () => {
         try {
           const response = await axios.get('https://caviar-api.vercel.app/api/user');
-          return response.data;
-        } catch (error) {
-          throw new Error(error.response.data.message || error.message);
+          setAllUsers(response.data)       
+         }catch (error) {
+            console.log(error)
         }
       };
+
+
+      useEffect(() => {
+        getAllUsers()
+      }, [])
+      
   return (
     <detacontext.Consumer>
       {

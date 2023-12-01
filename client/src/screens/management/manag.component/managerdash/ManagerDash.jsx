@@ -452,7 +452,7 @@ const ManagerDash = () => {
                               <h4 className="modal-title"></h4>
                               <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
-                            <div ref={printContainer} className='p-1' style ={{maxWidth:'400px'}}>
+                            <div ref={printContainer} style ={{maxWidth:'400px', padding:'5px'}}>
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>
@@ -460,7 +460,7 @@ const ManagerDash = () => {
                               </div>
 
                               {/* Customer Information */}
-                              {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                              {ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ margin: '20px' }}>
                                 <h4>Customer Details</h4>
                                 <p>Name: {name}</p>
                                 <p>Mobile: {phone}</p>

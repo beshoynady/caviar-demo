@@ -18,7 +18,7 @@ const Users = () => {
   };
   const [filteruser, setfilteruser] = useState([])
   const getUserByPhone = async (phone) => {
-    const user = AllUsers.filter(user => user.phome.startWith(phone) == true)
+    const user = AllUsers.filter(user => user.phone.startsWith(phone));
     setfilteruser(user)
   }
 

@@ -65,7 +65,7 @@ const LoginRegistr = (props) => {
 
 
 
-  const login = async (e,getUserInfoFromToken,setisLogin) => {
+  const login = async (e) => {
     e.preventDefault();
     console.log({ phone, password });
 
@@ -80,18 +80,18 @@ const LoginRegistr = (props) => {
         password,
       });
 
-      if (response && response.data) {
-        const { accessToken, findUser } = response.data;
+      // if (response && response.data) {
+      //   const { accessToken, findUser } = response.data;
 
-        if (accessToken && findUser.isActive) {
-          localStorage.setItem('token_u', accessToken);
-          getUserInfoFromToken();
-          setisLogin(true);
-          toast.success('Login successful!');
-        } else {
-          toast.error('User is not active.');
-        }
-      }
+      //   if (accessToken && findUser.isActive) {
+      //     localStorage.setItem('token_u', accessToken);
+      //     getUserInfoFromToken();
+      //     setisLogin(true);
+      //     toast.success('Login successful!');
+      //   } else {
+      //     toast.error('User is not active.');
+      //   }
+      // }
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Login failed. Please check your credentials.');
@@ -133,7 +133,7 @@ const LoginRegistr = (props) => {
                     <div className="slider-tab"></div>
                   </div>
                   <div className="form-inner">
-                    <form ref={loginForm} className="login" onSubmit={(e)=>login(e,setisLogin , getUserInfoFromToken)}>
+                    <form ref={loginForm} className="login" onSubmit={(e)=>login(e)}>
                       <div className="field">
                         <input type="text" placeholder="Phone" required onChange={(e) => setphone(e.target.value)} />
                       </div>

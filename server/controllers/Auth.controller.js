@@ -23,7 +23,7 @@ const signup = async (req, res) => {
             return res.status(409).json({ message: 'This phone number is already in use' });
         }
 
-        const passwordHash = await bcrypt.hash(password, 10);
+        const passwordHash = await bcrypt.hash(password, 10); // Hash the password
 
         const newUser = await Usermodel.create({
             username,

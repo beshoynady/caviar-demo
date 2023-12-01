@@ -65,7 +65,7 @@ const LoginRegistr = (props) => {
 
 
 
-  const login = async (e,phone, password, getUserInfoFromToken, setisLogin) => {
+  const login = async (e, getUserInfoFromToken, setisLogin) => {
     e.preventDefault();
     console.log({ phone, password });
 
@@ -79,6 +79,7 @@ const LoginRegistr = (props) => {
         phone,
         password,
       });
+      console.log({response: response})
 
       if (response && response.data) {
         const { accessToken, findUser } = response.data;

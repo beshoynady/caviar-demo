@@ -69,7 +69,7 @@ const Kitchen = () => {
       const orderData = { status };
       if (waiter) {
         orderData.waiter = waiter;
-      }
+      }   
   
       const response = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, orderData);
       if (response.status === 200) {

@@ -123,7 +123,7 @@ const Kitchen = () => {
                         <p className="card-text">نوع الطلب: {order.order_type}</p>
                         {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
                         <p className="card-text">وقت الاستلام: {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
-                        <p className="card-text">الانتظار: {Waitingtime(order.createdAt)} دقيقه</p>
+                        <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
                         <ul className='list-group list-group-flush'>
                           {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
                             return (
@@ -139,7 +139,7 @@ const Kitchen = () => {
                         </ul>
                         <div>
                           {order.status === 'Preparing' ? <button className="btn btn-warning" onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
-                            : <button className="btn btn-success" onClick={() => orderInprogress(order._id)}>بدء التنفيذ</button>
+                            : <button className="btn btn-success" onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
                           }
                         </div>
                       </div>

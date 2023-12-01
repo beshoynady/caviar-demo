@@ -243,6 +243,7 @@ function App() {
             products, subTotal, total, tax, deliveryCost, status, order_type
           });
           setItemsInCart([]);
+          setitemid([])
           getProducts();
           toast.success("Items added to the current order!");
         } else {
@@ -288,6 +289,7 @@ function App() {
             order_type,
           });
           setItemsInCart([]);
+          setitemid([])
           getProducts();
           toast.success("New order created successfully!");
         } catch (error) {
@@ -296,6 +298,7 @@ function App() {
         }
       }
       setItemsInCart([]);
+      setitemid([])
     } catch (error) {
       console.log(error);
       toast.error("An error occurred while processing the order");
@@ -336,6 +339,7 @@ function App() {
             status,
           });
           setItemsInCart([]);
+          setitemid([])
           getProducts();
           // Toast success message for updating order
           toast.success('Order updated successfully!');
@@ -350,6 +354,7 @@ function App() {
             status,
           });
           setItemsInCart([]);
+          setitemid([])
           getProducts();
 
           // Toast success message for updating order
@@ -377,11 +382,13 @@ function App() {
           order_type,
         });
         setItemsInCart([]);
+        setitemid([])
         getProducts();
         // Toast success message for creating a new order
         toast.success('New order created successfully!');
       }
       setItemsInCart([]);
+      setitemid([])
       getProducts();
 
     } catch (error) {
@@ -656,6 +663,7 @@ function App() {
 
         toast.success('Order updated successfully!');
         setItemsInCart([]);
+        setitemid([])
         getProducts();
       } else {
         // Create a new order
@@ -679,6 +687,7 @@ function App() {
 
         toast.success('New order created successfully!');
         setItemsInCart([]);
+        setitemid([])
       }
     } catch (error) {
       console.log(error);
@@ -686,7 +695,7 @@ function App() {
     }
   };
 
-const [posOrderId, setposOrderId] = useState('')
+  const [posOrderId, setposOrderId] = useState('')
 
   const createCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype, deliveryCost) => {
     try {
@@ -718,13 +727,14 @@ const [posOrderId, setposOrderId] = useState('')
         phone,
         address
       });
-      if(newOrder){
+      if (newOrder) {
         console.log(newOrder.data._id)
         setposOrderId(newOrder.data._id)
       }
 
       toast.success('Order created successfully!');
       setItemsInCart([]);
+      setitemid([])
 
     } catch (error) {
       console.log(error);
@@ -754,7 +764,7 @@ const [posOrderId, setposOrderId] = useState('')
       setordersubtotal(data.subTotal)
       setordertax(data.tax)
       setorderdeliveryCost(data.deliveryCost)
-  setItemsInCart([])
+      setItemsInCart([])
     } else if (lastemployeeorderactive) {
       const id = await lastemployeeorder._id
       const myorder = await axios.get('https://caviar-api.vercel.app/api/order/' + id,)
@@ -767,7 +777,7 @@ const [posOrderId, setposOrderId] = useState('')
       setordertotal(data.total)
       setordersubtotal(data.subTotal)
       setordertax(data.tax)
-      setorderdeliveryCost(data.deliveryCost)      
+      setorderdeliveryCost(data.deliveryCost)
       setItemsInCart([])
     }
   }
@@ -853,15 +863,15 @@ const [posOrderId, setposOrderId] = useState('')
 
   // const [list_day_order, setlist_day_order] = useState([])
   // const [total_day_salse, settotal_day_salse] = useState(0)
- 
+
   // const Payment_pending_orders = async () => {
   //   const dayorder = allOrders.filter((order) => new Date(order.createdAt).getDay() == new Date().getDay());
   //   setlist_day_order(dayorder);
-  
+
   //   if (dayorder.length > 0) {
   //     const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
   //     let total = 0;
-  
+
   //     if (order_day_paid.length > 0) {
   //       for (let i = 0; i < order_day_paid.length; i++) {
   //         total += order_day_paid[i].total; // تم تغيير هنا

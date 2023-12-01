@@ -65,7 +65,7 @@ const LoginRegistr = (props) => {
 
 
 
-  const login = async (e, getUserInfoFromToken, setisLogin) => {
+  const login = async (e,phone, password, getUserInfoFromToken, setisLogin) => {
     e.preventDefault();
     console.log({ phone, password });
 

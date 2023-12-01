@@ -12,14 +12,14 @@ const LoginRegistr = (props) => {
   const openlogin = props.openlogin;
   const [openform, setopenform] = useState(props.openlogin)
   const [closelogin, setcloselogin] = useState(true)
-  
+
   const authform = useRef()
   const loginText = useRef()
   const loginForm = useRef()
   const signupLink = useRef()
-  
-  const closeform=()=>{
-    authform.current.style.display="none"
+
+  const closeform = () => {
+    authform.current.style.display = "none"
   }
   // axios.defaults.withCredentials = true;
 
@@ -36,36 +36,36 @@ const LoginRegistr = (props) => {
   const signup = async (e) => {
     e.preventDefault();
     try {
-        if (password !== passconfirm) {
-            // Display an error message if passwords do not match
-            console.error('Passwords do not match');
-            toast.error('Passwords do not match'); // Display an error toast
-            return;
-        }
+      if (password !== passconfirm) {
+        // Display an error message if passwords do not match
+        console.error('Passwords do not match');
+        toast.error('Passwords do not match'); // Display an error toast
+        return;
+      }
 
-        const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
-            username,
-            email,
-            phone,
-            address,
-            password,
-            passconfirm,
-        });
-        
-        console.log('Signup successful:', response.data);
-        // Here, you can handle the response appropriately, e.g., show a success message to the user
-        toast.success('Signup successful'); // Display a success toast
+      const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
+        username,
+        email,
+        phone,
+        address,
+        password,
+        passconfirm,
+      });
+
+      console.log('Signup successful:', response.data);
+      // Here, you can handle the response appropriately, e.g., show a success message to the user
+      toast.success('Signup successful'); // Display a success toast
     } catch (error) {
-        console.error('Signup error:', error);
-        // Here, you can handle the error appropriately, e.g., display an error message to the user
-        toast.error('Signup failed'); // Display an error toast
+      console.error('Signup error:', error);
+      // Here, you can handle the error appropriately, e.g., display an error message to the user
+      toast.error('Signup failed'); // Display an error toast
     }
-};
+  };
 
 
 
 
-  const login = async (e) => {
+  const login = async (e, getUserInfoFromToken, setisLogin) => {
     e.preventDefault();
     console.log({ phone, password });
 
@@ -80,18 +80,18 @@ const LoginRegistr = (props) => {
         password,
       });
 
-      // if (response && response.data) {
-      //   const { accessToken, findUser } = response.data;
+      if (response && response.data) {
+        const { accessToken, findUser } = response.data;
 
-      //   if (accessToken && findUser.isActive) {
-      //     localStorage.setItem('token_u', accessToken);
-      //     getUserInfoFromToken();
-      //     setisLogin(true);
-      //     toast.success('Login successful!');
-      //   } else {
-      //     toast.error('User is not active.');
-      //   }
-      // }
+        if (accessToken && findUser.isActive) {
+          localStorage.setItem('token_u', accessToken);
+          getUserInfoFromToken();
+          setisLogin(true);
+          toast.success('Login successful!');
+        } else {
+          toast.error('User is not active.');
+        }
+      }
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Login failed. Please check your credentials.');
@@ -103,11 +103,11 @@ const LoginRegistr = (props) => {
   return (
     <detacontext.Consumer>
       {
-        ({setisLogin , getUserInfoFromToken}) => {
+        ({ setisLogin, getUserInfoFromToken }) => {
           return (
 
-            <div className='auth-section' ref={authform} style={openlogin? { 'display': 'flex' } : { 'display': 'none' }}>
-              <ToastContainer/>
+            <div className='auth-section' ref={authform} style={openlogin ? { 'display': 'flex' } : { 'display': 'none' }}>
+              <ToastContainer />
               <div className="wrapper">
                 <div className="title-text">
                   <Link to={'login'} ref={loginText} className="title login">
@@ -116,7 +116,7 @@ const LoginRegistr = (props) => {
                   <Link to={'signup'} className="title signup">
                     Signup Form
                   </Link>
-        
+
                 </div>
                 <div className="form-container">
                   <div className="slide-controls">
@@ -133,7 +133,7 @@ const LoginRegistr = (props) => {
                     <div className="slider-tab"></div>
                   </div>
                   <div className="form-inner">
-                    <form ref={loginForm} className="login" onSubmit={(e)=>login(e)}>
+                    <form ref={loginForm} className="login" onSubmit={(e) => login(e, setisLogin, getUserInfoFromToken)}>
                       <div className="field">
                         <input type="text" placeholder="Phone" required onChange={(e) => setphone(e.target.value)} />
                       </div>
@@ -145,7 +145,7 @@ const LoginRegistr = (props) => {
                       </div>
                       <div className="field btn">
                         <div className="btn-layer"></div>
-                        <input type="submit" value="Login"  onClick={closeform}/>
+                        <input type="submit" value="Login" onClick={closeform} />
                       </div>
                       <div className="signup-link" >
                         Not a member? <a ref={signupLink} href="" onClick={(e) => {
@@ -155,7 +155,7 @@ const LoginRegistr = (props) => {
                         }}>Signup now</a>
                       </div>
                     </form>
-                    <form className="signup" onSubmit={(e)=>signup(e)}>
+                    <form className="signup" onSubmit={(e) => signup(e)}>
                       <div className="field">
                         <input type="text" placeholder="User Name" required onChange={(e) => setusername(e.target.value)} />
                       </div>

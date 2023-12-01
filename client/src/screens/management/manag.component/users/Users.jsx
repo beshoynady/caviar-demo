@@ -64,7 +64,7 @@ const Users = () => {
                       </div>
                       <div class="col-sm-9">
                         <div class="filter-group">
-                          <label>Name</label>
+                          <label>الموبايل</label>
                           <input type="text" class="form-control" onChange={(e) => getUserByPhone(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
@@ -140,7 +140,7 @@ const Users = () => {
                             )
                           }
                         })
-                          :AllUsers.map((user, i) => {
+                          : AllUsers.map((user, i) => {
                             // if (i < pagination & i >= pagination - 5) {
                             if (i >= startpagination & i < endpagination) {
                               return (

@@ -135,11 +135,12 @@ const Kitchen = () => {
                           return (
                             <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red', color: 'white' } : { color: 'black' }}>
                               <div className="d-flex justify-content-between align-items-center w-100">
-                                <p>{i + 1}- {product.name}</p>
-                                <span> × {product.quantity}</span>
+                                <p style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{i + 1}- {product.name}</p>
+                                <span style={{ fontSize: '1.2em', fontWeight: 'bold' }}> × {product.quantity}</span>
                               </div>
-                              <div>{product.notes}</div>
+                              <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{product.notes}</div>
                             </li>
+
                           )
                         })}
                       </ul>

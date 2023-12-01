@@ -887,34 +887,7 @@ function App() {
   //++++++++++++++++++++++++++ AUTH ++++++++++++++++++++++++++++
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-  axios.defaults.withCredentials = true;
 
-  const signup = async (e, username, password, phone, address, email, setToken) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
-        username,
-        password,
-        phone,
-        address,
-        email,
-      });
-
-      if (response && response.data) {
-        const { accessToken } = response.data;
-
-        if (accessToken) {
-          // Store the token in the component state using the provided setToken function
-          setToken(accessToken);
-          // Optionally, you can store the token in localStorage here if required
-          // localStorage.setItem('token_u', accessToken);
-        }
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      // Handle errors appropriately (e.g., display an error message to the user)
-    }
-  };
 
 
   const [userLoginInfo, setUserLoginInfo] = useState(null);
@@ -951,38 +924,7 @@ function App() {
 
   const [isLogin, setisLogin] = useState(false);
 
-  const login = async (e, phone, password) => {
-    e.preventDefault();
-    console.log({ phone, password });
 
-    try {
-      if (!phone || !password) {
-        toast.error('Phone and password are required.');
-        return;
-      }
-
-      const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
-        phone,
-        password,
-      });
-
-      if (response && response.data) {
-        const { accessToken, findUser } = response.data;
-
-        if (accessToken && findUser.isActive) {
-          localStorage.setItem('token_u', accessToken);
-          getUserInfoFromToken();
-          // setisLogin(!isLogin);
-          toast.success('Login successful!');
-        } else {
-          toast.error('User is not active.');
-        }
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      toast.error('Login failed. Please check your credentials.');
-    }
-  };
 
 
   const employeelogin = async (e, phone, password) => {
@@ -1068,7 +1010,7 @@ function App() {
   return (
     <detacontext.Provider value={{
       // Functions related to authentication
-      userLoginInfo, employeeLoginInfo, getUserInfoFromToken, login, signup, logout, employeelogin, employeelogout,
+      userLoginInfo, employeeLoginInfo, getUserInfoFromToken, logout, employeelogin, employeelogout,setisLogin,
 
       // Functions related to products and categories
       allProducts, allcategories, filterByCategoryId, setcategoryid, deleteitems,

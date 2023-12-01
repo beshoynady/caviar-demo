@@ -5,9 +5,14 @@ const { validationResult } = require('express-validator');
 
 const signup = async (req, res) => {
     try {
-        const { username, email, address, phone, password } = req.body;
+        const { username, email, address, phone, password, passconfirm } = req.body;
 
-        // Validate input fields
+        // Check if passwords match
+        if (password !== passconfirm) {
+            return res.status(400).json({ message: 'Passwords do not match' });
+        }
+
+        // Validate input fields using express-validator
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -35,6 +40,8 @@ const signup = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+
 
 const login = async (req, res) => {
     try {

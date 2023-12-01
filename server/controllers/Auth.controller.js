@@ -57,7 +57,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'User is not active' });
         }
 
-        const match = await bcrypt.compare(password, findUser.password);
+        const match = await bcrypt.compare(password, findUser.password); // Compare hashed password
         if (!match) {
             return res.status(401).json({ message: 'Wrong password' });
         }
@@ -69,6 +69,7 @@ const login = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const generateAccessToken = (user) => {
     return jwt.sign(

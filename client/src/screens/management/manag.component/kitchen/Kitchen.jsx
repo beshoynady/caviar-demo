@@ -133,17 +133,17 @@ const Kitchen = () => {
                         </div>
 
                         <ul className='list-group list-group-flush'>
-                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
-                            return (
-                              <div key={i} className={`${product.isAdd ? 'bg-red' : 'bg-light'}`}>
-                                <li className={`list-group-item text-dark d-flex justify-content-between align-items-center  ${product.isAdd ? 'bg-red' : 'bg-light'}`}>
+                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => (
+                            <ul key={i} className={`list-group ${product.isAdd ? 'bg-red' : 'bg-light'}`}>
+                              <li className={`list-group-item text-dark d-flex flex-column justify-content-between align-items-center ${product.isAdd ? 'bg-red' : 'bg-light'}`}>
+                                <div className="d-flex justify-content-between align-items-center w-100">
                                   <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
                                   <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}> × {product.quantity}</span>
-                                </li>
+                                </div>
                                 <div>{product.notes}</div>
-                              </div>
-                            );
-                          })}
+                              </li>
+                            </ul>
+                          ))}
                         </ul>
                         <div className="card-footer text-center">
                           {order.status === 'Preparing' ?
@@ -165,6 +165,6 @@ const Kitchen = () => {
     </detacontext.Consumer>
   )
 
-} 
+}
 
 export default Kitchen

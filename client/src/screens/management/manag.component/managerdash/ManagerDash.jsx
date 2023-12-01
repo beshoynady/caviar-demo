@@ -476,10 +476,10 @@ const ManagerDash = () => {
                                 : ''}
 
                               {/* Order Details Table */}
-                              <table className="table table-bordered">
+                              <table className="table table-bordered" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr' }}>
                                 <thead className="thead-dark">
                                   <tr>
-                                    <th scope="col" colSpan="2">الصنف</th>
+                                    <th scope="col">الصنف</th>
                                     <th scope="col">السعر</th>
                                     <th scope="col">الكمية</th>
                                     <th scope="col">الاجمالي</th>

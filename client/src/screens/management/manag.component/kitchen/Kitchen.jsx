@@ -66,7 +66,6 @@ const Kitchen = () => {
       if (type === 'Internal') {
         waiter = specifiedWaiter();
       }
-  
       const orderData = { status };
       if (waiter) {
         orderData.waiter = waiter;

@@ -6,22 +6,26 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Users = () => {
-    const [AllUsers, setAllUsers] = useState([])
+  const [AllUsers, setAllUsers] = useState([])
 
-    const getAllUsers = async () => {
-        try {
-          const response = await axios.get('https://caviar-api.vercel.app/api/user');
-          setAllUsers(response.data)       
-         }catch (error) {
-            console.log(error)
-        }
-      };
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/user');
+      setAllUsers(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  const [filteruser, setfilteruser] = useState([])
+  const getUserByPhone = async (phone) => {
+    const user = AllUsers.filter(user => user.phome.startWith(phone) == true)
+    setfilteruser(user)
+  }
 
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
-      useEffect(() => {
-        getAllUsers()
-      }, [])
-      
   return (
     <detacontext.Consumer>
       {
@@ -61,7 +65,7 @@ const Users = () => {
                       <div class="col-sm-9">
                         <div class="filter-group">
                           <label>Name</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" class="form-control" onChange={(e) => getUserByPhone(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         {/* <div class="filter-group">
@@ -108,38 +112,7 @@ const Users = () => {
                     </thead>
                     <tbody>
                       {
-                    //   filteruser.length > 0 ? filteruser.map((user, i) => {
-                    //     if (i >= startpagination & i < endpagination) {
-                    //       return (
-                    //         <tr key={i}>
-                    //           <td>
-                    //             <span className="custom-checkbox">
-                    //               <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                    //               <label htmlFor="checkbox1"></label>
-                    //             </span>
-                    //           </td>
-                    //           <td>{i + 1}</td>
-                    //           <td>{user.fullname}</td>
-                    //           <td>{user.numberID}</td>
-                    //           <td>{user.address}</td>
-                    //           <td>{user.phone}</td>
-                    //           <td>{user.role}</td>
-                    //           <td>{user.basicSalary}</td>
-                    //           <td>{user.isActive ? 'متاح' : "غير متاح"}</td>
-                    //           <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
-                    //           <td>
-                    //             <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
-                    //               setuserloyeeid(user._id); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
-                    //             }}>&#xE254;</i></a>
-                    //             <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserloyeeid(user._id)}>&#xE872;</i></a>
-                    //           </td>
-                    //         </tr>
-                    //       )
-                    //     }
-                    //   })
-                    //     :
-                         AllUsers.map((user, i) => {
-                          // if (i < pagination & i >= pagination - 5) {
+                        filteruser.length > 0 ? filteruser.map((user, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
@@ -158,19 +131,48 @@ const Users = () => {
                                 <td>{user.isActive ? 'متاح' : "غير متاح"}</td>
                                 <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
-                                  <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                //    onClick={() => {
-                                //     setuserloyeeid(user._id); setfullname(user.fullname); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
-                                //   }}
-                                  >&#xE254;</i></a>
-                                  <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                //    onClick={() => setuserloyeeid(user._id)}
-                                   >&#xE872;</i></a>
+                                  <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
+                                    setuserloyeeid(user._id); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
+                                  }}>&#xE254;</i></a>
+                                  <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete" onClick={() => setuserloyeeid(user._id)}>&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
                           }
                         })
+                          :AllUsers.map((user, i) => {
+                            // if (i < pagination & i >= pagination - 5) {
+                            if (i >= startpagination & i < endpagination) {
+                              return (
+                                <tr key={i}>
+                                  <td>
+                                    <span className="custom-checkbox">
+                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                      <label htmlFor="checkbox1"></label>
+                                    </span>
+                                  </td>
+                                  <td>{i + 1}</td>
+                                  <td>{user.username}</td>
+                                  <td>{user.phone}</td>
+                                  <td>{user.address}</td>
+                                  <td>{user.email}</td>
+                                  <td>{user.isVarified ? 'موثق' : "غير موثق"}</td>
+                                  <td>{user.isActive ? 'متاح' : "غير متاح"}</td>
+                                  <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
+                                  <td>
+                                    <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                    //    onClick={() => {
+                                    //     setuserloyeeid(user._id); setfullname(user.fullname); setnumberID(user.numberID); setusername(user.username); setaddress(user.address); setemail(user.email); setisActive(user.isActive); setphone(user.phone); setrole(user.role); setbasicSalary(user.basicSalary)
+                                    //   }}
+                                    >&#xE254;</i></a>
+                                    <a href="#deleteuserloyeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                    //    onClick={() => setuserloyeeid(user._id)}
+                                    >&#xE872;</i></a>
+                                  </td>
+                                </tr>
+                              )
+                            }
+                          })
                       }
                     </tbody>
                   </table>

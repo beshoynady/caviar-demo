@@ -56,6 +56,17 @@ const SideBar = () => {
                     </ul>
                   </li>
 
+                  {/* Kitchen */}
+                  <li>
+                    <Link to="kitchen">
+                      <span className="material-symbols-outlined icon">cooking</span>
+                      <span className="link_name">المطبخ</span>
+                    </Link>
+                    <ul className="sub-menu blank">
+                      <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
+                    </ul>
+                  </li>
+
                   {/* Waiter */}
                   <li>
                     <Link to="waiter">
@@ -66,15 +77,14 @@ const SideBar = () => {
                       <li><Link to="waiter" className="link_name">الويتر</Link></li>
                     </ul>
                   </li>
-
-                  {/* Kitchen */}
+                  {/* Waiter */}
                   <li>
-                    <Link to="kitchen">
-                      <span className="material-symbols-outlined icon">cooking</span>
-                      <span className="link_name">المطبخ</span>
+                    <Link to="waiter">
+                      <span class="material-symbols-outlined">directions_bike</span>                      
+                      <span className="link_name">الديلفري</span>
                     </Link>
                     <ul className="sub-menu blank">
-                      <li><Link to="kitchen" className="link_name">المطبخ</Link></li>
+                      <li><Link to="deliveryman" className="link_name">الديلفري</Link></li>
                     </ul>
                   </li>
 
@@ -169,7 +179,7 @@ const SideBar = () => {
                   <li ref={arrowRefs.arrowsCash} onClick={() => openSubMenu(arrowRefs.arrowsCash)}>
                     <div className="iocn-link">
                       <a href="#">
-                        <span class="material-symbols-outlined icon">monetization_on</span>                        
+                        <span class="material-symbols-outlined icon">monetization_on</span>
                         <span className="link_name">الخزينة</span>
                       </a>
                       <i className='bx bxs-chevron-down arrow'></i>

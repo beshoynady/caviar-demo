@@ -86,12 +86,12 @@ const DeliveryMan = () => {
                      <div className="card text-white bg-success" style={{ width: "265px" }}>
                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                          <div style={{ maxWidth: "50%" }}>
-                           <p className="card-text">الطاولة: {usertitle(order.table)}</p>
+                           <p className="card-text">العميل: {usertitle(order.name)}</p>
                            <p className="card-text">رقم الفاتورة: {order.serial}</p>
-                           <p className="card-text">نوع الطلب: {order.order_type}</p>
+                           <p className="card-text">العنوان: {order.address}</p>
                          </div>
                          <div style={{ maxWidth: "50%" }}>
-                           <p className="card-text">اسم الويتر: {usertitle(order.waiter)}</p>
+                           <p className="card-text"> الطيار: {usertitle(order.deliveryMan)}</p>
                            <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                            <p className="card-text">التنفيذ: {new Date(order.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                          </div>

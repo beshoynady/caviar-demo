@@ -887,13 +887,12 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  const signup = async (e, username, password, phone, address, email, passconfirm) => {
+  const signup = async (e, username, password, phone, address, email, setToken) => {
     e.preventDefault();
     try {
       const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
         username,
         password,
-        passconfirm,
         phone,
         address,
         email,
@@ -901,6 +900,13 @@ function App() {
 
       if (response && response.data) {
         const { accessToken } = response.data;
+
+        if (accessToken) {
+          // Store the token in the component state using the provided setToken function
+          setToken(accessToken);
+          // Optionally, you can store the token in localStorage here if required
+          // localStorage.setItem('token_u', accessToken);
+        }
       }
     } catch (error) {
       console.error('Signup error:', error);

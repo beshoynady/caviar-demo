@@ -116,39 +116,43 @@ const Kitchen = () => {
               {orderactive && orderactive.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone === false).length > 0) {
                   return (
-                    <div className="card text-white bg-success mb-3" style={{ maxWidth: "18rem" }} key={i}>
-                      <div className="card-body text-right p-0">
-                        <p className="card-text">طاولة: {order.table != null ? usertitle(order.table) : (order.user ? usertitle(order.user) : '')}</p>
-                        <p className="card-text">رقم الطلب: {order.serial}</p>
-                        <p className="card-text">نوع الطلب: {order.order_type}</p>
-                        {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
-                        <p className="card-text">وقت الاستلام: {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
-                        <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
-                        <ul className='list-group list-group-flush'>
-                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
-                            return (
-                              <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
-                                <div>
-                                  <p>{i + 1}- {product.name}</p>
-                                  <span> × {product.quantity}</span>
-                                </div>
-                                <div>{product.notes}</div>
-                              </li>
-                            )
-                          })}
-                        </ul>
-                        <div>
-                          {order.status === 'Preparing' ? <button className="btn btn-warning" onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
-                            : <button className="btn btn-success" onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
-                          }
+                    <div className="card text-white bg-success" style={{ width: "265px" }}>
+                      <div className="card-body text-right d-flex justify-content-between p-0 m-1">
+                        <div style={{ maxWidth: "50%" }}>
+                          <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
+                          <p className="card-text">الفاتورة: {order.serial}</p>
+                          <p className="card-text">نوع الطلب: {order.order_type}</p>
                         </div>
+
+                        <div style={{ maxWidth: "50%" }}>
+                          {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
+                          <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                          <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
+                        </div>
+                      </div>
+                      <ul className='list-group list-group-flush'>
+                        {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
+                          return (
+                            <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
+                              <div className="d-flex justify-content-between align-items-center w-100">
+                                <p>{i + 1}- {product.name}</p>
+                                <span> × {product.quantity}</span>
+                              </div>
+                              <div>{product.notes}</div>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                      <div>
+                        {order.status === 'Preparing' ? <button className="btn btn-warning" onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                          : <button className="btn btn-success" onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
+                        }
                       </div>
                     </div>
                   )
                 }
               })}
             </div>
-
           )
         }
       }

@@ -479,20 +479,20 @@ const ManagerDash = () => {
                               <table className="table table-bordered">
                                 <thead className="thead-dark">
                                   <tr>
-                                    <th scope="col" style={{ width: '30%' }}>الصنف</th>
-                                    <th scope="col" style={{ width: '20%' }}>السعر</th>
-                                    <th scope="col" style={{ width: '20%' }}>الكمية</th>
-                                    <th scope="col" style={{ width: '20%' }}>الاجمالي</th>
+                                    <th scope="col" className="text-nowrap">الصنف</th>
+                                    <th scope="col" className="text-nowrap">السعر</th>
+                                    <th scope="col" className="text-nowrap">الكمية</th>
+                                    <th scope="col" className="text-nowrap">الاجمالي</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {/* Example rows, replace with dynamic data */}
+                                  {/* Replace this with your dynamic data */}
                                   {list_products_order.map((item, i) => (
                                     <tr key={i}>
-                                      <td>{item.name}</td>
-                                      <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td>{item.quantity}</td>
-                                      <td>{item.totalprice}</td>
+                                      <td className="text-truncate" style={{ maxWidth: '200px' }}>{item.name}</td>
+                                      <td className="text-nowrap">{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                      <td className="text-nowrap">{item.quantity}</td>
+                                      <td className="text-nowrap">{item.totalprice}</td>
                                     </tr>
                                   ))}
                                 </tbody>

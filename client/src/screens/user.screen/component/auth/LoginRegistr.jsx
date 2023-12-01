@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './LoginRegistr.css';
-// import axios from 'axios';
+import axios from 'axios';
 // import jwt_decode from "jwt-decode";
 import { detacontext } from '../../../../App'
 import { Link, useNavigate } from 'react-router-dom';
@@ -65,7 +65,7 @@ const LoginRegistr = (props) => {
 
 
 
-  const login = async (e) => {
+  const login = async (e,getUserInfoFromToken,setisLogin) => {
     e.preventDefault();
     console.log({ phone, password });
 
@@ -133,7 +133,7 @@ const LoginRegistr = (props) => {
                     <div className="slider-tab"></div>
                   </div>
                   <div className="form-inner">
-                    <form ref={loginForm} className="login" onSubmit={(e)=>login(e,phone,password)}>
+                    <form ref={loginForm} className="login" onSubmit={(e)=>login(e,setisLogin , getUserInfoFromToken)}>
                       <div className="field">
                         <input type="text" placeholder="Phone" required onChange={(e) => setphone(e.target.value)} />
                       </div>

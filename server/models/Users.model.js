@@ -28,7 +28,7 @@ const userschema = new mongoose.Schema({
         trim: true,
         required: [true, 'Password is required'],
         maxlength: 200,
-        minlength: 8,
+        minlength: 6,
         select: false, // Hide password from query results
     },
     address: {

@@ -77,19 +77,19 @@ const ManagerDash = () => {
 
   const [waiters, setWaiters] = useState([]);
   const [deliverymen, setDeliverymen] = useState([]);
-  
+
   const fetchActiveEmployees = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee');
       const activeEmployees = response.data.filter((employee) => employee.isActive === true);
-  
+
       const waiters = activeEmployees.filter((employee) => employee.role === 'waiter');
       const waiterIds = waiters.map((waiter) => waiter._id);
       if (waiterIds.length > 0) {
         console.log(waiterIds);
         setWaiters(waiterIds);
       }
-  
+
       const deliverymen = activeEmployees.filter((employee) => employee.role === 'deliveryman');
       const deliverymenIds = deliverymen.map((deliveryman) => deliveryman._id);
       if (deliverymenIds.length > 0) {
@@ -100,7 +100,7 @@ const ManagerDash = () => {
       console.error('Error fetching employees:', error);
     }
   };
-  
+
   // const [waiter, setwaiter] = useState()
   const specifiedWaiter = () => {
     const ordertakewaiter = allOrders.filter((order) => order.waiter != null)
@@ -139,7 +139,7 @@ const ManagerDash = () => {
   const putdeliveryman = async (e, orderid) => {
     try {
       const deliveryMan = await e.target.value
-      const order = await axios.put('https://caviar-api.vercel.app/api/order/' + orderid , {
+      const order = await axios.put('https://caviar-api.vercel.app/api/order/' + orderid, {
         deliveryMan
       });
       setupdate(!update);
@@ -155,7 +155,7 @@ const ManagerDash = () => {
   const [createBy, setcreateBy] = useState('');
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
-  
+
   const handleCashRegister = async (id) => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
@@ -173,7 +173,7 @@ const ManagerDash = () => {
     }
   };
 
-  
+
   const RevenueRecording = async (id, amount, description) => {
     handleCashRegister(id);
     try {
@@ -247,8 +247,8 @@ const ManagerDash = () => {
       settable(order.order_type == 'Internal' ? order.table : '')
       setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
       setordertype(order.order_type)
-      setaddress(order.order_type == 'Delivery' ?order.address:"")
-      setdeliveryMan(order.order_type == 'Delivery' ?order.deliveryMan:"")
+      setaddress(order.order_type == 'Delivery' ? order.address : "")
+      setdeliveryMan(order.order_type == 'Delivery' ? order.deliveryMan : "")
       if (order.order_type != 'Internal') {
         setname(order.name)
         setphone(order.phone)
@@ -396,17 +396,17 @@ const ManagerDash = () => {
                                 </td>
                                 <td>{recent.waiter ? usertitle(recent.waiter) : ''}</td>
                                 <td>
-                                  {recent.order_type == 'Delivery'?
-                                  <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
-                                    <option value={recent.deliveryMan}>{recent.deliveryMan? usertitle(recent.deliveryMan):"لم يحدد"}</option>
-                                    {deliverymen.map((man, i) => {
-                                      return (
-                                        <option value={man} key={i}>{usertitle(man)}</option>
-                                      )
-                                    })
-                                    }
-                                  </select>
-                                  :''}
+                                  {recent.order_type == 'Delivery' ?
+                                    <select name="status" id="status" form="carform" onChange={(e) => { putdeliveryman(e, recent._id) }}>
+                                      <option value={recent.deliveryMan}>{recent.deliveryMan ? usertitle(recent.deliveryMan) : "لم يحدد"}</option>
+                                      {deliverymen.map((man, i) => {
+                                        return (
+                                          <option value={man} key={i}>{usertitle(man)}</option>
+                                        )
+                                      })
+                                      }
+                                    </select>
+                                    : ''}
                                 </td>
                                 <td>
                                   <button
@@ -479,7 +479,7 @@ const ManagerDash = () => {
                               <table className="table table-bordered">
                                 <thead className="thead-dark">
                                   <tr>
-                                    <th scope="col">الصنف</th>
+                                    <th scope="col" colSpan="2">الصنف</th>
                                     <th scope="col">السعر</th>
                                     <th scope="col">الكمية</th>
                                     <th scope="col">الاجمالي</th>

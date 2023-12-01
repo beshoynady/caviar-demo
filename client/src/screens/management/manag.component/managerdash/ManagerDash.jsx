@@ -475,46 +475,48 @@ const ManagerDash = () => {
                                 </div>
                                 : ''}
                               {/* Order Details Table */}
-                              <table class="table table-bordered table-responsive-md">
-                                <thead class="thead-dark">
+                              <table className="table table-bordered table-responsive-md">
+                                <thead className="thead-dark">
                                   <tr>
-                                    <th scope="col" style="width: 30%; font-size: 20px">الصنف</th>
-                                    <th scope="col" style="width: 20%; font-size: 20px">السعر</th>
-                                    <th scope="col" style="width: 20%; font-size: 20px">الكمية</th>
-                                    <th scope="col" style="width: 20%; font-size: 20px">الاجمالي</th>
+                                    <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
+                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
+                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
+                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  {/* Replace this with your dynamic data */}
                                   {list_products_order.map((item, i) => (
                                     <tr key={i}>
-                                      <td className="text-truncate" style="max-width: 200px; font-size: 18px">{item.name}</td>
-                                      <td className="text-nowrap" style="font-size: 18px">{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td className="text-nowrap" style="font-size: 18px">{item.quantity}</td>
-                                      <td className="text-nowrap" style="font-size: 18px">{item.totalprice}</td>
+                                      <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
+                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
+                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
                                     </tr>
                                   ))}
                                 </tbody>
                                 <tfoot>
                                   <tr>
-                                    <td colspan="3" style="font-size: 20px">المجموع</td>
-                                    <td style="font-size: 20px">{ordersubtotal}</td>
+                                    <td colSpan="3" style={{ fontSize: '20px' }}>المجموع</td>
+                                    <td style={{ fontSize: '20px' }}>{ordersubtotal}</td>
                                   </tr>
                                   {orderdeliveryCost > 0 && (
                                     <tr>
-                                      <td colspan="3" style="font-size: 20px">خدمة التوصيل</td>
-                                      <td style="font-size: 20px">{orderdeliveryCost}</td>
+                                      <td colSpan="3" style={{ fontSize: '20px' }}>خدمة التوصيل</td>
+                                      <td style={{ fontSize: '20px' }}>{orderdeliveryCost}</td>
                                     </tr>
                                   )}
                                   <tr>
-                                    <td colspan="3" style="font-size: 20px">الضريبه</td>
-                                    <td style="font-size: 20px">{Math.round(ordertax * 100) / 100}</td>
+                                    <td colSpan="3" style={{ fontSize: '20px' }}>الضريبه</td>
+                                    <td style={{ fontSize: '20px' }}>{Math.round(ordertax * 100) / 100}</td>
                                   </tr>
                                   <tr>
-                                    <td colspan="3" style="font-size: 20px">الاجمالي</td>
-                                    <td style="font-size: 20px">{ordertotal}</td>
+                                    <td colSpan="3" style={{ fontSize: '20px' }}>الاجمالي</td>
+                                    <td style={{ fontSize: '20px' }}>{ordertotal}</td>
                                   </tr>
                                 </tfoot>
                               </table>
+
 
                               {/* Restaurant Information */}
                               <div className="restaurant-info text-dark" style={{ marginTop: '20px', textAlign: 'center' }}>

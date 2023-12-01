@@ -57,10 +57,12 @@ const Kitchen = () => {
     }
   };
 
+
+
   // Updates an order status to 'Preparing'
   const orderInProgress = async (id, type) => {
     try {
-      const status = 'Preparing';
+      const status = 'Preparing'; 
       let waiter = '';
   
       if (type === 'Internal') {
@@ -97,7 +99,7 @@ const Kitchen = () => {
     }
   };
 
-  
+
   // Calculates the waiting time for an order
   const waitingTime = (t) => {
     const t1 = new Date(t).getTime();

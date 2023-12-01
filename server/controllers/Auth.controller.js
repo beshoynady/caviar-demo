@@ -5,14 +5,9 @@ const { validationResult } = require('express-validator');
 
 const signup = async (req, res) => {
     try {
-        const { username, email, address, phone, password, passconfirm } = req.body;
+        const { username, email, address, phone, password } = req.body;
 
-        // Check if passwords match
-        if (password !== passconfirm) {
-            return res.status(400).json({ message: 'Passwords do not match' });
-        }
-
-        // Validate input fields using express-validator
+        // Validate input fields
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -23,7 +18,7 @@ const signup = async (req, res) => {
             return res.status(409).json({ message: 'This phone number is already in use' });
         }
 
-        const passwordHash = await bcrypt.hash(password, 10); // Hash the password
+        const passwordHash = await bcrypt.hash(password, 10);
 
         const newUser = await Usermodel.create({
             username,
@@ -41,8 +36,6 @@ const signup = async (req, res) => {
     }
 };
 
-
-
 const login = async (req, res) => {
     try {
         const { phone, password } = req.body;
@@ -57,7 +50,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'User is not active' });
         }
 
-        const match = await bcrypt.compare(password, findUser.password); // Compare hashed password
+        const match = await bcrypt.compare(password, findUser.password);
         if (!match) {
             return res.status(401).json({ message: 'Wrong password' });
         }
@@ -69,7 +62,6 @@ const login = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 
 const generateAccessToken = (user) => {
     return jwt.sign(

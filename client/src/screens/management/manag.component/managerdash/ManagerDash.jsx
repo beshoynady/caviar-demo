@@ -474,7 +474,6 @@ const ManagerDash = () => {
                                   <p>order num: {ordernum}</p>
                                 </div>
                                 : ''}
-
                               {/* Order Details Table */}
                               <table class="table table-bordered table-responsive-md">
                                 <thead class="thead-dark">

@@ -21,7 +21,7 @@ const LoginRegistr = (props) => {
   const closeform=()=>{
     authform.current.style.display="none"
   }
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
 
 
   const [username, setusername] = useState("")

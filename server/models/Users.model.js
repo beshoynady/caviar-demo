@@ -1,60 +1,54 @@
 const mongoose = require('mongoose');
 
 const userschema = new mongoose.Schema({
-    username: {
-        type: String,
-        unique: true,
-        required: [true, 'Username is required'],
-        trim: true,
-        minlength: 3,
-        maxlength: 100,
+    username :{
+        type : String,
+        unique : true,
+        require : [ true, 'required username' ],
+        trim : true,
+        minlength : 3,
+        maxlength : 100,
     },
-    email: {
-        type: String,
-        unique: true,
-        maxlength: 100,
-        minlength: 5,
-        trim: true,
-        validate: {
-            validator: function (v) {
-                // Simple email validation
-                return /^\S+@\S+\.\S+$/.test(v);
-            },
-            message: 'Please enter a valid email address',
-        },
+    email : {
+        type : String,
+        unique : true,
+        require : [ true, 'required email'],
+        maxlength : 100,
+        minlength : 10,
+        trim : true,
     },
-    password: {
-        type: String,
-        trim: true,
-        required: [true, 'Password is required'],
-        maxlength: 200,
-        minlength: 6,
-        select: false, // Hide password from query results
+    password : {
+        type : String,
+        trim : true,
+        require : [true , 'password required'],
+        maxlength : 200,
+        minlength : 3,
     },
-    address: {
-        type: String,
+    address:{
+        type:String,
         trim: true,
-        minlength: 3,
+        minlength:3,
         maxlength: 150,
-        required: [true, 'Address is required'],
+        
     },
-    phone: {
-        type: String,
-        required: [true, 'Phone number is required'],
-        trim: true,
+    phone:{
+        type : String,
+        require : [true , 'phone required'],
+        trim : true,
         length: 11,
     },
-    isVerified: {
-        type: Boolean,
-        default: false,
+
+    isVarified :{
+        type : Boolean,
+        default : false
     },
-    isActive: {
+    isActive :{
         type: Boolean,
-        default: true,
-        required: [true, 'isActive required'],
-    },
+        default : true,
+        require : [true , 'isActive required'],
+    }
 },
-{ timestamps: true }
+{timeseries: true}
 );
 
 const Usermodel = mongoose.model('User', userschema);

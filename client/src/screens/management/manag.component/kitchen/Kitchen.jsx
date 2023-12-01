@@ -111,55 +111,44 @@ const Kitchen = () => {
       {
         ({ usertitle, updatecountofsales }) => {
           return (
-            <div className='container-fluid h-100 overflow-auto bg-transparent py-5 px-3'>
+            <div className="container-fluid h-100 overflow-auto bg-transparent py-5 px-3">
               <ToastContainer />
-              {
-                orderactive && orderactive.map((order, i) => {
-                  if (order.products.filter((pr) => pr.isDone == false).length > 0) {
-                    return (
-                      <div className="card text-white bg-success" style={{ width: "265px" }}>
-                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">
-                          <div style={{ maxWidth: "50%" }}>
-                            <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
-                            <p className="card-text">الفاتورة: {order.serial}</p>
-                            <p className="card-text">نوع الطلب: {order.order_type}</p>
-                          </div>
-
-                          <div style={{ maxWidth: "50%" }}>
-                            {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
-                            <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                            <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
-                          </div>
-                        </div>
-
+              {orderactive && orderactive.map((order, i) => {
+                if (order.products.filter((pr) => pr.isDone === false).length > 0) {
+                  return (
+                    <div className="card text-white bg-success mb-3" style={{ maxWidth: "18rem" }} key={i}>
+                      <div className="card-body text-right p-0">
+                        <p className="card-text">طاولة: {order.table != null ? usertitle(order.table) : (order.user ? usertitle(order.user) : '')}</p>
+                        <p className="card-text">رقم الطلب: {order.serial}</p>
+                        <p className="card-text">نوع الطلب: {order.order_type}</p>
+                        {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
+                        <p className="card-text">وقت الاستلام: {new Date(order.createdAt).getHours()}:{new Date(order.createdAt).getMinutes()}</p>
+                        <p className="card-text">الانتظار: {Waitingtime(order.createdAt)} دقيقه</p>
                         <ul className='list-group list-group-flush'>
-                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => (
-                            <li key={i} className={`list-group-item text-dark d-flex flex-column justify-content-between align-items-center ${product.isAdd ? 'bg-red' : 'bg-white'}`}>
-                              <div className="w-100">
-                                <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
-                                <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}> × {product.quantity}</span>
-                              </div>
-                              <div>{product.notes}</div>
-                            </li>
-                          ))}
+                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
+                            return (
+                              <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red' } : {}}>
+                                <div>
+                                  <p>{i + 1}- {product.name}</p>
+                                  <span> × {product.quantity}</span>
+                                </div>
+                                <div>{product.notes}</div>
+                              </li>
+                            )
+                          })}
                         </ul>
-
-
-
-                        <div className="card-footer text-center">
-                          {order.status === 'Preparing' ?
-                            <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
-                            : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id)}>بدء التنفيذ</button>
+                        <div>
+                          {order.status === 'Preparing' ? <button className="btn btn-warning" onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                            : <button className="btn btn-success" onClick={() => orderInprogress(order._id)}>بدء التنفيذ</button>
                           }
                         </div>
                       </div>
-                    )
-                  }
-
-                })
-              }
-              )
+                    </div>
+                  )
+                }
+              })}
             </div>
+
           )
         }
       }

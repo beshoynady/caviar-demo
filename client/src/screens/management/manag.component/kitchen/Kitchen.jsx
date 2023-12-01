@@ -97,6 +97,7 @@ const Kitchen = () => {
     }
   };
 
+  
   // Calculates the waiting time for an order
   const waitingTime = (t) => {
     const t1 = new Date(t).getTime();

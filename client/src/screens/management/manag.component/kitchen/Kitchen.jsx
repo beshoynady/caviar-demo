@@ -111,7 +111,7 @@ const Kitchen = () => {
       {
         ({ usertitle, updatecountofsales }) => {
           return (
-            <div className="container-fluid h-100 overflow-auto bg-transparent py-5 px-3">
+            <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
               <ToastContainer />
               {orderactive && orderactive.map((order, i) => {
                 if (order.products.filter((pr) => pr.isDone === false).length > 0) {

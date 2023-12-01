@@ -78,7 +78,7 @@ const DeliveryMan = () => {
        {
          ({ usertitle, employeeLoginInfo }) => {
            return (
-             <div className='container-fluid h-100 overflow-auto bg-transparent py-5 px-3'>
+             <div className='container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3'>
                <ToastContainer/>
  
                {deliveryOrders && deliveryOrders.map((order, i) => {

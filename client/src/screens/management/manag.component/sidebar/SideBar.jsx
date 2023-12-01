@@ -77,10 +77,11 @@ const SideBar = () => {
                       <li><Link to="waiter" className="link_name">الويتر</Link></li>
                     </ul>
                   </li>
-                  {/* Waiter */}
+                  
+                  {/* deliveryman */}
                   <li>
-                    <Link to="waiter">
-                      <span class="material-symbols-outlined">directions_bike</span>                      
+                    <Link to="deliveryman">
+                      <span class="material-symbols-outlined icon">directions_bike</span>                      
                       <span className="link_name">الديلفري</span>
                     </Link>
                     <ul className="sub-menu blank">

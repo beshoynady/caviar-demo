@@ -144,6 +144,7 @@ const Kitchen = () => {
                           ))}
                         </ul>
 
+
                         <div className="card-footer text-center">
                           {order.status === 'Preparing' ?
                             <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>

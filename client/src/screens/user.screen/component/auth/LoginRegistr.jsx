@@ -99,6 +99,7 @@ const LoginRegistr = (props) => {
   };
 
 
+  
 
   return (
     <detacontext.Consumer>

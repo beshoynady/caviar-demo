@@ -4,8 +4,13 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
-
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "https://caviar-demo.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 
 
@@ -87,6 +92,8 @@ app.use('/api/expenses', routeexpense);
 app.use('/api/dailyexpense', routedailyexpense);
 app.use('/api/cashRegister', routecashRegister);
 app.use('/api/cashMovement', routecashMovement);
+
+
 
 
 

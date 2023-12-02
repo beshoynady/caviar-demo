@@ -20,13 +20,13 @@ const Users = () => {
     try {
       // Get the value from the event
       const isVarified = e.target.value;
-  
+
       // Send a request to update the 'isVarified' status
-      const response = await axios.get(`https://caviar-api.vercel.app/api/user/${id}`, {isVarified });
-  
+      const response = await axios.get(`https://caviar-api.vercel.app/api/user/${id}`, { isVarified });
+
       // Notify success using toast
       toast.success('Status updated successfully');
-  
+
       // Reload the user list or perform necessary actions
       getAllUsers();
     } catch (error) {
@@ -35,18 +35,18 @@ const Users = () => {
       toast.error('Failed to update status');
     }
   };
-  
+
   const changeorderActive = async (e, id) => {
     try {
       // Get the value from the event
       const isActive = e.target.value;
-  
+
       // Send a request to update the 'isActive' status
       const response = await axios.get(`https://caviar-api.vercel.app/api/user/${id}`, { isActive });
-  
+
       // Notify success using toast
       toast.success('Status updated successfully');
-  
+
       // Reload the user list or perform necessary actions
       getAllUsers();
     } catch (error) {
@@ -55,7 +55,7 @@ const Users = () => {
       toast.error('Failed to update status');
     }
   };
-  
+
   const [filteruser, setfilteruser] = useState([])
   const getUserByPhone = async (phone) => {
     const user = AllUsers.filter(user => user.phone.startsWith(phone));
@@ -168,15 +168,15 @@ const Users = () => {
                                 <td>{user.address}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                  <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, recent._id) }}>
-                                    <option>{recent.isActive ? 'نشط' : "غير نشط"}</option>
+                                  <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, user._id) }}>
+                                    <option>{user.isActive ? 'نشط' : "غير نشط"}</option>
                                     <option value={true} key={i}>متاح</option>
                                     <option value={false} key={i}>غير متاح"</option>
                                   </select>
                                 </td>
                                 <td>
-                                  <select name="status" id="status" form="carform" onChange={(e) => { changeorderVarified(e, recent._id) }}>
-                                    <option>{recent.isVarified?'موثق' : "غير موثق"}</option>
+                                  <select name="status" id="status" form="carform" onChange={(e) => { changeorderVarified(e, user._id) }}>
+                                    <option>{user.isVarified ? 'موثق' : "غير موثق"}</option>
                                     <option value={true} key={i}>موثق</option>
                                     <option value={false} key={i}>غير موثق"</option>
                                   </select>
@@ -213,9 +213,20 @@ const Users = () => {
                                   <td>{user.phone}</td>
                                   <td>{user.address}</td>
                                   <td>{user.email}</td>
-                                  <td>{user.isVarified ? 'موثق' : "غير موثق"}</td>
-                                  <td>{user.isActive ? 'متاح' : "غير متاح"}</td>
-                                  <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
+                                  <td>
+                                    <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, user._id) }}>
+                                      <option>{user.isActive ? 'نشط' : "غير نشط"}</option>
+                                      <option value={true} key={i}>متاح</option>
+                                      <option value={false} key={i}>غير متاح"</option>
+                                    </select>
+                                  </td>
+                                  <td>
+                                    <select name="status" id="status" form="carform" onChange={(e) => { changeorderVarified(e, user._id) }}>
+                                      <option>{user.isVarified ? 'موثق' : "غير موثق"}</option>
+                                      <option value={true} key={i}>موثق</option>
+                                      <option value={false} key={i}>غير موثق"</option>
+                                    </select>
+                                  </td>                                  <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                   <td>
                                     <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                     //    onClick={() => {

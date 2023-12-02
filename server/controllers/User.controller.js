@@ -169,4 +169,4 @@ const deleteuser = async (req, res) => {
     }
 };
 
-module.exports = { createuser, getoneuser, getallUsers, updateuser, deleteuser };
+module.exports = { createuser, getoneuser, getallUsers, updateuser, updateUserStatus, deleteuser };

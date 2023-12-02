@@ -887,96 +887,122 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  const signup = async (e, username, password, phone, address, email, setToken) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
-        username,
-        password,
-        phone,
-        address,
-        email,
-      });
-
-      if (response && response.data) {
-        const { accessToken } = response.data;
-
-        if (accessToken) {
-          // Store the token in the component state using the provided setToken function
-          setToken(accessToken);
-          // Optionally, you can store the token in localStorage here if required
-          // localStorage.setItem('token_u', accessToken);
-        }
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      // Handle errors appropriately (e.g., display an error message to the user)
-    }
-  };
-
-
+  
+  
   const [userLoginInfo, setUserLoginInfo] = useState(null);
   const [employeeLoginInfo, setEmployeeLoginInfo] = useState(null);
+  const [isLogin, setisLogin] = useState(false);
 
+  axios.defaults.withCredentials = true;
+
+// Function to handle user signup
+const signup = async (e, username, password, phone, address, email, passconfirm) => {
+  e.preventDefault();
+
+  try {
+    // Validate input fields
+    const validationErrors = validateInputs(username, password, phone, address, email);
+    if (validationErrors.length > 0) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    // Check if passwords match if passconfirm is provided
+    if (passconfirm !== undefined && password !== passconfirm) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+
+    // Send signup request
+    const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
+      username,
+      password,
+      phone,
+      address,
+      email,
+    });
+
+    if (response && response.data) {
+      const { accessToken, newUser } = response.data;
+      // Handle successful signup
+      toast.success('Signup successful!');
+      // Perform actions with accessToken or newUser if needed
+    }
+  } catch (error) {
+    // Handle signup error
+    console.error('Signup error:', error);
+    toast.error('Signup failed. Please try again.');
+  }
+};
+
+  
+  // Function to retrieve user info from tokens
   const getUserInfoFromToken = () => {
     const userToken = localStorage.getItem('token_u');
     const employeeToken = localStorage.getItem('token_e');
-
+  
     let decodedToken = null;
-
+  
     if (employeeToken && userToken) {
       decodedToken = jwt_decode(employeeToken);
+      // Set employee login info
       setEmployeeLoginInfo(decodedToken);
       console.log(decodedToken.employeeinfo);
-
+  
       decodedToken = jwt_decode(userToken);
+      // Set user login info
       setUserLoginInfo(decodedToken);
     } else if (employeeToken) {
       decodedToken = jwt_decode(employeeToken);
+      // Set employee login info
       setEmployeeLoginInfo(decodedToken);
       console.log(decodedToken.employeeinfo);
     } else if (userToken) {
       decodedToken = jwt_decode(userToken);
+      // Set user login info
       setUserLoginInfo(decodedToken);
     } else {
       setUserLoginInfo(null);
       setEmployeeLoginInfo(null);
     }
-
+  
     return decodedToken;
   };
-
-
-  const [isLogin, setisLogin] = useState(false);
-
+  
+  // Function for user login
   const login = async (e, phone, password) => {
     e.preventDefault();
     console.log({ phone, password });
-
+  
     try {
       if (!phone || !password) {
+        // Notify if phone or password is missing
         toast.error('Phone and password are required.');
         return;
       }
-
+  
       const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
         phone,
         password,
       });
-
+  
       if (response && response.data) {
         const { accessToken, findUser } = response.data;
-
+  
         if (accessToken && findUser.isActive) {
+          // Set access token to local storage
           localStorage.setItem('token_u', accessToken);
+          // Retrieve user info from token
           getUserInfoFromToken();
-          // setisLogin(!isLogin);
+          // Notify successful login
           toast.success('Login successful!');
         } else {
+          // Notify if user is not active
           toast.error('User is not active.');
         }
       }
     } catch (error) {
+      // Handle login error
       console.error('Login error:', error);
       toast.error('Login failed. Please check your credentials.');
     }

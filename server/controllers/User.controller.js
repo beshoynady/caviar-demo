@@ -79,16 +79,17 @@ const getallUsers = async (req, res) => {
 const updateuser = async (req, res) => {
     try {
         const { userid } = req.params;
-        const { username, email, address, phone, password } = req.body;
+        const { username, email, address, phone, password,isActive, isVarified } = req.body;
 
         // Schema validation using Joi for incoming data
         const schema = Joi.object({
-            username: Joi.string().trim().min(3).max(100).required(),
-            email: Joi.string().email().trim().min(10).max(100).required(),
+            username: Joi.string().trim().min(3).max(100),
+            email: Joi.string().email().trim().min(10).max(100),
             address: Joi.string().trim().min(3).max(150),
-            phone: Joi.string().trim().length(11).required(),
+            phone: Joi.string().trim().length(11),
             password: Joi.string().trim().min(3).max(200),
             isActive: Joi.boolean(),
+            isVarified: Joi.boolean(),
         });
 
         const validationResult = schema.validate(req.body);
@@ -106,7 +107,8 @@ const updateuser = async (req, res) => {
             email,
             address,
             phone,
-            isActive
+            isActive,
+            isVarified
         };
 
         if (password) {

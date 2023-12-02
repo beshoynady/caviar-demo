@@ -990,7 +990,8 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
         if (accessToken && findUser.isActive) {
           localStorage.setItem('token_u', accessToken);
           // Retrieve user info from token if needed
-          // getUserInfoFromToken();
+          getUserInfoFromToken();
+          setisLogin(!isLogin)
           toast.success('Login successful!');
         } else {
           toast.error('User is not active.');

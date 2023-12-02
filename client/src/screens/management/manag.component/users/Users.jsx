@@ -23,7 +23,7 @@ const Users = () => {
       console.log(e.target.value)
       
       // Send a request to update the 'isVarified' status
-      const response = await axios.put(`https://caviar-api.vercel.app/api/user/${id}`, { isVarified });
+      const response = await axios.put(`https://caviar-api.vercel.app/api/user/update-status/${id}`, { isVarified });
       console.log(response.data)
 
       // Notify success using toast
@@ -44,7 +44,7 @@ const Users = () => {
       const isActive = e.target.value;
 
       // Send a request to update the 'isActive' status
-      const response = await axios.put(`https://caviar-api.vercel.app/api/user/${id}`, { isActive });
+      const response = await axios.put(`https://caviar-api.vercel.app/api/user/update-status/${id}`, { isActive });
 
       // Notify success using toast
       toast.success('Status updated successfully');

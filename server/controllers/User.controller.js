@@ -127,6 +127,34 @@ const updateuser = async (req, res) => {
     }
 };
 
+const updateUserStatus = async (req, res) => {
+    try {
+      const { userid } = req.params;
+      const { isActive, isVarified } = req.body;
+  
+      const updatedFields = {};
+  
+      if (isActive !== undefined) {
+        updatedFields.isActive = isActive;
+      }
+  
+      if (isVarified !== undefined) {
+        updatedFields.isVarified = isVarified;
+      }
+  
+      const updatedUser = await Usermodel.findByIdAndUpdate(userid, updatedFields, { new: true });
+  
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+  
+
 // Function to delete a user by ID
 const deleteuser = async (req, res) => {
     try {

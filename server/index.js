@@ -1,4 +1,24 @@
+const http = require('http');
 const express = require('express');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('newOrder', (data) => {
+    console.log('New order received:', data);
+    io.emit('newOrderNotification', data); // إرسال إشعار بوجود أمر جديد لجميع العملاء المتصلين
+  });
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+
+
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
@@ -25,8 +45,6 @@ const routecashMovement = require('./router/CashMovement,router.js');
 dotenv.config();
 connectdb();
 
-const app = express();
-
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin : 'https://caviar-demo.vercel.app',
@@ -52,9 +70,9 @@ app.get('/',(req, res) => {
 
 const port = process.env.PORT|| 8000;
 
-app.listen(port, (req, res) => {
-    console.log(`listening on port ${port}`);
-});
+// app.listen(port, (req, res) => {
+//     console.log(`listening on port ${port}`);
+// });
 
 //ROUTER
 app.use('/api/product', routeproduct)
@@ -74,3 +92,6 @@ app.use('/api/cashRegister', routecashRegister);
 app.use('/api/cashMovement', routecashMovement);
 
 
+server.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});

@@ -3,12 +3,27 @@ import './ManagerDash.css'
 import { detacontext } from '../../../../App'
 import jwt_decode from 'jwt-decode';
 import axios from 'axios'
+import io from 'socket.io-client';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useReactToPrint } from 'react-to-print';
 
 
 
 const ManagerDash = () => {
+  useEffect(() => {
+    const socket = io('https://caviar-api.vercel.app'); 
+    socket.on('newOrder', (data) => {
+      console.log('New order received:', data);
+      toast.success('New order received'); 
+    });
+
+    return () => {
+      socket.disconnect(); 
+    };
+  }, []);
+
+
   const [pending_order, setpending_order] = useState([]);
   const [pending_payment, setpending_payment] = useState([]);
   const [allOrders, setallOrders] = useState([]);

@@ -54,7 +54,8 @@ const createOrder = async (req, res) => {
             payment_method,
             payment_date // Include if available in req.body
         });
-
+        
+        io.emit('newOrder', newOrder);
         res.status(201).json(newOrder);
     } catch (err) {
         res.status(400).json({ error: err.message });

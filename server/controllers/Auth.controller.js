@@ -38,30 +38,30 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { phone, password } = req.body;
-
-        const findUser = await Usermodel.findOne({ phone });
-        if (!findUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // Check if the user is active before allowing login
-        if (!findUser.isActive) {
-            return res.status(401).json({ message: 'User is not active' });
-        }
-
-        const match = await bcrypt.compare(password, findUser.password);
-        if (!match) {
-            return res.status(401).json({ message: 'Wrong password' });
-        }
-
-        const accessToken = generateAccessToken(findUser);
-
-        res.status(200).json({ findUser, accessToken });
+      const { phone, password } = req.body;
+  
+      const findUser = await Usermodel.findOne({ phone });
+      if (!findUser) {
+        return res.status(404).json({ message: 'Phone number is not registered' });
+      }
+  
+      if (!findUser.isActive) {
+        return res.status(401).json({ message: 'User is not active' });
+      }
+  
+      const match = await bcrypt.compare(password, findUser.password);
+      if (!match) {
+        return res.status(401).json({ message: 'Incorrect password' });
+      }
+  
+      const accessToken = generateAccessToken(findUser);
+  
+      res.status(200).json({ findUser, accessToken });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-};
+  };
+  
 
 const generateAccessToken = (user) => {
     return jwt.sign(

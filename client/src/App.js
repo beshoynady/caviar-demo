@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import { validationResult } from 'express-validator';
 import jwt_decode from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -972,11 +973,9 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
   // Function for user login
   const login = async (e, phone, password) => {
     e.preventDefault();
-    console.log({ phone, password });
   
     try {
       if (!phone || !password) {
-        // Notify if phone or password is missing
         toast.error('Phone and password are required.');
         return;
       }
@@ -990,23 +989,26 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
         const { accessToken, findUser } = response.data;
   
         if (accessToken && findUser.isActive) {
-          // Set access token to local storage
           localStorage.setItem('token_u', accessToken);
-          // Retrieve user info from token
-          getUserInfoFromToken();
-          // Notify successful login
+          // Retrieve user info from token if needed
+          // getUserInfoFromToken();
           toast.success('Login successful!');
         } else {
-          // Notify if user is not active
           toast.error('User is not active.');
         }
       }
     } catch (error) {
-      // Handle login error
       console.error('Login error:', error);
-      toast.error('Login failed. Please check your credentials.');
+      if (error.response && error.response.status === 404) {
+        toast.error('Phone number is not registered.');
+      } else if (error.response && error.response.status === 401) {
+        toast.error('Incorrect password.');
+      } else {
+        toast.error('Login failed. Please check your credentials.');
+      }
     }
   };
+  
 
 
   const employeelogin = async (e, phone, password) => {

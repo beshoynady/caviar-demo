@@ -40,6 +40,7 @@ const Users = () => {
     try {
       // Get the value from the event
       const isActive = e.target.value;
+      console.log(e.target.value)
 
       // Send a request to update the 'isActive' status
       const response = await axios.get(`https://caviar-api.vercel.app/api/user/${id}`, { isActive });
@@ -216,15 +217,15 @@ const Users = () => {
                                   <td>
                                     <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, user._id) }}>
                                       <option>{user.isActive ? 'نشط' : "غير نشط"}</option>
-                                      <option value={true} key={i}>نشط</option>
-                                    <option value={false} key={i}>غير نشط"</option>
+                                      <option value={true}>نشط</option>
+                                    <option value={false}>غير نشط"</option>
                                     </select>
                                   </td>
                                   <td>
                                     <select name="status" id="status" form="carform" onChange={(e) => { changeorderVarified(e, user._id) }}>
                                       <option>{user.isVarified ? 'موثق' : "غير موثق"}</option>
-                                      <option value={true} key={i}>موثق</option>
-                                      <option value={false} key={i}>غير موثق"</option>
+                                      <option value={true}>موثق</option>
+                                      <option value={false}>غير موثق"</option>
                                     </select>
                                   </td>                                 
                                    <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>

@@ -1,24 +1,5 @@
-const http = require('http');
 const express = require('express');
-const socketIo = require('socket.io');
-
-const app = express();
-const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "https://caviar-demo.vercel.app",
-    methods: ["GET", "POST"],
-    credentials: true
-  }
-});
-
-
-
-
 const cors = require('cors');
-
-
-
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 const connectdb = require('./database/connectdb.js');
@@ -44,15 +25,14 @@ const routecashMovement = require('./router/CashMovement,router.js');
 dotenv.config();
 connectdb();
 
-app.use(express.urlencoded({ extended: true }));
+const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin : 'https://caviar-demo.vercel.app',
   methods : ['GET', 'POST', 'PUT' , 'UPDATE', 'DELETE'],
   credentials: true 
 }));
-
-
 app.use(cookieParser());
 app.use(express.json());
 app.use('/',express.static("public"));
@@ -70,11 +50,6 @@ app.get('/',(req, res) => {
 //     console.log('Signed Cookies: ', req.signedCookies)
 //   })
 
-const port = process.env.PORT|| 8000;
-
-// app.listen(port, (req, res) => {
-//     console.log(`listening on port ${port}`);
-// });
 
 //ROUTER
 app.use('/api/product', routeproduct)
@@ -93,21 +68,41 @@ app.use('/api/dailyexpense', routedailyexpense);
 app.use('/api/cashRegister', routecashRegister);
 app.use('/api/cashMovement', routecashMovement);
 
+const port = process.env.PORT|| 8000;
 
-
-
-
-io.on('connection', (socket) => {
-  console.log('New client connected');
-  socket.on('newOrder', (data) => {
-    console.log('New order received:', data);
-    io.emit('newOrderNotification', data); 
-  });
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  });
+app.listen(port, (req, res) => {
+    console.log(`listening on port ${port}`);
 });
 
-server.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+
+
+
+
+// const http = require('http');
+// const express = require('express');
+// const socketIo = require('socket.io');
+
+// const app = express();
+// const server = http.createServer(app);
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "https://caviar-demo.vercel.app",
+//     methods: ["GET", "POST"],
+//     credentials: true
+//   }
+// });
+
+// io.on('connection', (socket) => {
+//   console.log('New client connected');
+//   socket.on('newOrder', (data) => {
+//     console.log('New order received:', data);
+//     io.emit('newOrderNotification', data); 
+//   });
+//   socket.on('disconnect', () => {
+//     console.log('Client disconnected');
+//   });
+// });
+
+// server.listen(port, () => {
+//   console.log(`listening on port ${port}`);
+// });

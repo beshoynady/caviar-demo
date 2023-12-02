@@ -55,7 +55,7 @@ const createOrder = async (req, res) => {
             payment_date // Include if available in req.body
         });
 
-        io.emit('newOrderNotification', newOrder);
+        // io.emit('newOrderNotification', newOrder);
         res.status(201).json(newOrder);
     } catch (err) {
         res.status(400).json({ error: err.message });

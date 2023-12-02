@@ -11,19 +11,20 @@ import { useReactToPrint } from 'react-to-print';
 
 
 const ManagerDash = () => {
-  useEffect(() => {
-    const socket = io('https://caviar-api.vercel.app', { withCredentials: true });
+  
+  // useEffect(() => {
+  //   const socket = io('https://caviar-api.vercel.app', { withCredentials: true });
 
-    socket.on('newOrderNotification', (data) => {
-      console.log('New order received:', data);
-      toast.success('New order received');
-      // Do something with the received order data
-    });
+  //   socket.on('newOrderNotification', (data) => {
+  //     console.log('New order received:', data);
+  //     toast.success('New order received');
+  //     // Do something with the received order data
+  //   });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
 
   const [pending_order, setpending_order] = useState([]);

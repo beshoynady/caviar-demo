@@ -143,9 +143,9 @@ const Users = () => {
                         <th>الاسم</th>
                         <th>الموبايل</th>
                         <th>العنوان</th>
+                        <th>الايميل</th>
                         <th>نشط</th>
                         <th>موثق</th>
-                        <th>الايميل</th>
                         <th>التاريخ</th>
                         <th>اجراءات</th>
                       </tr>
@@ -170,8 +170,8 @@ const Users = () => {
                                 <td>
                                   <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, user._id) }}>
                                     <option>{user.isActive ? 'نشط' : "غير نشط"}</option>
-                                    <option value={true} key={i}>متاح</option>
-                                    <option value={false} key={i}>غير متاح"</option>
+                                    <option value={true} key={i}>نشط</option>
+                                    <option value={false} key={i}>غير نشط"</option>
                                   </select>
                                 </td>
                                 <td>
@@ -216,8 +216,8 @@ const Users = () => {
                                   <td>
                                     <select name="status" id="status" form="carform" onChange={(e) => { changeorderActive(e, user._id) }}>
                                       <option>{user.isActive ? 'نشط' : "غير نشط"}</option>
-                                      <option value={true} key={i}>متاح</option>
-                                      <option value={false} key={i}>غير متاح"</option>
+                                      <option value={true} key={i}>نشط</option>
+                                    <option value={false} key={i}>غير نشط"</option>
                                     </select>
                                   </td>
                                   <td>
@@ -226,7 +226,8 @@ const Users = () => {
                                       <option value={true} key={i}>موثق</option>
                                       <option value={false} key={i}>غير موثق"</option>
                                     </select>
-                                  </td>                                  <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
+                                  </td>                                 
+                                   <td>{new Date(user.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                   <td>
                                     <a href="#edituserloyeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                     //    onClick={() => {

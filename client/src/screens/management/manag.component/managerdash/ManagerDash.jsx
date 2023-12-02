@@ -12,14 +12,16 @@ import { useReactToPrint } from 'react-to-print';
 
 const ManagerDash = () => {
   useEffect(() => {
-    const socket = io('https://caviar-api.vercel.app',{withCredentials: true,}); 
-    socket.on('newOrder', (data) => {
+    const socket = io('https://caviar-api.vercel.app', { withCredentials: true });
+
+    socket.on('newOrderNotification', (data) => {
       console.log('New order received:', data);
-      toast.success('New order received'); 
+      toast.success('New order received');
+      // Do something with the received order data
     });
 
     return () => {
-      socket.disconnect(); 
+      socket.disconnect();
     };
   }, []);
 

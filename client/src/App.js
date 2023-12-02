@@ -901,9 +901,8 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
   e.preventDefault();
 
   try {
-    // Validate input fields
-    const validationErrors = validateInputs(username, password, phone, address, email);
-    if (validationErrors.length > 0) {
+    // Check if any field is empty
+    if (!username || !password || !phone || !address || !email) {
       toast.error('Please fill in all required fields.');
       return;
     }
@@ -923,9 +922,9 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
       email,
     });
 
+    // Handle successful signup
     if (response && response.data) {
       const { accessToken, newUser } = response.data;
-      // Handle successful signup
       toast.success('Signup successful!');
       // Perform actions with accessToken or newUser if needed
     }
@@ -935,6 +934,7 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
     toast.error('Signup failed. Please try again.');
   }
 };
+
 
   
   // Function to retrieve user info from tokens

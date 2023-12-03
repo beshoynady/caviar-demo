@@ -19,53 +19,53 @@ const Cart = (props) => {
     bodyClass: 'printpage'
   });
 
-  const [list_products_order, setlist_products_order] = useState([])
-  const [serial, setserial] = useState('')
-  const [ordertype, setordertype] = useState('')
-  const [name, setname] = useState('')
-  const [address, setaddress] = useState('')
-  const [phone, setphone] = useState('')
-  const [ordertax, setordertax] = useState()
-  const [ordertotal, setordertotal] = useState()
-  const [ordersubtotal, setordersubtotal] = useState()
-  const [orderdeliveryCost, setorderdeliveryCost] = useState()
-  const [deliveryMan, setdeliveryMan] = useState()
-  const [ordernum, setordernum] = useState()
-  const [table, settable] = useState()
-  const [casher, setcasher] = useState()
-  const [ivocedate, setivocedate] = useState('')
+  // const [list_products_order, setlist_products_order] = useState([])
+  // const [serial, setserial] = useState('')
+  // const [ordertype, setordertype] = useState('')
+  // const [name, setname] = useState('')
+  // const [address, setaddress] = useState('')
+  // const [phone, setphone] = useState('')
+  // const [ordertax, setordertax] = useState()
+  // const [ordertotal, setordertotal] = useState()
+  // const [ordersubtotal, setordersubtotal] = useState()
+  // const [orderdeliveryCost, setorderdeliveryCost] = useState()
+  // const [deliveryMan, setdeliveryMan] = useState()
+  // const [ordernum, setordernum] = useState()
+  // const [table, settable] = useState()
+  // const [casher, setcasher] = useState()
+  // const [ivocedate, setivocedate] = useState('')
 
-  // Fetch orders from API
-  const getOrderDetalis = async (id) => {
-    try {
+  // // Fetch orders from API
+  // const getOrderDetalis = async (id) => {
+  //   try {
 
-      const res = await axios.get('https://caviar-api.vercel.app/api/order');
+  //     const res = await axios.get('https://caviar-api.vercel.app/api/order');
 
-      const order = res.data.find(o => o.serial == serial)
+  //     const order = res.data.find(o => o.serial == serial)
 
-      setlist_products_order(order.products)
-      setordertotal(order.total)
-      setordersubtotal(order.subTotal)
-      setordertax(order.tax)
-      setorderdeliveryCost(order.deliveryCost)
-      setserial(order.serial)
-      setivocedate(order.createdAt)
-      setcasher(order.casher)
-      settable(order.order_type == 'Internal' ? order.table : '')
-      setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
-      setordertype(order.order_type)
-      setaddress(order.order_type == 'Delivery' ? order.address : "")
-      setdeliveryMan(order.order_type == 'Delivery' ? order.deliveryMan : "")
-      if (order.order_type != 'Internal') {
-        setname(order.name)
-        setphone(order.phone)
-      }
+  //     setlist_products_order(order.products)
+  //     setordertotal(order.total)
+  //     setordersubtotal(order.subTotal)
+  //     setordertax(order.tax)
+  //     setorderdeliveryCost(order.deliveryCost)
+  //     setserial(order.serial)
+  //     setivocedate(order.createdAt)
+  //     setcasher(order.casher)
+  //     settable(order.order_type == 'Internal' ? order.table : '')
+  //     setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
+  //     setordertype(order.order_type)
+  //     setaddress(order.order_type == 'Delivery' ? order.address : "")
+  //     setdeliveryMan(order.order_type == 'Delivery' ? order.deliveryMan : "")
+  //     if (order.order_type != 'Internal') {
+  //       setname(order.name)
+  //       setphone(order.phone)
+  //     }
 
-    } catch (error) {
-      console.log(error);
-      // Display toast or handle error
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //     // Display toast or handle error
+  //   }
+  // };
 
   const { id } = useParams()
   return (

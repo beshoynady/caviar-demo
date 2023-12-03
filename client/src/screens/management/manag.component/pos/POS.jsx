@@ -103,7 +103,7 @@ const POS = () => {
 
 
                         <div className="invoice side" >
-                          <div ref={printContainer} className="max-w-400px p-5 overflow-auto">
+                          <div ref={printContainer} className="max-w-400px p-1 overflow-auto">
                             {/* Buttons */}
                             <div>
 

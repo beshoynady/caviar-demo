@@ -703,7 +703,7 @@ function App() {
   const createCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype, deliveryCost) => {
     try {
       const dayOrders = allOrders.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
-      const ordernum = dayOrders.length > 0 ? dayOrders[dayOrders.length - 1].ordernum + 1 : 1;
+      const ordernum = dayOrders.length = 1 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1 ;
 
       const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
       const products = [...ItemsInCart];

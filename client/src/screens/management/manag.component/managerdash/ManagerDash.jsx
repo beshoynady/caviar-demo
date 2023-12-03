@@ -250,7 +250,7 @@ const ManagerDash = () => {
   const [ivocedate, setivocedate] = useState('')
 
   // Fetch orders from API
-  const getProductsOrder = async (serial) => {
+  const getOrderDetalis = async (serial) => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       const order = res.data.find(o => o.serial == serial)
@@ -377,7 +377,7 @@ const ManagerDash = () => {
                       <thead>
                         <tr>
                           <th>م.</th>
-                          <th>رقم الاوردر</th>
+                          <th>رقم الفاتورة</th>
                           <th>العميل</th>
                           <th>الاجمالي</th>
                           <th>حالة الاوردر</th>
@@ -395,11 +395,11 @@ const ManagerDash = () => {
                               <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>
-                                  <a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(recent.serial)}>
+                                  <a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getOrderDetalis(recent.serial)}>
                                     {recent.serial}
                                   </a>
                                 </td>
-                                <td>{recent.table != null ? usertitle(recent.table) : usertitle(recent.user)}</td>
+                                <td>{recent.table != null ? usertitle(recent.table) : recent.user!= null ? usertitle(recent.user): recent.ordernum}</td>
                                 <td>{recent.total}</td>
                                 <td>
                                   <select name="status" id="status" form="carform" onChange={(e) => { changeorderstauts(e, recent._id) }}>

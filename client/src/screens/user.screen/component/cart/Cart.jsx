@@ -19,11 +19,59 @@ const Cart = (props) => {
     bodyClass: 'printpage'
   });
 
+  const [list_products_order, setlist_products_order] = useState([])
+  const [serial, setserial] = useState('')
+  const [ordertype, setordertype] = useState('')
+  const [name, setname] = useState('')
+  const [address, setaddress] = useState('')
+  const [phone, setphone] = useState('')
+  const [ordertax, setordertax] = useState()
+  const [ordertotal, setordertotal] = useState()
+  const [ordersubtotal, setordersubtotal] = useState()
+  const [orderdeliveryCost, setorderdeliveryCost] = useState()
+  const [deliveryMan, setdeliveryMan] = useState()
+  const [ordernum, setordernum] = useState()
+  const [table, settable] = useState()
+  const [casher, setcasher] = useState()
+  const [ivocedate, setivocedate] = useState('')
+
+  // Fetch orders from API
+  const getOrderDetalis = async (id) => {
+    try {
+
+      const res = await axios.get('https://caviar-api.vercel.app/api/order');
+
+      const order = res.data.find(o => o.serial == serial)
+
+      setlist_products_order(order.products)
+      setordertotal(order.total)
+      setordersubtotal(order.subTotal)
+      setordertax(order.tax)
+      setorderdeliveryCost(order.deliveryCost)
+      setserial(order.serial)
+      setivocedate(order.createdAt)
+      setcasher(order.casher)
+      settable(order.order_type == 'Internal' ? order.table : '')
+      setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
+      setordertype(order.order_type)
+      setaddress(order.order_type == 'Delivery' ? order.address : "")
+      setdeliveryMan(order.order_type == 'Delivery' ? order.deliveryMan : "")
+      if (order.order_type != 'Internal') {
+        setname(order.name)
+        setphone(order.phone)
+      }
+
+    } catch (error) {
+      console.log(error);
+      // Display toast or handle error
+    }
+  };
+
   const { id } = useParams()
   return (
     <detacontext.Consumer>
       {
-        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost
+        ({ userLoginInfo, usertitle, ItemsInCart, costOrder, deleteitems, invoice,myorder, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost
           , createClientOrderForUser, createClientOrderForTable, checkout }) => {
           return (
             <div className='cart-section' style={open_cart ? { 'display': 'flex' } : { 'display': 'none' }}>
@@ -109,152 +157,83 @@ const Cart = (props) => {
                     </div>
                     <div className="invoice side" >
                       <div ref={printContainer} style={{ maxWidth: '400px', padding: '5px' }}>
-                        <div className="container">
-                          {/* Buttons */}
-                          {/* <div>
-                            <button className="btn btn-primary mr-2" onClick={() => { }}>Download Invoice</button>
-                            <button className="btn btn-success" onClick={() => {}}>Print Invoice</button>
-                          </div> */}
-                          {/* Invoice Header */}
-                          <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
-                            <h2>Restaurant Name</h2>
-                            <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
-                          </div>
-
-                          {/* Customer Information */}
-                          <div className="customer-info" style={{ marginBottom: '20px' }}>
-                            <h4>Customer Details</h4>
-                            <p>Name: John Doe</p>
-                            <p>Mobile: 123-456-7890</p>
-                            <p>Address: 123 Main St, City</p>
-                          </div>
-
-                          {/* Order Details Table */}
-                          <table className="table table-bordered">
-                            <thead className="thead-dark">
-                              <tr>
-                                <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
-                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
-                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
-                                <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {/* Example rows, replace with dynamic data */}
-                              {list_products_order.map((item, i) => (
-                                <tr key={i}>
-                                  <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
-                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
-                                  <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td colSpan="3">المجموع</td>
-                                <td>{ordersubtotal}</td>
-                              </tr>
-                              {orderdeliveryCost && (
-                                <tr style={{ fontSize: '20px' }}>
-                                  <td colSpan="3">خدمة التوصيل</td>
-                                  <td>{orderdeliveryCost}</td>
-                                </tr>
-                              )}
-                              <tr style={{ fontSize: '20px' }}>
-                                <td colSpan="3">الضريبه</td>
-                                <td>{Math.round(ordertax * 100) / 100}</td>
-                              </tr>
-                              <tr style={{ fontSize: '20px' }}>
-                                <td colSpan="3">الاجمالي</td>
-                                <td>{ordertotal}</td>
-                              </tr>
-                            </tfoot>
-                          </table>
-
-                          {/* Restaurant Information */}
-                          <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
-                            <h4>Restaurant Details</h4>
-                            <p>Restaurant Name</p>
-                            <p>Mobile: 987-654-3210</p>
-                            <p>Address: 456 Street, City</p>
-                          </div>
-
-                          {/* Footer */}
-                          <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
-                            <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
-                          </div>
+                        {/* Invoice Header */}
+                        <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
+                          <h2>Restaurant Name</h2>
+                          <p>Casher {usertitle(myorder.casher)} |Invoice #{myorder.serial} |{myorder.ordertype == 'Internal' ? `Table ${usertitle(myorder.table)}` : ''} |Date: {new Date(myorder.ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                         </div>
-                        {/* <div id="invoice-POS">
-                          <center id="top">
-                            <div className="logo"></div>
-                            <div className="info">
-                              <h2>SBISTechs Inc</h2>
-                            </div>
-                          </center>
 
-                          <div id="mid">
-                            <div className="info">
-                              <h2>Contact Info</h2>
-                              <p>
-                                Address : street city, state 0000
-                                Email   : JohnDoe@gmail.com
-                                Phone   : 555-555-5555
-                              </p>
-                            </div>
+                        {/* Customer Information */}
+                        {myorder.ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ margin: '20px' }}>
+                          <h4>Customer Details</h4>
+                          <p>Name: {myorder.name}</p>
+                          <p>Mobile: {myorder.phone}</p>
+                          <p>Address: {myorder.address}</p>
+                          <p>Delivery Man: {usertitle(myorder.deliveryMan)}</p>
+                        </div> : myorder.ordertype == 'Takeaway' ?
+                          <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                            <h4>Customer Details</h4>
+                            <p>Name: {myorder.name}</p>
+                            <p>Mobile: {myorder.phone}</p>
+                            <p>order num: {myorder.ordernum}</p>
                           </div>
+                          : ''}
+                        {/* Order Details Table */}
+                        <table className="table table-bordered table-responsive-md">
+                          <thead className="thead-dark">
+                            <tr>
+                              <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
+                              <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
+                              <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
+                              <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* Replace this with your dynamic data */}
+                            {list_products_order.map((item, i) => (
+                              <tr key={i}>
+                                <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
+                                <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
+                                <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td colSpan="3" style={{ fontSize: '20px' }}>المجموع</td>
+                              <td style={{ fontSize: '20px' }}>{ordersubtotal}</td>
+                            </tr>
+                            {orderdeliveryCost > 0 && (
+                              <tr>
+                                <td colSpan="3" style={{ fontSize: '20px' }}>خدمة التوصيل</td>
+                                <td style={{ fontSize: '20px' }}>{orderdeliveryCost}</td>
+                              </tr>
+                            )}
+                            <tr>
+                              <td colSpan="3" style={{ fontSize: '20px' }}>الضريبه</td>
+                              <td style={{ fontSize: '20px' }}>{Math.round(ordertax * 100) / 100}</td>
+                            </tr>
+                            <tr>
+                              <td colSpan="3" style={{ fontSize: '20px' }}>الاجمالي</td>
+                              <td style={{ fontSize: '20px' }}>{ordertotal}</td>
+                            </tr>
+                          </tfoot>
+                        </table>
 
-                          <div id="bot">
 
-                            <div id="table">
-                              <table className="table table-striped">
-                                <thead>
-                                  <tr style={{ fontSize: '20px' }}>
-                                    <th scope="col">المنتج</th>
-                                    <th scope="col">الكمية</th>
-                                    <th scope="col">السعر</th>
-                                    <th scope="col">التكلفة</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {list_products_order.map((item, i) => (
-                                    <tr key={i}>
-                                      <td>{item.name}</td>
-                                      <td>{item.quantity}</td>
-                                      <td>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td>{item.totalprice}</td>
-                                    </tr>
-                                  ))}
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">المجموع</td>
-                                    <td className="payment">{ordersubtotal}</td>
-                                  </tr>
-                                  {orderdeliveryCost && (
-                                    <tr className="tabletitle">
-                                      <td className="Rate" colSpan="3">الديلفري</td>
-                                      <td className="payment">{orderdeliveryCost}</td>
-                                    </tr>
-                                  )}
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">ضرائب</td>
-                                    <td className="payment">{ordertax}</td>
-                                  </tr>
-                                  <tr className="tabletitle">
-                                    <td className="Rate" colSpan="3">الإجمالي</td>
-                                    <td className="payment">{ordertotal}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                        {/* Restaurant Information */}
+                        <div className="restaurant-info text-dark" style={{ marginTop: '20px', textAlign: 'center' }}>
+                          <h4>Restaurant Details</h4>
+                          <p>Restaurant Name</p>
+                          <p>Mobile: 987-654-3210</p>
+                          <p>Address: 456 Street, City</p>
+                        </div>
 
-
-                            <div id="legalcopy">
-                              <p className="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices.
-                              </p>
-                            </div>
-
-                          </div>
-                        </div> */}
+                        {/* Footer */}
+                        <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
+                          <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
+                        </div>
                       </div>
                       <div className="total-order">
                         {id ? <button className='total-order-btn' onClick={() => checkout()}>طلب الحساب</button> : ""}

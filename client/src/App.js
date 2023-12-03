@@ -564,6 +564,7 @@ function App() {
     const tableorder = allOrders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
+    
     const userorder = allOrders.filter((o, i) => o.user == clientid);
     const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
     const lastuserorderactive = lastuserorder.isActive

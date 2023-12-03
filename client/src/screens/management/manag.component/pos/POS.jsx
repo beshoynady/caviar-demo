@@ -28,7 +28,7 @@ const POS = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost }) => {
+        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice,myorder, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost }) => {
           if (employeeLoginInfo) {
             return (
               <section className='pos-section'>
@@ -117,12 +117,20 @@ const POS = () => {
                               </div>
 
                               {/* Customer Information */}
-                              <div className="customer-info" style={{ marginBottom: '20px' }}>
+                              {myorder.ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ margin: '20px' }}>
                                 <h4>Customer Details</h4>
-                                <p>Name: John Doe</p>
-                                <p>Mobile: 123-456-7890</p>
-                                <p>Address: 123 Main St, City</p>
-                              </div>
+                                <p>Name: {myorder.name}</p>
+                                <p>Mobile: {myorder.phone}</p>
+                                <p>Address: {myorder.address}</p>
+                                <p>Delivery Man: {usertitle(myorder.deliveryMan)}</p>
+                              </div> : myorder.ordertype == 'Takeaway' ?
+                                <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
+                                  <h4>Customer Details</h4>
+                                  <p>Name: {myorder.name}</p>
+                                  <p>Mobile: {myorder.phone}</p>
+                                  <p>order num: {myorder.ordernum}</p>
+                                </div>
+                                : ''}
 
                               {/* Order Details Table */}
                               <table className="table table-bordered">

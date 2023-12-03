@@ -28,7 +28,7 @@ const POS = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice,myorder, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost }) => {
+        ({ allProducts, allcategories, allTable, employeeLoginInfo, setcategoryid, categoryid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, usertitle, ItemsInCart, costOrder, createWaiterOrder, createCasherOrder, POSinvoice, myorder, list_products_order, ordertotal, ordersubtotal, ordertax, orderdeliveryCost }) => {
           if (employeeLoginInfo) {
             return (
               <section className='pos-section'>
@@ -104,89 +104,87 @@ const POS = () => {
 
                         <div className="invoice side" >
                           <div ref={printContainer} className="max-w-400px p-5 overflow-auto">
-                            <div className="container">
-                              {/* Buttons */}
-                              <div>
+                            {/* Buttons */}
+                            <div>
 
-                                <button className="btn btn-success" onClick={handlePrint}>Print Invoice</button>
-                              </div>
-                              {/* Invoice Header */}
-                              <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
-                                <h2>Restaurant Name</h2>
-                                <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
-                              </div>
+                              <button className="btn btn-success" onClick={handlePrint}>Print Invoice</button>
+                            </div>
+                            {/* Invoice Header */}
+                            <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
+                              <h2>Restaurant Name</h2>
+                              <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
+                            </div>
 
-                              {/* Customer Information */}
-                              {myorder.ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ margin: '20px' }}>
+                            {/* Customer Information */}
+                            {myorder.ordertype == 'Delivery' ? <div className="customer-info text-dark" style={{ margin: '20px' }}>
+                              <h4>Customer Details</h4>
+                              <p>Name: {myorder.name}</p>
+                              <p>Mobile: {myorder.phone}</p>
+                              <p>Address: {myorder.address}</p>
+                              <p>Delivery Man: {usertitle(myorder.deliveryMan)}</p>
+                            </div> : myorder.ordertype == 'Takeaway' ?
+                              <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
                                 <h4>Customer Details</h4>
                                 <p>Name: {myorder.name}</p>
                                 <p>Mobile: {myorder.phone}</p>
-                                <p>Address: {myorder.address}</p>
-                                <p>Delivery Man: {usertitle(myorder.deliveryMan)}</p>
-                              </div> : myorder.ordertype == 'Takeaway' ?
-                                <div className="customer-info text-dark" style={{ marginBottom: '20px' }}>
-                                  <h4>Customer Details</h4>
-                                  <p>Name: {myorder.name}</p>
-                                  <p>Mobile: {myorder.phone}</p>
-                                  <p>order num: {myorder.ordernum}</p>
-                                </div>
-                                : ''}
-
-                              {/* Order Details Table */}
-                              <table className="table table-bordered">
-                                <thead className="thead-dark">
-                                  <tr>
-                                    <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {/* Example rows, replace with dynamic data */}
-                                  {list_products_order.map((item, i) => (
-                                    <tr key={i}>
-                                      <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
-                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
-                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
-                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <td colSpan="3">Subtotal</td>
-                                    <td>{ordersubtotal}</td>
-                                  </tr>
-                                  {orderdeliveryCost && (
-                                    <tr>
-                                      <td colSpan="3">Delivery</td>
-                                      <td>{orderdeliveryCost}</td>
-                                    </tr>
-                                  )}
-                                  <tr>
-                                    <td colSpan="3">Tax</td>
-                                    <td>{Math.round(ordertax * 100) / 100}</td>
-                                  </tr>
-                                  <tr>
-                                    <td colSpan="3">Total</td>
-                                    <td>{ordertotal}</td>
-                                  </tr>
-                                </tfoot>
-                              </table>
-
-                              {/* Restaurant Information */}
-                              <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
-                                <h4>Restaurant Details</h4>
-                                <p>Restaurant Name</p>
-                                <p>Mobile: 987-654-3210</p>
-                                <p>Address: 456 Street, City</p>
+                                <p>order num: {myorder.ordernum}</p>
                               </div>
+                              : ''}
 
-                              {/* Footer */}
-                              <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
-                                <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
-                              </div>
+                            {/* Order Details Table */}
+                            <table className="table table-bordered">
+                              <thead className="thead-dark">
+                                <tr>
+                                  <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
+                                  <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
+                                  <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
+                                  <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {/* Example rows, replace with dynamic data */}
+                                {list_products_order.map((item, i) => (
+                                  <tr key={i}>
+                                    <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
+                                    <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
+                                    <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>
+                                    <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.totalprice}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colSpan="3">Subtotal</td>
+                                  <td>{ordersubtotal}</td>
+                                </tr>
+                                {orderdeliveryCost && (
+                                  <tr>
+                                    <td colSpan="3">Delivery</td>
+                                    <td>{orderdeliveryCost}</td>
+                                  </tr>
+                                )}
+                                <tr>
+                                  <td colSpan="3">Tax</td>
+                                  <td>{Math.round(ordertax * 100) / 100}</td>
+                                </tr>
+                                <tr>
+                                  <td colSpan="3">Total</td>
+                                  <td>{ordertotal}</td>
+                                </tr>
+                              </tfoot>
+                            </table>
+
+                            {/* Restaurant Information */}
+                            <div className="restaurant-info" style={{ marginTop: '20px', textAlign: 'center' }}>
+                              <h4>Restaurant Details</h4>
+                              <p>Restaurant Name</p>
+                              <p>Mobile: 987-654-3210</p>
+                              <p>Address: 456 Street, City</p>
+                            </div>
+
+                            {/* Footer */}
+                            <div className="footer" style={{ marginTop: '30px', textAlign: 'center', color: '#828282' }}>
+                              <p>Developed by: <span style={{ color: '#5a6268' }}>esyservice</span></p>
                             </div>
                           </div>
                           {/* <div className="total-order">

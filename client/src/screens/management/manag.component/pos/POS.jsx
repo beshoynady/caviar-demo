@@ -112,7 +112,7 @@ const POS = () => {
                             {/* Invoice Header */}
                             <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                               <h2>Restaurant Name</h2>
-                              <p>Invoice #1234 | Date: November 25, 2023 | Time: 14:30</p>
+                              <p>Casher {usertitle(myorder.casher)} |Invoice #{myorder.serial} |{myorder.ordertype == 'Internal' ? `Table ${usertitle(myorder.table)}` : ''} |Date: {new Date(myorder.ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
                             </div>
 
                             {/* Customer Information */}

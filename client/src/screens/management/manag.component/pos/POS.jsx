@@ -103,7 +103,7 @@ const POS = () => {
 
 
                         <div className="invoice side" >
-                          <div ref={printContainer} style={{ maxWidth: '400px', padding: '5px' }}>
+                          <div ref={printContainer} className="max-w-400px p-5 overflow-auto">
                             <div className="container">
                               {/* Buttons */}
                               <div>

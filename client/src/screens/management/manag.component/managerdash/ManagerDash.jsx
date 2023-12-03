@@ -470,7 +470,7 @@ const ManagerDash = () => {
                               <h4 className="modal-title"></h4>
                               <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
-                            <div ref={printContainer} style={{ maxWidth: '400px', padding: '5px' }}>
+                            <div ref={printContainer} className="max-w-400px p-5 overflow-auto">
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>

@@ -11,7 +11,7 @@ import { useReactToPrint } from 'react-to-print';
 
 
 const ManagerDash = () => {
-  
+
   // useEffect(() => {
   //   const socket = io('https://caviar-api.vercel.app', { withCredentials: true });
 
@@ -38,17 +38,17 @@ const ManagerDash = () => {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       const orders = res.data;
       setallOrders(orders);
-  
+
       const pendingOrders = orders.filter((order) => order.status === 'Pending');
       setpending_order(pendingOrders);
-  
+
       const pendingPayments = orders.filter((order) => order.payment_status === 'Pending');
       setpending_payment(pendingPayments);
-  
+
       const today = new Date().toDateString();
       const dayOrders = orders.filter((order) => new Date(order.createdAt).toDateString() === today);
       setlist_day_order(dayOrders);
-  
+
       const paidDayOrders = dayOrders.filter((order) => order.payment_status === 'Paid');
       if (paidDayOrders.length > 0) {
         const totalDaySales = paidDayOrders.reduce((total, order) => total + order.total, 0);
@@ -60,7 +60,7 @@ const ManagerDash = () => {
       console.log(error);
     }
   };
-  
+
 
 
   const status = ['Pending', 'Approved', 'Cancelled']
@@ -400,7 +400,7 @@ const ManagerDash = () => {
                                     {recent.serial}
                                   </a>
                                 </td>
-                                <td>{recent.table != null ? usertitle(recent.table) : recent.user!= null ? usertitle(recent.user): recent.ordernum}</td>
+                                <td>{recent.table != null ? usertitle(recent.table) : recent.user != null ? usertitle(recent.user) : recent.ordernum}</td>
                                 <td>{recent.total}</td>
                                 <td>
                                   <select name="status" id="status" form="carform" onChange={(e) => { changeorderstauts(e, recent._id) }}>
@@ -427,6 +427,7 @@ const ManagerDash = () => {
                                     </select>
                                     : ''}
                                 </td>
+                                <td>{recent.order_type}</td>
                                 <td>
                                   <button
                                     className="btn btn-primary"
@@ -443,7 +444,6 @@ const ManagerDash = () => {
                                     }
                                   </select>
                                 </td> */}
-                                <td>{recent.order_type}</td>
                               </tr>
                             )
                           }

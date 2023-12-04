@@ -113,7 +113,8 @@ const Orders = () => {
     }
   };
 
-  const deleteSelectedIds = async () => {
+  const deleteSelectedIds = async (e) => {
+    e.preventDefault();
     console.log(selectedIds)
     try {
       for (const Id of selectedIds) {

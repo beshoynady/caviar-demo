@@ -163,7 +163,7 @@ const Orders = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addOrderModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة اوردر جديد</span></a>
-                        <a href="#deleteOrderModal" className="btn btn-danger" data-toggle="modal" onChange={deleteSelectedIds}><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deletListOrderModal" className="btn btn-danger" data-toggle="modal" ><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -499,6 +499,26 @@ const Orders = () => {
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={deleteOrder}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">Delete Order</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <p>هل انت متاكد من حذف هذا السجل؟?</p>
+                        <p className="text-warning"><small>لا يمكن الرجوع في هذا الاجراء.</small></p>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-toggle="modal" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" className="btn btn-danger" value="Delete" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="deleteListOrderModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={deleteSelectedIds}>
                       <div className="modal-header">
                         <h4 className="modal-title">Delete Order</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

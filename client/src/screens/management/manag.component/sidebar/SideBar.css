@@ -233,12 +233,12 @@
 }
 
 .sidebar.close .nav-links .profile-details  {
+  width: 78px;
   background: none;
+  position: fixed;
+  bottom: 0;
 }
 
-.sidebar.close .nav-links .profile-details  {
-  width: 78px;
-}
 
 .sidebar .nav-links .profile-details  .name-job {
   height: 52px;

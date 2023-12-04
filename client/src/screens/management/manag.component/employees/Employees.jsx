@@ -156,6 +156,34 @@ const Employees = () => {
     }
   };
 
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleCheckboxChange = (e) => {
+    const Id = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedIds([...selectedIds, Id]);
+    } else {
+      const updatedSelectedIds = selectedIds.filter((id) => id !== Id);
+      setSelectedIds(updatedSelectedIds);
+    }
+  };
+
+  const deleteSelectedIds = async (e) => {
+    e.preventDefault();
+    console.log(selectedIds)
+    try {
+      for (const Id of selectedIds) {
+        await axios.delete(`https://caviar-api.vercel.app/api/order/${Id}`);
+      }
+      getemployees()
+      toast.success('Selected orders deleted successfully');
+      setSelectedIds([]);
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete selected orders');
+    }
+  };
 
   useEffect(() => {
     getemployees()
@@ -176,7 +204,7 @@ const Employees = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة موظف جديد</span></a>
-                        <a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
+                        <a href="#deleteListEmployeeModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف الكل</span></a>
                       </div>
                     </div>
                   </div>
@@ -252,8 +280,14 @@ const Employees = () => {
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
+                                <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={emp._id}
+                                      onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor={`checkbox${i}`}></label>                               
                                 </span>
                               </td>
                               <td>{i + 1}</td>
@@ -282,8 +316,14 @@ const Employees = () => {
                               <tr key={i}>
                                 <td>
                                   <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                    <label htmlFor="checkbox1"></label>
+                                  <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={emp._id}
+                                      onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor={`checkbox${i}`}></label>                               
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
@@ -475,6 +515,26 @@ const Employees = () => {
                     <form onSubmit={deleteEmployee}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف موظف</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <p>هل انت متاكد من حذف هذا السجل؟?</p>
+                        <p className="text-warning"><small>لا يمكن الرجوع في هذا الاجراء.</small></p>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="اغلاق" />
+                        <input type="submit" className="btn btn-danger" value="حذف" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="deleteListEmployeeModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={deleteSelectedIds}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">حذف الموظفين المحددين</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">

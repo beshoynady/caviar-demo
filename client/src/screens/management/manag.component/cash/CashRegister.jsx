@@ -94,6 +94,37 @@ const CashRegister = () => {
     setCashRegisters(filteredRegisters);
   };
 
+
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleCheckboxChange = (e) => {
+    const Id = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedIds([...selectedIds, Id]);
+    } else {
+      const updatedSelectedIds = selectedIds.filter((id) => id !== Id);
+      setSelectedIds(updatedSelectedIds);
+    }
+  };
+
+  const deleteSelectedIds = async (e) => {
+    e.preventDefault();
+    console.log(selectedIds)
+    try {
+      for (const Id of selectedIds) {
+        await axios.delete(`https://caviar-api.vercel.app/api/order/${Id}`);
+      }
+      getAllCashRegisters()
+      getEmployees()
+      toast.success('Selected orders deleted successfully');
+      setSelectedIds([]);
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete selected orders');
+    }
+  };
+
   useEffect(() => {
     // Fetch initial data on component mount
     getAllCashRegisters()
@@ -115,7 +146,7 @@ const CashRegister = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addCashRegisterModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه خزنه</span></a>
-                        <a href="#deleteCashRegisterModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deleteListCashRegisterModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -137,12 +168,12 @@ const CashRegister = () => {
                       </div>
                       <div class="col-sm-9">
                         <div class="filter-group">
-                          <label>اسم الصنف</label>
+                          <label>اسم الخزينه</label>
                           <input type="text" class="form-control" onChange={(e) => filterCashRegistersByName(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
-                          <label>الموظف</label>
+                          <label>المسؤل</label>
                           <select class="form-control" onChange={(e) => filterCashRegistersByEmployee(e.target.value)}>
                             <option >اختر</option>
                             {allEmployee&&allEmployee.map((Employee, i) => {
@@ -191,8 +222,14 @@ const CashRegister = () => {
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
+                                <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={cash._id}
+                                      onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor={`checkbox${i}`}></label>                               
                                 </span>
                               </td>
                               <td>{i + 1}</td>
@@ -201,7 +238,6 @@ const CashRegister = () => {
                               <td>{cash.balance}</td>
                               <td>
                                 <a href="#editCashRegisterModal" className="edit" data-toggle="modal" onClick={() => { setcashID(cash._id); setname(cash.name); setemployee(cash.employee); setbalance(cash.balance) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-
                                 <a href="#deleteCashRegisterModal" className="delete" data-toggle="modal" onClick={() => setcashID(cash._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -296,6 +332,26 @@ const CashRegister = () => {
                     <form onSubmit={deleteCashRegister}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف تصنيف</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <p>هل انت متاكد من حذف هذا التصنيف?</p>
+                        <p className="text-warning"><small>لا يمكن الرجوع فيه.</small></p>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
+                        <input type="submit" className="btn btn-danger" value="حذف" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="deleteListCashRegisterModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={deleteSelectedIds}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">حذف الخزن المحدده</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">

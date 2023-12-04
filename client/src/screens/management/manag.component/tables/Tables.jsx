@@ -9,7 +9,7 @@ const Tables = () => {
 
   const [tableid, settableid] = useState("")
   const [qrimage, setqrimage] = useState("")
-  
+
   const createQR = async (e) => {
     e.preventDefault();
     const URL = `https://${window.location.hostname}/${tableid}`;
@@ -19,12 +19,16 @@ const Tables = () => {
   }
 
   const [listoftable, setlistoftable] = useState([])
+  const [listoftabledescription, setlistoftabledescription] = useState([])
   const getallTable = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/table');
-      setlistoftable(response.data)
-      // console.log(response.data)
-      // console.log(listoftable)
+      const tables = response.data
+      setlistoftable(tables)
+      for(const table of tables){
+        setlistoftabledescription(...listoftabledescription , table.description)
+      }
+
     } catch (error) {
       console.log(error)
     }
@@ -62,13 +66,8 @@ const Tables = () => {
     }
   }
 
-const [tableFiltered, settableFiltered] = useState([])
-  const searchByNum = (num) => {
-    const tables = listoftable.filter((table) => table.tablenum.toString().startsWith(num) == true)
-    settableFiltered(tables)
-  }
-
-
+  
+  
   const deleteTable = async (e) => {
     e.preventDefault()
     // console.log(tableid)
@@ -82,12 +81,53 @@ const [tableFiltered, settableFiltered] = useState([])
     }
   }
 
+  const [tableFiltered, settableFiltered] = useState([])
+  const searchByNum = (num) => {
+    const tables = listoftable.filter((table) => table.tablenum.toString().startsWith(num) == true)
+    settableFiltered(tables)
+  }
+  const filterBySection = (e)=>{
+    const description = e.target.value
+    const filter = listoftable.filter(table=>table.description == description)
+    settableFiltered(filter)
+  }
+
   const printtableqr = useRef()
   const handlePrint = useReactToPrint({
     content: () => printtableqr.current,
     copyStyles: true,
     removeAfterPrint: true,
   });
+
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleCheckboxChange = (e) => {
+    const Id = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedIds([...selectedIds, Id]);
+    } else {
+      const updatedSelectedIds = selectedIds.filter((id) => id !== Id);
+      setSelectedIds(updatedSelectedIds);
+    }
+  };
+
+  const deleteSelectedIds = async (e) => {
+    e.preventDefault();
+    console.log(selectedIds)
+    try {
+      for (const Id of selectedIds) {
+        await axios.delete(`https://caviar-api.vercel.app/api/order/${Id}`);
+      }
+      getallTable()
+      toast.success('Selected orders deleted successfully');
+      setSelectedIds([]);
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete selected orders');
+    }
+  };
+
 
   useEffect(() => {
     getallTable()
@@ -108,7 +148,7 @@ const [tableFiltered, settableFiltered] = useState([])
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addTableModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه طاولة جديدة</span></a>
-                        <a href="#deleteTableModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deleteListTableModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -130,18 +170,17 @@ const [tableFiltered, settableFiltered] = useState([])
                       </div>
                       <div class="col-sm-9">
                         <div class="filter-group">
-                          <label>Name</label>
+                          <label>رقم الطاولة</label>
                           <input type="text" class="form-control" onChange={(e) => searchByNum(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
-                          <label>السكشن</label>
-                          <select class="form-control">
+                          <label>الموقع</label>
+                          <select class="form-control" onChange={e=> filterBySection()}>
                             <option>Any</option>
-                            <option>Delivered</option>
-                            <option>Shipped</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
+                            {listoftabledescription.map((description, i) =>
+                            <option key={i} value={description}>{description}</option>
+                              )}
                           </select>
                         </div>
                         <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -168,60 +207,71 @@ const [tableFiltered, settableFiltered] = useState([])
                     </thead>
                     <tbody>
                       {
-                      tableFiltered.length>0?tableFiltered.map((t, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{t.tablenum}</td>
-                              <td>{t.description}</td>
-                              <td>{t.chairs}</td>
-                              {/* <td>{t.reservation ? "Reserved" : "Unreserved"}</td> */}
-                              <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum) }}>
-                                <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
-                              </a></td>
-                              <td>
-                                <a href="#editTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum); setchairs(t.chairs); settabledesc(t.description) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        tableFiltered.length > 0 ? tableFiltered.map((table, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={table._id}
+                                      onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor={`checkbox${i}`}></label>                                </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{table.tablenum}</td>
+                                <td>{table.description}</td>
+                                <td>{table.chairs}</td>
+                                {/* <td>{table.reservation ? "Reserved" : "Unreserved"}</td> */}
+                                <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum) }}>
+                                  <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
+                                </a></td>
+                                <td>
+                                  <a href="#editTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum); setchairs(table.chairs); settabledesc(table.description) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteTableModal" className="delete" data-toggle="modal" onClick={() => settableid(t._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })
-                      :listoftable.map((t, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{t.tablenum}</td>
-                              <td>{t.description}</td>
-                              <td>{t.chairs}</td>
-                              {/* <td>{t.reservation ? "Reserved" : "Unreserved"}</td> */}
-                              <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum) }}>
-                                <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
-                              </a></td>
-                              <td>
-                                <a href="#editTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(t._id); settablenum(t.tablenum); setchairs(t.chairs); settabledesc(t.description) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteTableModal" className="delete" data-toggle="modal" onClick={() => settableid(table._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+                          }
+                        })
+                          : listoftable.map((table, i) => {
+                            if (i >= startpagination & i < endpagination) {
+                              return (
+                                <tr key={i}>
+                                  <td>
+                                    <span className="custom-checkbox">
+                                      <input
+                                        type="checkbox"
+                                        id={`checkbox${i}`}
+                                        name="options[]"
+                                        value={table._id}
+                                        onChange={handleCheckboxChange}
+                                      />
+                                      <label htmlFor={`checkbox${i}`}></label>
+                                    </span>
+                                  </td>
+                                  <td>{i + 1}</td>
+                                  <td>{table.tablenum}</td>
+                                  <td>{table.description}</td>
+                                  <td>{table.chairs}</td>
+                                  {/* <td>{table.reservation ? "Reserved" : "Unreserved"}</td> */}
+                                  <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum) }}>
+                                    <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
+                                  </a></td>
+                                  <td>
+                                    <a href="#editTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum); setchairs(table.chairs); settabledesc(table.description) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteTableModal" className="delete" data-toggle="modal" onClick={() => settableid(t._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          )
-                        }
-                      })
+                                    <a href="#deleteTableModal" className="delete" data-toggle="modal" onClick={() => settableid(table._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  </td>
+                                </tr>
+                              )
+                            }
+                          })
                       }
                     </tbody>
                   </table>
@@ -284,11 +334,11 @@ const [tableFiltered, settableFiltered] = useState([])
                         </div>
                         <div className="form-group">
                           <label>عدد المقاعد</label>
-                          <input type="Number" defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => t._id == tableid).chairs : ''} className="form-control" required onChange={(e) => setchairs(e.target.value)} />
+                          <input type="Number" defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => table._id == tableid).chairs : ''} className="form-control" required onChange={(e) => setchairs(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <textarea defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => t._id == tableid).description : ""} className="form-control" required onChange={(e) => settabledesc(e.target.value)}></textarea>
+                          <textarea defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => table._id == tableid).description : ""} className="form-control" required onChange={(e) => settabledesc(e.target.value)}></textarea>
                         </div>
                       </div>
                       <div className="modal-footer">
@@ -333,6 +383,26 @@ const [tableFiltered, settableFiltered] = useState([])
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={deleteTable}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">حذف طاولة</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <p>هل انت متاكد من حذف هذا السجل؟?</p>
+                        <p className="text-warning"><small>لا يمكن الرجوع في هذا الاجراء.</small></p>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
+                        <input type="submit" className="btn btn-danger" value="حذف" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div id="deleteListTableModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={deleteSelectedIds}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف طاولة</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

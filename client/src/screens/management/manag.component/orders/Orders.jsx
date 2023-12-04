@@ -280,9 +280,14 @@ const Orders = () => {
                               <tr key={i}>
                                 <td>
                                   <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value={order._id} />
-                                    <label htmlFor="checkbox1"></label>
-                                  </span>
+                                  <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={order._id}
+                                      onChange={handleCheckboxChange}
+                                    />                                    
+                                    <label htmlFor={`checkbox${i}`}></label>                                  </span>
                                 </td>
 
                                 <td>{i + 1}</td>

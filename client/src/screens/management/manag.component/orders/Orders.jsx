@@ -114,6 +114,7 @@ const Orders = () => {
   };
 
   const deleteSelectedIds = async () => {
+    console.log(selectedIds)
     try {
       for (const Id of selectedIds) {
         await axios.delete(`https://caviar-api.vercel.app/api/order/${Id}`);
@@ -163,7 +164,7 @@ const Orders = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addOrderModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة اوردر جديد</span></a>
-                        <a href="#deletListOrderModal" className="btn btn-danger" data-toggle="modal" ><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deleteListOrderModal" className="btn btn-danger" data-toggle="modal" ><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>

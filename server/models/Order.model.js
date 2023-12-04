@@ -30,7 +30,8 @@ const OrderSchema = new mongoose.Schema({
     ordernum: {
         type: Number,
         min: 1,
-        max: 1000000,    
+        max: 1000000,
+        required: true    
     },
     // Array of products in the order
     products: [

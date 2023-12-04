@@ -703,7 +703,7 @@ function App() {
   const createCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype, deliveryCost) => {
     try {
       const dayOrders = allOrders.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
-      const ordernum = dayOrders.length = 1 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1 ;
+      const ordernum = dayOrders.length == 1 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1 ;
 
       const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
       const products = [...ItemsInCart];
@@ -715,6 +715,9 @@ function App() {
       const address = await clientaddress;
       const createBy = await casherid;
       const order_type = await ordertype;
+      const casher = casherid;
+      const status = 'Approved';
+
 
       const newOrder = await axios.post('https://caviar-api.vercel.app/api/order', {
         serial,
@@ -726,9 +729,11 @@ function App() {
         total,
         order_type,
         createBy,
+        casher,
         name,
         phone,
-        address
+        address,
+        status
       });
       if (newOrder) {
         console.log(newOrder.data._id)

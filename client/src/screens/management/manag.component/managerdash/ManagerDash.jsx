@@ -33,33 +33,34 @@ const ManagerDash = () => {
   const [list_day_order, setlist_day_order] = useState([]);
   const [total_day_salse, settotal_day_salse] = useState(0);
 
-  const fetchData = async () => {
+  const fetchOrdersData = async () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      setallOrders(res.data);
-      const recentStatus = res.data.filter((order) => order.status === 'Pending');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
-      setpending_order(recentStatus);
-      setpending_payment(recentPaymentStatus);
-
-      const dayorder = res.data.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
-      setlist_day_order(dayorder);
-
-      if (dayorder.length > 0) {
-        const order_day_paid = dayorder.filter((order) => order.payment_status === 'Paid');
-        let total = 0;
-
-        if (order_day_paid.length > 0) {
-          for (let i = 0; i < order_day_paid.length; i++) {
-            total += order_day_paid[i].total;
-          }
-          settotal_day_salse(total);
-        }
+      const orders = res.data;
+      setallOrders(orders);
+  
+      const pendingOrders = orders.filter((order) => order.status === 'Pending');
+      setpending_order(pendingOrders);
+  
+      const pendingPayments = orders.filter((order) => order.payment_status === 'Pending');
+      setpending_payment(pendingPayments);
+  
+      const today = new Date().toDateString();
+      const dayOrders = orders.filter((order) => new Date(order.createdAt).toDateString() === today);
+      setlist_day_order(dayOrders);
+  
+      const paidDayOrders = dayOrders.filter((order) => order.payment_status === 'Paid');
+      if (paidDayOrders.length > 0) {
+        const totalDaySales = paidDayOrders.reduce((total, order) => total + order.total, 0);
+        settotal_day_salse(totalDaySales);
+      } else {
+        settotal_day_salse(0);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  
 
 
   const status = ['Pending', 'Approved', 'Cancelled']
@@ -86,7 +87,7 @@ const ManagerDash = () => {
       const order = axios.put('https://caviar-api.vercel.app/api/order/' + id, {
         payment_status, isActive, casher
       })
-      fetchData()
+      fetchOrdersData()
       setupdate(!update)
     } catch (error) {
       console.log(error)
@@ -209,7 +210,7 @@ const ManagerDash = () => {
         });
         if (updatecashRegister) {
           setbalance(updatedBalance);
-          fetchData()
+          fetchOrdersData()
           toast.success('Expense created successfully');
           setupdate(!update);
         }
@@ -293,7 +294,7 @@ const ManagerDash = () => {
   }
 
   useEffect(() => {
-    fetchData()
+    fetchOrdersData()
     fetchActiveEmployees();
     getUserInfoFromToken();
   }, [update]);

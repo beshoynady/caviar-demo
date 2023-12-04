@@ -336,11 +336,11 @@ const Tables = () => {
                         </div>
                         <div className="form-group">
                           <label>عدد المقاعد</label>
-                          <input type="Number" defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => table._id == tableid).chairs : ''} className="form-control" required onChange={(e) => setchairs(e.target.value)} />
+                          <input type="Number" defaultValue={listoftable.length > 0 ? listoftable.find((table, i) => table._id == tableid).chairs : ''} className="form-control" required onChange={(e) => setchairs(e.target.value)} />
                         </div>
                         <div className="form-group">
                           <label>الوصف</label>
-                          <textarea defaultValue={listoftable.length > 0 ? listoftable.find((t, i) => table._id == tableid).description : ""} className="form-control" required onChange={(e) => settabledesc(e.target.value)}></textarea>
+                          <textarea defaultValue={listoftable.length > 0 ? listoftable.find((table, i) => table._id == tableid).description : ""} className="form-control" required onChange={(e) => settabledesc(e.target.value)}></textarea>
                         </div>
                       </div>
                       <div className="modal-footer">

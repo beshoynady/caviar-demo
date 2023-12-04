@@ -92,7 +92,7 @@ const SideBar = () => {
                   {/* Users */}
                   <li>
                     <Link to="users">
-                      <span className="material-symbols-outlined icon">contact_phone</span>
+                      <span className="material-symbols-outlined icon">user_attributes</span>
                       <span className="link_name">المستخدمين</span>
                     </Link>
                     <ul className="sub-menu blank">

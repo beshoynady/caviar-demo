@@ -362,7 +362,7 @@ const ManagerDash = () => {
                         {balance ? Math.round(balance / 10) * 10 : 0}
                       </h3>
                     </span>
-                    <i className='bx bx-dollar-circle'></i>
+                    <i class="fa-solid fa-box-dollar"></i>
                   </li>
                 </ul>
 

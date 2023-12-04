@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { useReactToPrint } from 'react-to-print';
 import { detacontext } from '../../../../App';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -139,6 +140,7 @@ const Tables = () => {
 
           return (
             <div className="container-xl mlr-auto">
+              <ToastContainer/>
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">

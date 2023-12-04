@@ -103,7 +103,7 @@ const POS = () => {
 
 
                         <div className="invoice side" >
-                          <div ref={printContainer} className="max-w-400px p-1 overflow-auto">
+                          <div ref={printContainer} className="w-100 p-1 overflow-auto max-w-400px">
                             {/* Buttons */}
                             <div>
 
@@ -157,12 +157,12 @@ const POS = () => {
                                   <td colSpan="3">Subtotal</td>
                                   <td>{ordersubtotal}</td>
                                 </tr>
-                                {orderdeliveryCost && (
+                                {orderdeliveryCost>0 ?
                                   <tr>
                                     <td colSpan="3">Delivery</td>
                                     <td>{orderdeliveryCost}</td>
                                   </tr>
-                                )}
+                                :''}
                                 <tr>
                                   <td colSpan="3">Tax</td>
                                   <td>{Math.round(ordertax * 100) / 100}</td>

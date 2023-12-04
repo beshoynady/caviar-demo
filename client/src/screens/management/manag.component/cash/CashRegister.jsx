@@ -115,7 +115,7 @@ const CashRegister = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addCashRegisterModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه خزنه</span></a>
-                        {/* <a href="#deleteCashRegisterModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a> */}
+                        <a href="#deleteCashRegisterModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>

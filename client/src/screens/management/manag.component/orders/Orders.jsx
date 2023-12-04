@@ -45,7 +45,7 @@ const Orders = () => {
   const getProductsOrder = async (serial) => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      const order = res.data.find(o => o.serial == serial)
+      const order = res.data.find(o => order.serial == serial)
       setlist_products_order(order.products)
       setordertotal(order.total)
       setordersubtotal(order.subTotal)
@@ -100,6 +100,32 @@ const Orders = () => {
       toast.error('Failed to delete order');
     }
   };
+  const [selectedIds, setSelectedIds] = useState([]);
+  const handleCheckboxChange = (e) => {
+    const Id = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedIds([...selectedIds, Id]);
+    } else {
+      const updatedSelectedIds = selectedIds.filter((id) => id !== Id);
+      setSelectedIds(updatedSelectedIds);
+    }
+  };
+
+  const deleteSelectedIds = async () => {
+    try {
+      for (const Id of selectedIds) {
+        await axios.delete(`https://caviar-api.vercel.app/api/order/${Id}`);
+      }
+      getOrders();
+      toast.success('Selected orders deleted successfully');
+      setSelectedIds([]);
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete selected orders');
+    }
+  };
 
   // State for filtered orders
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -137,7 +163,7 @@ const Orders = () => {
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addOrderModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة اوردر جديد</span></a>
-                        <a href="#deleteOrderModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deleteOrderModal" className="btn btn-danger" data-toggle="modal" onChange={deleteSelectedIds}><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -211,66 +237,72 @@ const Orders = () => {
                     </thead>
                     <tbody>
                       {filteredOrders.length > 0 ?
-                        filteredOrders.map((o, i) => {
+                        filteredOrders.map((order, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
                                 <td>
                                   <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                    <label htmlFor="checkbox1"></label>
+                                    <input
+                                      type="checkbox"
+                                      id={`checkbox${i}`}
+                                      name="options[]"
+                                      value={order._id}
+                                      onChange={handleCheckboxChange}
+                                    />                                    
+                                    <label htmlFor={`checkbox${i}`}></label>
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
-                                <td>{o.serial}</td>
-                                <td>{o.ordernum ? o.ordernum : '--'}</td>
-                                <td>{o.table != null ? usertitle(o.table)
-                                  : o.user ? usertitle(o.user)
-                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
+                                <td>{order.serial}</td>
+                                <td>{order.ordernum ? order.ordernum : '--'}</td>
+                                <td>{order.table != null ? usertitle(order.table)
+                                  : order.user ? usertitle(order.user)
+                                    : order.createBy ? usertitle(order.createBy) : '--'}</td>
 
-                                <td>{o.order_type}</td>
-                                <td>{o.total}</td>
-                                <td>{o.status}</td>
-                                <td>{usertitle(o.casher)}</td>
-                                <td>{o.payment_status}</td>
-                                <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
+                                <td>{order.order_type}</td>
+                                <td>{order.total}</td>
+                                <td>{order.status}</td>
+                                <td>{usertitle(order.casher)}</td>
+                                <td>{order.payment_status}</td>
+                                <td>{new Date(order.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(order._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
                             )
                           }
                         })
-                        : listOfOrders.map((o, i) => {
+                        : listOfOrders.map((order, i) => {
                           if (i >= startpagination & i < endpagination) {
                             return (
                               <tr key={i}>
                                 <td>
                                   <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <input type="checkbox" id="checkbox1" name="options[]" value={order._id} />
                                     <label htmlFor="checkbox1"></label>
                                   </span>
                                 </td>
 
                                 <td>{i + 1}</td>
-                                <td><a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(o.serial)}>{o.serial} </a></td>
+                                <td><a href="#invoiceOrderModal" data-toggle="modal" onClick={() => getProductsOrder(order.serial)}>{order.serial} </a></td>
 
-                                <td>{o.ordernum ? o.ordernum : '--'}</td>
-                                <td>{o.table != null ? usertitle(o.table)
-                                  : o.user ? usertitle(o.user)
-                                    : o.createBy ? usertitle(o.createBy) : '--'}</td>
+                                <td>{order.ordernum ? order.ordernum : '--'}</td>
+                                <td>{order.table != null ? usertitle(order.table)
+                                  : order.user ? usertitle(order.user)
+                                    : order.createBy ? usertitle(order.createBy) : '--'}</td>
 
-                                <td>{o.order_type}</td>
-                                <td>{o.total}</td>
-                                <td>{o.status}</td>
-                                <td>{usertitle(o.casher)}</td>
-                                <td>{o.payment_status}</td>
-                                <td>{new Date(o.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
+                                <td>{order.order_type}</td>
+                                <td>{order.total}</td>
+                                <td>{order.status}</td>
+                                <td>{usertitle(order.casher)}</td>
+                                <td>{order.payment_status}</td>
+                                <td>{new Date(order.payment_date).toLocaleString('en-GB', { hour12: true })}</td>
 
                                 <td>
                                   <a href="#editOrderModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(o._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  <a href="#deleteOrderModal" className="delete" data-toggle="modal" onClick={() => setOrderId(order._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
                             )

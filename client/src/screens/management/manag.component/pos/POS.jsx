@@ -101,7 +101,6 @@ const POS = () => {
                           </div>
                         </div>
 
-
                         <div className="invoice side" >
                           <div ref={printContainer} className="w-100 p-1 overflow-auto max-w-400px">
                             {/* Buttons */}

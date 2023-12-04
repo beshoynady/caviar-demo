@@ -702,10 +702,14 @@ function App() {
 
   const createCasherOrder = async (casherid, clientname, clientphone, clientaddress, ordertype, deliveryCost) => {
     try {
-      const dayOrders = allOrders.filter((order) => new Date(order.createdAt).getDay() === new Date().getDay());
-      const ordernum = dayOrders.length == 1 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1 ;
-
+      // Retrieve day's orders to determine the order number
+      const dayOrders = allOrders.filter((order) => new Date(order.createdAt).toDateString() === new Date().toDateString());
+      const ordernum = dayOrders.length === 0 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1;
+  
+      // Generate serial number for the order
       const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
+  
+      // Prepare order details
       const products = [...ItemsInCart];
       const subTotal = costOrder;
       const tax = subTotal * 0.14;
@@ -717,8 +721,8 @@ function App() {
       const order_type = await ordertype;
       const casher = casherid;
       const status = 'Approved';
-
-
+  
+      // Create the new order
       const newOrder = await axios.post('https://caviar-api.vercel.app/api/order', {
         serial,
         ordernum,
@@ -735,17 +739,18 @@ function App() {
         address,
         status
       });
-      if (newOrder) {
-        console.log(newOrder.data._id)
-        setposOrderId(newOrder.data._id)
+  
+      // Handle successful order creation
+      if (newOrder && newOrder.data._id) {
+        setposOrderId(newOrder.data._id);
+        toast.success('Order created successfully!');
+        setItemsInCart([]);
+        setitemid([]);
+      } else {
+        throw new Error('Failed to create order');
       }
-
-      toast.success('Order created successfully!');
-      setItemsInCart([]);
-      setitemid([])
-
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error('An error occurred. Please try again.');
     }
   };

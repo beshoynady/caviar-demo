@@ -2,6 +2,8 @@ const Usermodel = require('../models/Users.model.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
+require('dotenv').config();
+
 
 const signup = async (req, res) => {
     try {
@@ -69,6 +71,7 @@ const generateAccessToken = (user) => {
             userinfo: {
                 id: user._id,
                 isActive: user.isActive,
+                isVarified: user.isVarified,
                 username: user.username,
                 phone: user.phone,
             },

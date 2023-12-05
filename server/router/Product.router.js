@@ -29,16 +29,47 @@ const upload = multer({ storage: storage });
 
 const router = express.Router();
 
+
+
+const fs = require('fs');
+
+// Function to delete the old image
+const deleteOldImage = (imagePath) => {
+  try {
+    fs.unlinkSync(imagePath); // Deleting the image using fs.unlinkSync
+    console.log('Old image deleted successfully');
+  } catch (err) {
+    console.error('Error deleting old image', err);
+  }
+};
+
+// Middleware to delete the old image before uploading the new one
+const deleteOldImageMiddleware = async (req, res, next) => {
+  try {
+    // Replace this with a method to retrieve the product from your database or storage
+    const product = await getProductById(req.params.productid);
+
+    // Checking if the product and image exist
+    if (product && product.image) {
+      const oldImagePath = path.join(__dirname, '..', 'images', product.image);
+      deleteOldImage(oldImagePath); // Calling the function to delete the old image
+    }
+    next();
+  } catch (err) {
+    console.error('Error deleting old image in middleware', err);
+    next(err);
+  }
+};
+
 // router.use(verifyJWT)
 
 router.route('/')
   .post(upload.single("image"), createProduct)
-  .get(authenticateToken, getAllProducts);
-  
+  .get(getAllProducts);
+
 router.route('/getproductbycategory/:categoryid').get(getProductByCategory)
-router.route('/:productid').get(getOneProduct).put(upload.single("image"), updateProduct).delete(deleteProduct);
-router.route('/withoutimage/:productid').put(updateProductWithoutImage)
-router.route('/addrecipe/:productid').put(addRecipe)
-// router.route('/:productid').get(getoneproduct).put(updateproduct).delete(deleteproduct);
+router.route('/:productid').get(getOneProduct).put(authenticateToken,deleteOldImageMiddleware, upload.single("image"), updateProduct).delete(authenticateToken, deleteProduct);
+router.route('/withoutimage/:productid').put(authenticateToken, updateProductWithoutImage)
+router.route('/addrecipe/:productid').put(authenticateToken, addRecipe)
 
 module.exports = router;

@@ -215,14 +215,11 @@ function App() {
   }
 
 
-  const generateSerial = (num) => {
-    const str = num.toString();
-    const pad = '000000';
-    return pad.substring(0, pad.length - str.length) + str;
-  };
 
   const createClientOrderForUser = async (userId) => {
     try {
+      const token = localStorage.getItem('token_u');
+      
       const userorder = allOrders.filter((o, i) => o.user == userId);
       const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
       const lastuserorderactive = lastuserorder.isActive;
@@ -243,7 +240,9 @@ function App() {
           const order_type = 'Delivery';
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, subTotal, total, tax, deliveryCost, status, order_type
-          });
+          },{headers: {
+            Authorization: `Bearer ${token}`
+          }});
           setItemsInCart([]);
           setitemid([])
           getProducts();
@@ -254,7 +253,9 @@ function App() {
           const order_type = 'Delivery';
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, subTotal, total, tax, deliveryCost, status, order_type
-          });
+          },{headers: {
+            Authorization: `Bearer ${token}`
+          }});
           setItemsInCart([]);
           getProducts();
         }
@@ -289,7 +290,9 @@ function App() {
             address,
             phone,
             order_type,
-          });
+          },{headers: {
+            Authorization: `Bearer ${token}`
+          }});
           setItemsInCart([]);
           setitemid([])
           getProducts();

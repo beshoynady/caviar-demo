@@ -31,7 +31,6 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 1000000,
-        required: true    
     },
     // Array of products in the order
     products: [

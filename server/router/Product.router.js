@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 // const verifyJWT = require('../middleware/verifyjwt');
+const authenticateToken = require('../utlits/authenticate')
 
 const {
   createProduct,
@@ -30,7 +31,10 @@ const router = express.Router();
 
 // router.use(verifyJWT)
 
-router.route('/').post(upload.single("image"), createProduct).get(getAllProducts);
+router.route('/')
+  .post(upload.single("image"), createProduct)
+  .get(authenticateToken, getAllProducts);
+  
 router.route('/getproductbycategory/:categoryid').get(getProductByCategory)
 router.route('/:productid').get(getOneProduct).put(upload.single("image"), updateProduct).delete(deleteProduct);
 router.route('/withoutimage/:productid').put(updateProductWithoutImage)

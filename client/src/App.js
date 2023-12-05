@@ -70,7 +70,13 @@ function App() {
   //+++++++++++++++++ product ++++++++++++++++++++
   const [allProducts, setallProducts] = useState([])
   const getProducts = async () => {
-    const products = await axios.get('https://caviar-api.vercel.app/api/product')
+    const token = localStorage.getItem('token_u');
+
+    const products = await axios.get('https://caviar-api.vercel.app/api/product', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     setallProducts(products.data)
   }
 
@@ -219,7 +225,7 @@ function App() {
   const createClientOrderForUser = async (userId) => {
     try {
       const token = localStorage.getItem('token_u');
-      
+
       const userorder = allOrders.filter((o, i) => o.user == userId);
       const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
       const lastuserorderactive = lastuserorder.isActive;
@@ -240,9 +246,11 @@ function App() {
           const order_type = 'Delivery';
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, subTotal, total, tax, deliveryCost, status, order_type
-          },{headers: {
-            Authorization: `Bearer ${token}`
-          }});
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setItemsInCart([]);
           setitemid([])
           getProducts();
@@ -253,9 +261,11 @@ function App() {
           const order_type = 'Delivery';
           const neworder = await axios.put('https://caviar-api.vercel.app/api/order/' + id, {
             products, subTotal, total, tax, deliveryCost, status, order_type
-          },{headers: {
-            Authorization: `Bearer ${token}`
-          }});
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setItemsInCart([]);
           getProducts();
         }
@@ -290,9 +300,11 @@ function App() {
             address,
             phone,
             order_type,
-          },{headers: {
-            Authorization: `Bearer ${token}`
-          }});
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setItemsInCart([]);
           setitemid([])
           getProducts();
@@ -567,7 +579,7 @@ function App() {
     const tableorder = allOrders.filter((o, i) => o.table == clientid);
     const lasttableorder = tableorder.length > 0 ? tableorder[tableorder.length - 1] : [];
     const lasttableorderactive = lasttableorder.isActive
-    
+
     const userorder = allOrders.filter((o, i) => o.user == clientid);
     const lastuserorder = userorder.length > 0 ? userorder[userorder.length - 1] : [];
     const lastuserorderactive = lastuserorder.isActive
@@ -708,10 +720,10 @@ function App() {
       // Retrieve day's orders to determine the order number
       const dayOrders = allOrders.filter((order) => new Date(order.createdAt).toDateString() === new Date().toDateString());
       const ordernum = dayOrders.length === 0 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1;
-  
+
       // Generate serial number for the order
       const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';
-  
+
       // Prepare order details
       const products = [...ItemsInCart];
       const subTotal = costOrder;
@@ -724,7 +736,7 @@ function App() {
       const order_type = await ordertype;
       const casher = casherid;
       const status = 'Approved';
-  
+
       // Create the new order
       const newOrder = await axios.post('https://caviar-api.vercel.app/api/order', {
         serial,
@@ -742,7 +754,7 @@ function App() {
         address,
         status
       });
-  
+
       // Handle successful order creation
       if (newOrder && newOrder.data._id) {
         setposOrderId(newOrder.data._id);
@@ -901,68 +913,68 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  
-  
+
+
   const [userLoginInfo, setUserLoginInfo] = useState(null);
   const [employeeLoginInfo, setEmployeeLoginInfo] = useState(null);
   const [isLogin, setisLogin] = useState(false);
 
   axios.defaults.withCredentials = true;
 
-// Function to handle user signup
-const signup = async (e, username, password, phone, address, email, passconfirm) => {
-  e.preventDefault();
+  // Function to handle user signup
+  const signup = async (e, username, password, phone, address, email, passconfirm) => {
+    e.preventDefault();
 
-  try {
-    // Check if any field is empty
-    if (!username || !password || !phone || !address || !email) {
-      toast.error('Please fill in all required fields.');
-      return;
+    try {
+      // Check if any field is empty
+      if (!username || !password || !phone || !address || !email) {
+        toast.error('Please fill in all required fields.');
+        return;
+      }
+
+      // Check if passwords match if passconfirm is provided
+      if (passconfirm !== undefined && password !== passconfirm) {
+        toast.error('Passwords do not match.');
+        return;
+      }
+
+      // Send signup request
+      const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
+        username,
+        password,
+        phone,
+        address,
+        email,
+      });
+
+      // Handle successful signup
+      if (response && response.data) {
+        const { accessToken, newUser } = response.data;
+        toast.success('Signup successful!');
+        // Perform actions with accessToken or newUser if needed
+      }
+    } catch (error) {
+      // Handle signup error
+      console.error('Signup error:', error);
+      toast.error('Signup failed. Please try again.');
     }
-
-    // Check if passwords match if passconfirm is provided
-    if (passconfirm !== undefined && password !== passconfirm) {
-      toast.error('Passwords do not match.');
-      return;
-    }
-
-    // Send signup request
-    const response = await axios.post('https://caviar-api.vercel.app/api/auth/signup', {
-      username,
-      password,
-      phone,
-      address,
-      email,
-    });
-
-    // Handle successful signup
-    if (response && response.data) {
-      const { accessToken, newUser } = response.data;
-      toast.success('Signup successful!');
-      // Perform actions with accessToken or newUser if needed
-    }
-  } catch (error) {
-    // Handle signup error
-    console.error('Signup error:', error);
-    toast.error('Signup failed. Please try again.');
-  }
-};
+  };
 
 
-  
+
   // Function to retrieve user info from tokens
   const getUserInfoFromToken = () => {
     const userToken = localStorage.getItem('token_u');
     const employeeToken = localStorage.getItem('token_e');
-  
+
     let decodedToken = null;
-  
+
     if (employeeToken && userToken) {
       decodedToken = jwt_decode(employeeToken);
       // Set employee login info
       setEmployeeLoginInfo(decodedToken);
       console.log(decodedToken.employeeinfo);
-  
+
       decodedToken = jwt_decode(userToken);
       // Set user login info
       setUserLoginInfo(decodedToken);
@@ -979,28 +991,28 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
       setUserLoginInfo(null);
       setEmployeeLoginInfo(null);
     }
-  
+
     return decodedToken;
   };
-  
+
   // Function for user login
   const login = async (e, phone, password) => {
     e.preventDefault();
-  
+
     try {
       if (!phone || !password) {
         toast.error('Phone and password are required.');
         return;
       }
-  
+
       const response = await axios.post('https://caviar-api.vercel.app/api/auth/login', {
         phone,
         password,
       });
-  
+
       if (response && response.data) {
         const { accessToken, findUser } = response.data;
-  
+
         if (accessToken && findUser.isActive) {
           localStorage.setItem('token_u', accessToken);
           // Retrieve user info from token if needed
@@ -1022,7 +1034,7 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
       }
     }
   };
-  
+
 
 
   const employeelogin = async (e, phone, password) => {
@@ -1155,8 +1167,8 @@ const signup = async (e, username, password, phone, address, email, passconfirm)
             <Route path='category' element={<Category />} />
             <Route path='kitchen' element={<Kitchen />} />
             <Route path='waiter' element={<Waiter />} />
-            <Route path='users' element={<Users/>} />
-            <Route path='deliveryman' element={<DeliveryMan/>} />
+            <Route path='users' element={<Users />} />
+            <Route path='deliveryman' element={<DeliveryMan />} />
             <Route path='pos' element={<POS />} />
             <Route path='categoryStock' element={<CategoryStock />} />
             <Route path='stockitem' element={<StockItem />} />

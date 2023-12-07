@@ -58,6 +58,12 @@ const Header = () => {
               </li>
             </ul>
             <div className="d-flex align-items-center">
+              <Link className="d-lg-none me-3" to="/login">
+                تسجيل الدخول
+              </Link>
+              <Link className="d-lg-none me-3" to="/cart">
+                <i className="bi bi-cart"></i>
+              </Link>
               <Link className="btn btn-primary me-3" onClick={logout}>
                 تسجيل الخروج
               </Link>
@@ -65,7 +71,7 @@ const Header = () => {
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {ItemsInCart.length}
                 </span>
-                سلة التسوق
+                <i className="bi bi-cart"></i>
               </Link>
             </div>
           </div>

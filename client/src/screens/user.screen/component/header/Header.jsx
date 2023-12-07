@@ -4,16 +4,20 @@ import { useState, useRef } from 'react';
 import { detacontext } from '../../../../App';
 import LoginRegistr from '../auth/LoginRegistr';
 import Cart from '../cart/Cart';
+import { Button } from 'react-bootstrap'; // Import Bootstrap Button component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Assuming you're using FontAwesome for icons
+import { faSignInAlt, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // Import required icons
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const Header = () => {
   const { id } = useParams();
   const [opencart, setopencart] = useState(false);
   const [openlogin, setopenlogin] = useState(false);
+  const [showNav, setShowNav] = useState(false); // State to toggle mobile nav
   const navref = useRef();
 
   const toggleMobileMenu = () => {
-    navref.current.classList.toggle('show');
+    setShowNav(!showNav);
   };
 
   const { userLoginInfo, logout, ItemsInCart } = useContext(detacontext); // Using useContext hook to access context
@@ -31,7 +35,7 @@ const Header = () => {
             <Link to="/">كافيار</Link>
           </div>
           <div className="col-6 col-md-8">
-            <nav ref={navref}>
+            <nav ref={navref} className={showNav ? 'show' : 'hide'}>
               <ul>
                 <li onClick={toggleMobileMenu}>
                   <Link to="/">الرئيسيه</Link>
@@ -54,22 +58,20 @@ const Header = () => {
               {!id && (
                 <>
                   {userLoginInfo && userLoginInfo.userinfo ? (
-                    <div onClick={logout}>
-                      خروج
-                      <span>logout</span>
-                    </div>
+                    <Button variant="primary" onClick={logout}>
+                      خروج <FontAwesomeIcon icon={faSignOutAlt} />
+                    </Button>
                   ) : (
-                    <div onClick={() => setopenlogin(!openlogin)}>
-                      دخول
-                      <span>login</span>
-                    </div>
+                    <Button variant="primary" onClick={() => setopenlogin(!openlogin)}>
+                      دخول <FontAwesomeIcon icon={faSignInAlt} />
+                    </Button>
                   )}
                 </>
               )}
-              <div onClick={() => setopencart(!opencart)}>
-                <span>shopping_cart</span>
+              <Button variant="primary" onClick={() => setopencart(!opencart)}>
+                <FontAwesomeIcon icon={faShoppingCart} />{' '}
                 <span>{ItemsInCart.length}</span>
-              </div>
+              </Button>
               <LoginRegistr openlogin={openlogin} />
               <Cart opencart={opencart} />
             </div>

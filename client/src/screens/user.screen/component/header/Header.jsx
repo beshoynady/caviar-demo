@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { detacontext } from '../../../../App';
@@ -58,15 +58,9 @@ const Header = () => {
               </li>
             </ul>
             <div className="d-flex align-items-center">
-              {userLoginInfo && userLoginInfo.userinfo ? (
-                <Link className="btn btn-primary me-3" onClick={logout}>
-                  تسجيل الخروج
-                </Link>
-              ) : (
-                <Link className="btn btn-primary me-3" to="/login">
-                  تسجيل الدخول
-                </Link>
-              )}
+              <Link className="btn btn-primary me-3" onClick={logout}>
+                تسجيل الخروج
+              </Link>
               <Link className="btn btn-outline-primary position-relative" to="/cart">
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {ItemsInCart.length}

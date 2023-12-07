@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import { detacontext } from '../../../../App';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
-  const { userLoginInfo, logout, ItemsInCart } = useContext(detacontext);
 
   const toggleMobileMenu = () => {
     setShowNav(!showNav);
@@ -13,10 +11,9 @@ const Header = () => {
 
   return (
     <header>
-      {/* Desktop view */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light d-lg-flex">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <Link className="navbar-brand me-auto" to="/">
+          <Link className="navbar-brand" to="/">
             كافيار
           </Link>
           <button
@@ -27,52 +24,51 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            className={`collapse navbar-collapse ${showNav ? 'show' : ''}`}
+            className={`collapse navbar-collapse ${
+              showNav ? 'show' : ''
+            }`}
           >
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  تسجيل الدخول
+                <Link className="nav-link" to="/">
+                  الرئيسية
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  <i className="bi bi-cart"></i>
+                <Link className="nav-link" to="#menu">
+                  قائمة الطعام
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="#offer">
+                  العروض
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="#location">
+                  موقعنا
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="#contact">
+                  تواصل معنا
                 </Link>
               </li>
             </ul>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile view */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
-        <div className="container">
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={toggleMobileMenu}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <Link className="navbar-brand mx-auto" to="/">
-            كافيار
-          </Link>
-          <div
-            className={`collapse navbar-collapse ${showNav ? 'show' : ''}`}
-          >
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  تسجيل الدخول
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  <i className="bi bi-cart"></i>
-                </Link>
-              </li>
-            </ul>
+            <div className="d-flex align-items-center">
+              <Link className="btn btn-primary me-3" to="/login">
+                تسجيل الدخول
+              </Link>
+              <Link className="btn btn-outline-primary me-3" to="/signup">
+                إنشاء حساب
+              </Link>
+              <Link className="btn btn-outline-primary position-relative" to="/cart">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  5 {/* Replace with dynamic cart count */}
+                </span>
+                <i className="bi bi-cart"></i>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -81,9 +77,6 @@ const Header = () => {
 };
 
 export default Header;
-
-
-
 
 
 

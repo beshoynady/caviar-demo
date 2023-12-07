@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { detacontext } from '../../../../App';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
+  const { userLoginInfo, logout, ItemsInCart } = useContext(detacontext);
 
   const toggleMobileMenu = () => {
     setShowNav(!showNav);
@@ -56,17 +58,20 @@ const Header = () => {
               </li>
             </ul>
             <div className="d-flex align-items-center">
-              <Link className="btn btn-primary me-3" to="/login">
-                تسجيل الدخول
-              </Link>
-              <Link className="btn btn-outline-primary me-3" to="/signup">
-                إنشاء حساب
-              </Link>
+              {userLoginInfo && userLoginInfo.userinfo ? (
+                <Link className="btn btn-primary me-3" onClick={logout}>
+                  تسجيل الخروج
+                </Link>
+              ) : (
+                <Link className="btn btn-primary me-3" to="/login">
+                  تسجيل الدخول
+                </Link>
+              )}
               <Link className="btn btn-outline-primary position-relative" to="/cart">
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  5 {/* Replace with dynamic cart count */}
+                  {ItemsInCart.length}
                 </span>
-                <i className="bi bi-cart"></i>
+                سلة التسوق
               </Link>
             </div>
           </div>
@@ -77,6 +82,7 @@ const Header = () => {
 };
 
 export default Header;
+
 
 
 

@@ -25,63 +25,68 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className={`collapse navbar-collapse ${
-              showNav ? 'show' : ''
-            }`}
-          >
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  الرئيسية
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#menu">
-                  قائمة الطعام
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#offer">
-                  العروض
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#location">
-                  موقعنا
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#contact">
-                  تواصل معنا
-                </Link>
-              </li>
-            </ul>
-            <div className="d-flex align-items-center">
-              <Link className="d-lg-none me-3" to="/login">
-                تسجيل الدخول
+        </div>
+      </nav>
+      <div className={`collapse navbar-collapse ${showNav ? 'show' : ''}`}>
+        <div className="container">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                الرئيسية
               </Link>
-              <Link className="d-lg-none me-3" to="/cart">
-                <i className="bi bi-cart"></i>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#menu">
+                قائمة الطعام
               </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#offer">
+                العروض
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#location">
+                موقعنا
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#contact">
+                تواصل معنا
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="container">
+        <div className="d-flex align-items-center justify-content-between py-3">
+          <div>
+            {userLoginInfo && userLoginInfo.userinfo ? (
               <Link className="btn btn-primary me-3" onClick={logout}>
                 تسجيل الخروج
               </Link>
-              <Link className="btn btn-outline-primary position-relative" to="/cart">
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {ItemsInCart.length}
-                </span>
-                <i className="bi bi-cart"></i>
+            ) : (
+              <Link className="btn btn-primary me-3" to="/login">
+                تسجيل الدخول
               </Link>
-            </div>
+            )}
+          </div>
+          <div>
+            <Link className="btn btn-outline-primary me-3" to="/cart">
+              <i className="bi bi-cart"></i>
+            </Link>
+            <span className="badge bg-danger">
+              {ItemsInCart.length}
+            </span>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };
 
 export default Header;
+
 
 
 

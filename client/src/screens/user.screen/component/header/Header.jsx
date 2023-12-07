@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { detacontext } from '../../../../App';
@@ -15,7 +15,7 @@ const Header = () => {
     <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand mx-auto" to="/">
             كافيار
           </Link>
           <button
@@ -25,63 +25,67 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className={`collapse navbar-collapse ${
-              showNav ? 'show' : ''
-            }`}
-          >
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  الرئيسية
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#menu">
-                  قائمة الطعام
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#offer">
-                  العروض
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#location">
-                  موقعنا
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="#contact">
-                  تواصل معنا
-                </Link>
-              </li>
-            </ul>
-            <div className="d-flex align-items-center">
-              {userLoginInfo && userLoginInfo.userinfo ? (
-                <Link className="btn btn-primary me-3" onClick={logout}>
-                  تسجيل الخروج
-                </Link>
-              ) : (
-                <Link className="btn btn-primary me-3" to="/login">
-                  تسجيل الدخول
-                </Link>
-              )}
-              <Link className="btn btn-outline-primary position-relative" to="/cart">
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {ItemsInCart.length}
-                </span>
-                سلة التسوق
-              </Link>
-            </div>
-          </div>
         </div>
       </nav>
+      <div className={`collapse navbar-collapse ${showNav ? 'show' : ''}`}>
+        <div className="container">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                الرئيسية
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#menu">
+                قائمة الطعام
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#offer">
+                العروض
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#location">
+                موقعنا
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="#contact">
+                تواصل معنا
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="container">
+        <div className="d-flex align-items-center justify-content-between py-3">
+          <div className="d-lg-none">
+            <Link className="me-3" to="/login">
+              تسجيل الدخول
+            </Link>
+            <Link className="me-3" to="/cart">
+              <i className="bi bi-cart"></i>
+            </Link>
+          </div>
+          <div className="d-none d-lg-flex align-items-center">
+            <Link className="btn btn-primary me-3" onClick={logout}>
+              تسجيل الخروج
+            </Link>
+            <Link className="btn btn-outline-primary me-3" to="/cart">
+              <i className="bi bi-cart"></i>
+            </Link>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
 
 export default Header;
+
+
+
 
 
 

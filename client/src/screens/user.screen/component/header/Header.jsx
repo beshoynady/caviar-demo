@@ -15,7 +15,7 @@ const Header = () => {
     <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand mx-auto" to="/">
             كافيار
           </Link>
           <button
@@ -60,24 +60,21 @@ const Header = () => {
       </div>
       <div className="container">
         <div className="d-flex align-items-center justify-content-between py-3">
-          <div>
-            {userLoginInfo && userLoginInfo.userinfo ? (
-              <Link className="btn btn-primary me-3" onClick={logout}>
-                تسجيل الخروج
-              </Link>
-            ) : (
-              <Link className="btn btn-primary me-3" to="/login">
-                تسجيل الدخول
-              </Link>
-            )}
+          <div className="d-lg-none">
+            <Link className="me-3" to="/login">
+              تسجيل الدخول
+            </Link>
+            <Link className="me-3" to="/cart">
+              <i className="bi bi-cart"></i>
+            </Link>
           </div>
-          <div>
+          <div className="d-none d-lg-flex align-items-center">
+            <Link className="btn btn-primary me-3" onClick={logout}>
+              تسجيل الخروج
+            </Link>
             <Link className="btn btn-outline-primary me-3" to="/cart">
               <i className="bi bi-cart"></i>
             </Link>
-            <span className="badge bg-danger">
-              {ItemsInCart.length}
-            </span>
           </div>
         </div>
       </div>
@@ -86,6 +83,7 @@ const Header = () => {
 };
 
 export default Header;
+
 
 
 

@@ -1,47 +1,34 @@
-import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap';
-import { BsPerson, BsBag } from 'react-icons/bs';
+import React from 'react';
+import { Navbar, Nav, Button } from 'react-bootstrap';
+import { FaUser, FaShoppingCart } from 'react-icons/fa'; // استيراد أيقونات Font Awesome
 
-const Header = () => {
-  const [smallScreen, setSmallScreen] = useState(false);
-
-  const handleToggle = () => {
-    setSmallScreen(!smallScreen);
-  };
-
+const Header = ({ userLoginInfo, logout, ItemsInCart }) => {
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#">اسم الموقع</Navbar.Brand>
-
-        {/* البرجر أيقونة في الشاشات الصغيرة */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
-
-        {/* العناصر في الشاشات الكبيرة */}
-        <Navbar.Collapse id="basic-navbar-nav" className={!smallScreen ? 'justify-content-center' : ''}>
-          <Nav className="me-auto">
-            <Nav.Link href="#">رابط 1</Nav.Link>
-            <Nav.Link href="#">رابط 2</Nav.Link>
-            <NavDropdown title="المستخدم" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#">تسجيل الدخول</NavDropdown.Item>
-              <NavDropdown.Item href="#">الإعدادات</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">تسجيل الخروج</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-
-        {/* أيقونة المستخدم */}
-        <Button variant="light" className="me-2">
-          <BsPerson />
-        </Button>
-
-        {/* أيقونة الشوب كارت */}
-        <Button variant="light">
-          <BsBag />
-          <span className="badge bg-secondary ms-1">عدد المنتجات</span>
-        </Button>
-      </Container>
+      <Navbar.Brand href="#">اسم الموقع</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link href="#">رابط 1</Nav.Link>
+          <Nav.Link href="#">رابط 2</Nav.Link>
+          <Nav.Link href="#">رابط 3</Nav.Link>
+          <Nav.Link href="#">رابط 4</Nav.Link>
+        </Nav>
+        <Nav>
+          <Button variant="outline-primary" onClick={userLoginInfo ? logout : null}>
+            {userLoginInfo ? 'تسجيل الخروج' : 'تسجيل الدخول'}
+          </Button>
+          {userLoginInfo && (
+            <>
+              <Nav.Link href="#" className="d-flex align-items-center ms-3">
+                <FaShoppingCart />
+                <span className="ms-1">عربة التسوق ({ItemsInCart.length})</span>
+              </Nav.Link>
+              <span className="ms-3">عدد المنتجات: {ItemsInCart.length}</span>
+            </>
+          )}
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };

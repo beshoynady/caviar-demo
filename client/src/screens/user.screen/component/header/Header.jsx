@@ -1,36 +1,68 @@
-import React from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // استيراد الأيقونات من Font Awesome
+import React, { useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { detacontext } from '../../../../App';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
-const Header = ({ userLoginInfo, logout, ItemsInCart }) => {
+const Header = () => {
+  const { id } = useParams();
+  const [opencart, setopencart] = useState(false);
+  const [openlogin, setopenlogin] = useState(false);
+  const navref = useRef();
+
+  const toggleMobileMenu = () => {
+    navref.current.classList.toggle("show");
+  };
+
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#">اسم الموقع</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="#">رابط 1</Nav.Link>
-          <Nav.Link href="#">رابط 2</Nav.Link>
-          <Nav.Link href="#">رابط 3</Nav.Link>
-          <Nav.Link href="#">رابط 4</Nav.Link>
-        </Nav>
-        <Nav>
-          <Button variant="outline-primary" onClick={userLoginInfo ? logout : null}>
-            {userLoginInfo ? 'تسجيل الخروج' : 'تسجيل الدخول'}
-          </Button>
-          {userLoginInfo && (
-            <>
-              <Nav.Link href="#" className="d-flex align-items-center ms-3">
-                <FontAwesomeIcon icon={faShoppingCart} />
-                <span className="ms-1">عربة التسوق ({ItemsInCart.length})</span>
-              </Nav.Link>
-              <span className="ms-3">عدد المنتجات: {ItemsInCart.length}</span>
-            </>
-          )}
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <detacontext.Consumer>
+      {({ userLoginInfo, logout, ItemsInCart }) => (
+        <header className='header-client'>
+          <div className="container-lg d-flex justify-content-between align-items-center">
+            <div className='logo d-flex align-items-center'>
+              <div className="mob-menu" onClick={toggleMobileMenu}>
+                <span className="bg-dark rounded p-1"></span>
+                <span className="bg-dark rounded p-1 mt-1"></span>
+                <span className="bg-dark rounded p-1 mt-1"></span>
+              </div>
+              <Link to="/" className='res-name text-decoration-none'>كافيار</Link>
+            </div>
+            <nav ref={navref} className='nav'>
+              <ul className='navigator list-unstyled d-flex justify-content-between m-0'>
+                <li onClick={toggleMobileMenu}><Link to="/">الرئيسيه</Link></li>
+                <li onClick={toggleMobileMenu}><Link to="#menu">قائمة الطعام</Link></li>
+                <li onClick={toggleMobileMenu}><Link to="#offer">العروض</Link></li>
+                <li onClick={toggleMobileMenu}><Link to="#location">موقعنا</Link></li>
+                <li onClick={toggleMobileMenu}><Link to="#contact">تواصل معنا</Link></li>
+              </ul>
+            </nav>
+            <div className='right-nav d-flex align-items-center'>
+              {!id && (
+                <>
+                  {userLoginInfo && userLoginInfo.userinfo ? (
+                    <div className="nav-logout bg-danger text-white px-2 py-1 rounded cursor-pointer" onClick={logout}>
+                      خروج
+                      <span className="material-symbols-outlined text-white">logout</span>
+                    </div>
+                  ) : (
+                    <div className='nav-login bg-light text-dark px-2 py-1 rounded cursor-pointer' onClick={() => setopenlogin(!openlogin)}>
+                      دخول
+                      <span className="material-symbols-outlined">
+                        login
+                      </span>
+                    </div>
+                  )}
+                </>
+              )}
+              <div className='cart-icon position-relative' onClick={() => setopencart(!opencart)}>
+                <span className="material-symbols-rounded shopping_cart text-white">shopping_cart</span>
+                <span className='cartcounter bg-danger text-white rounded-circle d-flex align-items-center justify-content-center'>{ItemsInCart.length}</span>
+              </div>
+              {/* Include LoginRegistr and Cart components here */}
+            </div>
+          </div>
+        </header>
+      )}
+    </detacontext.Consumer>
   );
 };
 

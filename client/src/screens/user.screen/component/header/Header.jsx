@@ -26,15 +26,15 @@ const Header = () => {
                 <span id='line-2'></span>
                 <span id='line-3'></span>
               </div>
-              <Link to="/" className='res-name'>كافيار</Link>
+              <a href ="/" className='res-name'>كافيار</a>
             </div>
             <nav ref={navref} className='nav'>
               <ul className='navigator'>
-                <li onClick={toggleMobileMenu}><Link to="/">الرئيسيه</Link></li>
-                <li onClick={toggleMobileMenu}><Link to="#menu">قائمة الطعام</Link></li>
-                <li onClick={toggleMobileMenu}><Link to="#offer">العروض</Link></li>
-                <li onClick={toggleMobileMenu}><Link to="#location">موقعنا</Link></li>
-                <li onClick={toggleMobileMenu}><Link to="#contact">تواصل معنا</Link></li>
+                <li onClick={toggleMobileMenu}><a href ="/">الرئيسيه</a></li>
+                <li onClick={toggleMobileMenu}><a href ="#menu">قائمة الطعام</a></li>
+                <li onClick={toggleMobileMenu}><a href ="#offer">العروض</a></li>
+                <li onClick={toggleMobileMenu}><a href ="#location">موقعنا</a></li>
+                <li onClick={toggleMobileMenu}><a href ="#contact">تواصل معنا</a></li>
               </ul>
             </nav>
             <div className='right-nav'>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
-import { FaUser, FaShoppingCart } from 'react-icons/fa'; // استيراد أيقونات Font Awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // استيراد الأيقونات من Font Awesome
 
 const Header = ({ userLoginInfo, logout, ItemsInCart }) => {
   return (
@@ -21,7 +22,7 @@ const Header = ({ userLoginInfo, logout, ItemsInCart }) => {
           {userLoginInfo && (
             <>
               <Nav.Link href="#" className="d-flex align-items-center ms-3">
-                <FaShoppingCart />
+                <FontAwesomeIcon icon={faShoppingCart} />
                 <span className="ms-1">عربة التسوق ({ItemsInCart.length})</span>
               </Nav.Link>
               <span className="ms-3">عدد المنتجات: {ItemsInCart.length}</span>
@@ -34,6 +35,7 @@ const Header = ({ userLoginInfo, logout, ItemsInCart }) => {
 };
 
 export default Header;
+
 
 // import React, { useRef, useState } from 'react';
 // import { Link, useParams } from 'react-router-dom';

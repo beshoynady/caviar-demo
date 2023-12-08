@@ -22,7 +22,7 @@ export default function Offers() {
       {
         ({ allProducts, itemid, additemtocart, deleteitems, increment, descrement, setproductnote, addnotrstoproduct, }) => {
           return (
-            <section id='offer'  className='offers-section'>
+            <section id='offer' className='offers-section'>
               <div className='section-title'>
                 <h2>OFFERS</h2>
               </div>
@@ -50,7 +50,7 @@ export default function Offers() {
                         <img className='offer-img' src={`https://raw.githubusercontent.com/beshoynady/restaurant-api/main/server/images/${product.image}`} alt="" />
                         {product._id == productid & noteArea == true ?
                           <div className='offers-note'>
-                            <form onSubmit={(e) => { addnotrstoproduct(e, product._id);; setnoteArea(!noteArea) }}>
+                            <form onSubmit={(e) => { addnotrstoproduct(e, product._id); setnoteArea(!noteArea) }}>
                               <textarea placeholder='اضف تعليماتك الخاصة بهذا الطبق ' name="note" cols="100" rows="3" onChange={(e) => { setproductnote(e.target.value) }}></textarea>
                               <div className='note-btn'>
                                 <button>تاكيد</button>

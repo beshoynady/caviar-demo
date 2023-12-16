@@ -19,21 +19,23 @@ const Tables = () => {
     setqrimage(qr.data);
   }
 
-  const [listoftable, setlistoftable] = useState([])
-  const [listoftabledescription, setlistoftabledescription] = useState([])
+  const [listoftable, setlistoftable] = useState([]);
+  const [listoftabledescription, setlistoftabledescription] = useState([]);
+  
   const getallTable = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/table');
-      const tables = response.data
-      setlistoftable(tables)
-      for(const table of tables){
-        setlistoftabledescription(...listoftabledescription , table.description)
-      }
-
+      const tables = response.data;
+      setlistoftable(tables);
+  
+      setlistoftabledescription(prevDescription => {
+        const descriptions = tables.map(table => table.description);
+        return [...prevDescription, ...descriptions];
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const [tablenum, settablenum] = useState(0);
   const [chairs, setchairs] = useState(0);
@@ -67,8 +69,8 @@ const Tables = () => {
     }
   }
 
-  
-  
+
+
   const deleteTable = async (e) => {
     e.preventDefault()
     // console.log(tableid)
@@ -87,9 +89,8 @@ const Tables = () => {
     const tables = listoftable.filter((table) => table.tablenum.toString().startsWith(num) == true)
     settableFiltered(tables)
   }
-  const filterBySection = (e)=>{
-    const description = e.target.value
-    const filter = listoftable.filter(table=>table.description == description)
+  const filterBySection = (description) => {
+    const filter = listoftable.filter(table => table.description == description)
     settableFiltered(filter)
   }
 
@@ -133,6 +134,7 @@ const Tables = () => {
   useEffect(() => {
     getallTable()
   }, [])
+
   return (
     <detacontext.Consumer>
       {
@@ -140,7 +142,7 @@ const Tables = () => {
 
           return (
             <div className="container-xl mlr-auto">
-              <ToastContainer/>
+              <ToastContainer />
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -178,11 +180,11 @@ const Tables = () => {
                         </div>
                         <div class="filter-group">
                           <label>الموقع</label>
-                          <select class="form-control" onChange={e=> filterBySection()}>
+                          <select class="form-control" onChange={e => filterBySection(e.target.value)}>
                             <option>Any</option>
-                            {listoftabledescription.map((description, i) =>
-                            <option key={i} value={description}>{description}</option>
-                              )}
+                            {listoftabledescription && listoftabledescription.map((description, i) =>
+                              <option key={i} value={description}>{description}</option>
+                            )}
                           </select>
                         </div>
                         <span class="filter-icon"><i class="fa fa-filter"></i></span>

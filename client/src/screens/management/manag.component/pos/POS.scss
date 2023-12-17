@@ -379,10 +379,9 @@
         width: 100%;
         height: calc(100% - 50px);
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: center;
         justify-content: flex-start;
-    
         .pos-cart {
             width: 100%;
             height: 100vh;
@@ -555,29 +554,31 @@
             background-color: rgb(56, 56, 56);
             overflow: hidden;
             .client-formgroup {
-                width: 100%;
-                height: max-content;
-                display: flex;
                 align-items: center;
+                display: flex;
+                height: -webkit-max-content;
+                height: auto;
                 justify-content: flex-start;
                 padding: 5px;
+                width: 100%;         
                 .form-info {
-                    width: 100%;
-                    height: 100%;
+                    align-items: center;
+                    border-bottom: 2px solid wheat;
                     display: flex;
                     flex-wrap: wrap;
-                    align-items: center;
+                    height: 100%;
                     justify-content: flex-start;
-                    border-bottom: 2px solid wheat;
-    
+                    width: 100%;
                     .formgroup {
-                        max-width: 300px;
-                        height: 50%;
-                        display: flex;
                         align-items: center;
-                        color: white;
+                        color: #fff;
+                        display: flex;
+                        height: auto;
                         justify-content: center;
-    
+                        max-width: 100%;
+                        align-content: center;
+                        flex-direction: row;
+                        flex-wrap: wrap;
                         >label {
                             font-size: 16px;
                             font-weight: 900;
@@ -601,13 +602,13 @@
                         }
                     }
                     .info-adress {
-                        font-size: 16px;
-                        font-weight: 900;
                         align-items: center;
                         display: flex;
-                        height: 50%;
+                        font-size: 16px;
+                        font-weight: 900;
+                        height: 30%;
                         justify-content: flex-start;
-                        width: 50%;
+                        width: 100%;
                         >label {
                             font-size: 16px;
                             font-weight: 900;
@@ -711,7 +712,7 @@
                     }
                 }
                 .pos-category {
-                    width: 80px;
+                    width: 120px;
                     height: 100vh;
                     background-color: rgb(56, 56, 56);
                     border-right: 2px solid white;

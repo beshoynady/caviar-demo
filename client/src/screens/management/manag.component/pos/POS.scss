@@ -377,7 +377,7 @@
 @media (max-width: 768px) {
     .pos-section {
         width: 100%;
-        height: calc(100% - 50px);
+        height: auto;
         display: flex;
         flex-direction: column-reverse;
         align-items: center;

@@ -552,7 +552,8 @@
             align-items: flex-start;
             justify-content: center;
             background-color: rgb(56, 56, 56);
-            overflow: hidden;
+            // overflow: hidden;
+            margin-bottom: 10px;
             .client-formgroup {
                 align-items: center;
                 display: flex;

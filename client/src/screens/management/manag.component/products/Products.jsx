@@ -312,7 +312,7 @@ const Products = () => {
                                 <td>{p.discount}</td>
                                 <td>{p.priceAfterDiscount}</td>
                                 <td>{p.sales}</td> 
-                                <td>{p.avaliable}</td> 
+                                <td>{p.avaliable?'متاح':'غير متاح'}</td> 
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
@@ -344,7 +344,7 @@ const Products = () => {
                                 <td>{p.discount}</td>
                                 <td>{p.priceAfterDiscount}</td>
                                 <td>{p.sales}</td>
-                                <td>{p.avaliable}</td>
+                                <td>{p.avaliable?'متاح':'غير متاح'}</td> 
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   {/* <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> */}

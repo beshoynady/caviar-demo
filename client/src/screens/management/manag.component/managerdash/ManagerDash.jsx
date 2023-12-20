@@ -400,7 +400,7 @@ const ManagerDash = () => {
                                     {recent.serial}
                                   </a>
                                 </td>
-                                <td>{recent.table != null ? usertitle(recent.table) : recent.user != null ? usertitle(recent.user) : recent.ordernum}</td>
+                                <td>{recent.order_type== 'Internal' ? usertitle(recent.table) : recent.order_type== 'Delivery' ? usertitle(recent.user) : recent.ordernum}</td>
                                 <td>{recent.total}</td>
                                 <td>
                                   <select name="status" id="status" form="carform" onChange={(e) => { changeorderstauts(e, recent._id) }}>

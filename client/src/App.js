@@ -719,7 +719,8 @@ function App() {
     try {
       // Retrieve day's orders to determine the order number
       const dayOrders = allOrders.filter((order) => new Date(order.createdAt).toDateString() === new Date().toDateString());
-      const ordernum = dayOrders.length === 0 ? 1 : dayOrders[dayOrders.length - 1].ordernum + 1;
+      const takeawayorder = dayOrders.filter((order)=> order.order_type== 'Takeaway')
+      const ordernum = takeawayorder.length == 0 ? 1 : takeawayorder[takeawayorder.length - 1].ordernum + 1;
 
       // Generate serial number for the order
       const serial = allOrders.length > 0 ? String(Number(allOrders[allOrders.length - 1].serial) + 1).padStart(6, '0') : '000001';

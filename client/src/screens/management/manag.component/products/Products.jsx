@@ -9,6 +9,7 @@ const Products = () => {
   const [productprice, setproductprice] = useState(0);
   const [productdescription, setproductdescription] = useState("");
   const [productcategoryid, setproductcategoryid] = useState(null);
+  const [avaliable, setavaliable] = useState();
   const [productimg, setproductimg] = useState("");
 
   const createProduct = async (e) => {
@@ -19,6 +20,7 @@ const Products = () => {
       formdata.append('productprice', productprice);
       formdata.append('productdescription', productdescription);
       formdata.append('productcategoryid', productcategoryid);
+      formdata.append('avaliable', avaliable);
       formdata.append('image', productimg);
       console.log(...formdata)
       const response = await axios.post('https://caviar-api.vercel.app/api/product/', formdata);
@@ -35,7 +37,7 @@ const Products = () => {
     if (productimg) {
       try {
         const response = await axios.put('https://caviar-api.vercel.app/api/product/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount, image: productimg
+          productname, productprice, productdescription, productcategoryid, productdiscount,avaliable, image: productimg
         });
         console.log(response.data);
         if (response) {
@@ -48,7 +50,7 @@ const Products = () => {
     } else {
       try {
         const response = await axios.put('https://caviar-api.vercel.app/api/product/withoutimage/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount
+          productname, productprice, productdescription, productcategoryid, productdiscount,avaliable
         });
         // console.log(productid);
         console.log(response.data);
@@ -254,6 +256,7 @@ const Products = () => {
                         <th>التخفيض</th>
                         <th>بعد التخفيض</th>
                         <th>عدد المبيعات</th>
+                        <th>متاح</th>
                         <th>اجراءات</th>
                       </tr>
                     </thead>
@@ -278,7 +281,8 @@ const Products = () => {
                                 <td>{p.price}</td>
                                 <td>{p.discount}</td>
                                 <td>{p.priceAfterDiscount}</td>
-                                <td>{p.sales}</td>
+                                <td>{p.sales}</td> 
+                                <td>{p.avaliable}</td> 
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
@@ -310,6 +314,7 @@ const Products = () => {
                                 <td>{p.discount}</td>
                                 <td>{p.priceAfterDiscount}</td>
                                 <td>{p.sales}</td>
+                                <td>{p.avaliable}</td>
                                 <td>
                                   <a href="#editProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id); setproductname(p.name); setproductdescription(p.description); setproductprice(p.price); setproductdiscount(p.discount); setproductcategoryid(p.category) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   {/* <a href="#recipeProductModal" className="edit" data-toggle="modal" onClick={() => { setproductid(p._id) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> */}
@@ -367,6 +372,13 @@ const Products = () => {
                           </select>
                         </div>
                         <div className="form-group">
+                          <label>متاح</label>
+                          <select name="category" id="category" form="carform" onChange={(e) => setavaliable(e.target.value)}>
+                            <option value={true} >متاح</option>
+                            <option value={false} >غير متاح</option>
+                          </select>
+                        </div>
+                        <div className="form-group">
                           <label>الصورة</label>
                           <input type="file" className="form-control" required onChange={(e) => setproductimg(e.target.files[0])} />
                         </div>
@@ -411,6 +423,13 @@ const Products = () => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
                             }
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label>متاح</label>
+                          <select name="category" id="category" form="carform" onChange={(e) => setavaliable(e.target.value)}>
+                            <option value={true} >متاح</option>
+                            <option value={false} >غير متاح</option>
                           </select>
                         </div>
                         <div className="form-group">

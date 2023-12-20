@@ -103,6 +103,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    avaliable:{
+      type: Boolean,
+      default: true,
+      required: true
+    },
     image: {
       type: String,
     },

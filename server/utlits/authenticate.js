@@ -8,12 +8,12 @@ const authenticateToken = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) {
-        return res.sendStatus(401); // Unauthorized
+        return res.status(401).json({ message: 'Unauthorized: Token missing' }); // Unauthorized
     }
 
     jwt.verify(token, secretKey, (err, user) => {
         if (err) {
-            return res.sendStatus(403); // Forbidden
+            return res.status(403).json({ message: 'Forbidden: Invalid token' }); // Forbidden
         }
         req.user = user;
         next();

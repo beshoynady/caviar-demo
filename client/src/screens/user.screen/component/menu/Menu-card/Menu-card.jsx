@@ -61,7 +61,6 @@ const MenuCard = () => {
             }
          }
       </detacontext.Consumer>
-
    )
 }
 

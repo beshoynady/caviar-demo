@@ -158,7 +158,6 @@
   text-align: center;
   border-radius: 20px;
   cursor: pointer;
-  background-color: rgb(216, 0, 0);
 }
 .card-group .menu-card .detalis .card-btn .addtocart {
   width: 100%;
@@ -167,7 +166,6 @@
   text-align: center;
   border-radius: 20px;
   cursor: pointer;
-  background-color: rgb(153, 255, 0);
 }
 .card-group .menu-card .detalis .card-btn .addnote {
   width: 45%;

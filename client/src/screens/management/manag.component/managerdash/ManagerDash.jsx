@@ -519,21 +519,21 @@ const ManagerDash = () => {
                                 <tfoot>
                                   <tr>
                                     <td colSpan="3" style={{ fontSize: '20px' }}>المجموع</td>
-                                    <td style={{ fontSize: '20px' }}>{ordersubtotal}</td>
+                                    <td colSpan="2" style={{ fontSize: '20px' }}>{ordersubtotal}</td>
                                   </tr>
                                   {orderdeliveryCost > 0 && (
                                     <tr>
                                       <td colSpan="3" style={{ fontSize: '20px' }}>خدمة التوصيل</td>
-                                      <td style={{ fontSize: '20px' }}>{orderdeliveryCost}</td>
+                                      <td colSpan="2" style={{ fontSize: '20px' }}>{orderdeliveryCost}</td>
                                     </tr>
                                   )}
                                   <tr>
                                     <td colSpan="3" style={{ fontSize: '20px' }}>الضريبه</td>
-                                    <td style={{ fontSize: '20px' }}>{Math.round(ordertax * 100) / 100}</td>
+                                    <td colSpan="2" style={{ fontSize: '20px' }}>{Math.round(ordertax * 100) / 100}</td>
                                   </tr>
                                   <tr>
                                     <td colSpan="3" style={{ fontSize: '20px' }}>الاجمالي</td>
-                                    <td style={{ fontSize: '20px' }}>{ordertotal}</td>
+                                    <td colSpan="2" style={{ fontSize: '20px' }}>{ordertotal}</td>
                                   </tr>
                                 </tfoot>
                               </table>

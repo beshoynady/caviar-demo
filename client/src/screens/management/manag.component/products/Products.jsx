@@ -59,7 +59,7 @@ const Products = () => {
   
         const response = await axios.put(`https://caviar-api.vercel.app/api/product/${productid}`, formdata, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
           },
         });
@@ -79,7 +79,7 @@ const Products = () => {
           avaliable,
         }, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'authorization': `Bearer ${token}`,
           },
         });
   

@@ -248,7 +248,7 @@ const ManagerDash = () => {
   const [ordernum, setordernum] = useState()
   const [table, settable] = useState()
   const [casher, setcasher] = useState()
-  const [ivocedate, setivocedate] = useState('')
+  const [ivocedate, setivocedate] = useState(new Date())
 
   // Fetch orders from API
   const getOrderDetalis = async (serial) => {
@@ -261,7 +261,7 @@ const ManagerDash = () => {
       setordertax(order.tax)
       setorderdeliveryCost(order.deliveryCost)
       setserial(order.serial)
-      setivocedate(order.createdAt)
+      // setivocedate(order.createdAt)
       setcasher(order.casher)
       settable(order.order_type == 'Internal' ? order.table : '')
       setordernum(order.order_type == 'Takeaway' ? order.ordernum : '')
@@ -475,7 +475,7 @@ const ManagerDash = () => {
                               {/* Invoice Header */}
                               <div className="invoice-header" style={{ backgroundColor: '#343a40', color: '#ffffff', padding: '20px', textAlign: 'center' }}>
                                 <h2>Restaurant Name</h2>
-                                <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date(ivocedate).toLocaleString('en-GB', { hour12: true })}</p>
+                                <p>Casher {usertitle(casher)} |Invoice #{serial} |{ordertype == 'Internal' ? `Table ${usertitle(table)}` : ''} |Date: {new Date().toLocaleString('en-GB', { hour12: true })}</p>
                               </div>
 
                               {/* Customer Information */}
@@ -497,6 +497,7 @@ const ManagerDash = () => {
                               <table className="table table-bordered table-responsive-md">
                                 <thead className="thead-dark">
                                   <tr>
+                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>م</th>
                                     <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
                                     <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
                                     <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
@@ -507,6 +508,7 @@ const ManagerDash = () => {
                                   {/* Replace this with your dynamic data */}
                                   {list_products_order.map((item, i) => (
                                     <tr key={i}>
+                                      <td className="text-nowrap" style={{ fontSize: '18px' }}>{i+1}</td>
                                       <td className="text-truncate" style={{ maxWidth: '200px', fontSize: '18px' }}>{item.name}</td>
                                       <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.priceAfterDiscount ? item.priceAfterDiscount : item.price}</td>
                                       <td className="text-nowrap" style={{ fontSize: '18px' }}>{item.quantity}</td>

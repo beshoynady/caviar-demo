@@ -497,11 +497,11 @@ const ManagerDash = () => {
                               <table className="table table-bordered table-responsive-md">
                                 <thead className="thead-dark">
                                   <tr>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>م</th>
-                                    <th scope="col" style={{ width: '30%', fontSize: '20px' }}>الصنف</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>السعر</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الكمية</th>
-                                    <th scope="col" style={{ width: '20%', fontSize: '20px' }}>الاجمالي</th>
+                                    <th scope="col" style={{ width: '15%', fontSize: '20px' }}>م</th>
+                                    <th scope="col" style={{ width: '40%', fontSize: '20px' }}>الصنف</th>
+                                    <th scope="col" style={{ width: '15%', fontSize: '20px' }}>السعر</th>
+                                    <th scope="col" style={{ width: '15%', fontSize: '20px' }}>الكمية</th>
+                                    <th scope="col" style={{ width: '15%', fontSize: '20px' }}>الاجمالي</th>
                                   </tr>
                                 </thead>
                                 <tbody>

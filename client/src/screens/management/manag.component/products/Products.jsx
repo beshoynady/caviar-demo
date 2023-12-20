@@ -23,7 +23,16 @@ const Products = () => {
       formdata.append('avaliable', avaliable);
       formdata.append('image', productimg);
       console.log(...formdata)
-      const response = await axios.post('https://caviar-api.vercel.app/api/product/', formdata);
+
+      const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+    const response = await axios.post('https://caviar-api.vercel.app/api/product/', formdata, config);
       console.log(response.data);
     } catch (error) {
       console.log(error)
@@ -33,37 +42,58 @@ const Products = () => {
   const [productid, setproductid] = useState("")
   const [productdiscount, setproductdiscount] = useState(null)
   const editProduct = async (e) => {
-    e.preventDefault()
-    if (productimg) {
-      try {
-        const response = await axios.put('https://caviar-api.vercel.app/api/product/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount,avaliable, image: productimg
+    e.preventDefault();
+  
+    try {
+      const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
+  
+      if (productimg) {
+        const formdata = new FormData();
+        formdata.append('productname', productname);
+        formdata.append('productprice', productprice);
+        formdata.append('productdescription', productdescription);
+        formdata.append('productcategoryid', productcategoryid);
+        formdata.append('productdiscount', productdiscount);
+        formdata.append('avaliable', avaliable);
+        formdata.append('image', productimg);
+  
+        const response = await axios.put(`https://caviar-api.vercel.app/api/product/${productid}`, formdata, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
         });
+  
         console.log(response.data);
         if (response) {
-          getallCategories()
-          getallproducts()
+          getallCategories();
+          getallproducts();
         }
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
-      try {
-        const response = await axios.put('https://caviar-api.vercel.app/api/product/withoutimage/' + productid, {
-          productname, productprice, productdescription, productcategoryid, productdiscount,avaliable
+      } else {
+        const response = await axios.put(`https://caviar-api.vercel.app/api/product/withoutimage/${productid}`, {
+          productname,
+          productprice,
+          productdescription,
+          productcategoryid,
+          productdiscount,
+          avaliable,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         });
-        // console.log(productid);
+  
         console.log(response.data);
         if (response) {
-          getallCategories()
-          getallproducts()
+          getallCategories();
+          getallproducts();
         }
-      } catch (error) {
-        console.log(error)
       }
+    } catch (error) {
+      console.log(error);
     }
-
-  }
+  };
+  
 
 
   const [listofProducts, setlistofProducts] = useState([]);

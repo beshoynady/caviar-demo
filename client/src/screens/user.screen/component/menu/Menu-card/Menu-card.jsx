@@ -48,7 +48,7 @@ const MenuCard = () => {
                                   :<div className='card-btn'>
                                        {itemid.filter((i) => i === product._id).length > 0 && product.quantity > 0 ? 
                                           <button type="button" className='btn btn-danger delfromcart' onClick={() => { deleteitems(product._id) }}>احذف من الطلبات</button>
-                                       :<button type="button" className='btn btn-success addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) } }}>اضف إلى طلباتي</button>
+                                       :<button type="button" className='btn btn-success addtocart' onClick={() => { if (product.quantity > 0) { additemtocart(product._id) } }}> طلباتي</button>
                                        }
                                     </div>
                                  }

@@ -41,9 +41,9 @@ const MenuCard = () => {
                                        <p>{product.price - product.discount}<sup><del>{product.price}</del></sup></p> :
                                        <p>{product.price} ج</p>}
                                  </div>
-                                 {product.avaliable ?
+                                 {product.avaliable =='false' ?
                                     <div className='card-btn'>
-                                       <button type="button" className='btn btn-warning'>غير متاح الان</button>
+                                       <button type="button" className='btn btn-warning delfromcart'>غير متاح الان</button>
                                     </div>
                                     : <div className='card-btn'>
                                        {itemid.filter((i) => i == product._id).length > 0 && product.quantity > 0 ?

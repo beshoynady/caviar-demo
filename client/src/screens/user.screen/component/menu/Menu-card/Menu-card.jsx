@@ -41,7 +41,7 @@ const MenuCard = () => {
                                        <p>{product.price - product.discount}<sup><del>{product.price}</del></sup></p> :
                                        <p>{product.price} ج</p>}
                                  </div>
-                                 {product.avaliable === 'false' ? (
+                                 {product.avaliable == 'false' ? (
                                     <div className='card-btn'>
                                        <button type="button" className='btn btn-warning delfromcart'>غير متاح الآن</button>
                                     </div>

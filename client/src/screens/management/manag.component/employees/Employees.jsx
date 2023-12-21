@@ -29,6 +29,7 @@ const Employees = () => {
   const [email, setemail] = useState("")
   const [isActive, setisActive] = useState(true)
   const [role, setrole] = useState("")
+  const [sectionNumber, setsectionNumber] = useState()
 
   const notify = (message, type) => {
     toast[type](message, {
@@ -46,7 +47,7 @@ const Employees = () => {
   //     phone: Joi.string().length(11),
   //     password: Joi.string().min(3),
   //     basicSalary: Joi.number().min(0),
-  //     role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'Chef'),
+  //     sectionNumber: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'Chef'),
   //     isActive: Joi.boolean(),
   // });
   const createEmployee = async (e) => {
@@ -73,7 +74,7 @@ const Employees = () => {
       return;
     }
     try {
-      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', { fullname, basicSalary, numberID, username, password, address, phone, email, isActive, role })
+      const newemployee = await axios.post('https://caviar-api.vercel.app/api/employee', { fullname, basicSalary, numberID, username, password, address, phone, email, isActive, role, sectionNumber })
       console.log(newemployee)
       notify('Employee created successfully', 'success');
       getemployees();
@@ -103,8 +104,8 @@ const Employees = () => {
       // }
 
       const updateData = password
-        ? { fullname, numberID, username, email, address, phone, password, basicSalary, isActive, role }
-        : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };
+        ? { fullname, numberID, username, email, address, phone, password, basicSalary, isActive, role, sectionNumber }
+        : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role, sectionNumber };
 
       const update = await axios.put(`https://caviar-api.vercel.app/api/employee/${employeeid}`, updateData);
       if (update.status === 200) {
@@ -235,7 +236,7 @@ const Employees = () => {
                           <select class="form-control" onChange={(e) => getemployeesByJob(e.target.value)} >
                             <option>الكل</option>
                             <option value="manager">مدير</option>
-                            <option value="casher">Cashير</option>
+                            <option value="casher">كاشير</option>
                             <option value="waiter">ويتر</option>
                             <option value="Chef">شيف</option>
                           </select>
@@ -269,6 +270,7 @@ const Employees = () => {
                         <th>الوظيفه</th>
                         <th>الراتب</th>
                         <th>الحالة</th>
+                        <th>السكشن</th>
                         <th>التاريخ</th>
                         <th>اجراءات</th>
                       </tr>
@@ -280,14 +282,14 @@ const Employees = () => {
                             <tr key={i}>
                               <td>
                                 <span className="custom-checkbox">
-                                <input
-                                      type="checkbox"
-                                      id={`checkbox${i}`}
-                                      name="options[]"
-                                      value={emp._id}
-                                      onChange={handleCheckboxChange}
-                                    />
-                                    <label htmlFor={`checkbox${i}`}></label>                               
+                                  <input
+                                    type="checkbox"
+                                    id={`checkbox${i}`}
+                                    name="options[]"
+                                    value={emp._id}
+                                    onChange={handleCheckboxChange}
+                                  />
+                                  <label htmlFor={`checkbox${i}`}></label>
                                 </span>
                               </td>
                               <td>{i + 1}</td>
@@ -298,6 +300,7 @@ const Employees = () => {
                               <td>{emp.role}</td>
                               <td>{emp.basicSalary}</td>
                               <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
+                              <td>{emp.sectionNumber}</td>
                               <td>{new Date(emp.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                               <td>
                                 <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
@@ -316,14 +319,14 @@ const Employees = () => {
                               <tr key={i}>
                                 <td>
                                   <span className="custom-checkbox">
-                                  <input
+                                    <input
                                       type="checkbox"
                                       id={`checkbox${i}`}
                                       name="options[]"
                                       value={emp._id}
                                       onChange={handleCheckboxChange}
                                     />
-                                    <label htmlFor={`checkbox${i}`}></label>                               
+                                    <label htmlFor={`checkbox${i}`}></label>
                                   </span>
                                 </td>
                                 <td>{i + 1}</td>
@@ -334,6 +337,7 @@ const Employees = () => {
                                 <td>{emp.role}</td>
                                 <td>{emp.basicSalary}</td>
                                 <td>{emp.isActive ? 'متاح' : "غير متاح"}</td>
+                                <td>{emp.sectionNumber}</td>
                                 <td>{new Date(emp.createdAt).toLocaleString('en-GB', { hour12: true })}</td>
                                 <td>
                                   <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
@@ -426,6 +430,13 @@ const Employees = () => {
                           <input type="Number" min={0} className="form-control" required onChange={(e) => setbasicSalary(e.target.value)} />
                           <div className="invalid-feedback">Please enter a valid salary.</div>
                         </div>
+                        {roll == 'casher' ?
+                          <div className="form-group">
+                            <label>رقم السكشن</label>
+                            <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />
+                          </div>
+                          : ''}
+
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="اغلاق" />
@@ -500,6 +511,12 @@ const Employees = () => {
                           <input type="Number" min={0} className="form-control" defaultValue={basicSalary} required onChange={(e) => setbasicSalary(e.target.value)} />
                         </div>
                       </div>
+                      {roll == 'casher' ?
+                        <div className="form-group">
+                          <label>رقم السكشن</label>
+                          <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />
+                        </div>
+                        : ''}
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="اغلاق" />
                         <input type="submit" className="btn btn-info" value="حفظ" />

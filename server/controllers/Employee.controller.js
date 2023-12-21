@@ -37,7 +37,7 @@ const createEmployee = async (req, res, next) => {
             return res.status(400).json({ message: error.details[0].message });
         }
         // Destructuring request body for required employee details
-        const { fullname, numberID, username, email, address, phone, basicSalary, role, isActive } = req.body;
+        const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive } = req.body;
 
         // Destructuring request body for optional employee details
         const pass = req.body.password;
@@ -62,6 +62,7 @@ const createEmployee = async (req, res, next) => {
             password,
             basicSalary,
             role,
+            sectionNumber,
             isActive,
         });
 
@@ -151,11 +152,11 @@ const updateEmployee = async (req, res) => {
             return res.status(400).json({ message: error.details[0].message });
         }
         const id = req.params.employeeId;
-        const { fullname, numberID, username, email, address, phone, basicSalary, role, isActive, password } = req.body;
+        const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive, password } = req.body;
 
         const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
 
-        const updateData = password ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role } : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role };
+        const updateData = password ? { fullname, numberID, username, email, address, phone, password: hashedPassword, basicSalary, isActive, role ,sectionNumber } : { fullname, numberID, username, email, address, phone, basicSalary, isActive, role, sectionNumber };
 
         const updateEmployee = await Employeemodel.findByIdAndUpdate(id, updateData, { new: true });
 

@@ -430,7 +430,7 @@ const Employees = () => {
                           <input type="Number" min={0} className="form-control" required onChange={(e) => setbasicSalary(e.target.value)} />
                           <div className="invalid-feedback">Please enter a valid salary.</div>
                         </div>
-                        {role == 'casher' ?
+                        {role == 'waiter' ?
                           <div className="form-group">
                             <label>رقم السكشن</label>
                             <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />
@@ -511,7 +511,7 @@ const Employees = () => {
                           <input type="Number" min={0} className="form-control" defaultValue={basicSalary} required onChange={(e) => setbasicSalary(e.target.value)} />
                         </div>
                       </div>
-                      {role == 'casher' ?
+                      {role == 'waiter' ?
                         <div className="form-group">
                           <label>رقم السكشن</label>
                           <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />

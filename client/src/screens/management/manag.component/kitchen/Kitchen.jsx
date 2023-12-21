@@ -60,6 +60,7 @@ const Kitchen = () => {
     const findwaiter = AllWaiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )
     console.log({findwaiter:findwaiter})
     const waiter = findwaiter?findwaiter._id:''
+    console.log({waiter:waiter})
     return waiter
     
   };

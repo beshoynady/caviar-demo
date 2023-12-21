@@ -46,24 +46,35 @@ const Kitchen = () => {
   };
 
   // Determines the next available waiter to take an order
-  const specifiedWaiter = async(id) => {
+ const specifiedWaiter = async (id) => {
     const getorder = allOrders.find((order) => order._id == id);
-    console.log({getorder:getorder})
-    // const data =getorder.data 
-    const tableId = getorder.table 
-    console.log({tableId:tableId})
-    const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`)
-    console.log({getTable:getTable})
-    const tablesectionNumber = getTable.data.sectionNumber
-    console.log({tablesectionNumber:tablesectionNumber})
-    console.log({AllWaiters:AllWaiters})
-    const findwaiter = AllWaiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )
-    console.log({findwaiter:findwaiter})
-    const waiter = findwaiter?findwaiter._id:''
-    console.log({waiter:waiter})
-    return waiter
-    
-  };
+    console.log({ getorder: getorder });
+
+    const tableId = getorder.table;
+    console.log({ tableId: tableId });
+
+    try {
+        const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`);
+        console.log({ getTable: getTable });
+
+        const tablesectionNumber = getTable.data.sectionNumber;
+        console.log({ tablesectionNumber: tablesectionNumber });
+
+        console.log({ AllWaiters: AllWaiters });
+
+        const findwaiter = AllWaiters.find((waiter) => waiter.sectionNumber == tablesectionNumber);
+        console.log({ findwaiter: findwaiter });
+
+        const waiterId = findwaiter ? findwaiter._id : '';
+        console.log({ waiterId: waiterId });
+
+        return waiterId;
+    } catch (error) {
+        console.error('Error fetching table or waiter data:', error);
+        return ''; // Handle the error case here, returning an empty string for waiterId
+    }
+};
+
   // const specifiedWaiter = () => {
   //   const orderTakeWaiter = allOrders.filter((order) => order.waiter !== null);
   //   const lastWaiter = orderTakeWaiter.length > 0 ? orderTakeWaiter[orderTakeWaiter.length - 1].waiter : '';

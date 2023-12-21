@@ -1,11 +1,40 @@
 const mongoose = require('mongoose');
 
-const { ObjectId } = mongoose.Schema;
+const { Schema } = mongoose;
 
-const TableSchema = new mongoose.Schema(
+// const ReservationSchema = new Schema(
+//     {
+//         tableNumber: {
+//             type: Number,
+//             required: true,
+//         },
+//         userId: {
+//             type: Schema.Types.ObjectId,
+//             ref: 'User',
+//             required: true,
+//         },
+//         customerName: {
+//             type: String,
+//             required: true,
+//         },
+//         customerPhone: {
+//             type: String,
+//             required: true,
+//         },
+//         dateTime: {
+//             type: Date,
+//             required: true,
+//         }
+//     },
+//     {
+//         timestamps: true,
+//     }
+// );
+
+const TableSchema = new Schema(
     {
         tablenum: {
-            type:  Number,
+            type: Number,
             required: true,
             unique: true,
             trim: true,
@@ -13,7 +42,7 @@ const TableSchema = new mongoose.Schema(
             max: 100000,
             validate: {
                 validator: function (v) {
-                    return v > 0
+                    return v > 0;
                 },
                 message: '{VALUE} is not a valid table number'
             }
@@ -33,41 +62,36 @@ const TableSchema = new mongoose.Schema(
             default: 1,
             validate: {
                 validator: function (v) {
-                    return v > 0
+                    return v > 0;
                 },
                 message: '{VALUE} is not a valid number of chairs'
             }
         },
-        isValid:{
-            type : Boolean,
+        isValid: {
+            type: Boolean,
             default: true,
         },
-        reservation:{
-            type:ObjectId,
-            ref:'User',
-            default: null,
+        // reservations: [ReservationSchema],
+        sectionNumber: {
+            type: Number,
+            required: true,
+            min: 1,
+            max: 100,
         },
         createdAt: {
             type: Date,
             default: Date.now,
             required: true,
-            trim: true,
         },
         updatedAt: {
             type: Date,
             default: Date.now,
-            trim: true,
-        },
-        deletedAt: {
-            type: Date,
-            default: null,
-            trim: true,
         }
-    },{
+    },
+    {
         timestamps: true,
     }
+);
 
-)
-const TableModel= mongoose.model('Table', TableSchema);
-module.exports = TableModel
-
+const TableModel = mongoose.model('Table', TableSchema);
+module.exports = TableModel;

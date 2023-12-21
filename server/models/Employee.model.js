@@ -20,7 +20,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     trim: true,
     minlength: 3,
-    maxlength: 150,
+    maxlength: 200,
   },
   email: {
     type: String,
@@ -63,6 +63,13 @@ const employeeSchema = new mongoose.Schema({
     trim: true,
     enum: ['manager', 'casher', 'waiter', 'deliveryman', 'chef'],
     required: [true, 'Role is required'],
+  },
+  sectionNumber: {
+    type: Number,
+    required: function() {
+      return this.role === 'waiter';
+    },
+    min: 1,
   },
   basicSalary: {
     type: Number,

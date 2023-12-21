@@ -66,10 +66,6 @@ const employeeSchema = new mongoose.Schema({
   },
   sectionNumber: {
     type: Number,
-    required: function() {
-      return this.role === 'waiter';
-    },
-    min: 1,
   },
   basicSalary: {
     type: Number,

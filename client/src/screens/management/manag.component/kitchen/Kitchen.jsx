@@ -54,6 +54,7 @@ const Kitchen = () => {
     console.log({getTable:getTable})
     const tablesectionNumber = getTable.data.sectionNumber
     console.log({tablesectionNumber:tablesectionNumber})
+    console.log({waiters:waiters})
     const findwaiter = waiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )
     console.log({findwaiter:findwaiter})
     const waiter = findwaiter?findwaiter._id:''

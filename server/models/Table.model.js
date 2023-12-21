@@ -70,6 +70,7 @@ const TableSchema = new Schema(
         isValid: {
             type: Boolean,
             default: true,
+            required: true
         },
         // reservations: [ReservationSchema],
         sectionNumber: {

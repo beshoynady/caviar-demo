@@ -21,13 +21,13 @@ const Tables = () => {
 
   const [listoftable, setlistoftable] = useState([]);
   const [listoftabledescription, setlistoftabledescription] = useState([]);
-  
+
   const getallTable = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/table');
       const tables = response.data;
       setlistoftable(tables);
-  
+
       setlistoftabledescription(prevDescription => {
         const descriptions = tables.map(table => table.description);
         return [...prevDescription, ...descriptions];
@@ -39,7 +39,9 @@ const Tables = () => {
 
   const [tablenum, settablenum] = useState(0);
   const [chairs, setchairs] = useState(0);
+  const [sectionNumber, setsectionNumber] = useState();
   const [tabledesc, settabledesc] = useState("");
+  const [isValid, setisValid] = useState();
 
   const createTable = async (e) => {
     e.preventDefault()
@@ -47,7 +49,7 @@ const Tables = () => {
     // console.log(tablenum);
     // console.log(chairs)
     try {
-      const response = await axios.post('https://caviar-api.vercel.app/api/table/', { "description": tabledesc, tablenum, chairs });
+      const response = await axios.post('https://caviar-api.vercel.app/api/table/', { "description": tabledesc, tablenum, chairs, sectionNumber });
       console.log(response.data);
       getallTable();
     } catch (error) {
@@ -61,7 +63,7 @@ const Tables = () => {
     // console.log(tablenum);
     // console.log(chairs)
     try {
-      const response = await axios.put(`https://caviar-api.vercel.app/api/table/${tableid}`, { "description": tabledesc, tablenum, chairs });
+      const response = await axios.put(`https://caviar-api.vercel.app/api/table/${tableid}`, { "description": tabledesc, tablenum, chairs, sectionNumber, isValid });
       console.log(response.data);
       getallTable();
     } catch (error) {
@@ -204,6 +206,8 @@ const Tables = () => {
                         <th>رقم الطاولة</th>
                         <th>الوصف</th>
                         <th>عدد المقاعد</th>
+                        <th>السكشن</th>
+                        <th>متاح</th>
                         {/* <th>الحجز</th> */}
                         <th>QR</th>
                         <th>اجراءات</th>
@@ -230,6 +234,8 @@ const Tables = () => {
                                 <td>{table.tablenum}</td>
                                 <td>{table.description}</td>
                                 <td>{table.chairs}</td>
+                                <td>{table.sectionNumber}</td>
+                                <td>{table.isValid ? 'متاح' : 'غير متاح'}</td>
                                 {/* <td>{table.reservation ? "Reserved" : "Unreserved"}</td> */}
                                 <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum) }}>
                                   <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
@@ -263,6 +269,9 @@ const Tables = () => {
                                   <td>{table.tablenum}</td>
                                   <td>{table.description}</td>
                                   <td>{table.chairs}</td>
+                                  <td>{table.sectionNumber}</td>
+                                  <td>{table.isValid ? 'متاح' : 'غير متاح'}</td>
+
                                   {/* <td>{table.reservation ? "Reserved" : "Unreserved"}</td> */}
                                   <td><a href="#qrTableModal" className="edit" data-toggle="modal" onClick={() => { settableid(table._id); settablenum(table.tablenum) }}>
                                     <span className="material-symbols-outlined" data-toggle="tooltip" title="QR">qr_code_2_add</span>
@@ -303,6 +312,10 @@ const Tables = () => {
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
+                          <label>رقم السكشن</label>
+                          <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />
+                        </div>
+                        <div className="form-group">
                           <label>رقم الطاولة</label>
                           <input type="Number" defaultValue={listoftable.length > 0 ? listoftable[listoftable.length - 1].tablenum : ""} className="form-control" required onChange={(e) => settablenum(e.target.value)} />
                         </div>
@@ -333,6 +346,10 @@ const Tables = () => {
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
+                          <label>رقم السكشن</label>
+                          <input type="Number" className="form-control" required onChange={(e) => setsectionNumber(e.target.value)} />
+                        </div>
+                        <div className="form-group">
                           <label>رقم الطاولة</label>
                           <input type="Number" defaultValue={listoftable.length > 0 ? listoftable[listoftable.length - 1].tablenum : ""} className="form-control" required onChange={(e) => settablenum(e.target.value)} />
                         </div>
@@ -343,6 +360,14 @@ const Tables = () => {
                         <div className="form-group">
                           <label>الوصف</label>
                           <textarea defaultValue={listoftable.length > 0 ? listoftable.find((table, i) => table._id == tableid).description : ""} className="form-control" required onChange={(e) => settabledesc(e.target.value)}></textarea>
+                        </div>
+                        <div className="form-group">
+                          <label>متاح</label>
+                          <select name="category" id="category" form="carform" onChange={(e) => setisValid(e.target.value)}>
+                            <option >اختر</option>
+                            <option value={true} >متاح</option>
+                            <option value={false} >غير متاح</option>
+                          </select>
                         </div>
                       </div>
                       <div className="modal-footer">

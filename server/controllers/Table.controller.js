@@ -1,104 +1,100 @@
-const QRCode = require('qrcode')
-
+const QRCode = require('qrcode');
 const TableModel = require('../models/Table.model');
 
+// Create a new table
 const createTable = async (req, res) => {
-    const tablenum = req.body.tablenum;
-    const description = req.body.description;
-    const chairs = req.body.chairs;
+    const { tablenum, description, chairs, sectionNumber } = req.body;
+
     try {
-        const tablecreated = await TableModel.create({ tablenum, description, chairs });
-
-        return res.json({ "message": "table created successfully", "data": tablecreated }).status(200)
-
+        const tableCreated = await TableModel.create({ tablenum, description, chairs, sectionNumber });
+        return res.status(200).json({ message: "Table created successfully", data: tableCreated });
     } catch (err) {
-        res.status(400).json(err.Message)
+        return res.status(400).json(err.message);
     }
-}
+};
 
+// Create QR code from URL
 const createQR = async (req, res) => {
-    const URL = req.body.URL;
+    const { URL } = req.body;
+
     try {
         const QR = await QRCode.toDataURL(URL);
-        res.json(QR).status(200);
+        return res.status(200).json(QR);
     } catch (err) {
-        res.status(400).json(err)
+        return res.status(400).json(err);
     }
-}
+};
 
-const showallTables = async (_req, res) => {
+// Retrieve all tables
+const showAllTables = async (_req, res) => {
     try {
-        const allTable = await TableModel.find();
-        return res.status(200).json(allTable)
+        const allTables = await TableModel.find();
+        return res.status(200).json(allTables);
+    } catch (error) {
+        console.error("Error fetching all tables:", error);
+        return res.status(400).json(error);
     }
-    catch (error) {
-        console.log("Error in getting all tables", error);
-        res.status(400).json(error)
-    };
-}
+};
 
+// Retrieve a single table by ID
 const showOneTable = async (req, res) => {
-    const id = req.params.tableid
+    const id = req.params.tableid;
+
     try {
         const oneTable = await TableModel.findById(id);
-        if (!oneTable) return res.status(404).json({ "Message": "No such a table exist" });
-        else return res.status(200).json(oneTable)
+        if (!oneTable) return res.status(404).json({ message: "Table does not exist" });
+        return res.status(200).json(oneTable);
+    } catch (e) {
+        console.error("Error fetching table:", e);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
-    catch (e) {
-        console.log(e, " Something Went Wrong")
-        return res.status(500).json({ "Mesage": "Internal Server Error " });
-    }
-}
+};
 
+// Update a table by ID
 const updateTable = async (req, res) => {
-    const id = req.params.tableid
-    const tablenum = req.body.tablenum;
-    const description = req.body.description;
-    const chairs = req.body.chairs;
-    const isValid = req.body.isValid;
+    const id = req.params.tableid;
+    const { tablenum, description, chairs, sectionNumber, isValid } = req.body;
+
     try {
-        const updatedTable = await TableModel.findByIdAndUpdate({ _id: id }, {
-            $set: {
-                tablenum,
-                description,
-                chairs,
-                isValid
-            }
-        },
-            { new: true }).exec()
+        const updatedTable = await TableModel.findByIdAndUpdate(
+            { _id: id },
+            { $set: { tablenum, description, chairs, sectionNumber, isValid } },
+            { new: true }
+        ).exec();
+
         if (!updatedTable) {
-            return res.status(404).json({ "Message": "no Such A Table Exist" });
-        }
-        else {
+            return res.status(404).json({ message: "Table not found" });
+        } else {
             return res.status(201).json(updatedTable);
         }
     } catch (err) {
-        console.log({ message: "Invalid Request Body" }, err);
-        return res.status(400).json({ "Message": 'Invalid request body' });
-
+        console.error("Invalid request body:", err);
+        return res.status(400).json({ message: 'Invalid request body' });
     }
-}
+};
 
+// Delete a table by ID
 const deleteTable = async (req, res) => {
-    const id =await req.params.tableid
+    const id = req.params.tableid;
+
     try {
         const deletedTable = await TableModel.findByIdAndDelete(id).exec();
         if (deletedTable) {
-            return res.status(200).json({ "Deleted Message": "The requested table has been successfully Deleted." });
+            return res.status(200).json({ message: "Table deleted successfully" });
         } else {
-            return res.status(404).json({ "Error message": "Requested table not found or already deleted!" })
-        };
+            return res.status(404).json({ message: "Table not found or already deleted" });
+        }
     } catch (error) {
-        console.log("Something went wrong", error);
-        return res.status(500).json({ "Server Error ": "Unable to process your request at this time please contact support" })
+        console.error("Error deleting table:", error);
+        return res.status(500).json({ message: "Server Error: Unable to process your request at this time" });
     }
-}
+};
 
 module.exports = {
     createTable,
     createQR,
-    showallTables,
+    showAllTables,
     showOneTable,
     updateTable,
     deleteTable
-}
+};

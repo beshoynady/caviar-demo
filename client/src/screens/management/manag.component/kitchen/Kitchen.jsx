@@ -91,30 +91,31 @@ const Kitchen = () => {
 
 
   // Updates an order status to 'Preparing'
-  const orderInProgress = async (id, type) => {
+const orderInProgress = async (id, type) => {
     try {
-      const status = 'Preparing'; 
-      let waiter = '';
-  
-      if (type === 'Internal') {
-        waiter = specifiedWaiter(id);
-      }
-      const orderData = { status };
-      if (waiter) {
-        orderData.waiter = waiter;
-      }   
-  
-      const response = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, orderData);
-      if (response.status === 200) {
-        toast.success('Order is in progress!'); 
-      } else {
-        toast.error('Failed to start order!'); 
-      }
+        const status = 'Preparing';
+        let waiter = '';
+
+        if (type === 'Internal') {
+            waiter = await specifiedWaiter(id); 
+        }
+        const orderData = { status };
+        if (waiter) {
+            orderData.waiter = waiter;
+        }
+
+        const response = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, orderData);
+        if (response.status === 200) {
+            toast.success('Order is in progress!');
+        } else {
+            toast.error('Failed to start order!');
+        }
     } catch (error) {
-      console.error(error);
-      toast.error('Failed to start order!');
+        console.error(error);
+        toast.error('Failed to start order!');
     }
-  };
+};
+
 
   // Updates an order status to 'Prepared'
   const orderDone = async (id) => {

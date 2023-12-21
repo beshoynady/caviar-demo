@@ -11,7 +11,8 @@ const Kitchen = () => {
 
   const [orderactive, setOrderActive] = useState([]); // State for active orders
   const [allOrders, setAllOrders] = useState([]); // State for all orders
-  const [waiters, setWaiters] = useState([]); // State for active waiters
+  const [AllWaiters, setAllWaiters] = useState([]); // State for active waiters
+  const [waiters, setWaiters] = useState([]); // State for active waiters ID
   const [waittime, setWaitTime] = useState(''); // State for waiting time
 
   // Fetches orders from the API
@@ -35,6 +36,7 @@ const Kitchen = () => {
       const allEmployees = await axios.get('https://caviar-api.vercel.app/api/employee');
       const allWaiters = allEmployees.data.filter((employee) => employee.role === 'waiter');
       const waiterActive = allWaiters.filter((waiter) => waiter.isActive);
+      setAllWaiters(waiterActive);
 
       const waiterIds = waiterActive.map((waiter) => waiter._id);
       setWaiters(waiterIds);
@@ -54,8 +56,8 @@ const Kitchen = () => {
     console.log({getTable:getTable})
     const tablesectionNumber = getTable.data.sectionNumber
     console.log({tablesectionNumber:tablesectionNumber})
-    console.log({waiters:waiters})
-    const findwaiter = waiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )
+    console.log({AllWaiters:AllWaiters})
+    const findwaiter = AllWaiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )
     console.log({findwaiter:findwaiter})
     const waiter = findwaiter?findwaiter._id:''
     return waiter

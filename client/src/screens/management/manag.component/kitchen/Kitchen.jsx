@@ -47,8 +47,9 @@ const Kitchen = () => {
   const specifiedWaiter = async(id) => {
     const getorder = allOrders.find((order) => order._id == id);
     console.log({getorder:getorder})
-    const data =getorder.data 
-    const tableId = data.table 
+    // const data =getorder.data 
+    const tableId = getorder.table 
+    console.log({tableId:tableId})
     const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`)
     console.log({getTable:getTable})
     const tablesectionNumber = getTable.data.sectionNumber

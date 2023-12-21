@@ -44,18 +44,30 @@ const Kitchen = () => {
   };
 
   // Determines the next available waiter to take an order
-  const specifiedWaiter = () => {
-    const orderTakeWaiter = allOrders.filter((order) => order.waiter !== null);
-    const lastWaiter = orderTakeWaiter.length > 0 ? orderTakeWaiter[orderTakeWaiter.length - 1].waiter : '';
-
-    const indexLastWaiter = lastWaiter ? waiters.indexOf(lastWaiter) : 0;
-
-    if (waiters.length === indexLastWaiter + 1) {
-      return waiters[0];
-    } else {
-      return waiters[indexLastWaiter + 1];
-    }
+  const specifiedWaiter = async(id) => {
+    const getorder = allOrders.find((order) => order._id == id);
+    console.log({getorder:getorder})
+    const data =getorder.data 
+    const tableId = data.table 
+    const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`)
+    console.log({getTable:getTable})
+    const tablesectionNumber = getTable.data.sectionNumber
+    const waiter = waiters.find((waiter)=> waiter.sectionNumber == tablesectionNumber )._id
+    return waiter
+    
   };
+  // const specifiedWaiter = () => {
+  //   const orderTakeWaiter = allOrders.filter((order) => order.waiter !== null);
+  //   const lastWaiter = orderTakeWaiter.length > 0 ? orderTakeWaiter[orderTakeWaiter.length - 1].waiter : '';
+
+  //   const indexLastWaiter = lastWaiter ? waiters.indexOf(lastWaiter) : 0;
+
+  //   if (waiters.length === indexLastWaiter + 1) {
+  //     return waiters[0];
+  //   } else {
+  //     return waiters[indexLastWaiter + 1];
+  //   }
+  // };
 
 
 
@@ -66,7 +78,7 @@ const Kitchen = () => {
       let waiter = '';
   
       if (type === 'Internal') {
-        waiter = specifiedWaiter();
+        waiter = specifiedWaiter(id);
       }
       const orderData = { status };
       if (waiter) {

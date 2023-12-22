@@ -98,7 +98,7 @@ const ProductRecipe = () => {
     if (productRecipe.length > 0) {
       const Recipe = [...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
-      const totalcost = producttotalcost + totalcostofitem
+      const totalcost = Math.round((producttotalcost + totalcostofitem) * 100) / 100;
 
       const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost },
         {
@@ -143,13 +143,17 @@ const ProductRecipe = () => {
     console.log(recipeIndex)
     productRecipe[recipeIndex] = { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }
     console.log(productRecipe)
-    let total = 0
+    let total = 0;
+
     for (let i = 0; i < productRecipe.length; i++) {
-      total += productRecipe[i].totalcostofitem
+      total += productRecipe[i].totalcostofitem;
     }
+    
+    const totalcost = Math.round(total * 100) / 100;
+    
     console.log({ totalcost: total })
     // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
-    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost: total },
+    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost },
     {
       headers: {
         'authorization': `Bearer ${token}`,

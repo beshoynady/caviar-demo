@@ -85,7 +85,7 @@ const updateProduct = async (req, res) => {
     } = req.body;
 
     const image = req.file.filename;
-    const priceAfterDiscount = productprice - productdiscount;
+    const priceAfterDiscount =productdiscount>0? productprice - productdiscount:0;
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       { _id: productid },
@@ -123,7 +123,7 @@ const updateProductWithoutImage = async (req, res) => {
       avaliable
     } = req.body;
 
-    const priceAfterDiscount = productprice - productdiscount;
+    const priceAfterDiscount =productdiscount>0? productprice - productdiscount:0;
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(
       { _id: productid },

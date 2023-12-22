@@ -89,8 +89,9 @@ const StockManag = () => {
         if (movement == 'Purchase'){
           console.log({listofProducts:listofProducts})
           listofProducts.map((product) => {
+            console.log({product:product})
             const arrayRecipe = product.Recipe
-            console.log({arrayRecipe:arrayRecipe})
+            console.log(arrayRecipe) 
             const totalcost = 0
             const productid = product._id
             arrayRecipe.map((recipe) => {

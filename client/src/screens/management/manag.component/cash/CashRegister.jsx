@@ -27,7 +27,7 @@ const CashRegister = () => {
   const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashregister');
-      setCashRegisters(response.data);
+      setCashRegisters(response.data.reverse());
     } catch (err) {
       toast.error('Error fetching cash registers');
     }

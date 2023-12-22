@@ -187,7 +187,7 @@ const StockManag = () => {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockmanag/');
       console.log(response.data)
       const Stockactions = await response.data;
-      setAllStockactions(Stockactions)
+      setAllStockactions(Stockactions.reverse())
     } catch (error) {
       console.log(error)
     }

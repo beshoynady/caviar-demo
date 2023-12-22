@@ -74,7 +74,7 @@ const ProductRecipe = () => {
     console.log({ productRecipe: productRecipe })
 
     if (productRecipe) {
-      setproductRecipe(productRecipe)
+      setproductRecipe(productRecipe.reverse())
     }
     const totalProductRecipe = await product.data.totalcost
     if (totalProductRecipe) {

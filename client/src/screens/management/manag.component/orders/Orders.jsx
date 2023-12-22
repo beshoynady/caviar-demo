@@ -141,7 +141,7 @@ const Orders = () => {
   // Filter orders by order type
   const getOrdersByType = (type) => {
     const orders = listOfOrders.filter((order) => order.order_type === type);
-    setFilteredOrders(orders);
+    setFilteredOrders(orders.reverse());
   };
 
   // Fetch orders on component mount

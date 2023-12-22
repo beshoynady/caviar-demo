@@ -10,7 +10,7 @@ const CategoryStock = () => {
 
   const getallCategoryStock = async () => {
     const res = await axios.get("https://caviar-api.vercel.app/api/categoryStock/");
-    setallCategoryStock(res.data)
+    setallCategoryStock(res.data.reverse())
   }
 
   const [AllStockItems, setAllStockItems] = useState([]);
@@ -18,7 +18,7 @@ const CategoryStock = () => {
   const getallStockItem = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      const StockItems = await response.data;
+      const StockItems = await response.data.reverse();
       console.log(response.data)
       setAllStockItems(StockItems)
 

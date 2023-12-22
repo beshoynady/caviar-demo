@@ -132,7 +132,7 @@ const EmployeesSalary = () => {
   const getSalaryMovement = async () => {
     const movement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
     console.log(movement)
-    setlistofsalarymovement(movement.data)
+    setlistofsalarymovement(movement.data.reverse())
   }
 
   const [EmployeeSalaryMovement, setEmployeeSalaryMovement] = useState([])
@@ -142,7 +142,7 @@ const EmployeesSalary = () => {
     const filterSalaryMovement = listofsalarymovement.length > 0 ? listofsalarymovement.filter(move => move.EmployeeId == id) : []
     console.log(filterSalaryMovement)
     if (filterSalaryMovement.length > 0) {
-      setEmployeeSalaryMovement(filterSalaryMovement)
+      setEmployeeSalaryMovement(filterSalaryMovement.reverse())
     }
   }
 
@@ -177,11 +177,11 @@ const EmployeesSalary = () => {
   const getSalaryMovementByemp = (id) => {
     if (filterEmp.length > 0) {
       const filterlist = filterEmp.filter(m => m.EmployeeId == id)
-      setfilterEmp(filterlist)
+      setfilterEmp(filterlist.reverse())
 
     } else {
       const FilterByEmployees = listofsalarymovement.filter(m => m.EmployeeId == id)
-      setfilterEmp(FilterByEmployees)
+      setfilterEmp(FilterByEmployees.reverse())
     }
   }
 
@@ -191,11 +191,11 @@ const EmployeesSalary = () => {
     console.log(listofsalarymovement)
     if (filterEmp.length > 0) {
       const filterlist = filterEmp.filter(m => m.movement == mov)
-      setfilterEmp(filterlist)
+      setfilterEmp(filterlist.reverse())
     } else {
       const filterlist = listofsalarymovement.filter(m => m.movement == mov)
       console.log(filterlist)
-      setfilterEmp(filterlist)
+      setfilterEmp(filterlist.reverse())
     }
   }
 

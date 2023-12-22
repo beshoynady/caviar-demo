@@ -87,11 +87,11 @@ const updateStockItem = async (req, res) => {
 const movements = async (req, res) => {
   try {
     const itemId = req.params.itemId;
-    const { newBalance, price, newcost } = req.body;
+    const { newBalance, price, newcost ,costOfPart } = req.body;
 
     const movedStockItem = await StockItemsModel.findByIdAndUpdate(
       { _id: itemId },
-      { Balance: newBalance, price, totalCost: newcost },
+      { Balance: newBalance, price, totalCost: newcost ,costOfPart },
       { new: true }
     );
 

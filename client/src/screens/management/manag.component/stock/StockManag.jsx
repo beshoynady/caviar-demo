@@ -30,8 +30,8 @@ const StockManag = () => {
   const [newcost, setnewcost] = useState(0)
   const [oldBalance, setoldBalance] = useState(0)
   const [newBalance, setnewBalance] = useState(0)
-  const [amount, setamount] = useState();
-  const [balance, setbalance] = useState();
+  const [costOfPart, setcostOfPart] = useState();
+  const [parts, setparts] = useState();
   const [cashRegister, setcashRegister] = useState('');
 
 
@@ -58,12 +58,13 @@ const StockManag = () => {
     console.log({newcost:newcost});
     console.log({oldBalance:oldBalance});
     console.log({newBalance:newBalance});
+    console.log({costOfPart:costOfPart});
     e.preventDefault();
     try {
       const actionBy = employeeId;
 
       // Update the stock item's movement
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price ,costOfPart });
 
       if (changeItem.status === 200) {
         // Create a new stock action
@@ -194,9 +195,12 @@ const StockManag = () => {
     if (movement == "Expense" || movement == "Wastage") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
       setnewcost(Number(oldCost) - Number(cost))
+      setcostOfPart(Number(price) / Number(parts))
     } else {
       setnewBalance(Number(oldBalance) + Number(Quantity))
       setnewcost(Number(oldCost) + Number(cost))
+      setcostOfPart(Number(price) / Number(parts))
+
     }
   }, [Quantity, price])
 
@@ -402,7 +406,8 @@ const StockManag = () => {
                           <select name="" id="" onChange={(e) => {
                             setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);; setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
                             setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
-                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].totalCost)
+                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].totalCost);
+                            setparts(StockItems.filter(i => i._id == e.target.value)[0].parts)
                           }}>
                             <option >اختر الصنف</option>
                             {StockItems.map((item, i) => {

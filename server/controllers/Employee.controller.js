@@ -97,42 +97,45 @@ const getoneEmployee = async (req, res) => {
 
 const loginEmployee = async (req, res) => {
     try {
-        const phone = req.body.phone;
-        const password = req.body.password;
+        const { phone, password } = req.body;
 
         if (!phone || !password) {
-            return res.status(404).json({ message: 'phone or password is required' });
+            return res.status(400).json({ message: 'Phone number and password are required' });
         }
 
-        const findEmployee = await Employeemodel.findOne({ phone: phone });
+        const findEmployee = await Employeemodel.findOne({ phone });
+
         if (!findEmployee) {
-            return res.status(400).json({ message: 'this Employee not founded' });
+            return res.status(404).json({ message: 'Employee not found' });
         }
 
         const match = await bcrypt.compare(password, findEmployee.password);
+
         if (!match) {
-            return res.status(401).json({ message: 'Wrong Password' });
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        const accessToken = jwt.sign({
-            employeeinfo: {
-                id: findEmployee._id,
-                username: findEmployee.username,
-                isAdmin: findEmployee.isAdmin,
-                isActive: findEmployee.isActive,
-                role: findEmployee.role
-            }
-        }, process.env.jwt_secret_key, {
-            expiresIn: process.env.jwt_expire
-        });
+        const accessToken = jwt.sign(
+            {
+                employeeinfo: {
+                    id: findEmployee._id,
+                    username: findEmployee.username,
+                    isAdmin: findEmployee.isAdmin,
+                    isActive: findEmployee.isActive,
+                    role: findEmployee.role
+                }
+            },
+            process.env.jwt_secret_key,
+            { expiresIn: process.env.jwt_expire }
+        );
 
         if (!accessToken) {
-            return res.status(401).json({ message: 'accessToken not sign' });
+            return res.status(500).json({ message: 'Failed to generate access token' });
         }
 
-        res.status(200).json({ findEmployee, accessToken , message:"login success"});
+        res.status(200).json({ findEmployee, accessToken, message: 'Login successful' });
     } catch (error) {
-        res.status(404).send('error');
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
 

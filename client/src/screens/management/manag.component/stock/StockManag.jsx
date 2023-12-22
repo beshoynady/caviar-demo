@@ -81,7 +81,7 @@ const StockManag = () => {
 
       // Update the stock item's movement
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price, costOfPart });
-
+      console.log(changeItem)
       if (changeItem.status === 200) {
         // Create a new stock action
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });

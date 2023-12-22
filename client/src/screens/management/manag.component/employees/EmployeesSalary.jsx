@@ -337,7 +337,7 @@ const EmployeesSalary = () => {
                                 <td>{mov.Amount}</td>
                                 <td>{mov.oldAmount}</td>
                                 <td>{mov.newAmount}</td>
-                                <td>{mov.actionBy}</td>
+                                <td>{usertitle(mov.actionBy)}</td>
                                 <td>{mov.actionAt}</td>
                                 <td>
                                   <a href="#editSalaryMovementModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
@@ -371,7 +371,7 @@ const EmployeesSalary = () => {
                   <div className="modal-content">
                     <form onSubmit={addSalaryMovement}>
                       <div className="modal-header">
-                        <h4 className="modal-title">Add New Transaction</h4>
+                        <h4 className="modal-title">اضف تعامل جديد</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
@@ -418,8 +418,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" readOnly Value={Date()} />
-                        </div>
+                          <p className="form-control" readOnly>{new Date().toLocaleString()}</p>                        </div>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="Close" />
@@ -435,7 +434,7 @@ const EmployeesSalary = () => {
                   <div className="modal-content">
                     <form onSubmit={updateSalaryMovement}>
                       <div className="modal-header">
-                        <h4 className="modal-title">تعديل بيانات الموظفين</h4>
+                        <h4 className="modal-title">تعديل تعامل</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
@@ -478,8 +477,7 @@ const EmployeesSalary = () => {
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
-                          <input type="text" className="form-control" readOnly defaultValue={actionAt} />
-                        </div>
+                          <p className="form-control" readOnly>{new Date(actionAt).toLocaleString()}</p>                        </div>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="اغلاق" />

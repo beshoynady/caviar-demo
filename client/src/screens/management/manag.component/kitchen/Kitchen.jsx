@@ -122,7 +122,10 @@ const orderInProgress = async (id, type) => {
     const status = 'Prepared';
 
     try {
-      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
+      const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
+      const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
+
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order
     } catch (error) {

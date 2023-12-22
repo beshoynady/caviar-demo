@@ -58,10 +58,8 @@ const Waiter = () => {
 
   const updateOrderDelivered = async (id) => {
     try {
-      const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-      const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
       const status = 'Delivered';
-      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
       fetchInternalOrders();
       fetchPendingData();
       toast.success('Order has been delivered!');

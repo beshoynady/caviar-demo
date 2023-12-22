@@ -86,31 +86,32 @@ const StockManag = () => {
         // Create a new stock action
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
         console.log(response.data);
-        if (movement == 'Purchase'){
-          console.log({listofProducts:listofProducts})
-          listofProducts.map((product) => {
-            console.log({product:product})
-            const arrayRecipe = product.Recipe
-            console.log(arrayRecipe) 
-            const totalcost = 0
-            const productid = product._id
-            arrayRecipe.map((recipe) => {
-              if (recipe.itemId == itemId) {
-                console.log({recipe:recipe})
+        if (movement == 'Purchase') {
+          for (const product of listofProducts) {
+            const arrayRecipe = product.Recipe;
+            let totalcost = 0;
+            const productid = product._id;
+      
+            for (const recipe of arrayRecipe) {
+              if (recipe.itemId === itemId) {
                 recipe.costofitem = costOfPart;
-                recipe.totalcostofitem = recipe.amount * costOfPart
+                recipe.totalcostofitem = recipe.amount * costOfPart;
               }
-              totalcost = recipe.totalcostofitem + totalcost
-            })
-            const updateRecipetoProduct = axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: arrayRecipe, totalcost },
+              totalcost += recipe.totalcostofitem;
+            }
+      
+            // Update the product with the modified recipe and total cost
+            const updateRecipeToProduct = await axios.put(
+              `https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,
+              { Recipe: arrayRecipe, totalcost },
               {
                 headers: {
-                  'authorization': `Bearer ${token}`,
+                  Authorization: `Bearer ${token}`,
                 },
               }
-            )
-            console.log({updateRecipetoProduct:updateRecipetoProduct})
-          })
+            );
+            console.log({ updateRecipeToProduct: updateRecipeToProduct.data });
+          }
         }
         // Update the stock actions list and stock items
         getallStockaction();

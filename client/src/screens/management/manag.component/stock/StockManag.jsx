@@ -65,15 +65,15 @@ const StockManag = () => {
   const actionAt = new Date().toLocaleString()
 
   const createStockaction = async (e, employeeId) => {
-    console.log({ itemId: itemId });
-    console.log({ movement: movement });
-    console.log({ Quantity: Quantity });
-    console.log({ cost: cost });
-    console.log({ oldCost: oldCost });
-    console.log({ newcost: newcost });
-    console.log({ oldBalance: oldBalance });
-    console.log({ newBalance: newBalance });
-    console.log({ costOfPart: costOfPart });
+    // console.log({ itemId: itemId });
+    // console.log({ movement: movement });
+    // console.log({ Quantity: Quantity });
+    // console.log({ cost: cost });
+    // console.log({ oldCost: oldCost });
+    // console.log({ newcost: newcost });
+    // console.log({ oldBalance: oldBalance });
+    // console.log({ newBalance: newBalance });
+    // console.log({ costOfPart: costOfPart });
     e.preventDefault();
     try {
       const actionBy = employeeId;
@@ -87,6 +87,7 @@ const StockManag = () => {
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
         console.log(response.data);
         if (movement == 'Purchase'){
+          console.log({listofProducts:listofProducts})
           listofProducts.map((product) => {
             const arrayRecipe = product.recipe
             console.log({arrayRecipe:arrayRecipe})

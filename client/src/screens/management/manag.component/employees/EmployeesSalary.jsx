@@ -209,12 +209,13 @@ const EmployeesSalary = () => {
         ({ employeeLoginInfo, usertitle, EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
+              <ToastContainer/>
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
                     <div className="row">
                       <div className="col-sm-6">
-                        <h2>ادارة <b>الرواتب</b></h2>
+                        <h2>ادارة <b>تعاملات الموظفين</b></h2>
                       </div>
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addSalaryMovementModal" onClick={() => { setactionBy(employeeLoginInfo ? employeeLoginInfo.employeeinfo.id : '') }} className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافة حركة</span></a>
@@ -240,7 +241,7 @@ const EmployeesSalary = () => {
                       </div>
                       <div class="col-sm-9">
                         <div class="filter-group">
-                          <label>Name</label>
+                          <label>الاسم</label>
                           <input type="text" class="form-control" />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
@@ -308,7 +309,7 @@ const EmployeesSalary = () => {
                               <td>{mov.oldAmount}</td>
                               <td>{mov.newAmount}</td>
                               <td>{usertitle(mov.actionBy)}</td>
-                              <td>{mov.actionAt}</td>
+                              <td>{new Date(mov.actionAt).toLocaleString()}</td>
                               <td>
                                 <a href="#editSalaryMovementModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
                                   setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)
@@ -338,7 +339,7 @@ const EmployeesSalary = () => {
                                 <td>{mov.oldAmount}</td>
                                 <td>{mov.newAmount}</td>
                                 <td>{usertitle(mov.actionBy)}</td>
-                                <td>{mov.actionAt}</td>
+                                <td>{new Date(mov.actionAt).toLocaleString()}</td>
                                 <td>
                                   <a href="#editSalaryMovementModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit" onClick={() => {
                                     setsalarymovementId(mov._id); setEmployeeName(mov.EmployeeName); setAmount(mov.Amount); setactionBy(mov.actionBy); setoldAmount(mov.oldAmount); setnewAmount(mov.newAmount); setactionAt(mov.actionAt); setmovement(mov.movement)

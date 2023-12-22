@@ -50,6 +50,14 @@ const StockManag = () => {
   const actionAt = new Date().toLocaleString()
 
   const createStockaction = async (e, employeeId) => {
+    console.log({itemId:itemId});
+    console.log({movement:movement});
+    console.log({Quantity:Quantity});
+    console.log({cost:cost});
+    console.log({oldCost:oldCost});
+    console.log({newcost:newcost});
+    console.log({oldBalance:oldBalance});
+    console.log({newBalance:newBalance});
     e.preventDefault();
     try {
       const actionBy = employeeId;
@@ -412,7 +420,7 @@ const StockManag = () => {
                           <label>السعر</label>
                           {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
                             <input type='Number' className="form-control" readOnly required defaultValue={price} />
-                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(e.target.value * Quantity) }} />
+                            : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(Number(e.target.value) * Quantity) }} />
                           }
                         </div>
                         <div className="form-group">

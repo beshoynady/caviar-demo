@@ -46,7 +46,7 @@ const Kitchen = () => {
   };
 
   // Determines the next available waiter to take an order
- const specifiedWaiter = async (id) => {
+  const specifiedWaiter = async (id) => {
     const getorder = allOrders.find((order) => order._id == id);
     console.log({ getorder: getorder });
 
@@ -54,26 +54,26 @@ const Kitchen = () => {
     console.log({ tableId: tableId });
 
     try {
-        const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`);
-        console.log({ getTable: getTable });
+      const getTable = await axios.get(`https://caviar-api.vercel.app/api/table/${tableId}`);
+      console.log({ getTable: getTable });
 
-        const tablesectionNumber = getTable.data.sectionNumber;
-        console.log({ tablesectionNumber: tablesectionNumber });
+      const tablesectionNumber = getTable.data.sectionNumber;
+      console.log({ tablesectionNumber: tablesectionNumber });
 
-        console.log({ AllWaiters: AllWaiters });
+      console.log({ AllWaiters: AllWaiters });
 
-        const findwaiter = AllWaiters.find((waiter) => waiter.sectionNumber == tablesectionNumber);
-        console.log({ findwaiter: findwaiter });
+      const findwaiter = AllWaiters.find((waiter) => waiter.sectionNumber == tablesectionNumber);
+      console.log({ findwaiter: findwaiter });
 
-        const waiterId = findwaiter ? findwaiter._id : '';
-        console.log({ waiterId: waiterId });
+      const waiterId = findwaiter ? findwaiter._id : '';
+      console.log({ waiterId: waiterId });
 
-        return waiterId;
+      return waiterId;
     } catch (error) {
-        console.error('Error fetching table or waiter data:', error);
-        return ''; // Handle the error case here, returning an empty string for waiterId
+      console.error('Error fetching table or waiter data:', error);
+      return ''; // Handle the error case here, returning an empty string for waiterId
     }
-};
+  };
 
   // const specifiedWaiter = () => {
   //   const orderTakeWaiter = allOrders.filter((order) => order.waiter !== null);
@@ -91,30 +91,31 @@ const Kitchen = () => {
 
 
   // Updates an order status to 'Preparing'
-const orderInProgress = async (id, type) => {
+  const orderInProgress = async (id, type) => {
     try {
-        const status = 'Preparing';
-        let waiter = '';
+      const status = 'Preparing';
+      let waiter = '';
 
-        if (type === 'Internal') {
-            waiter = await specifiedWaiter(id); 
-        }
-        const orderData = { status };
-        if (waiter) {
-            orderData.waiter = waiter;
-        }
+      if (type === 'Internal') {
+        waiter = await specifiedWaiter(id);
+      }
+      const orderData = { status };
+      if (waiter) {
+        orderData.waiter = waiter;
+      }
 
-        const response = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, orderData);
-        if (response.status === 200) {
-            toast.success('Order is in progress!');
-        } else {
-            toast.error('Failed to start order!');
-        }
-    } catch (error) {
-        console.error(error);
+      const response = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, orderData);
+      if (response.status === 200) {
+        getOrdersFromAPI()
+        toast.success('Order is in progress!');
+      } else {
         toast.error('Failed to start order!');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to start order!');
     }
-};
+  };
 
 
   // Updates an order status to 'Prepared'
@@ -168,7 +169,7 @@ const orderInProgress = async (id, type) => {
                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                         <div style={{ maxWidth: "50%" }}>
                           <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
-                          <p className="card-text">رقم الطلب: {order.ordernum?order.ordernum:''}</p>
+                          <p className="card-text">رقم الطلب: {order.ordernum ? order.ordernum : ''}</p>
                           <p className="card-text">الفاتورة: {order.serial}</p>
                           <p className="card-text">نوع الطلب: {order.order_type}</p>
                         </div>

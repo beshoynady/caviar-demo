@@ -340,7 +340,7 @@ function App() {
         const tax = subTotal * 0.14;
         const total = subTotal + tax;
 
-        if (status === 'Preparing') {
+        if (status == 'Preparing') {
           const additem = [];
           for (let i = 0; i < ItemsInCart.length; i++) {
             ItemsInCart[i].isAdd = true;

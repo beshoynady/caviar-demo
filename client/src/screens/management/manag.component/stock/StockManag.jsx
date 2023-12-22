@@ -86,7 +86,7 @@ const StockManag = () => {
         // Create a new stock action
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
         console.log(response.data);
-        if (movement === 'Purchase'){
+        if (movement == 'Purchase'){
           listofProducts.map((product) => {
             const arrayRecipe = product.recipe
             console.log({arrayRecipe:arrayRecipe})
@@ -228,6 +228,7 @@ const StockManag = () => {
     getallStockaction()
     getaStockItems()
     getAllCashRegisters()
+    getallproducts()
   }, [])
 
   useEffect(() => {

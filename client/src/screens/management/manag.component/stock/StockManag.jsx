@@ -99,17 +99,17 @@ const StockManag = () => {
                 console.log({recipe:recipe})
                 recipe.costofitem = costOfPart;
                 recipe.costOfPart = recipe.amount * costOfPart
+                totalcost = recipe.map((rec) => rec.costOfPart + totalcost);
+                const updateRecipetoProduct = axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: arrayRecipe, totalcost },
+                  {
+                    headers: {
+                      'authorization': `Bearer ${token}`,
+                    },
+                  }
+                )
+                console.log({updateRecipetoProduct:updateRecipetoProduct})
               }
-              totalcost = recipe.map((rec) => rec.costOfPart + totalcost);
             })
-            const updateRecipetoProduct = axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: arrayRecipe, totalcost },
-              {
-                headers: {
-                  'authorization': `Bearer ${token}`,
-                },
-              }
-            )
-            console.log({updateRecipetoProduct:updateRecipetoProduct})
           })
         }
         // Update the stock actions list and stock items

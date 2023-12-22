@@ -64,59 +64,77 @@ const StockManag = () => {
   const [actionId, setactionId] = useState("")
   const actionAt = new Date().toLocaleString()
 
-  const createStockaction = async (e, employeeId) => {
-    // console.log({ itemId: itemId });
-    // console.log({ movement: movement });
-    // console.log({ Quantity: Quantity });
-    // console.log({ cost: cost });
-    // console.log({ oldCost: oldCost });
-    // console.log({ newcost: newcost });
-    // console.log({ oldBalance: oldBalance });
-    // console.log({ newBalance: newBalance });
-    // console.log({ costOfPart: costOfPart });
-    e.preventDefault();
+  const createStockAction = async (e, employeeId) => {
     try {
       const actionBy = employeeId;
       const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
-
+  
       // Update the stock item's movement
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price, costOfPart });
-      console.log(changeItem)
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, {
+        newBalance,
+        newcost,
+        price,
+        costOfPart,
+      });
+  
+      console.log(changeItem);
+  
       if (changeItem.status === 200) {
         // Create a new stock action
-        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
+        const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', {
+          itemId,
+          movement,
+          Quantity,
+          cost,
+          oldCost,
+          unit,
+          newBalance,
+          oldBalance,
+          price,
+          actionBy,
+          actionAt,
+        });
+  
         console.log(response.data);
-        if (movement == 'Purchase') {
+  
+        if (movement === 'Purchase') {
           for (const product of listofProducts) {
             const arrayRecipe = product.Recipe;
-            let totalcost = 0;
             const productid = product._id;
-      
+  
             for (const recipe of arrayRecipe) {
               if (recipe.itemId === itemId) {
                 recipe.costofitem = costOfPart;
                 recipe.totalcostofitem = recipe.amount * costOfPart;
+  
+                const totalcost = arrayRecipe.reduce((acc, curr) => {
+                  return acc + (curr.totalcostofitem || 0);
+                }, 0);
+  
+                // Update the product with the modified recipe and total cost
+                const updateRecipeToProduct = await axios.put(
+                  `https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,
+                  { Recipe: arrayRecipe, totalcost },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+  
+                console.log({ updateRecipeToProduct: updateRecipeToProduct.data });
+  
+                // Toast for successful update based on recipe change
+                toast.success(`Recipe updated for product ${productid}`);
               }
-              totalcost += recipe.totalcostofitem;
             }
-      
-            // Update the product with the modified recipe and total cost
-            const updateRecipeToProduct = await axios.put(
-              `https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,
-              { Recipe: arrayRecipe, totalcost },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            console.log({ updateRecipeToProduct: updateRecipeToProduct.data });
           }
         }
+  
         // Update the stock actions list and stock items
         getallStockaction();
         getaStockItems();
-
+  
         // Toast notification for successful creation
         toast.success('Stock action created successfully');
       }
@@ -125,7 +143,9 @@ const StockManag = () => {
       // Toast notification for error
       toast.error('Error creating stock action');
     }
-  }
+  };
+  
+
 
 
 
@@ -429,7 +449,7 @@ const StockManag = () => {
               <div id="addStockactionModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createStockaction(e, employeeLoginInfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => createStockAction(e, employeeLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف بالمخزن</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

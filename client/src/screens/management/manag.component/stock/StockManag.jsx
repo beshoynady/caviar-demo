@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const StockManag = () => {
+
   const [StockItems, setStockItems] = useState([]);
   const getaStockItems = async () => {
     try {
@@ -184,10 +185,10 @@ const StockManag = () => {
   useEffect(() => {
     if (movement == "Expense" || movement == "Wastage") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
-      setnewcost(oldCost - cost)
+      setnewcost(Number(oldCost) - Number(cost))
     } else {
       setnewBalance(Number(oldBalance) + Number(Quantity))
-      setnewcost(oldCost + cost)
+      setnewcost(Number(oldCost) + Number(cost))
     }
   }, [Quantity, price])
 
@@ -393,7 +394,7 @@ const StockManag = () => {
                           <select name="" id="" onChange={(e) => {
                             setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);; setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
                             setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
-                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].cost)
+                            setoldCost(StockItems.filter(i => i._id == e.target.value)[0].totalCost)
                           }}>
                             <option >اختر الصنف</option>
                             {StockItems.map((item, i) => {

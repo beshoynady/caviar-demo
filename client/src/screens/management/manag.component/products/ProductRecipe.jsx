@@ -93,12 +93,20 @@ const ProductRecipe = () => {
   const createRecipe = async (e) => {
     e.preventDefault()
     // console.log(productRecipe)
+    const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
+
     if (productRecipe.length > 0) {
       const Recipe = [...productRecipe, { itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
 
       const totalcost = producttotalcost + totalcostofitem
 
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost })
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost },
+        {
+          headers: {
+            'authorization': `Bearer ${token}`,
+          },
+        }
+      )
 
       console.log({ addRecipetoProduct: addRecipetoProduct })
 
@@ -107,7 +115,13 @@ const ProductRecipe = () => {
       const Recipe = [{ itemId: itemId, name: name, amount: amount, costofitem: costofitem, unit: unit, totalcostofitem: totalcostofitem }]
       const totalcost = totalcostofitem
 
-      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost })
+      const addRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe, totalcost },
+        {
+          headers: {
+            'authorization': `Bearer ${token}`,
+          },
+        }
+      )
       console.log({ addRecipetoProduct: addRecipetoProduct })
       getProductRecipe(productid)
       setitemId('')
@@ -122,6 +136,7 @@ const ProductRecipe = () => {
   const [recipeid, setrecipeid] = useState('')
   const editRecipe = async (e) => {
     e.preventDefault()
+    const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
     const getRecipe = productRecipe.find(recipe => recipe._id == recipeid)
     console.log(getRecipe)
     const recipeIndex = productRecipe.findIndex(recipe => recipe === getRecipe)
@@ -134,7 +149,13 @@ const ProductRecipe = () => {
     }
     console.log({ totalcost: total })
     // productRecipe.map(rec=>totalcost = totalcost + rec.totalcostofitem)
-    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost: total })
+    const editRecipetoProduct = await axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: productRecipe, totalcost: total },
+    {
+      headers: {
+        'authorization': `Bearer ${token}`,
+      },
+    }
+    )
     getProductRecipe(productid)
     setitemId('')
     setname('')
@@ -293,7 +314,7 @@ const ProductRecipe = () => {
                                   settotalcostofitem(rec.settotalcostofitem)
                                 }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 
-                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() =>{setrecipeid(rec._id)}}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <a href="#deleteProductModal" className="delete" data-toggle="modal" onClick={() => { setrecipeid(rec._id) }}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
                           )

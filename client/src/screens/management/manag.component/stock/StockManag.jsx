@@ -5,6 +5,21 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const StockManag = () => {
+  const [listofProducts, setlistofProducts] = useState([]);
+
+  const getallproducts = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/product/');
+      const products = await response.data;
+      // console.log(response.data)
+      setlistofProducts(products)
+      // console.log(listofProducts)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   const [StockItems, setStockItems] = useState([]);
   const getaStockItems = async () => {
@@ -50,27 +65,48 @@ const StockManag = () => {
   const actionAt = new Date().toLocaleString()
 
   const createStockaction = async (e, employeeId) => {
-    console.log({itemId:itemId});
-    console.log({movement:movement});
-    console.log({Quantity:Quantity});
-    console.log({cost:cost});
-    console.log({oldCost:oldCost});
-    console.log({newcost:newcost});
-    console.log({oldBalance:oldBalance});
-    console.log({newBalance:newBalance});
-    console.log({costOfPart:costOfPart});
+    console.log({ itemId: itemId });
+    console.log({ movement: movement });
+    console.log({ Quantity: Quantity });
+    console.log({ cost: cost });
+    console.log({ oldCost: oldCost });
+    console.log({ newcost: newcost });
+    console.log({ oldBalance: oldBalance });
+    console.log({ newBalance: newBalance });
+    console.log({ costOfPart: costOfPart });
     e.preventDefault();
     try {
       const actionBy = employeeId;
 
       // Update the stock item's movement
-      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price ,costOfPart });
+      const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price, costOfPart });
 
       if (changeItem.status === 200) {
         // Create a new stock action
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', { itemId, movement, Quantity, cost, oldCost, unit, newBalance, oldBalance, price, actionBy, actionAt });
         console.log(response.data);
-
+        if (movement === 'Purchase'){
+          listofProducts.map((product) => {
+            const arrayRecipe = product.recipe
+            const totalcost = 0
+            const productid = product._id
+            arrayRecipe.map((recipe) => {
+              if (recipe.itemId == itemId) {
+                recipe.costofitem = costOfPart;
+                recipe.costOfPart = recipe.amount * costOfPart
+              }
+              totalcost = recipe.map((rec) => rec.costOfPart + totalcost);
+            })
+            const updateRecipetoProduct = axios.put(`https://caviar-api.vercel.app/api/product/addrecipe/${productid}`, { Recipe: arrayRecipe, totalcost },
+              {
+                headers: {
+                  'authorization': `Bearer ${token}`,
+                },
+              }
+            )
+            console.log({updateRecipetoProduct:updateRecipetoProduct})
+          })
+        }
         // Update the stock actions list and stock items
         getallStockaction();
         getaStockItems();

@@ -65,6 +65,8 @@ const StockManag = () => {
   const actionAt = new Date().toLocaleString()
 
   const createStockAction = async (e, employeeId) => {
+    e.preventDefault();
+
     try {
       const actionBy = employeeId;
       const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage

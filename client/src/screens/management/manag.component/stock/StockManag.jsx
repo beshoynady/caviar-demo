@@ -77,6 +77,7 @@ const StockManag = () => {
     e.preventDefault();
     try {
       const actionBy = employeeId;
+      const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
 
       // Update the stock item's movement
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price, costOfPart });

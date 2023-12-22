@@ -68,8 +68,8 @@ router.route('/')
   .get(getAllProducts);
 
 router.route('/getproductbycategory/:categoryid').get(getProductByCategory)
-router.route('/:productid').get(getOneProduct).put(authenticateToken,deleteOldImageMiddleware, upload.single("image"), updateProduct).delete(authenticateToken, deleteProduct);
-router.route('/withoutimage/:productid').put(authenticateToken, updateProductWithoutImage)
-router.route('/addrecipe/:productid').put(authenticateToken, addRecipe)
+router.route('/:productid').get(getOneProduct).put(deleteOldImageMiddleware, upload.single("image"), updateProduct).delete(authenticateToken, deleteProduct);
+router.route('/withoutimage/:productid').put(updateProductWithoutImage)
+router.route('/addrecipe/:productid').put(addRecipe)
 
 module.exports = router;

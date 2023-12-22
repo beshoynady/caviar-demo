@@ -13,11 +13,3 @@ router.route('/:userid').get(getoneuser).put(updateuser).delete(deleteuser);
 router.route('/update-status/:userid').put(updateUserStatus)
 module.exports = router;
 
-
-// route.post("/create", createuser);
-// route.get("/allUsers", getallUsers);
-// route.get("/:userid", getoneuser);
-// route.put("/update/:userid", updateuser);
-// route.delete("/delete/:userid", deleteuser);
-
-// module.exports = route;

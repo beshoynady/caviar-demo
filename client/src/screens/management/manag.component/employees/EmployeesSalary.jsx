@@ -136,6 +136,7 @@ const EmployeesSalary = () => {
   }
 
   const [EmployeeSalaryMovement, setEmployeeSalaryMovement] = useState([])
+
   const filterEmployeeSalaryMovement = async (id) => {
     console.log(listofsalarymovement)
     const filterSalaryMovement = listofsalarymovement.length > 0 ? listofsalarymovement.filter(move => move.EmployeeId == id) : []
@@ -147,14 +148,30 @@ const EmployeesSalary = () => {
 
 
   const filterSalaryMovement = async (m) => {
-    const filterm = EmployeeSalaryMovement.filter(move => move.movement == m)
-    console.log(filterm)
-    if (filterm.length > 0) {
-      setoldAmount(filterm[filterm.length - 1].newAmount)
-    } else {
-      setoldAmount(0)
+    try {
+      // Get the current month
+      const currentMonth = new Date().getMonth();
+  
+      // Filter movements for the current month
+      const filterMonth = EmployeeSalaryMovement.filter((mo) => new Date(mo.actionAt).getMonth() === currentMonth);
+  
+      // Filter movements based on the specified 'm' parameter
+      const filterMovement = filterMonth.filter((move) => move.movement === m);
+  
+      console.log(filterMovement);
+  
+      // Set 'oldAmount' based on the filtered movement data
+      if (filterMovement.length > 0) {
+        setoldAmount(filterMovement[filterMovement.length - 1].newAmount);
+      } else {
+        setoldAmount(0);
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle error here
     }
-  }
+  };
+  
 
   const [filterEmp, setfilterEmp] = useState([])
   const getSalaryMovementByemp = (id) => {

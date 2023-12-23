@@ -672,6 +672,7 @@ const PayRoll = () => {
                                   </td>
                                   <td>{i + 1}</td>
                                   <td>{em.fullname}</td>
+                                  <td>{em.role}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>

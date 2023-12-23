@@ -1,0 +1,41 @@
+#location{
+    width: 100%;
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background-image: url(../../image/bg-sec3.jpg);
+    // background-size: cover;
+    // background-position: bottom center;
+    // background-repeat: no-repeat;
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content:space-between;
+        .left {
+            width: 40%;
+            height: 80%;
+            border: 2px solid gainsboro;
+        }
+        .right{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content:center ;
+            h1{
+                font-size: 24px;
+                font-weight: bolder;
+            }
+            p{
+                width: 80%;
+                height: 20%;
+                font-size:20px;
+                font-weight: 800;
+                margin-top: 30px;
+            }
+
+        }
+    }
+}

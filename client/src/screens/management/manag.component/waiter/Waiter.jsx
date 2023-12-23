@@ -40,7 +40,7 @@ const Waiter = () => {
     
     console.log({ internalOrdersData: internalOrdersData });
 
-    const productsFiltered = internalOrdersData.filter((product) => product.isDone === true && product.isDeleverd === false);
+    const productsFiltered = internalOrdersData.filter((product) => product.isDone == true && product.isDeleverd == false);
     
     console.log({ productsFiltered: productsFiltered });
 
@@ -198,7 +198,7 @@ const Waiter = () => {
                         </div>
                       </div>
                       <ul className="list-group list-group-flush">
-                        {order.products.filter((pr) => pr.isDeleverd === false).map((product, i) => {
+                        {order.products.filter((pr) => pr.isDeleverd == false).map((product, i) => {
                           return (
                             <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i}>
                               <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>

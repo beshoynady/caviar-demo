@@ -33,21 +33,25 @@ const Waiter = () => {
 
  // Function to fetch internal orders
  const fetchInternalOrders = async () => {
-   try {
-     const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-    //  const activeOrders = orders.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
-     const activeOrders = orders.data.filter((order) => order.isActive === true);
-     const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
-     console.log({internalOrdersData:internalOrdersData})
-     const productsFilterd = internalOrdersData.length>0? internalOrdersData.filter((product) => {product.isDone == true && product.isDeleverd == false}):""; 
-     console.log({productsFilterd:productsFilterd})
-     if (productsFilterd.length>0){
-       setInternalOrders(internalOrdersData);
-     }
-   } catch (error) {
-     console.log(error);
-   }
- };
+  try {
+    const orders = await axios.get('https://caviar-api.vercel.app/api/order');
+    const activeOrders = orders.data.filter((order) => order.isActive === true);
+    const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
+    
+    console.log({ internalOrdersData: internalOrdersData });
+
+    const productsFiltered = internalOrdersData.filter((product) => product.isDone === true && product.isDeleverd === false);
+    
+    console.log({ productsFiltered: productsFiltered });
+
+    if (productsFiltered.length > 0) {
+      setInternalOrders(internalOrdersData);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   const updateOrderOnWay = async (id) => {
     try {

@@ -13,8 +13,7 @@ const PayRoll = () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee')
       const data = await response.data
-      const employee = data.filter((em) => em.isActive == true)
-      setlistofemployee(employee)
+      setlistofemployee(data)
     } catch (error) {
       console.log(error)
     }
@@ -471,6 +470,7 @@ const PayRoll = () => {
   // };
 
   const filterEmployeesByJob = (role) => {
+    getemployees()
     if (listofemployee.length > 0) {
       const FilterEmployees = listofemployee.filter(employee => employee.role == role)
       setlistofemployee(FilterEmployees)
@@ -478,16 +478,17 @@ const PayRoll = () => {
   }
   const filterEmpByStatus = (status) => {
     console.log(status)
-    if (status == true) {
-      console.log(listofemployee)
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
-      console.log(filteredEmployees)
-      setlistofemployee(filteredEmployees)
-    } else if (status == false) {
-      const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
-      console.log(filteredEmployees)
-      setlistofemployee(filteredEmployees)
-    }
+    getemployees()
+    const filteredEmployees = listofemployee.filter(employee => employee.isActive == status)
+    console.log(filteredEmployees)
+    setlistofemployee(filteredEmployees)
+    // if (status == true) {
+    //   console.log(listofemployee)
+    // } else if (status == false) {
+    //   const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
+    //   console.log(filteredEmployees)
+    //   setlistofemployee(filteredEmployees)
+    // }
   }
 
   // const deleteEmployee = async (e) => {

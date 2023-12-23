@@ -197,7 +197,7 @@ const Kitchen = () => {
                       <div className="card-footer text-center">
                         {order.status === 'Preparing' ?
                           <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
-                          : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
+                          : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
                         }
                       </div>
                     </div>

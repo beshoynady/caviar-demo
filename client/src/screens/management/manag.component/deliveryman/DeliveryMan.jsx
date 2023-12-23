@@ -92,13 +92,13 @@ const DeliveryMan = () => {
                 const undeliveredProducts = order.products.filter(pr => !pr.isDeleverd);
 
                 if (undeliveredProducts.length > 0) {
-                  const { name, serial, address, deliveryMan, createdAt, updatedAt, _id, status } = order;
+                  const { name, serial, address, deliveryMan, createdAt, updatedAt, _id, status,user } = order;
 
                   return (
                     <div className="card text-white bg-success" style={{ width: "265px" }} key={i}>
                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                         <div style={{ maxWidth: "50%" }}>
-                          <p className="card-text">العميل: {usertitle(name)}</p>
+                          <p className="card-text">العميل: {user?usertitle(user):name}</p>
                           <p className="card-text">رقم الفاتورة: {serial}</p>
                           <p className="card-text">العنوان: {address}</p>
                         </div>

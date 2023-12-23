@@ -54,7 +54,7 @@ const DeliveryMan = () => {
    const updateOrderDelivered = async (id) => {
      try {
        const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-       const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
+       const products = orderData.data.products.map((prod) => ({ ...prod, isDeleverd: true }));
        const status = 'Delivered';
        await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
        fetchdeliveryOrders();
@@ -82,7 +82,7 @@ const DeliveryMan = () => {
                <ToastContainer/>
  
                {deliveryOrders && deliveryOrders.map((order, i) => {
-                 if (order.products.filter((pr) => pr.isDone == false).length > 0) {
+                 if (order.products.filter((pr) => pr.isDeleverd == false).length > 0) {
                    return (
                      <div className="card text-white bg-success" style={{ width: "265px" }}>
                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">

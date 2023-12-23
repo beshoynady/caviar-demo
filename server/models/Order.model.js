@@ -83,6 +83,12 @@ const OrderSchema = new mongoose.Schema({
                 default: false,
                 required: true,
             },
+            // Indicates if the product is Deleverd
+            isDeleverd: {
+                type: Boolean,
+                default: false,
+                required: true,
+            },
             // Indicates if the product is to be added
             isAdd: {
                 type: Boolean,

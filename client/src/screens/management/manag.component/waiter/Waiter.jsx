@@ -152,32 +152,6 @@ const Waiter = () => {
                       }
                     </div>
                   </div>
-                  // <div className="wai-card" key={i}>
-                  //   <div className="card-info">
-                  //     <p className="info-p">اسم العميل {order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                  //     <p className="info-p">رقم الطلب {order.serial}</p>
-                  //     <p className="info-p">نوع الطلب {order.order_type}</p>
-                  //     <p className="info-p">اسم الويتر {usertitle(order.waiter)}</p>
-                  //     <p className="info-p">وقت الاستلام {new Date(order.createdAt).getHours() + ":" + new Date(order.createdAt).getMinutes()}</p>
-                  //     <p className="info-p">وقت التنفيذ {new Date(order.updatedAt).getHours() + ":" + new Date(order.updatedAt).getMinutes()}</p>
-                  //   </div>
-                  //   <div className="card-product">
-                  //     <ul className='card-ul'>
-                  //       <li className="card-li">
-                  //         <p className='product-name' >{order.table != null ? usertitle(order.table) : usertitle(order.user)}</p>
-                  //         <p className='product-name' >{order.help != 'Not requested' ? 'يحتاج المساعدة' : order.isActive == false ? 'يحتاج الفاتورة' : ''}</p>
-
-                  //       </li>
-
-                  //     </ul>
-                  //   </div>
-                  //   <div className='card-btn'>
-                  //     {order.help == 'Send waiter' ?
-                  //       <button ref={ready} className='btn-ready' onClick={() => { helpOnWay(order._id) }}>متجة للعميل</button>
-                  //       : order.help == 'On the way' ? <button ref={start} className='btn-start' onClick={() => helpDone(order._id)}>تم</button>
-                  //         : ''}
-                  //   </div>
-                  // </div>
                 )
               })
               }
@@ -199,7 +173,7 @@ const Waiter = () => {
                         </div>
                       </div>
                       <ul className="list-group list-group-flush">
-                        {order.products.filter((pr) => pr.isDeleverd == false).map((product, i) => {
+                        {order.products.filter((pr) => pr.isDone === true && pr.isDeleverd === false).map((product, i) => {
                           return (
                             <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i}>
                               <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>

@@ -41,13 +41,13 @@ const Waiter = () => {
     console.log({ internalOrdersData: internalOrdersData });
     const products = internalOrdersData.length>0?internalOrdersData[0].products:[]
     console.log({ products: products });
-    // const productsFiltered =products.length>0? products.filter((product) => product.isDone == true && product.isDeleverd == false):[];
+    const productsFiltered =products.length>0? products.filter((product) => product.isDone == true && product.isDeleverd == false):[];
     
-    // console.log({ productsFiltered: productsFiltered });
+    console.log({ productsFiltered: productsFiltered });
 
-    // if (productsFiltered.length > 0) {
-    //   setInternalOrders(internalOrdersData);
-    // }
+    if (productsFiltered.length > 0) {
+      setInternalOrders(internalOrdersData);
+    }
   } catch (error) {
     console.log(error);
   }

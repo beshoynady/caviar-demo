@@ -40,7 +40,7 @@ const Waiter = () => {
     
     console.log({ internalOrdersData: internalOrdersData });
 
-    const productsFiltered = internalOrdersData.filter((product) => product.isDone == true && product.isDeleverd == false);
+    const productsFiltered = internalOrdersData.products.filter((product) => product.isDone == true && product.isDeleverd == false);
     
     console.log({ productsFiltered: productsFiltered });
 

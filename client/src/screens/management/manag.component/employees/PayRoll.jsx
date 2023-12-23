@@ -613,56 +613,13 @@ const PayRoll = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {
-                        thismonth != new Date().getMonth + 1 ?
-                          listofemployee.map((em, i) => {
-                            if (em.payRoll.length > 0) {
-                              em.payRoll.map((roll, i) => {
-                                if (roll.Month == thismonth) {
-                                  return (
-                                    <tr key={i}>
-                                      <td>
-                                        <span className="custom-checkbox">
-                                          <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                          <label htmlFor="checkbox1"></label>
-                                        </span>
-                                      </td>
-                                      <td>{i + 1}</td>
-                                      <td>{em.fullname}</td>
-                                      <td>{em.role}</td>
-                                      <td>{roll.salary}</td>
-                                      <td>{roll.Additional}</td>
-                                      <td>{roll.Bonus}</td>
-                                      <td>{roll.TotalDue}</td>
-                                      <td>{roll.Deduction}</td>
-                                      <td>{roll.Absence}</td>
-                                      <td>{roll.Predecessor}</td>
-                                      <td>{roll.TotalDeductible}</td>
-                                      <td>{roll.Insurance}</td>
-                                      <td>{roll.Tax}</td>
-                                      <td>{roll.NetSalary}</td>
-                                      <td>
-                                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                        // onClick={() => {
-                                        //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                        // }}
-                                        >&#xE254;</i></a>
-                                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                        // onClick={() => setuserid(e._id)}
-                                        >&#xE872;</i></a>
-                                      </td>
-                                    </tr>
-                                  )
-                                }
-                              })
-
-                            }
-                          })
-                          : filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
-                            if (em.payRoll.length > 0) {
-                              if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                      {thismonth !== new Date().getMonth() + 1 ? (
+                        listofemployee.map((em, i) => {
+                          if (em.payRoll.length > 0) {
+                            return em.payRoll.map((roll, j) => {
+                              if (roll.Month === thismonth) {
                                 return (
-                                  <tr key={i}>
+                                  <tr key={j}>
                                     <td>
                                       <span className="custom-checkbox">
                                         <input type="checkbox" id="checkbox1" name="options[]" value="1" />
@@ -672,17 +629,17 @@ const PayRoll = () => {
                                     <td>{i + 1}</td>
                                     <td>{em.fullname}</td>
                                     <td>{em.role}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
-                                    <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                    <td>{roll.salary}</td>
+                                    <td>{roll.Additional}</td>
+                                    <td>{roll.Bonus}</td>
+                                    <td>{roll.TotalDue}</td>
+                                    <td>{roll.Deduction}</td>
+                                    <td>{roll.Absence}</td>
+                                    <td>{roll.Predecessor}</td>
+                                    <td>{roll.TotalDeductible}</td>
+                                    <td>{roll.Insurance}</td>
+                                    <td>{roll.Tax}</td>
+                                    <td>{roll.NetSalary}</td>
                                     <td>
                                       <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                       // onClick={() => {
@@ -694,53 +651,96 @@ const PayRoll = () => {
                                       >&#xE872;</i></a>
                                     </td>
                                   </tr>
-                                )
-
+                                );
                               }
+                              return null;
+                            });
+                          }
+                          return null;
+                        })
+                      ) : filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
+                        if (em.payRoll.length > 0) {
+                          if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{em.fullname}</td>
+                                <td>{em.role}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                <td>
+                                  <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                  // onClick={() => {
+                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                  // }}
+                                  >&#xE254;</i></a>
+                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                  // onClick={() => setuserid(e._id)}
+                                  >&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+
+                          }
+                        }
+                      })
+                        :
+                        listofemployee.map((em, i) => {
+                          if (em.payRoll.length > 0) {
+                            if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                              return (
+                                <tr key={i}>
+                                  <td>
+                                    <span className="custom-checkbox">
+                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                      <label htmlFor="checkbox1"></label>
+                                    </span>
+                                  </td>
+                                  <td>{i + 1}</td>
+                                  <td>{em.fullname}</td>
+                                  <td>{em.role}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                  <td>
+                                    <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                    // onClick={() => {
+                                    //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                    // }}
+                                    >&#xE254;</i></a>
+                                    <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                    // onClick={() => setuserid(e._id)}
+                                    >&#xE872;</i></a>
+                                  </td>
+                                </tr>
+                              )
+
                             }
-                          })
-                            :
-                            listofemployee.map((em, i) => {
-                              if (em.payRoll.length > 0) {
-                                if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
-                                  return (
-                                    <tr key={i}>
-                                      <td>
-                                        <span className="custom-checkbox">
-                                          <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                          <label htmlFor="checkbox1"></label>
-                                        </span>
-                                      </td>
-                                      <td>{i + 1}</td>
-                                      <td>{em.fullname}</td>
-                                      <td>{em.role}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
-                                      <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
-                                      <td>
-                                        <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                        // onClick={() => {
-                                        //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                        // }}
-                                        >&#xE254;</i></a>
-                                        <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                        // onClick={() => setuserid(e._id)}
-                                        >&#xE872;</i></a>
-                                      </td>
-                                    </tr>
-                                  )
-
-                                }
-                              }
-                            })
+                          }
+                        })
                       }
                     </tbody>
                   </table>

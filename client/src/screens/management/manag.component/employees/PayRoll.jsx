@@ -56,9 +56,9 @@ const PayRoll = () => {
   //   listofemployee
   // }
   // const getPayRollEmployee = async (id) => {
-  //   e.preventDefault()
-  //   try {
-  //     console.log(employeeid)
+    //   e.preventDefault()
+    //   try {
+      //     console.log(employeeid)
   //     const employee = await axios.get(`https://caviar-api.vercel.app/api/employee/${id}`)
   //     setsalary(employee.basicSalary)
   //   } catch (error) {
@@ -116,12 +116,12 @@ const PayRoll = () => {
   //           Absence = filterAbs[filterAbs.length - 1].newAmount
   //           payRoll[payRoll.length - 1].Absence = Absence
   //         }else{
-  //           Absence=0
-  //           payRoll[payRoll.length - 1].Absence = Absence
-  //         }
-
-  //         const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
-  //         if (filterAdd.length > 0) {
+    //           Absence=0
+    //           payRoll[payRoll.length - 1].Absence = Absence
+    //         }
+    
+    //         const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+    //         if (filterAdd.length > 0) {
   //           Additional = filterAdd[filterAdd.length - 1].newAmount
   //           payRoll[payRoll.length - 1].Additional = Additional
   //         }else{
@@ -469,11 +469,13 @@ const PayRoll = () => {
   //   }
   // };
 
+  const [filterEmployees, setfilterEmployees] = useState([])
+
   const filterEmployeesByJob = (role) => {
     getemployees()
     if (listofemployee.length > 0) {
       const FilterEmployees = listofemployee.filter(employee => employee.role == role)
-      setlistofemployee(FilterEmployees)
+      setfilterEmployees(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
@@ -481,7 +483,7 @@ const PayRoll = () => {
     getemployees()
     const filteredEmployees = listofemployee.filter(employee => employee.isActive == status)
     console.log(filteredEmployees)
-    setlistofemployee(filteredEmployees)
+    setfilterEmployees(filteredEmployees)
     // if (status == true) {
     //   console.log(listofemployee)
     // } else if (status == false) {
@@ -572,7 +574,7 @@ const PayRoll = () => {
                           <select class="form-control" onChange={(e)=>setthismonth(e.target.value)}>
                             <option >الكل</option>
                             {arryeofmonth.map((month, i) =>{
-                              <option value={month} key={i}>month</option>
+                              <option value={month} key={i}>{month}</option>
                             })}
                           </select>
                         </div>
@@ -612,7 +614,7 @@ const PayRoll = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {listofemployee && listofemployee.map((em, i) => {
+                      {filterEmployees? filterEmployees.map((em, i) => {
                         if (em.payRoll.length > 0) {
                           if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                             return (
@@ -651,7 +653,48 @@ const PayRoll = () => {
 
                           }
                         }
-                      })}
+                      })
+                      : listofemployee ? listofemployee.map((em, i) => {
+                        if (em.payRoll.length > 0) {
+                          if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{em.fullname}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
+                                <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                <td>
+                                  <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                  // onClick={() => {
+                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                  // }}
+                                  >&#xE254;</i></a>
+                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                  // onClick={() => setuserid(e._id)}
+                                  >&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            )
+
+                          }
+                        }
+                      })
+                      :''}
                     </tbody>
                   </table>
                   <div className="clearfix">

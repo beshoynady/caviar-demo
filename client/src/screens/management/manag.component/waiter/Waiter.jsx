@@ -39,11 +39,11 @@ const Waiter = () => {
      const activeOrders = orders.data.filter((order) => order.isActive === true);
      const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
      console.log({internalOrdersData:internalOrdersData})
-    //  const products = internalOrdersData.products.filter(product => product.isDone == true && product.isDeleverd == false); 
-    //  console.log({products:products})
-    //  if (products.length>0){
-    //    setInternalOrders(internalOrdersData);
-    //  }
+     const products = internalOrdersData>0?internalOrdersData.products.filter(product => product.isDone == true && product.isDeleverd == false):""; 
+     console.log({products:products})
+     if (products.length>0){
+       setInternalOrders(internalOrdersData);
+     }
    } catch (error) {
      console.log(error);
    }

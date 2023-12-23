@@ -614,7 +614,7 @@ const PayRoll = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {filterEmployees? filterEmployees.map((em, i) => {
+                      {filterEmployees.length>0? filterEmployees.map((em, i) => {
                         if (em.payRoll.length > 0) {
                           if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                             return (
@@ -654,7 +654,7 @@ const PayRoll = () => {
                           }
                         }
                       })
-                      : listofemployee ? listofemployee.map((em, i) => {
+                      : listofemployee.map((em, i) => {
                         if (em.payRoll.length > 0) {
                           if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                             return (
@@ -694,7 +694,7 @@ const PayRoll = () => {
                           }
                         }
                       })
-                      :''}
+                      }
                     </tbody>
                   </table>
                   <div className="clearfix">

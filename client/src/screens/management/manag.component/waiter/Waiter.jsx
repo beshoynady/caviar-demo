@@ -35,9 +35,13 @@ const Waiter = () => {
  const fetchInternalOrders = async () => {
    try {
      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-     const activeOrders = orders.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
+    //  const activeOrders = orders.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
+     const activeOrders = orders.data.filter((order) => order.isActive === true);
      const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
-     setInternalOrders(internalOrdersData);
+     const products = internalOrdersData.products.filter(product => product.isDone == true && product.isDeleverd == false); 
+     if (products.length>0){
+       setInternalOrders(internalOrdersData);
+     }
    } catch (error) {
      console.log(error);
    }

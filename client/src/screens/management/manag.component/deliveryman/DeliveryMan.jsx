@@ -6,33 +6,35 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 const DeliveryMan = () => {
-  // State for pending orders and payments
-  const [pendingOrders, setPendingOrders] = useState([]);
-  const [pendingPayments, setPendingPayments] = useState([]);
+  // // State for pending orders and payments
+  // const [pendingOrders, setPendingOrders] = useState([]);
+  // const [pendingPayments, setPendingPayments] = useState([]);
  
-  // Function to fetch pending orders and payments
-  const fetchPendingData = async () => {
-    try {
-      const res = await axios.get('https://caviar-api.vercel.app/api/order');
-      const recentStatus = res.data.filter((order) => order.status === 'Pending');
-      const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
-      setPendingOrders(recentStatus);
-      setPendingPayments(recentPaymentStatus);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // // Function to fetch pending orders and payments
+  // const fetchPendingData = async () => {
+  //   try {
+  //     const res = await axios.get('https://caviar-api.vercel.app/api/order');
+  //     const recentStatus = res.data.filter((order) => order.status === 'Pending');
+  //     const recentPaymentStatus = res.data.filter((order) => order.payment_status === 'Pending');
+  //     setPendingOrders(recentStatus);
+  //     setPendingPayments(recentPaymentStatus);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
  
   // State for internal orders
-  const [deliveryOrders, setdeliveryOrders] = useState([]);
- 
+  
+  
+  
   // Function to fetch internal orders
+  const [deliveryOrders, setdeliveryOrders] = useState([]);
   const fetchdeliveryOrders = async () => {
     try {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-      const activeOrders = orders.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
-      const deliveryOrdersData = activeOrders.filter(order => order.order_type === 'Delivery');
-      setdeliveryOrders(deliveryOrdersData);
+      const deliveryOrdersData = orders.filter(order => order.order_type === 'Delivery');
+      const activeOrders = deliveryOrdersData.data.filter((order) => order.isActive === true && (order.status === 'Prepared' || order.status === 'On the way'));
+      setdeliveryOrders(activeOrders);
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +45,7 @@ const DeliveryMan = () => {
        const status = 'On the way';
        await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
        fetchdeliveryOrders();
-       fetchPendingData();
+      //  fetchPendingData();
        toast.success('Order is on the way!');
      } catch (error) {
        console.log(error);
@@ -56,10 +58,12 @@ const DeliveryMan = () => {
        const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
        const products = orderData.data.products.map((prod) => ({ ...prod, isDeleverd: true }));
        const status = 'Delivered';
-       await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
-       fetchdeliveryOrders();
-       fetchPendingData();
-       toast.success('Order has been delivered!');
+       const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+       if(updateOrder){
+         fetchdeliveryOrders();
+         toast.success('Order has been delivered!');
+       }
+      //  fetchPendingData();
      } catch (error) {
        console.log(error);
        toast.error('Error delivering order!');
@@ -69,7 +73,7 @@ const DeliveryMan = () => {
  
   // Fetch initial data on component mount
    useEffect(() => {
-     fetchPendingData();
+    //  fetchPendingData();
      fetchdeliveryOrders();
    }, []);
  

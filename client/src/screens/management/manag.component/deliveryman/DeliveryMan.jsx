@@ -26,27 +26,28 @@ const DeliveryMan = () => {
   // State for internal orders
   
   
-  
   // Function to fetch internal orders
-  const [deliveryOrders, setdeliveryOrders] = useState([]);
-  const fetchdeliveryOrders = async () => {
-    try {
-      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-      const activeOrders= orders.data.filter(order =>order.isActive === true && order.order_type === 'Delivery');
-      console.log({activeOrders: activeOrders})
-      const deliveryOrdersData  = deliveryOrdersData.filter((order) => order.status === 'Prepared' || order.status === 'On the way');
-      console.log({ deliveryOrdersData : deliveryOrdersData})
-      setdeliveryOrders(deliveryOrdersData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [deliveryOrders, setDeliveryOrders] = useState([]);
+
+const fetchDeliveryOrders = async () => {
+  try {
+    const orders = await axios.get('https://caviar-api.vercel.app/api/order');
+    const activeOrders = orders.data.filter(order => order.isActive === true && order.order_type === 'Delivery');
+    console.log({ activeOrders: activeOrders });
+    const deliveryOrdersData = activeOrders.filter(order => order.status === 'Prepared' || order.status === 'On the way');
+    console.log({ deliveryOrdersData: deliveryOrdersData });
+    setDeliveryOrders(deliveryOrdersData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
  
    const updateOrderOnWay = async (id) => {
      try {
        const status = 'On the way';
        await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
-       fetchdeliveryOrders();
+       fetchDeliveryOrders();
       //  fetchPendingData();
        toast.success('Order is on the way!');
      } catch (error) {
@@ -62,7 +63,7 @@ const DeliveryMan = () => {
        const status = 'Delivered';
        const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
        if(updateOrder){
-         fetchdeliveryOrders();
+         fetchDeliveryOrders();
          toast.success('Order has been delivered!');
        }
       //  fetchPendingData();
@@ -76,7 +77,7 @@ const DeliveryMan = () => {
   // Fetch initial data on component mount
    useEffect(() => {
     //  fetchPendingData();
-     fetchdeliveryOrders();
+     fetchDeliveryOrders();
    }, []);
  
    return (

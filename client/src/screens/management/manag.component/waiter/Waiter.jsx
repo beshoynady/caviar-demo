@@ -72,10 +72,12 @@ const Waiter = () => {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = orderData.data.products.map((prod) => ({ ...prod, isDeleverd: true }));
       const status = 'Delivered';
-      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status ,products});
-      fetchInternalOrders();
-      fetchPendingData();
-      toast.success('Order has been delivered!');
+      const updateOrder= await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status ,products});
+      if(updateOrder.status == 200){
+        fetchInternalOrders()
+        fetchPendingData();
+        toast.success('Order has been delivered!');
+      }
     } catch (error) {
       console.log(error);
       toast.error('Error delivering order!');

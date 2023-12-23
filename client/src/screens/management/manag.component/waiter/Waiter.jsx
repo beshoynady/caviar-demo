@@ -39,7 +39,7 @@ const Waiter = () => {
      const activeOrders = orders.data.filter((order) => order.isActive === true);
      const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
      console.log({internalOrdersData:internalOrdersData})
-     const products = internalOrdersData.products
+     const products = internalOrdersData[0].products
      console.log({products:products})
     //  const productsFilterd = products.length>0?products.filter(product => product.isDone == true && product.isDeleverd == false):""; 
     //  console.log({productsFilterd:productsFilterd})

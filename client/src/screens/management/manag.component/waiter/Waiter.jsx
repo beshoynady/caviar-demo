@@ -39,9 +39,9 @@ const Waiter = () => {
     const internalOrdersData = activeOrders.filter(order => order.order_type === 'Internal');
     
     console.log({ internalOrdersData: internalOrdersData });
-    const products = internalOrdersData.length>0?internalOrdersData[0].products:[]
+    const products = internalOrdersData.length > 0 ? internalOrdersData.flatMap(order => order.products) : [];
     console.log({ products: products });
-    const productsFiltered =products.length>0? products.filter((product) => product.isDone == true && product.isDeleverd == false):[];
+    const productsFiltered = products.length > 0 ? products.filter((product) => product.isDone === true && product.isDeleverd === false) : [];
     
     console.log({ productsFiltered: productsFiltered });
 

@@ -613,11 +613,11 @@ const PayRoll = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {thismonth !== new Date().getMonth() + 1 ? (
+                      {thismonth != new Date().getMonth() + 1 ? (
                         listofemployee.map((em, i) => {
                           if (em.payRoll.length > 0) {
-                            return em.payRoll.map((roll, j) => {
-                              if (roll.Month === thismonth) {
+                             em.payRoll.map((roll, j) => {
+                              if (roll.Month == thismonth) {
                                 return (
                                   <tr key={j}>
                                     <td>
@@ -653,10 +653,8 @@ const PayRoll = () => {
                                   </tr>
                                 );
                               }
-                              return null;
                             });
                           }
-                          return null;
                         })
                       ) : filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
                         if (em.payRoll.length > 0) {

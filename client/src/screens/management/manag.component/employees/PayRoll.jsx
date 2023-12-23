@@ -5,8 +5,8 @@ import { detacontext } from '../../../../App';
 
 const PayRoll = () => {
 
-  const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  const thismonth = new Date().getMonth() + 1
+  const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12]
+  const [thismonth, setthismonth] = useState(new Date().getMonth() + 1)
 
   const [listofemployee, setlistofemployee] = useState([])
   const getemployees = async () => {
@@ -470,11 +470,10 @@ const PayRoll = () => {
   //   }
   // };
 
-  const [filterEmp, setfilterEmp] = useState([])
-  const getemployeesByJob = (role) => {
+  const filterEmployeesByJob = (role) => {
     if (listofemployee.length > 0) {
       const FilterEmployees = listofemployee.filter(employee => employee.role == role)
-      setfilterEmp(FilterEmployees)
+      setlistofemployee(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
@@ -483,11 +482,11 @@ const PayRoll = () => {
       console.log(listofemployee)
       const filteredEmployees = listofemployee.filter(employee => employee.isActive == true)
       console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
+      setlistofemployee(filteredEmployees)
     } else if (status == false) {
       const filteredEmployees = listofemployee.filter(employee => employee.isActive == false)
       console.log(filteredEmployees)
-      setfilterEmp(filteredEmployees)
+      setlistofemployee(filteredEmployees)
     }
   }
 
@@ -550,21 +549,30 @@ const PayRoll = () => {
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
-                          <label>الحركة</label>
-                          <select class="form-control" >
+                          <label>الوظيفه</label>
+                          <select class="form-control" onChange={(e)=>filterEmployeesByJob(e.target.value)} >
                             <option>الكل</option>
                             <option value="manager">مدير</option>
-                            <option value="casher">Cashير</option>
+                            <option value="casher">كاشير</option>
                             <option value="waiter">ويتر</option>
                             <option value="Chef">شيف</option>
                           </select>
                         </div>
                         <div class="filter-group">
                           <label>الحالة</label>
-                          <select class="form-control" >
+                          <select class="form-control" onChange={(e)=> filterEmpByStatus(e.target.value)}>
                             <option >الكل</option>
                             <option value={true}>متاح</option>
                             <option value={false}>غير متاح</option>
+                          </select>
+                        </div>
+                        <div class="filter-group">
+                          <label>الشهر</label>
+                          <select class="form-control" onChange={(e)=>setthismonth(e.target.value)}>
+                            <option >الكل</option>
+                            {arryeofmonth.map((month, i) =>{
+                              <option value={month} key={i}>month</option>
+                            })}
                           </select>
                         </div>
                         <div class="filter-group">

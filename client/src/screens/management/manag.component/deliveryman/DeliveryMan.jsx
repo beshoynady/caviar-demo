@@ -9,7 +9,7 @@ const DeliveryMan = () => {
   // // State for pending orders and payments
   // const [pendingOrders, setPendingOrders] = useState([]);
   // const [pendingPayments, setPendingPayments] = useState([]);
- 
+
   // // Function to fetch pending orders and payments
   // const fetchPendingData = async () => {
   //   try {
@@ -22,116 +22,119 @@ const DeliveryMan = () => {
   //     console.log(error);
   //   }
   // };
- 
+
   // State for internal orders
-  
-  
+
+
   // Function to fetch internal orders
   const [deliveryOrders, setDeliveryOrders] = useState([]);
 
-const fetchDeliveryOrders = async () => {
-  try {
-    const orders = await axios.get('https://caviar-api.vercel.app/api/order');
-    const activeOrders = orders.data.filter(order => order.isActive === true && order.order_type === 'Delivery');
-    console.log({ activeOrders: activeOrders });
-    const deliveryOrdersData = activeOrders.filter(order => order.status === 'Prepared' || order.status === 'On the way');
-    console.log({ deliveryOrdersData: deliveryOrdersData });
-    setDeliveryOrders(deliveryOrdersData);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const fetchDeliveryOrders = async () => {
+    try {
+      const orders = await axios.get('https://caviar-api.vercel.app/api/order');
+      const activeOrders = orders.data.filter(order => order.isActive === true && order.order_type === 'Delivery');
+      console.log({ activeOrders: activeOrders });
+      const deliveryOrdersData = activeOrders.filter(order => order.status === 'Prepared' || order.status === 'On the way');
+      console.log({ deliveryOrdersData: deliveryOrdersData });
+      setDeliveryOrders(deliveryOrdersData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
- 
-   const updateOrderOnWay = async (id) => {
-     try {
-       const status = 'On the way';
-       await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
-       fetchDeliveryOrders();
+
+  const updateOrderOnWay = async (id) => {
+    try {
+      const status = 'On the way';
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { status });
+      fetchDeliveryOrders();
       //  fetchPendingData();
-       toast.success('Order is on the way!');
-     } catch (error) {
-       console.log(error);
-       toast.error('Error updating order status!');
-     }
-   };
- 
-   const updateOrderDelivered = async (id) => {
-     try {
-       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-       const products = orderData.data.products.map((prod) => ({ ...prod, isDeleverd: true }));
-       const status = 'Delivered';
-       const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
-       if(updateOrder){
-         fetchDeliveryOrders();
-         toast.success('Order has been delivered!');
-       }
+      toast.success('Order is on the way!');
+    } catch (error) {
+      console.log(error);
+      toast.error('Error updating order status!');
+    }
+  };
+
+  const updateOrderDelivered = async (id) => {
+    try {
+      const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
+      const products = orderData.data.products.map((prod) => ({ ...prod, isDeleverd: true }));
+      const status = 'Delivered';
+      const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      if (updateOrder) {
+        fetchDeliveryOrders();
+        toast.success('Order has been delivered!');
+      }
       //  fetchPendingData();
-     } catch (error) {
-       console.log(error);
-       toast.error('Error delivering order!');
-     }
-   };
- 
- 
+    } catch (error) {
+      console.log(error);
+      toast.error('Error delivering order!');
+    }
+  };
+
+
   // Fetch initial data on component mount
-   useEffect(() => {
+  useEffect(() => {
     //  fetchPendingData();
-     fetchDeliveryOrders();
-   }, []);
- 
-   return (
-     <detacontext.Consumer>
-       {
-         ({ usertitle, employeeLoginInfo }) => {
-           return (
-             <div className='container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3'>
-               <ToastContainer/>
- 
-               {deliveryOrders && deliveryOrders.map((order, i) => {
-                 if (order.products.filter((pr) => pr.isDeleverd == false).length > 0) {
-                   return (
-                     <div className="card text-white bg-success" style={{ width: "265px" }}>
-                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">
-                         <div style={{ maxWidth: "50%" }}>
-                           <p className="card-text">العميل: {usertitle(order.name)}</p>
-                           <p className="card-text">رقم الفاتورة: {order.serial}</p>
-                           <p className="card-text">العنوان: {order.address}</p>
-                         </div>
-                         <div style={{ maxWidth: "50%" }}>
-                           <p className="card-text"> الطيار: {usertitle(order.deliveryMan)}</p>
-                           <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                           <p className="card-text">التنفيذ: {new Date(order.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                         </div>
-                       </div>
-                       <ul className="list-group list-group-flush">
-                         {order.products.filter((pr) => pr.isDeleverd === false).map((product, i) => {
-                           return (
-                             <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={i}>
-                               <span style={{ fontSize: "18px" }}>{i + 1}- {product.name}</span>
-                               <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}>× {product.quantity}</span>
-                             </li>
-                           )
-                         })}
-                       </ul>
-                       <div className="card-footer text-center">
-                         {order.status === 'Prepared' ?
-                           <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { updateOrderOnWay(order._id) }}>استلام الطلب</button>
-                           : <button className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={() =>{ updateOrderDelivered(order._id)}}>تم التسليم</button>
-                         }
-                       </div>
-                     </div>
- 
-                   )
-                 }
- 
-               })}
-             </div>
-           )
-         }
-       }
-     </detacontext.Consumer>
-   )
+    fetchDeliveryOrders();
+  }, []);
+
+  return (
+    <detacontext.Consumer>
+      {
+        ({ usertitle, employeeLoginInfo }) => {
+          return (
+            <div className='container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3'>
+              <ToastContainer />
+
+              {deliveryOrders && deliveryOrders.map((order, i) => {
+                const undeliveredProducts = order.products.filter(pr => !pr.isDeleverd);
+
+                if (undeliveredProducts.length > 0) {
+                  const { name, serial, address, deliveryMan, createdAt, updatedAt, _id, status } = order;
+
+                  return (
+                    <div className="card text-white bg-success" style={{ width: "265px" }} key={i}>
+                      <div className="card-body text-right d-flex justify-content-between p-0 m-1">
+                        <div style={{ maxWidth: "50%" }}>
+                          <p className="card-text">العميل: {usertitle(name)}</p>
+                          <p className="card-text">رقم الفاتورة: {serial}</p>
+                          <p className="card-text">العنوان: {address}</p>
+                        </div>
+                        <div style={{ maxWidth: "50%" }}>
+                          <p className="card-text"> الطيار: {usertitle(deliveryMan)}</p>
+                          <p className="card-text">الاستلام: {new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                          <p className="card-text">التنفيذ: {new Date(updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                        </div>
+                      </div>
+                      <ul className="list-group list-group-flush">
+                        {undeliveredProducts.map((product, j) => (
+                          <li className="list-group-item bg-light text-dark d-flex justify-content-between align-items-center" key={j}>
+                            <span style={{ fontSize: "18px" }}>{j + 1}- {product.name}</span>
+                            <span className="badge bg-secondary rounded-pill" style={{ fontSize: "16px" }}>× {product.quantity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="card-footer text-center">
+                        {status === 'Prepared' ?
+                          <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => { updateOrderOnWay(_id) }}>استلام الطلب</button> :
+                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { updateOrderDelivered(_id) }}>تم التسليم</button>
+                        }
+                      </div>
+                    </div>
+                  );
+                }
+
+                return null; // لا تقم بعرض شيء إذا كانت جميع المنتجات تم تسليمها
+              })}
+
+            </div>
+          )
+        }
+      }
+    </detacontext.Consumer>
+  )
 
 }
 

@@ -183,7 +183,7 @@ const Waiter = () => {
               }
 
               {internalOrders && internalOrders.map((order, i) => {
-                if (order.products.filter((pr) => pr.isDeleverd == false).length > 0) {
+                if (order.products.filter((pr) => pr.isDone === true && pr.isDeleverd === false).length > 0) {
                   return (
                     <div className="card text-white bg-success" style={{ width: "265px" }}>
                       <div className="card-body text-right d-flex justify-content-between p-0 m-1">

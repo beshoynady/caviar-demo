@@ -34,7 +34,7 @@ const DeliveryMan = () => {
       const orders = await axios.get('https://caviar-api.vercel.app/api/order');
       const activeOrders= orders.data.filter(order =>order.isActive === true && order.order_type === 'Delivery');
       console.log({activeOrders: activeOrders})
-      const deliveryOrdersData  = deliveryOrdersData.data.filter((order) => order.status === 'Prepared' || order.status === 'On the way');
+      const deliveryOrdersData  = deliveryOrdersData.filter((order) => order.status === 'Prepared' || order.status === 'On the way');
       console.log({ deliveryOrdersData : deliveryOrdersData})
       setdeliveryOrders(deliveryOrdersData);
     } catch (error) {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 const employeeSchema = new mongoose.Schema({
   fullname: {
@@ -149,6 +150,10 @@ const employeeSchema = new mongoose.Schema({
         required: true,
         default: false,
       },
+      paidBy:{
+        type: ObjectId,
+        ref: 'Employee',
+      }
     },
   ],
   isVerified: {

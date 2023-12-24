@@ -200,7 +200,8 @@ const validatePayroll = (data) => {
       tax: Joi.number().min(0).required(),
       totalDeductible: Joi.number().min(0).required(),
       netSalary: Joi.number().min(0).required(),
-      isPaid: Joi.boolean().required(),
+      isPaid: Joi.boolean(),
+      paidBy: Joi.string()
     });
   
     return schema.validate(data);
@@ -228,6 +229,7 @@ const validatePayroll = (data) => {
         totalDeductible,
         netSalary,
         isPaid,
+        paidBy
       } = req.body;
   
       const employee = await Employeemodel.findById(employeeId);
@@ -251,6 +253,7 @@ const validatePayroll = (data) => {
           payroll.TotalDeductible = totalDeductible;
           payroll.NetSalary = netSalary;
           payroll.isPaid = isPaid;
+          payroll.paidBy = paidBy;
         }
       });
   
@@ -268,7 +271,6 @@ const validatePayroll = (data) => {
           Tax: tax,
           TotalDeductible: totalDeductible,
           NetSalary: netSalary,
-          isPaid: isPaid,
         });
       }
   

@@ -431,6 +431,13 @@ const PayRoll = () => {
     }
   }
 
+  const paidSalary = async (id, em)=>{
+    console.log({id, em})
+    const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`,{
+      isPaid: true, paidBy:em
+    })
+  }
+
   // const updateOrAddPayrollForMonthFrontend = async () => {
   //   try {
   //     const employeeId = 'employee123'; // Replace with actual employee ID
@@ -517,7 +524,7 @@ const PayRoll = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, startpagination, endpagination, setstartpagination, setendpagination }) => {
+        ({ EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -691,14 +698,7 @@ const PayRoll = () => {
                                               <td>{Roll.Tax}</td>
                                               <td>{Roll.NetSalary}</td>
                                               <td>
-                                                <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                                // onClick={() => {
-                                                //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                                // }}
-                                                >&#xE254;</i></a>
-                                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                                // onClick={() => setuserid(e._id)}
-                                                >&#xE872;</i></a>
+                                              <button type='button' className="btn btn-success" onClick={()=>paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}>دفع</button>
                                               </td>
                                             </tr>
                                           </>

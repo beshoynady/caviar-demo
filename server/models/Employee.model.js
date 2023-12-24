@@ -77,78 +77,65 @@ const employeeSchema = new mongoose.Schema({
     {
       Month: {
         type: Number,
-        required: true,
         default: 0,
       },
       salary: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Additional: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Bonus: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       TotalDue: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Absence: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Deduction: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Predecessor: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Insurance: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       Tax: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       TotalDeductible: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       NetSalary: {
         type: Number,
-        required: true,
         min: 0,
         default: 0,
       },
       isPaid: {
         type: Boolean,
-        required: true,
         default: false,
       },
       paidBy:{

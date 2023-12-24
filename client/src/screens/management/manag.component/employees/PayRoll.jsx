@@ -144,11 +144,11 @@ const PayRoll = () => {
       let Insurance = 0
       let Tax = 0
       let NetSalary = 0
-      let isPaid = false
       let salary = listofemployee[i].basicSalary
       let month = new Date().getMonth() + 1
       let id = listofemployee[i]._id
       setemployeeid(id)
+
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
       console.log({ employeemov: employeemov })
 
@@ -211,7 +211,6 @@ const PayRoll = () => {
           tax: Tax,
           totalDeductible: TotalDeductible,
           netSalary: NetSalary,
-          isPaid,
         })
         console.log(result)
         if (result) {
@@ -238,7 +237,6 @@ const PayRoll = () => {
           tax: Tax,
           totalDeductible: TotalDeductible,
           netSalary: NetSalary,
-          isPaid,
         })
         console.log(result)
         if (result) {

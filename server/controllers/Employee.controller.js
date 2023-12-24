@@ -207,79 +207,86 @@ const deleteEmployee = async (req, res) => {
 //     return schema.validate(data);
 //   };
   
-  const updateOrAddPayrollForMonth = async (req, res) => {
-    try {
-      // const { error } = validatePayroll(req.body);
-      // if (error) {
-      //   return res.status(400).json({ message: error.details[0].message });
-      // }
-  
-      const employeeId = req.params.employeeId;
-      const {
-        month,
-        salary,
-        additional,
-        bonus,
-        totalDue,
-        absence,
-        deduction,
-        predecessor,
-        insurance,
-        tax,
-        totalDeductible,
-        netSalary,
-        isPaid,
-        paidBy
-      } = req.body;
-  
-      const employee = await Employeemodel.findById(employeeId);
-      if (!employee) {
-        return res.status(404).json({ message: 'Employee not found' });
-      }
-  
-      let found = false;
-      employee.payRoll.forEach((payroll) => {
-        if (payroll.Month === month && !payroll.isPaid) {
-          found = true;
-          payroll.salary = salary;
-          payroll.Additional = additional;
-          payroll.Bonus = bonus;
-          payroll.TotalDue = totalDue;
-          payroll.Absence = absence;
-          payroll.Deduction = deduction;
-          payroll.Predecessor = predecessor;
-          payroll.Insurance = insurance;
-          payroll.Tax = tax;
-          payroll.TotalDeductible = totalDeductible;
-          payroll.NetSalary = netSalary;
+const updateOrAddPayrollForMonth = async (req, res) => {
+  try {
+    // Extracting necessary data from the request body
+    const employeeId = req.params.employeeId;
+    const {
+      month,
+      salary,
+      additional,
+      bonus,
+      totalDue,
+      absence,
+      deduction,
+      predecessor,
+      insurance,
+      tax,
+      totalDeductible,
+      netSalary,
+      isPaid,
+      paidBy
+    } = req.body;
+
+    // Finding the employee by ID
+    const employee = await Employeemodel.findById(employeeId);
+    if (!employee) {
+      // If employee not found, return a 404 response
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    let found = false;
+    employee.payRoll.forEach((payroll) => {
+      // Checking if payroll for the month exists and is not paid
+      if (payroll.Month === month && !payroll.isPaid) {
+        found = true;
+        // Updating payroll if any non-empty field is provided, otherwise updating isPaid and paidBy
+        if (salary || additional || bonus || totalDue || absence || deduction || predecessor || insurance || tax || totalDeductible || netSalary) {
+          payroll.salary = salary || payroll.salary;
+          payroll.Additional = additional || payroll.Additional;
+          payroll.Bonus = bonus || payroll.Bonus;
+          payroll.TotalDue = totalDue || payroll.TotalDue;
+          payroll.Absence = absence || payroll.Absence;
+          payroll.Deduction = deduction || payroll.Deduction;
+          payroll.Predecessor = predecessor || payroll.Predecessor;
+          payroll.Insurance = insurance || payroll.Insurance;
+          payroll.Tax = tax || payroll.Tax;
+          payroll.TotalDeductible = totalDeductible || payroll.TotalDeductible;
+          payroll.NetSalary = netSalary || payroll.NetSalary;
+        } else {
           payroll.isPaid = isPaid;
           payroll.paidBy = paidBy;
         }
-      });
-  
-      if (!found) {
-        employee.payRoll.push({
-          Month: month,
-          salary: salary,
-          Additional: additional,
-          Bonus: bonus,
-          TotalDue: totalDue,
-          Absence: absence,
-          Deduction: deduction,
-          Predecessor: predecessor,
-          Insurance: insurance,
-          Tax: tax,
-          TotalDeductible: totalDeductible,
-          NetSalary: netSalary,
-        });
       }
-  
-      await employee.save();
-      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    });
+
+    if (!found) {
+      // If payroll for the month doesn't exist, add a new payroll entry
+      employee.payRoll.push({
+        Month: month,
+        salary: salary,
+        Additional: additional,
+        Bonus: bonus,
+        TotalDue: totalDue,
+        Absence: absence,
+        Deduction: deduction,
+        Predecessor: predecessor,
+        Insurance: insurance,
+        Tax: tax,
+        TotalDeductible: totalDeductible,
+        NetSalary: netSalary,
+      });
     }
-  };
+
+    // Saving changes to the employee and sending a success response
+    await employee.save();
+    res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+  } catch (error) {
+    // Handling any errors that occur during the process
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
   const paidPayrollForMonth = async (req, res) => {

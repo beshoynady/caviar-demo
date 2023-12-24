@@ -14,7 +14,7 @@ router.route('/:employeeId')
 router.route('/login').post(loginEmployee);
 
 router.route('/payroll/:employeeId')
-    .put(paidPayrollForMonth);
+    .put(updateOrAddPayrollForMonth);
 
 // router.route('/paid/:employeeId')
 //     .put(paidPayrollForMonth);

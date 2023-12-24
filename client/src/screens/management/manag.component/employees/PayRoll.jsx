@@ -571,7 +571,7 @@ const PayRoll = () => {
                             <option value="Chef">شيف</option>
                             <option value="deliveryman">ديليفري</option>
                           </select>
-                        </div>
+                        </div>  
                         <div class="filter-group">
                           <label>الحالة</label>
                           <select class="form-control" onChange={(e) => filterEmpByStatus(e.target.value)}>
@@ -626,44 +626,52 @@ const PayRoll = () => {
                     <tbody>
                       {
                         filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
-                          if (em.payRoll.length > 0) {
-                            if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
-                              return (
-                                <tr key={i}>
-                                  <td>
-                                    <span className="custom-checkbox">
-                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                      <label htmlFor="checkbox1"></label>
-                                    </span>
-                                  </td>
-                                  <td>{i + 1}</td>
-                                  <td>{em.fullname}</td>
-                                  <td>{em.role}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Deduction}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Absence}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Predecessor}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
-                                  <td>
-                                    <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                    // onClick={() => {
-                                    //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                    // }}
-                                    >&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                    // onClick={() => setuserid(e._id)}
-                                    >&#xE872;</i></a>
-                                  </td>
-                                </tr>
-                              )
+                          if (em.isActive == true && em.payRoll.length > 0) {
+                            return (
 
-                            }
+                              // {
+                              em.payRoll.map((Roll, j) => {
+                                return (
+                                  Roll.Month == thismonth ?
+                                    (
+                                      <tr key={i}>
+                                        <td>
+                                          <span className="custom-checkbox">
+                                            <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                            <label htmlFor="checkbox1"></label>
+                                          </span>
+                                        </td>
+                                        <td>{i + 1}</td>
+                                        <td>{em.fullname}</td>
+                                        <td>{em.role}</td>
+                                        <td>{Roll.salary}</td>
+                                        <td>{Roll.Additional}</td>
+                                        <td>{Roll.Bonus}</td>
+                                        <td>{Roll.TotalDue}</td>
+                                        <td>{Roll.Deduction}</td>
+                                        <td>{Roll.Absence}</td>
+                                        <td>{Roll.Predecessor}</td>
+                                        <td>{Roll.TotalDeductible}</td>
+                                        <td>{Roll.Insurance}</td>
+                                        <td>{Roll.Tax}</td>
+                                        <td>{Roll.NetSalary}</td>
+                                        <td>{usertitle(Roll.paidBy)}</td>
+                                        {Roll.isPaid == false ? (
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
+                                          > دفع</button></td>
+                                        ) : (
+                                          <td>تم الدفع</td>
+                                        )}
+                                      </tr>
+                                    )
+                                    : ''
+                                )
+                              }
+                              )
+                              // }
+
+                              // </tr >
+                            )
                           }
                         })
                           :

@@ -258,7 +258,7 @@ const PayRoll = () => {
     handlecashRegister(em)
     createDailyExpense(em, amount,expenseDescription,note)
     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
-      isPaid: true, paidBy: em 
+      isPaid: true, paidBy: em ,month
     })
     console.log(updatePayRoll)
   }

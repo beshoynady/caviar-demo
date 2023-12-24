@@ -211,6 +211,7 @@ const validatePayroll = (data) => {
     try {  
       const employeeId = req.params.employeeId;
       const {
+        month,
         isPaid,
         paidBy
       } = req.body;
@@ -219,9 +220,7 @@ const validatePayroll = (data) => {
       if (!employee) {
         return res.status(404).json({ message: 'Employee not found' });
       }
-  
-      const month = /* تعيين قيمة الشهر هنا بطريقة مناسبة */
-  
+    
       employee.payRoll.forEach((payroll) => {
         if (payroll.Month === month && !payroll.isPaid) {
           payroll.isPaid = isPaid;

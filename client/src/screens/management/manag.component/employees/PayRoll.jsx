@@ -620,6 +620,7 @@ const PayRoll = () => {
                         <th>ضريبه</th>
                         <th>المستحق عن الشهر</th>
                         <th>دفع بواسطه</th>
+                        <th>الدفع</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -671,11 +672,10 @@ const PayRoll = () => {
                               return (
 
                                 // {
-                                  em.payRoll.map((Roll, i) => {
+                                  em.payRoll.map((Roll, j) => {
                                     return (
                                       Roll.Month == thismonth ?
                                         (
-
                                           <>
                                             <tr key={i}>
                                               <td>
@@ -700,7 +700,7 @@ const PayRoll = () => {
                                               <td>{Roll.NetSalary}</td>
                                               <td>{usertitle(Roll.paidBy)}</td>
                                               <td>
-                                                {Roll.isPaid?
+                                                {Roll.isPaid==true?
                                               <button type='button' className="btn btn-success" onClick={()=>paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}>دفع</button>
                                                 :'تم الدفع'}
                                               </td>

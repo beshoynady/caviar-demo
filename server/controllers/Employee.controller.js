@@ -152,10 +152,10 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        // const { error } = updateEmployeeSchema.validate(req.body);
-        // if (error) {
-        //     return res.status(400).json({ message: error.details[0].message });
-        // }
+        const { error } = updateEmployeeSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
         const id = req.params.employeeId;
         const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive, password } = req.body;
 
@@ -186,70 +186,33 @@ const deleteEmployee = async (req, res) => {
 
 
 
-// const validatePayroll = (data) => {
-//     const schema = Joi.object({
-//       month: Joi.number(),
-//       salary: Joi.number().min(0),
-//       additional: Joi.number().min(0),
-//       bonus: Joi.number().min(0),
-//       totalDue: Joi.number().min(0),
-//       absence: Joi.number().min(0),
-//       deduction: Joi.number().min(0),
-//       predecessor: Joi.number().min(0),
-//       insurance: Joi.number().min(0),
-//       tax: Joi.number().min(0),
-//       totalDeductible: Joi.number().min(0),
-//       netSalary: Joi.number().min(0),
-//       isPaid: Joi.boolean(),
-//       paidBy: Joi.string()
-//     });
+const validatePayroll = (data) => {
+    const schema = Joi.object({
+      month: Joi.number(),
+      salary: Joi.number().min(0),
+      additional: Joi.number().min(0),
+      bonus: Joi.number().min(0),
+      totalDue: Joi.number().min(0),
+      absence: Joi.number().min(0),
+      deduction: Joi.number().min(0),
+      predecessor: Joi.number().min(0),
+      insurance: Joi.number().min(0),
+      tax: Joi.number().min(0),
+      totalDeductible: Joi.number().min(0),
+      netSalary: Joi.number().min(0),
+      isPaid: Joi.boolean(),
+      paidBy: Joi.string()
+    });
   
-//     return schema.validate(data);
-//   };
+    return schema.validate(data);
+  };
   
-const paidPayrollForMonth =async (req, res) => {
-    try {
-        const employeeId = req.params.employeeId;
-        const {
-            month,
-            isPaid,
-            paidBy
-        } = req.body;
-
-        const employee = await Employeemodel.findById(employeeId);
-        if (!employee) {
-            return res.status(404).json({ message: 'Employee not found' });
-        }
-
-        let found = false;
-        employee.payRoll.forEach((payroll) => {
-            if (payroll.Month === month && !payroll.isPaid) {
-                found = true;
-                payroll.isPaid = isPaid;
-                payroll.paidBy = paidBy;
-            }
-        });
-
-        if (!found) {
-            return res.status(404).json({ message: 'Payroll for the specified month not found' });
-        }
-
-        await employee.save();
-        res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-  
-
-
-
   const updateOrAddPayrollForMonth = async (req, res) => {
     try {
-    //   const { error } = validatePayroll(req.body);
-    //   if (error) {
-    //     return res.status(400).json({ message: error.details[0].message });
-    //   }
+      const { error } = validatePayroll(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
   
       const employeeId = req.params.employeeId;
       const {
@@ -319,4 +282,36 @@ const paidPayrollForMonth =async (req, res) => {
   };
 
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth,paidPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };
+  const paidPayrollForMonth = async (req, res) => {
+    try {
+      const id = req.params.employeeId;
+      const { isPaid, paidBy, month } = req.body;
+  
+      const employee = await Employeemodel.findById(id);
+      if (!employee) {
+        return res.status(404).send({ message: 'No employee found' });
+      }
+  
+      let updated = false;
+      employee.payRoll.forEach((payroll) => {
+        if (payroll.Month === month) {
+          payroll.isPaid = isPaid;
+          payroll.paidBy = paidBy;
+          updated = true;
+        }
+      });
+  
+      if (!updated) {
+        return res.status(404).send({ message: 'No payroll for the specified month found' });
+      }
+  
+      await employee.save();
+      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
+
+module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };

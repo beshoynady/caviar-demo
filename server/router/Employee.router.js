@@ -12,10 +12,11 @@ router.route('/:employeeId')
     .delete(employeesController.deleteEmployee);
 
 router.route('/login').post(employeesController.loginEmployee);
-router.route('/payroll/:employeeId')
-    .put(employeesController.paidPayrollForMonth);
 
-// router.route('/paidsalary/:employeeId')
-//     .put(employeesController.paidPayrollForMonth);
+router.route('/payroll/:employeeId')
+    .put(employeesController.updateOrAddPayrollForMonth);
+
+router.route('/paid/:employeeId')
+    .put(employeesController.paidPayrollForMonth);
 
 module.exports = router;

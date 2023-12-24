@@ -217,7 +217,7 @@ const paidPayrollForMonth =async (req, res) => {
         paidBy
       } = req.body;
   
-      const employee = await EmployeeModel.findById(employeeId);
+      const employee = await Employeemodel.findById(employeeId);
       if (!employee) {
         return res.status(404).json({ message: 'Employee not found' });
       }

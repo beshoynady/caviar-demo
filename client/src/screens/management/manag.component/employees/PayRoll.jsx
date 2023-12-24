@@ -705,8 +705,8 @@ const PayRoll = () => {
                       })
                         :
                         listofemployee.map((em, i) => {
-                          if (em.payRoll.length > 0) {
-                            if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
+                          // if (em.payRoll.length > 0) {
+                          //   if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                               return (
                                 <tr key={i}>
                                   <td>
@@ -762,8 +762,8 @@ const PayRoll = () => {
                                 </tr>
                               )
 
-                            }
-                          }
+                          //   }
+                          // }
                       })
                       }
                     </tbody>

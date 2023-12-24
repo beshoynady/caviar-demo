@@ -207,34 +207,37 @@ const deleteEmployee = async (req, res) => {
 //     return schema.validate(data);
 //   };
   
-const paidPayrollForMonth = async (req, res) => {
-    try {  
+const paidPayrollForMonth =async (req, res) => {
+    try {
       const employeeId = req.params.employeeId;
+      const month = parseInt(req.body.month);
+  
       const {
-        month,
         isPaid,
         paidBy
       } = req.body;
   
-      if (!month || typeof isPaid !== 'boolean' || typeof paidBy !== 'string') {
-        return res.status(400).json({ message: 'Invalid input data' });
-      }
-  
-      const employee = await Employeemodel.findById(employeeId);
+      const employee = await EmployeeModel.findById(employeeId);
       if (!employee) {
         return res.status(404).json({ message: 'Employee not found' });
       }
   
-      const foundPayroll = employee.payRoll.find(payroll => payroll.Month === month && !payroll.isPaid);
-      if (foundPayroll) {
-        foundPayroll.isPaid = isPaid;
-        foundPayroll.paidBy = paidBy;
-      } else {
-        return res.status(404).json({ message: 'Payroll for the specified month not found or already paid' });
+      const payrollIndex = employee.payRoll.findIndex(payroll => payroll.Month === month);
+      if (payrollIndex === -1) {
+        return res.status(404).json({ message: `Payroll for month ${month} not found` });
       }
   
+      const payroll = employee.payRoll[payrollIndex];
+      if (payroll.isPaid) {
+        return res.status(400).json({ message: `Payroll for month ${month} is already marked as paid` });
+      }
+  
+      // Update the required fields
+      employee.payRoll[payrollIndex].isPaid = isPaid;
+      employee.payRoll[payrollIndex].paidBy = paidBy;
+  
       await employee.save();
-      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+      res.status(200).json({ message: `Payroll for month ${month} updated successfully`, payroll: employee.payRoll[payrollIndex] });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -15,7 +15,7 @@ router.route('/login').post(employeesController.loginEmployee);
 router.route('/payroll/:employeeId')
     .put(employeesController.updateOrAddPayrollForMonth);
 
-router.route('/paid/:employeeId')
+router.route('/paidsalary/:employeeId')
     .put(employeesController.paidPayrollForMonth);
 
 module.exports = router;

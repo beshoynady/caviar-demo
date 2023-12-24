@@ -251,7 +251,7 @@ const PayRoll = () => {
   }
 
   const paidSalary = async (id,name,em, amount, month) => {
-    // console.log({ id, em })
+    console.log({ id, em })
     // const expenseDescription = `دفع مرتب ${name} ${amount}`
     // // const month = new Date().getMonth() + 1;
     // const note = `دفع مرتب ${name} لشهر ${month}`

@@ -250,19 +250,32 @@ const PayRoll = () => {
     }
   }
 
-  const paidSalary = async (id,name,em, amount, month) => {
-    console.log({ id, em })
+  // const paidSalary = async (id,name,em, amount, month) => {
+  //   console.log({ id, em })
     // const expenseDescription = `دفع مرتب ${name} ${amount}`
     // // const month = new Date().getMonth() + 1;
     // const note = `دفع مرتب ${name} لشهر ${month}`
     // handlecashRegister(em)
     // createDailyExpense(em, amount,expenseDescription,note)
-    const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
-      isPaid: true, paidBy: em ,month
-    })
-    console.log(updatePayRoll)
-  }
+  //   const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
+  //     isPaid: true, paidBy: em ,month
+  //   })
+  //   console.log(updatePayRoll)
+  // }
 
+  const paidSalary = async (id, name, em, amount, month) => {
+    try {
+      console.log({ id, em })
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
+        isPaid: true,
+        paidBy: em,
+        month
+      });
+      console.log(updatePayRoll);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // const updateOrAddPayrollForMonthFrontend = async () => {
   //   try {
   //     const employeeId = 'employee123'; // Replace with actual employee ID

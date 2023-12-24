@@ -676,43 +676,41 @@ const PayRoll = () => {
                                   return (
                                     Roll.Month == thismonth ?
                                       (
-                                          <tr key={i}>
-                                            <td>
-                                              <span className="custom-checkbox">
-                                                <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                                <label htmlFor="checkbox1"></label>
-                                              </span>
-                                            </td>
-                                            <td>{i + 1}</td>
-                                            <td>{em.fullname}</td>
-                                            <td>{em.role}</td>
-                                            <td>{Roll.salary}</td>
-                                            <td>{Roll.Additional}</td>
-                                            <td>{Roll.Bonus}</td>
-                                            <td>{Roll.TotalDue}</td>
-                                            <td>{Roll.Deduction}</td>
-                                            <td>{Roll.Absence}</td>
-                                            <td>{Roll.Predecessor}</td>
-                                            <td>{Roll.TotalDeductible}</td>
-                                            <td>{Roll.Insurance}</td>
-                                            <td>{Roll.Tax}</td>
-                                            <td>{Roll.NetSalary}</td>
-                                            <td>{usertitle(Roll.paidBy)}</td>
-                                            <td>
-                                              {Roll.isPaid === false ? (
-                                                <button
-                                                  type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
-                                                > دفع</button>
-                                              ) : (
-                                                <td>تم الدفع</td>
-                                              )}
-                                            </td>
-                                          </tr>
-                                          )
-                                          : ''
-                                          )
-                                  }
-                                          )
+                                        <tr key={i}>
+                                          <td>
+                                            <span className="custom-checkbox">
+                                              <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                              <label htmlFor="checkbox1"></label>
+                                            </span>
+                                          </td>
+                                          <td>{i + 1}</td>
+                                          <td>{em.fullname}</td>
+                                          <td>{em.role}</td>
+                                          <td>{Roll.salary}</td>
+                                          <td>{Roll.Additional}</td>
+                                          <td>{Roll.Bonus}</td>
+                                          <td>{Roll.TotalDue}</td>
+                                          <td>{Roll.Deduction}</td>
+                                          <td>{Roll.Absence}</td>
+                                          <td>{Roll.Predecessor}</td>
+                                          <td>{Roll.TotalDeductible}</td>
+                                          <td>{Roll.Insurance}</td>
+                                          <td>{Roll.Tax}</td>
+                                          <td>{Roll.NetSalary}</td>
+                                          <td>{usertitle(Roll.paidBy)}</td>
+                                          {Roll.isPaid == false ? (
+                                            <td><button
+                                              type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
+                                            > دفع</button></td>
+                                          ) : (
+                                            <td>تم الدفع</td>
+                                          )}
+                                        </tr>
+                                      )
+                                      : ''
+                                  )
+                                }
+                                )
                                 // }
 
                                 // </tr >

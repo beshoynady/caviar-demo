@@ -699,8 +699,7 @@ const PayRoll = () => {
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
                                           {Roll.isPaid == false ? (
-                                            <td><button
-                                              type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
+                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
                                             > دفع</button></td>
                                           ) : (
                                             <td>تم الدفع</td>

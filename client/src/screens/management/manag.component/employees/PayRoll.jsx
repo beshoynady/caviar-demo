@@ -144,11 +144,11 @@ const PayRoll = () => {
       let Insurance = 0
       let Tax = 0
       let NetSalary = 0
+      let isPaid = false
       let salary = listofemployee[i].basicSalary
       let month = new Date().getMonth() + 1
       let id = listofemployee[i]._id
       setemployeeid(id)
-
       const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
       console.log({ employeemov: employeemov })
 
@@ -211,6 +211,7 @@ const PayRoll = () => {
           tax: Tax,
           totalDeductible: TotalDeductible,
           netSalary: NetSalary,
+          isPaid,
         })
         console.log(result)
         if (result) {
@@ -237,6 +238,7 @@ const PayRoll = () => {
           tax: Tax,
           totalDeductible: TotalDeductible,
           netSalary: NetSalary,
+          isPaid,
         })
         console.log(result)
         if (result) {
@@ -259,13 +261,14 @@ const PayRoll = () => {
   //   })
   //   console.log(updatePayRoll)
   // }
+
   const paidSalary = async (id, name, em, amount, month) => {
     try {
       console.log({ id, em });
-      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
         isPaid: true,
         paidBy: em,
-        month,
+        month
       });
       console.log(updatePayRoll);
     } catch (error) {

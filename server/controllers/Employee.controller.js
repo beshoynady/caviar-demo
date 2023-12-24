@@ -186,34 +186,33 @@ const deleteEmployee = async (req, res) => {
 
 
 
-// const validatePayroll = (data) => {
-//     const schema = Joi.object({
-//       month: Joi.number(),
-//       salary: Joi.number().min(0),
-//       additional: Joi.number().min(0),
-//       bonus: Joi.number().min(0),
-//       totalDue: Joi.number().min(0),
-//       absence: Joi.number().min(0),
-//       deduction: Joi.number().min(0),
-//       predecessor: Joi.number().min(0),
-//       insurance: Joi.number().min(0),
-//       tax: Joi.number().min(0),
-//       totalDeductible: Joi.number().min(0),
-//       netSalary: Joi.number().min(0),
-//       isPaid: Joi.boolean(),
-//       paidBy: Joi.string()
-//     });
+const validatePayroll = (data) => {
+    const schema = Joi.object({
+      month: Joi.number(),
+      salary: Joi.number().min(0),
+      additional: Joi.number().min(0),
+      bonus: Joi.number().min(0),
+      totalDue: Joi.number().min(0),
+      absence: Joi.number().min(0),
+      deduction: Joi.number().min(0),
+      predecessor: Joi.number().min(0),
+      insurance: Joi.number().min(0),
+      tax: Joi.number().min(0),
+      totalDeductible: Joi.number().min(0),
+      netSalary: Joi.number().min(0),
+      isPaid: Joi.boolean(),
+      paidBy: Joi.string()
+    });
   
-//     return schema.validate(data);
-//   };
-
-// const { error } = validatePayroll(req.body);
-// if (error) {
-//   return res.status(400).json({ message: error.details[0].message });
-// }
+    return schema.validate(data);
+  };
   
   const updateOrAddPayrollForMonth = async (req, res) => {
     try {
+      const { error } = validatePayroll(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
   
       const employeeId = req.params.employeeId;
       const {
@@ -242,23 +241,20 @@ const deleteEmployee = async (req, res) => {
       employee.payRoll.forEach((payroll) => {
         if (payroll.Month === month && !payroll.isPaid) {
           found = true;
-          if (salary || additional || bonus || totalDue || absence || deduction || predecessor || insurance || tax || totalDeductible || netSalary) {
-            payroll.salary = salary || payroll.salary;
-            payroll.Additional = additional || payroll.Additional;
-            payroll.Bonus = bonus || payroll.Bonus;
-            payroll.TotalDue = totalDue || payroll.TotalDue;
-            payroll.Absence = absence || payroll.Absence;
-            payroll.Deduction = deduction || payroll.Deduction;
-            payroll.Predecessor = predecessor || payroll.Predecessor;
-            payroll.Insurance = insurance || payroll.Insurance;
-            payroll.Tax = tax || payroll.Tax;
-            payroll.TotalDeductible = totalDeductible || payroll.TotalDeductible;
-            payroll.NetSalary = netSalary || payroll.NetSalary;
-          } else {
-            payroll.isPaid = isPaid ;
-            payroll.paidBy = paidBy;
-          }
-          }
+          payroll.salary = salary;
+          payroll.Additional = additional;
+          payroll.Bonus = bonus;
+          payroll.TotalDue = totalDue;
+          payroll.Absence = absence;
+          payroll.Deduction = deduction;
+          payroll.Predecessor = predecessor;
+          payroll.Insurance = insurance;
+          payroll.Tax = tax;
+          payroll.TotalDeductible = totalDeductible;
+          payroll.NetSalary = netSalary;
+          payroll.isPaid = isPaid;
+          payroll.paidBy = paidBy;
+        }
       });
   
       if (!found) {

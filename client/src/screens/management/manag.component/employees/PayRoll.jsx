@@ -261,14 +261,14 @@ const PayRoll = () => {
   //   })
   //   console.log(updatePayRoll)
   // }
-
   const paidSalary = async (id, name, em, amount, month) => {
     try {
       console.log({ id, em });
       const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
         isPaid: true,
         paidBy: em,
-        month
+        month,
+        salary:amount
       });
       console.log(updatePayRoll);
     } catch (error) {

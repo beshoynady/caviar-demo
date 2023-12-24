@@ -78,6 +78,7 @@ const employeeSchema = new mongoose.Schema({
       Month: {
         type: Number,
         required: true,
+        default: 0,
       },
       salary: {
         type: Number,

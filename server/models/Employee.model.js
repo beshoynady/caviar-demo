@@ -82,7 +82,7 @@ const employeeSchema = new mongoose.Schema({
       },
       salary: {
         type: Number,
-        // required: true,
+        required: true,
         min: 0,
         default: 0,
       },

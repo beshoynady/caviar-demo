@@ -186,28 +186,28 @@ const deleteEmployee = async (req, res) => {
 
 
 
-const validatePayroll = (data) => {
-    const schema = Joi.object({
-      month: Joi.number(),
-      salary: Joi.number().min(0),
-      additional: Joi.number().min(0),
-      bonus: Joi.number().min(0),
-      totalDue: Joi.number().min(0),
-      absence: Joi.number().min(0),
-      deduction: Joi.number().min(0),
-      predecessor: Joi.number().min(0),
-      insurance: Joi.number().min(0),
-      tax: Joi.number().min(0),
-      totalDeductible: Joi.number().min(0),
-      netSalary: Joi.number().min(0),
-      isPaid: Joi.boolean(),
-      paidBy: Joi.string()
-    });
+// const validatePayroll = (data) => {
+//     const schema = Joi.object({
+//       month: Joi.number(),
+//       salary: Joi.number().min(0),
+//       additional: Joi.number().min(0),
+//       bonus: Joi.number().min(0),
+//       totalDue: Joi.number().min(0),
+//       absence: Joi.number().min(0),
+//       deduction: Joi.number().min(0),
+//       predecessor: Joi.number().min(0),
+//       insurance: Joi.number().min(0),
+//       tax: Joi.number().min(0),
+//       totalDeductible: Joi.number().min(0),
+//       netSalary: Joi.number().min(0),
+//       isPaid: Joi.boolean(),
+//       paidBy: Joi.string()
+//     });
   
-    return schema.validate(data);
-  };
+//     return schema.validate(data);
+//   };
   
-  const paidPayrollForMonth = async (req, res) => {
+const paidPayrollForMonth = async (req, res) => {
     try {  
       const employeeId = req.params.employeeId;
       const {
@@ -216,17 +216,24 @@ const validatePayroll = (data) => {
         paidBy
       } = req.body;
   
+      // التحقق من صحة القيم المُدخلة
+      if (!month || typeof isPaid !== 'boolean' || typeof paidBy !== 'string') {
+        return res.status(400).json({ message: 'Invalid input data' });
+      }
+  
       const employee = await Employeemodel.findById(employeeId);
       if (!employee) {
         return res.status(404).json({ message: 'Employee not found' });
       }
-    
-      employee.payRoll.forEach((payroll) => {
-        if (payroll.Month === month && !payroll.isPaid) {
-          payroll.isPaid = isPaid;
-          payroll.paidBy = paidBy;
-        }
-      });  
+  
+      // البحث عن الرواتب غير المدفوعة وتحديثها
+      const foundPayroll = employee.payRoll.find(payroll => payroll.Month === month && !payroll.isPaid);
+      if (foundPayroll) {
+        foundPayroll.isPaid = isPaid;
+        foundPayroll.paidBy = paidBy;
+      } else {
+        return res.status(404).json({ message: 'Payroll for the specified month not found or already paid' });
+      }
   
       await employee.save();
       res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
@@ -234,6 +241,7 @@ const validatePayroll = (data) => {
       res.status(500).json({ message: error.message });
     }
   };
+  
 
 
 

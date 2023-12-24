@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App';
 import { ToastContainer, toast } from 'react-toastify';
+import { number } from 'joi';
 
 
 const PayRoll = () => {
@@ -252,9 +253,10 @@ const PayRoll = () => {
   const paidSalary = async (id,name,em, amount) => {
     console.log({ id, em })
     const expenseDescription = `دفع مرتب ${name} ${amount}`
-    const month = new Date().getMonth + 1
+    const month = number(new Date().getMonth + 1)
+    const note = `دفع مرتب ${name} لشهر ${month}`
     handlecashRegister(em)
-    createDailyExpense(em, amount,expenseDescription)
+    createDailyExpense(em, amount,expenseDescription,note)
     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
       isPaid: true, paidBy: em ,month
     })

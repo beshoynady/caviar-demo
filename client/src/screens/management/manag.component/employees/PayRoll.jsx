@@ -431,10 +431,10 @@ const PayRoll = () => {
     }
   }
 
-  const paidSalary = async (id, em)=>{
-    console.log({id, em})
-    const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`,{
-      isPaid: true, paidBy:em
+  const paidSalary = async (id, em) => {
+    console.log({ id, em })
+    const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
+      isPaid: true, paidBy: em
     })
   }
 
@@ -524,7 +524,7 @@ const PayRoll = () => {
   return (
     <detacontext.Consumer>
       {
-        ({usertitle, EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
+        ({ usertitle, EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -672,48 +672,50 @@ const PayRoll = () => {
                               return (
 
                                 // {
-                                  em.payRoll.map((Roll, j) => {
-                                    return (
-                                      Roll.Month == thismonth ?
-                                        (
-                                          <>
-                                            <tr key={i}>
-                                              <td>
-                                                <span className="custom-checkbox">
-                                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                                  <label htmlFor="checkbox1"></label>
-                                                </span>
-                                              </td>
-                                              <td>{i + 1}</td>
-                                              <td>{em.fullname}</td>
-                                              <td>{em.role}</td>
-                                              <td>{Roll.salary}</td>
-                                              <td>{Roll.Additional}</td>
-                                              <td>{Roll.Bonus}</td>
-                                              <td>{Roll.TotalDue}</td>
-                                              <td>{Roll.Deduction}</td>
-                                              <td>{Roll.Absence}</td>
-                                              <td>{Roll.Predecessor}</td>
-                                              <td>{Roll.TotalDeductible}</td>
-                                              <td>{Roll.Insurance}</td>
-                                              <td>{Roll.Tax}</td>
-                                              <td>{Roll.NetSalary}</td>
-                                              <td>{usertitle(Roll.paidBy)}</td>
-                                              <td>
-                                                {Roll.isPaid==true?
-                                              <button type='button' className="btn btn-success" onClick={()=>paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}>دفع</button>
-                                                :'تم الدفع'}
-                                              </td>
-                                            </tr>
-                                          </>
-                                        )
-                                        : ''
-                                    )
+                                em.payRoll.map((Roll, j) => {
+                                  return (
+                                    Roll.Month == thismonth ?
+                                      (
+                                          <tr key={i}>
+                                            <td>
+                                              <span className="custom-checkbox">
+                                                <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                                <label htmlFor="checkbox1"></label>
+                                              </span>
+                                            </td>
+                                            <td>{i + 1}</td>
+                                            <td>{em.fullname}</td>
+                                            <td>{em.role}</td>
+                                            <td>{Roll.salary}</td>
+                                            <td>{Roll.Additional}</td>
+                                            <td>{Roll.Bonus}</td>
+                                            <td>{Roll.TotalDue}</td>
+                                            <td>{Roll.Deduction}</td>
+                                            <td>{Roll.Absence}</td>
+                                            <td>{Roll.Predecessor}</td>
+                                            <td>{Roll.TotalDeductible}</td>
+                                            <td>{Roll.Insurance}</td>
+                                            <td>{Roll.Tax}</td>
+                                            <td>{Roll.NetSalary}</td>
+                                            <td>{usertitle(Roll.paidBy)}</td>
+                                            <td>
+                                              {Roll.isPaid === false ? (
+                                                <button
+                                                  type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}
+                                                > دفع</button>
+                                              ) : (
+                                                <td>تم الدفع</td>
+                                              )}
+                                            </td>
+                                          </tr>
+                                          )
+                                          : ''
+                                          )
                                   }
-                                  )
+                                          )
                                 // }
 
-                                // </tr>
+                                // </tr >
                               )
                             }
                           })

@@ -250,15 +250,15 @@ const PayRoll = () => {
     }
   }
 
-  const paidSalary = async (id,name,em, amount) => {
+  const paidSalary = async (id,name,em, amount, month) => {
     console.log({ id, em })
-    // const expenseDescription = `دفع مرتب ${name} ${amount}`
+    const expenseDescription = `دفع مرتب ${name} ${amount}`
     // const month = new Date().getMonth() + 1;
-    // const note = `دفع مرتب ${name} لشهر ${month}`
-    // handlecashRegister(em)
-    // createDailyExpense(em, amount,expenseDescription,note)
+    const note = `دفع مرتب ${name} لشهر ${month}`
+    handlecashRegister(em)
+    createDailyExpense(em, amount,expenseDescription,note)
     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
-      isPaid: true, paidBy: em
+      isPaid: true, paidBy: em ,month
     })
     console.log(updatePayRoll)
   }
@@ -484,7 +484,7 @@ const PayRoll = () => {
                                         <td>{Roll.NetSalary}</td>
                                         <td>{usertitle(Roll.paidBy)}</td>
                                         {Roll.isPaid == false ? (
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}
                                           > دفع</button></td>
                                         ) : (
                                           <td>تم الدفع</td>
@@ -534,7 +534,7 @@ const PayRoll = () => {
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
                                           {Roll.isPaid == false ? (
-                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
+                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}
                                             > دفع</button></td>
                                           ) : (
                                             <td>تم الدفع</td>

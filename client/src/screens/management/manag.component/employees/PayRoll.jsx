@@ -763,7 +763,8 @@ const PayRoll = () => {
                               )
 
                             }
-                          })
+                          }
+                      })
                       }
                     </tbody>
                   </table>

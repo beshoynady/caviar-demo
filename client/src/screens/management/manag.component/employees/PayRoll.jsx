@@ -569,7 +569,7 @@ const PayRoll = () => {
                         </div>
                         <div className="filter-group">
                           <label>الشهر</label>
-                          <select className="form-control" onChange={(e) => setthismonth(e.target.value)}>
+                          <select className="form-control" onChange={(e) =>{ setthismonth(e.target.value);console.log(e.target.value)}}>
                             <option>الكل</option>
                             {arryeofmonth.map((month, i) => (
                               <option value={month} key={i}>{months[month - 1]}</option>
@@ -613,50 +613,56 @@ const PayRoll = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {thismonth != new Date().getMonth() + 1 ? (
-                        listofemployee.map((em, i) => {
-                          if (em.payRoll.length > 0) {
-                             em.payRoll.map((roll, j) => {
-                              if (roll.Month == thismonth) {
-                                return (
-                                  <tr key={j}>
-                                    <td>
-                                      <span className="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                        <label htmlFor="checkbox1"></label>
-                                      </span>
-                                    </td>
-                                    <td>{i + 1}</td>
-                                    <td>{em.fullname}</td>
-                                    <td>{em.role}</td>
-                                    <td>{roll.salary}</td>
-                                    <td>{roll.Additional}</td>
-                                    <td>{roll.Bonus}</td>
-                                    <td>{roll.TotalDue}</td>
-                                    <td>{roll.Deduction}</td>
-                                    <td>{roll.Absence}</td>
-                                    <td>{roll.Predecessor}</td>
-                                    <td>{roll.TotalDeductible}</td>
-                                    <td>{roll.Insurance}</td>
-                                    <td>{roll.Tax}</td>
-                                    <td>{roll.NetSalary}</td>
-                                    <td>
-                                      <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                      // onClick={() => {
-                                      //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                      // }}
-                                      >&#xE254;</i></a>
-                                      <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                      // onClick={() => setuserid(e._id)}
-                                      >&#xE872;</i></a>
-                                    </td>
-                                  </tr>
-                                );
-                              }
-                            });
-                          }
-                        })
-                      ) : filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
+                      {
+                      // thismonth != new Date().getMonth() + 1 ? (
+                      //   listofemployee.map((em, i) => {
+                      //     if (em.payRoll.length > 0) {
+                      //       em.payRoll.map((roll, j) => {
+                      //         if (roll.Month == thismonth) {
+                      //           return (
+                      //             <tr key={j}>
+                      //               <td>
+                      //                 <span className="custom-checkbox">
+                      //                   <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                      //                   <label htmlFor="checkbox1"></label>
+                      //                 </span>
+                      //               </td>
+                      //               <td>{i + 1}</td>
+                      //               <td>{em.fullname}</td>
+                      //               <td>{em.role}</td>
+                      //               <td>{roll.salary}</td>
+                      //               <td>{roll.Additional}</td>
+                      //               <td>{roll.Bonus}</td>
+                      //               <td>{roll.TotalDue}</td>
+                      //               <td>{roll.Deduction}</td>
+                      //               <td>{roll.Absence}</td>
+                      //               <td>{roll.Predecessor}</td>
+                      //               <td>{roll.TotalDeductible}</td>
+                      //               <td>{roll.Insurance}</td>
+                      //               <td>{roll.Tax}</td>
+                      //               <td>{roll.NetSalary}</td>
+                      //               <td>
+                      //                 <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                      //                 // onClick={() => {
+                      //                 //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                      //                 // }}
+                      //                 >&#xE254;</i></a>
+                      //                 <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                      //                 // onClick={() => setuserid(e._id)}
+                      //                 >&#xE872;</i></a>
+                      //               </td>
+                      //             </tr>
+                      //           );
+                      //         }
+                      //       });
+                      //     }
+
+
+
+                      //   })
+                      // )
+                      // : 
+                      filterEmployees.length > 0 ? filterEmployees.map((em, i) => {
                         if (em.payRoll.length > 0) {
                           if (em.payRoll[em.payRoll.length - 1].Month == thismonth) {
                             return (
@@ -712,7 +718,27 @@ const PayRoll = () => {
                                   <td>{i + 1}</td>
                                   <td>{em.fullname}</td>
                                   <td>{em.role}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
+                                  {em.payRoll.map((Roll, i) => {
+                                    if (Roll.Month == thismonth) {
+                                      return (
+                                        <>
+                                          <td>{Roll.salary}</td>
+                                          <td>{Roll.Additional}</td>
+                                          <td>{Roll.Bonus}</td>
+                                          <td>{Roll.TotalDue}</td>
+                                          <td>{Roll.Deduction}</td>
+                                          <td>{Roll.Absence}</td>
+                                          <td>{Roll.Predecessor}</td>
+                                          <td>{Roll.TotalDeductible}</td>
+                                          <td>{Roll.Insurance}</td>
+                                          <td>{Roll.Tax}</td>
+                                          <td>{Roll.NetSalary}</td>
+                                        </>
+
+                                      )
+                                    }
+                                  })}
+                                  {/* <td>{em.payRoll[em.payRoll.length - 1].salary}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Additional}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Bonus}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].TotalDue}</td>
@@ -722,7 +748,7 @@ const PayRoll = () => {
                                   <td>{em.payRoll[em.payRoll.length - 1].TotalDeductible}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Insurance}</td>
                                   <td>{em.payRoll[em.payRoll.length - 1].Tax}</td>
-                                  <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td>
+                                  <td>{em.payRoll[em.payRoll.length - 1].NetSalary}</td> */}
                                   <td>
                                     <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
                                     // onClick={() => {
@@ -737,8 +763,7 @@ const PayRoll = () => {
                               )
 
                             }
-                          }
-                        })
+                          })
                       }
                     </tbody>
                   </table>

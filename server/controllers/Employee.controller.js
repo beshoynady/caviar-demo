@@ -189,17 +189,17 @@ const deleteEmployee = async (req, res) => {
 const validatePayroll = (data) => {
     const schema = Joi.object({
       month: Joi.number(),
-      salary: Joi.number(),
-      additional: Joi.number(),
-      bonus: Joi.number(),
-      totalDue: Joi.number(),
-      absence: Joi.number(),
-      deduction: Joi.number(),
-      predecessor: Joi.number(),
-      insurance: Joi.number(),
-      tax: Joi.number(),
-      totalDeductible: Joi.number(),
-      netSalary: Joi.number(),
+      salary: Joi.number().min(0),
+      additional: Joi.number().min(0),
+      bonus: Joi.number().min(0),
+      totalDue: Joi.number().min(0),
+      absence: Joi.number().min(0),
+      deduction: Joi.number().min(0),
+      predecessor: Joi.number().min(0),
+      insurance: Joi.number().min(0),
+      tax: Joi.number().min(0),
+      totalDeductible: Joi.number().min(0),
+      netSalary: Joi.number().min(0),
       isPaid: Joi.boolean(),
       paidBy: Joi.string()
     });
@@ -207,12 +207,40 @@ const validatePayroll = (data) => {
     return schema.validate(data);
   };
   
+  const paidPayrollForMonth = async (req, res) => {
+    try {  
+      const employeeId = req.params.employeeId;
+      const {
+        isPaid,
+        paidBy
+      } = req.body;
+  
+      const employee = await Employeemodel.findById(employeeId);
+      if (!employee) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+  
+      employee.payRoll.forEach((payroll) => {
+        if (payroll.Month === month && !payroll.isPaid) {
+          payroll.isPaid = isPaid;
+          payroll.paidBy = paidBy;
+        }
+      });  
+      await updateEmployee.save();
+      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+
+
   const updateOrAddPayrollForMonth = async (req, res) => {
     try {
-    //   const { error } = validatePayroll(req.body);
-    //   if (error) {
-    //     return res.status(400).json({ message: error.details[0].message });
-    //   }
+      const { error } = validatePayroll(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
   
       const employeeId = req.params.employeeId;
       const {
@@ -271,9 +299,6 @@ const validatePayroll = (data) => {
           Tax: tax,
           TotalDeductible: totalDeductible,
           NetSalary: netSalary,
-          isPaid : isPaid,
-          paidBy : paidBy,
-
         });
       }
   
@@ -285,4 +310,4 @@ const validatePayroll = (data) => {
   };
 
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };
+module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth,paidPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };

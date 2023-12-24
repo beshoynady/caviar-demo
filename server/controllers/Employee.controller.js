@@ -189,17 +189,17 @@ const deleteEmployee = async (req, res) => {
 const validatePayroll = (data) => {
     const schema = Joi.object({
       month: Joi.number(),
-      salary: Joi.number().min(0),
-      additional: Joi.number().min(0),
-      bonus: Joi.number().min(0),
-      totalDue: Joi.number().min(0),
-      absence: Joi.number().min(0),
-      deduction: Joi.number().min(0),
-      predecessor: Joi.number().min(0),
-      insurance: Joi.number().min(0),
-      tax: Joi.number().min(0),
-      totalDeductible: Joi.number().min(0),
-      netSalary: Joi.number().min(0),
+      salary: Joi.number(),
+      additional: Joi.number(),
+      bonus: Joi.number(),
+      totalDue: Joi.number(),
+      absence: Joi.number(),
+      deduction: Joi.number(),
+      predecessor: Joi.number(),
+      insurance: Joi.number(),
+      tax: Joi.number(),
+      totalDeductible: Joi.number(),
+      netSalary: Joi.number(),
       isPaid: Joi.boolean(),
       paidBy: Joi.string()
     });

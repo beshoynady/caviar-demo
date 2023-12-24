@@ -220,13 +220,16 @@ const validatePayroll = (data) => {
         return res.status(404).json({ message: 'Employee not found' });
       }
   
+      const month = /* تعيين قيمة الشهر هنا بطريقة مناسبة */
+  
       employee.payRoll.forEach((payroll) => {
         if (payroll.Month === month && !payroll.isPaid) {
           payroll.isPaid = isPaid;
           payroll.paidBy = paidBy;
         }
       });  
-      await updateEmployee.save();
+  
+      await employee.save();
       res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
     } catch (error) {
       res.status(500).json({ message: error.message });

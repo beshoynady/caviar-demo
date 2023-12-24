@@ -152,10 +152,10 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const { error } = updateEmployeeSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
+        // const { error } = updateEmployeeSchema.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({ message: error.details[0].message });
+        // }
         const id = req.params.employeeId;
         const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive, password } = req.body;
 
@@ -239,10 +239,10 @@ const validatePayroll = (data) => {
 
   const updateOrAddPayrollForMonth = async (req, res) => {
     try {
-      const { error } = validatePayroll(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+    //   const { error } = validatePayroll(req.body);
+    //   if (error) {
+    //     return res.status(400).json({ message: error.details[0].message });
+    //   }
   
       const employeeId = req.params.employeeId;
       const {

@@ -659,53 +659,57 @@ const PayRoll = () => {
                         })
                           :
                           listofemployee.map((em, i) => {
-                            if(em.payRoll.length>0){
+                            if (em.isActive == true && em.payRoll.length > 0) {
                               return (
-                                <tr key={i}>
-                                  <td>
-                                    <span className="custom-checkbox">
-                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                      <label htmlFor="checkbox1"></label>
-                                    </span>
-                                  </td>
-                                  <td>{i + 1}</td>
-                                  <td>{em.fullname}</td>
-                                  <td>{em.role}</td>
-                                  {em.payRoll.map((Roll, i) => {
-                                    return(
+
+                                // {
+                                  em.payRoll.map((Roll, i) => {
+                                    return (
                                       Roll.Month == thismonth ?
-                                      (
-  
-                                        <>
-                                          <td>{Roll.salary}</td>
-                                          <td>{Roll.Additional}</td>
-                                          <td>{Roll.Bonus}</td>
-                                          <td>{Roll.TotalDue}</td>
-                                          <td>{Roll.Deduction}</td>
-                                          <td>{Roll.Absence}</td>
-                                          <td>{Roll.Predecessor}</td>
-                                          <td>{Roll.TotalDeductible}</td>
-                                          <td>{Roll.Insurance}</td>
-                                          <td>{Roll.Tax}</td>
-                                          <td>{Roll.NetSalary}</td>
-                                          <td>
-                                            <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                            // onClick={() => {
-                                            //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                            // }}
-                                            >&#xE254;</i></a>
-                                            <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                            // onClick={() => setuserid(e._id)}
-                                            >&#xE872;</i></a>
-                                          </td>
-                                        </>
-                                      )
+                                        (
+
+                                          <>
+                                            <tr key={i}>
+                                              <td>
+                                                <span className="custom-checkbox">
+                                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                                  <label htmlFor="checkbox1"></label>
+                                                </span>
+                                              </td>
+                                              <td>{i + 1}</td>
+                                              <td>{em.fullname}</td>
+                                              <td>{em.role}</td>
+                                              <td>{Roll.salary}</td>
+                                              <td>{Roll.Additional}</td>
+                                              <td>{Roll.Bonus}</td>
+                                              <td>{Roll.TotalDue}</td>
+                                              <td>{Roll.Deduction}</td>
+                                              <td>{Roll.Absence}</td>
+                                              <td>{Roll.Predecessor}</td>
+                                              <td>{Roll.TotalDeductible}</td>
+                                              <td>{Roll.Insurance}</td>
+                                              <td>{Roll.Tax}</td>
+                                              <td>{Roll.NetSalary}</td>
+                                              <td>
+                                                <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                                // onClick={() => {
+                                                //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                                // }}
+                                                >&#xE254;</i></a>
+                                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                                // onClick={() => setuserid(e._id)}
+                                                >&#xE872;</i></a>
+                                              </td>
+                                            </tr>
+                                          </>
+                                        )
                                         : ''
                                     )
                                   }
-                                  )}
-  
-                                </tr>
+                                  )
+                                // }
+
+                                // </tr>
                               )
                             }
                           })

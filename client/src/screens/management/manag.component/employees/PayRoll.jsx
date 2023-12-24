@@ -252,12 +252,13 @@ const PayRoll = () => {
   const paidSalary = async (id,name,em, amount) => {
     console.log({ id, em })
     const expenseDescription = `دفع مرتب ${name} ${amount}`
-
+    const month = new Date().getMonth + 1
     handlecashRegister(em)
     createDailyExpense(em, amount,expenseDescription)
     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
-      isPaid: true, paidBy: em
+      isPaid: true, paidBy: em ,month
     })
+    console.log(updatePayRoll)
   }
 
   // const updateOrAddPayrollForMonthFrontend = async () => {

@@ -241,7 +241,7 @@ const updateOrAddPayrollForMonth = async (req, res) => {
       if (payroll.Month === month && !payroll.isPaid) {
         found = true;
         // Updating payroll if any non-empty field is provided, otherwise updating isPaid and paidBy
-        if (salary || additional || bonus || totalDue || absence || deduction || predecessor || insurance || tax || totalDeductible || netSalary) {
+        // if (salary || additional || bonus || totalDue || absence || deduction || predecessor || insurance || tax || totalDeductible || netSalary) {
           payroll.salary = salary || payroll.salary;
           payroll.Additional = additional || payroll.Additional;
           payroll.Bonus = bonus || payroll.Bonus;
@@ -253,10 +253,10 @@ const updateOrAddPayrollForMonth = async (req, res) => {
           payroll.Tax = tax || payroll.Tax;
           payroll.TotalDeductible = totalDeductible || payroll.TotalDeductible;
           payroll.NetSalary = netSalary || payroll.NetSalary;
-        } else {
-          payroll.isPaid = isPaid;
-          payroll.paidBy = paidBy;
-        }
+          payroll.isPaid = isPaid || payroll.isPaid;
+          payroll.paidBy = paidBy|| payroll.paidBy;
+        // } else {
+        // }
       }
     });
 
@@ -289,35 +289,35 @@ const updateOrAddPayrollForMonth = async (req, res) => {
 
 
 
-  const paidPayrollForMonth = async (req, res) => {
-    try {
-      const id = req.params.employeeId;
-      const { isPaid, paidBy, month } = req.body;
+  // const paidPayrollForMonth = async (req, res) => {
+  //   try {
+  //     const id = req.params.employeeId;
+  //     const { isPaid, paidBy, month } = req.body;
   
-      const employee = await Employeemodel.findById(id);
-      if (!employee) {
-        return res.status(404).send({ message: 'No employee found' });
-      }
+  //     const employee = await Employeemodel.findById(id);
+  //     if (!employee) {
+  //       return res.status(404).send({ message: 'No employee found' });
+  //     }
   
-      let updated = false;
-      employee.payRoll.forEach((payroll) => {
-        if (payroll.Month === month) {
-          payroll.isPaid = isPaid;
-          payroll.paidBy = paidBy;
-          updated = true;
-        }
-      });
+  //     let updated = false;
+  //     employee.payRoll.forEach((payroll) => {
+  //       if (payroll.Month === month) {
+  //         payroll.isPaid = isPaid;
+  //         payroll.paidBy = paidBy;
+  //         updated = true;
+  //       }
+  //     });
   
-      if (!updated) {
-        return res.status(404).send({ message: 'No payroll for the specified month found' });
-      }
+  //     if (!updated) {
+  //       return res.status(404).send({ message: 'No payroll for the specified month found' });
+  //     }
   
-      await employee.save();
-      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
+  //     await employee.save();
+  //     res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //   }
+  // };
   
 
 

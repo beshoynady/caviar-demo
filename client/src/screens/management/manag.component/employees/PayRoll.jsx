@@ -266,7 +266,6 @@ const PayRoll = () => {
         isPaid: true,
         paidBy: em,
         month,
-        salary:amount
       });
       console.log(updatePayRoll);
     } catch (error) {

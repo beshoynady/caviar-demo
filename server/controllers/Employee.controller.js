@@ -209,39 +209,37 @@ const deleteEmployee = async (req, res) => {
   
 const paidPayrollForMonth =async (req, res) => {
     try {
-      const employeeId = req.params.employeeId;
-      const month = parseInt(req.body.month);
-  
-      const {
-        isPaid,
-        paidBy
-      } = req.body;
-  
-      const employee = await Employeemodel.findById(employeeId);
-      if (!employee) {
-        return res.status(404).json({ message: 'Employee not found' });
-      }
-  
-      const payrollIndex = employee.payRoll.findIndex(payroll => payroll.Month === month);
-      if (payrollIndex === -1) {
-        return res.status(404).json({ message: `Payroll for month ${month} not found` });
-      }
-  
-      const payroll = employee.payRoll[payrollIndex];
-      if (payroll.isPaid) {
-        return res.status(400).json({ message: `Payroll for month ${month} is already marked as paid` });
-      }
-  
-      // Update the required fields
-      employee.payRoll[payrollIndex].isPaid = isPaid;
-      employee.payRoll[payrollIndex].paidBy = paidBy;
-  
-      await employee.save();
-      res.status(200).json({ message: `Payroll for month ${month} updated successfully`, payroll: employee.payRoll[payrollIndex] });
+        const employeeId = req.params.employeeId;
+        const {
+            month,
+            isPaid,
+            paidBy
+        } = req.body;
+
+        const employee = await Employeemodel.findById(employeeId);
+        if (!employee) {
+            return res.status(404).json({ message: 'Employee not found' });
+        }
+
+        let found = false;
+        employee.payRoll.forEach((payroll) => {
+            if (payroll.Month === month && !payroll.isPaid) {
+                found = true;
+                payroll.isPaid = isPaid;
+                payroll.paidBy = paidBy;
+            }
+        });
+
+        if (!found) {
+            return res.status(404).json({ message: 'Payroll for the specified month not found' });
+        }
+
+        await employee.save();
+        res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  };
+};
   
 
 

@@ -4,40 +4,40 @@ const bcrypt = require('bcrypt');
 
 const Joi = require('joi');
 
-const createEmployeeSchema = Joi.object({
-    fullname: Joi.string().min(3).max(100).required(),
-    numberID: Joi.string().length(14).required(),
-    username: Joi.string().min(3).max(100).required(),
-    email: Joi.string().email().required(),
-    address: Joi.string().min(3).max(150),
-    phone: Joi.string().length(11).required(),
-    password: Joi.string().min(3).required(),
-    basicSalary: Joi.number().min(0).required(),
-    sectionNumber: Joi.number().min(1),
-    role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'chef').required(),
-    isActive: Joi.boolean().required(),
-});
+// const createEmployeeSchema = Joi.object({
+//     fullname: Joi.string().min(3).max(100).required(),
+//     numberID: Joi.string().length(14).required(),
+//     username: Joi.string().min(3).max(100).required(),
+//     email: Joi.string().email().required(),
+//     address: Joi.string().min(3).max(150),
+//     phone: Joi.string().length(11).required(),
+//     password: Joi.string().min(3).required(),
+//     basicSalary: Joi.number().min(0).required(),
+//     sectionNumber: Joi.number().min(1),
+//     role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'chef').required(),
+//     isActive: Joi.boolean().required(),
+// });
 
-const updateEmployeeSchema = Joi.object({
-    fullname: Joi.string().min(3).max(100),
-    numberID: Joi.string().length(14),
-    username: Joi.string().min(3).max(100),
-    email: Joi.string().email(),
-    address: Joi.string().min(3).max(150),
-    phone: Joi.string().length(11),
-    password: Joi.string().min(3),
-    basicSalary: Joi.number().min(0),
-    sectionNumber: Joi.number().min(1),
-    role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'chef'),
-    isActive: Joi.boolean(),
-});
+// const updateEmployeeSchema = Joi.object({
+//     fullname: Joi.string().min(3).max(100),
+//     numberID: Joi.string().length(14),
+//     username: Joi.string().min(3).max(100),
+//     email: Joi.string().email(),
+//     address: Joi.string().min(3).max(150),
+//     phone: Joi.string().length(11),
+//     password: Joi.string().min(3),
+//     basicSalary: Joi.number().min(0),
+//     sectionNumber: Joi.number().min(1),
+//     role: Joi.string().valid('manager', 'casher', 'waiter', 'deliveryman', 'chef'),
+//     isActive: Joi.boolean(),
+// });
 
 const createEmployee = async (req, res, next) => {
     try {
-        const { error } = createEmployeeSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
+        // const { error } = createEmployeeSchema.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({ message: error.details[0].message });
+        // }
         // Destructuring request body for required employee details
         const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive } = req.body;
 
@@ -152,10 +152,10 @@ const getallEmployees = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
     try {
-        const { error } = updateEmployeeSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
+        // const { error } = updateEmployeeSchema.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({ message: error.details[0].message });
+        // }
         const id = req.params.employeeId;
         const { fullname, numberID, username, email, address, phone, basicSalary, role, sectionNumber, isActive, password } = req.body;
 
@@ -186,33 +186,33 @@ const deleteEmployee = async (req, res) => {
 
 
 
-const validatePayroll = (data) => {
-    const schema = Joi.object({
-      month: Joi.number(),
-      salary: Joi.number().min(0),
-      additional: Joi.number().min(0),
-      bonus: Joi.number().min(0),
-      totalDue: Joi.number().min(0),
-      absence: Joi.number().min(0),
-      deduction: Joi.number().min(0),
-      predecessor: Joi.number().min(0),
-      insurance: Joi.number().min(0),
-      tax: Joi.number().min(0),
-      totalDeductible: Joi.number().min(0),
-      netSalary: Joi.number().min(0),
-      isPaid: Joi.boolean(),
-      paidBy: Joi.string()
-    });
+// const validatePayroll = (data) => {
+//     const schema = Joi.object({
+//       month: Joi.number(),
+//       salary: Joi.number().min(0),
+//       additional: Joi.number().min(0),
+//       bonus: Joi.number().min(0),
+//       totalDue: Joi.number().min(0),
+//       absence: Joi.number().min(0),
+//       deduction: Joi.number().min(0),
+//       predecessor: Joi.number().min(0),
+//       insurance: Joi.number().min(0),
+//       tax: Joi.number().min(0),
+//       totalDeductible: Joi.number().min(0),
+//       netSalary: Joi.number().min(0),
+//       isPaid: Joi.boolean(),
+//       paidBy: Joi.string()
+//     });
   
-    return schema.validate(data);
-  };
+//     return schema.validate(data);
+//   };
   
   const updateOrAddPayrollForMonth = async (req, res) => {
     try {
-      const { error } = validatePayroll(req.body);
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+      // const { error } = validatePayroll(req.body);
+      // if (error) {
+      //   return res.status(400).json({ message: error.details[0].message });
+      // }
   
       const employeeId = req.params.employeeId;
       const {
@@ -314,4 +314,4 @@ const validatePayroll = (data) => {
   
 
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };
+module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth,paidPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };

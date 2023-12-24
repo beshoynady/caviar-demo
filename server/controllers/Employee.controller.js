@@ -213,17 +213,17 @@ const updateOrAddPayrollForMonth = async (req, res) => {
     const employeeId = req.params.employeeId;
     const {
       month,
-      salary,
-      additional,
-      bonus,
-      totalDue,
-      absence,
-      deduction,
-      predecessor,
-      insurance,
-      tax,
-      totalDeductible,
-      netSalary,
+      // salary,
+      // additional,
+      // bonus,
+      // totalDue,
+      // absence,
+      // deduction,
+      // predecessor,
+      // insurance,
+      // tax,
+      // totalDeductible,
+      // netSalary,
       isPaid,
       paidBy
     } = req.body;
@@ -242,41 +242,43 @@ const updateOrAddPayrollForMonth = async (req, res) => {
         found = true;
         // Updating payroll if any non-empty field is provided, otherwise updating isPaid and paidBy
         // if (salary || additional || bonus || totalDue || absence || deduction || predecessor || insurance || tax || totalDeductible || netSalary) {
-          payroll.salary = salary || payroll.salary;
-          payroll.Additional = additional || payroll.Additional;
-          payroll.Bonus = bonus || payroll.Bonus;
-          payroll.TotalDue = totalDue || payroll.TotalDue;
-          payroll.Absence = absence || payroll.Absence;
-          payroll.Deduction = deduction || payroll.Deduction;
-          payroll.Predecessor = predecessor || payroll.Predecessor;
-          payroll.Insurance = insurance || payroll.Insurance;
-          payroll.Tax = tax || payroll.Tax;
-          payroll.TotalDeductible = totalDeductible || payroll.TotalDeductible;
-          payroll.NetSalary = netSalary || payroll.NetSalary;
-          payroll.isPaid = isPaid || payroll.isPaid;
-          payroll.paidBy = paidBy|| payroll.paidBy;
+          // payroll.salary = salary || payroll.salary;
+          // payroll.Additional = additional || payroll.Additional;
+          // payroll.Bonus = bonus || payroll.Bonus;
+          // payroll.TotalDue = totalDue || payroll.TotalDue;
+          // payroll.Absence = absence || payroll.Absence;
+          // payroll.Deduction = deduction || payroll.Deduction;
+          // payroll.Predecessor = predecessor || payroll.Predecessor;
+          // payroll.Insurance = insurance || payroll.Insurance;
+          // payroll.Tax = tax || payroll.Tax;
+          // payroll.TotalDeductible = totalDeductible || payroll.TotalDeductible;
+          // payroll.NetSalary = netSalary || payroll.NetSalary;
+          // payroll.isPaid = isPaid || payroll.isPaid;
+          // payroll.paidBy = paidBy|| payroll.paidBy;
+          payroll.isPaid = isPaid ;
+          payroll.paidBy = paidBy;
         // } else {
         // }
       }
     });
 
-    if (!found) {
-      // If payroll for the month doesn't exist, add a new payroll entry
-      employee.payRoll.push({
-        Month: month,
-        salary: salary,
-        Additional: additional,
-        Bonus: bonus,
-        TotalDue: totalDue,
-        Absence: absence,
-        Deduction: deduction,
-        Predecessor: predecessor,
-        Insurance: insurance,
-        Tax: tax,
-        TotalDeductible: totalDeductible,
-        NetSalary: netSalary,
-      });
-    }
+    // if (!found) {
+    //   // If payroll for the month doesn't exist, add a new payroll entry
+    //   employee.payRoll.push({
+    //     Month: month,
+    //     salary: salary,
+    //     Additional: additional,
+    //     Bonus: bonus,
+    //     TotalDue: totalDue,
+    //     Absence: absence,
+    //     Deduction: deduction,
+    //     Predecessor: predecessor,
+    //     Insurance: insurance,
+    //     Tax: tax,
+    //     TotalDeductible: totalDeductible,
+    //     NetSalary: netSalary,
+    //   });
+    // }
 
     // Saving changes to the employee and sending a success response
     await employee.save();

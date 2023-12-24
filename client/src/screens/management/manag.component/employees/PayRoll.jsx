@@ -551,7 +551,7 @@ const PayRoll = () => {
                       <div class="col-sm-9">
                         <div class="filter-group">
                           <label>الاسم</label>
-                          <input type="text" class="form-control" onChange={(e)=>searchByName(e.target.value)}/>
+                          <input type="text" class="form-control" onChange={(e) => searchByName(e.target.value)} />
                           <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="filter-group">
@@ -671,8 +671,10 @@ const PayRoll = () => {
                                 <td>{em.fullname}</td>
                                 <td>{em.role}</td>
                                 {em.payRoll.map((Roll, i) => {
-                                  Roll.Month == thismonth ?
+                                  return(
+                                    Roll.Month == thismonth ?
                                     (
+
                                       <>
                                         <td>{Roll.salary}</td>
                                         <td>{Roll.Additional}</td>
@@ -685,34 +687,23 @@ const PayRoll = () => {
                                         <td>{Roll.Insurance}</td>
                                         <td>{Roll.Tax}</td>
                                         <td>{Roll.NetSalary}</td>
+                                        <td>
+                                          <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
+                                          // onClick={() => {
+                                          //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
+                                          // }}
+                                          >&#xE254;</i></a>
+                                          <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
+                                          // onClick={() => setuserid(e._id)}
+                                          >&#xE872;</i></a>
+                                        </td>
                                       </>
-
                                     )
-                                    : <>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                    </>
+                                      : ''
+                                  )
                                 }
                                 )}
-                                <td>
-                                  <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit"
-                                  // onClick={() => {
-                                  //   setuserid(e._id); setusername(e.username); setaddress(e.address); setemail(e.email); setisAdmin(e.isAdmin); setisActive(e.isActive); setphone(e.phone); setrole(e.role); setsalary(e.salary)
-                                  // }}
-                                  >&#xE254;</i></a>
-                                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete"
-                                  // onClick={() => setuserid(e._id)}
-                                  >&#xE872;</i></a>
-                                </td>
+
                               </tr>
                             )
 

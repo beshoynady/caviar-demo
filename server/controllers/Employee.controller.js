@@ -271,6 +271,9 @@ const validatePayroll = (data) => {
           Tax: tax,
           TotalDeductible: totalDeductible,
           NetSalary: netSalary,
+          isPaid : isPaid,
+          paidBy : paidBy,
+
         });
       }
   

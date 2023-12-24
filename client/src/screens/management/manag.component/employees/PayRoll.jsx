@@ -524,7 +524,7 @@ const PayRoll = () => {
   return (
     <detacontext.Consumer>
       {
-        ({ EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
+        ({usertitle, EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
               <div className="table-responsive">
@@ -619,6 +619,7 @@ const PayRoll = () => {
                         <th>تامين</th>
                         <th>ضريبه</th>
                         <th>المستحق عن الشهر</th>
+                        <th>دفع بواسطه</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -697,6 +698,7 @@ const PayRoll = () => {
                                               <td>{Roll.Insurance}</td>
                                               <td>{Roll.Tax}</td>
                                               <td>{Roll.NetSalary}</td>
+                                              <td>{usertitle(Roll.paidBy)}</td>
                                               <td>
                                                 {Roll.isPaid?
                                               <button type='button' className="btn btn-success" onClick={()=>paidSalary(em._id, employeeLoginInfo.employeeinfo.id)}>دفع</button>

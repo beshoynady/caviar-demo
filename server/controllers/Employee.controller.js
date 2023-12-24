@@ -216,7 +216,6 @@ const paidPayrollForMonth = async (req, res) => {
         paidBy
       } = req.body;
   
-      // التحقق من صحة القيم المُدخلة
       if (!month || typeof isPaid !== 'boolean' || typeof paidBy !== 'string') {
         return res.status(400).json({ message: 'Invalid input data' });
       }
@@ -226,7 +225,6 @@ const paidPayrollForMonth = async (req, res) => {
         return res.status(404).json({ message: 'Employee not found' });
       }
   
-      // البحث عن الرواتب غير المدفوعة وتحديثها
       const foundPayroll = employee.payRoll.find(payroll => payroll.Month === month && !payroll.isPaid);
       if (foundPayroll) {
         foundPayroll.isPaid = isPaid;

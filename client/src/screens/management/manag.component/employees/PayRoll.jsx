@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { detacontext } from '../../../../App';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const PayRoll = () => {
@@ -248,9 +249,9 @@ const PayRoll = () => {
     }
   }
 
-  const paidSalary = async (id, em, amount) => {
+  const paidSalary = async (id,name,em, amount) => {
     console.log({ id, em })
-    const expenseDescription = `دفع مرتب ${usertitle(id)} ${amount}`
+    const expenseDescription = `دفع مرتب ${name} ${amount}`
 
     handlecashRegister(em)
     createDailyExpense(em, amount,expenseDescription)
@@ -349,6 +350,7 @@ const PayRoll = () => {
         ({ usertitle, EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
+              <ToastContainer/>
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -479,7 +481,7 @@ const PayRoll = () => {
                                         <td>{Roll.NetSalary}</td>
                                         <td>{usertitle(Roll.paidBy)}</td>
                                         {Roll.isPaid == false ? (
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
                                           > دفع</button></td>
                                         ) : (
                                           <td>تم الدفع</td>
@@ -529,7 +531,7 @@ const PayRoll = () => {
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
                                           {Roll.isPaid == false ? (
-                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
+                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary)}
                                             > دفع</button></td>
                                           ) : (
                                             <td>تم الدفع</td>

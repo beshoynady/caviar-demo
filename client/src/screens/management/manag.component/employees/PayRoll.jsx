@@ -188,20 +188,20 @@ const PayRoll = () => {
       const cashRegister = allCashRegisters ? allCashRegisters.filter(cash => cash.employee === manager) : [];
       console.log(cashRegister)
       // // Update selected cash register data
-      // cashRegister(cashRegister._id);
+      cashRegister(cashRegister[0]._id);
       console.log(cashRegister[0]._id)
-      // setcashRegistername(cashRegister.name);
-      // setbalance(cashRegister.balance);
-      // // Set values and variables
-      // setamount(salary);
-      // setpaidBy(manager);
-      // setemployeeId(employee);
-      // setmonth(paidMonth);
-      // setemployeeName(name);
-      // // Update expense description
-      // setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
-      // // Update notes
-      // setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
+      setcashRegistername(cashRegister.name);
+      setbalance(cashRegister.balance);
+      // Set values and variables
+      setamount(salary);
+      setpaidBy(manager);
+      setemployeeId(employee);
+      setmonth(paidMonth);
+      setemployeeName(name);
+      // Update expense description
+      setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
+      // Update notes
+      setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
     } catch (error) {
       // Handle errors and display an appropriate error message to the user
       console.error(error);

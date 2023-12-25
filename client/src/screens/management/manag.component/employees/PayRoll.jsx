@@ -16,7 +16,7 @@ const PayRoll = () => {
 
 
   // State variables
-  const [expenseID, setexpenseID] = useState('');
+  const [expenseID, setexpenseID] = useState('658845918881bd1fa6a00407');
   const [cashMovementId, setcashMovementId] = useState('');
   const [dailyexpenseID, setdailyexpenseID] = useState('');
   const [expenseDescription, setexpenseDescription] = useState('');
@@ -571,8 +571,8 @@ const PayRoll = () => {
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        <p className="mb-0 text-center">هل أنت متأكد من دفع {amount} مرتب {employeeName} ؟</p>
-                        <p className="text-warning text-center">لا يمكن الرجوع في هذا الإجراء.</p>
+                        <p className="mb-0 text-center fs-5 fw-bold">هل أنت متأكد من دفع {amount} مرتب {employeeName} ؟</p> <br/>
+                        <p className="text-warning text-center fs-3 fw-bold">لا يمكن الرجوع في هذا الإجراء.</p>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="الغاء" />

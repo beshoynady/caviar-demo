@@ -272,7 +272,7 @@ const PayRoll = () => {
     e.preventDefault();
     try {
       // Create daily expense
-      createDailyExpense();
+     await createDailyExpense();
 
       // Prepare payload for updating payroll status
       const payload = {

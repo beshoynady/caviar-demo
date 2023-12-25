@@ -275,47 +275,6 @@ const PayRoll = () => {
       console.error(error);
     }
   };
-    // const updateOrAddPayrollForMonthFrontend = async () => {
-  //   try {
-  //     const employeeId = 'employee123'; // Replace with actual employee ID
-  //     const month = 11; // Replace with the month number
-  //     const salary = 5000; // Replace with actual salary value
-  //     const additional = 500;
-  //     const bonus = 300;
-  //     const totalDue = 5500;
-  //     const absence = 2;
-  //     const deduction = 200;
-  //     const predecessor = 100;
-  //     const insurance = 500;
-  //     const tax = 750;
-  //     const totalDeductible = 1050;
-  //     const netSalary = 4450;
-  //     const isPaid = false;
-
-  //     const data = {
-  //       month,
-  //       salary,
-  //       additional,
-  //       bonus,
-  //       totalDue,
-  //       absence,
-  //       deduction,
-  //       predecessor,
-  //       insurance,
-  //       tax,
-  //       totalDeductible,
-  //       netSalary,
-  //       isPaid,
-  //     };
-
-  //     const response = await axios.put(`YOUR_BACKEND_ENDPOINT/${employeeId}`, data);
-  //     console.log(response.data);
-  //     // Handle success message or further operations here
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error message or further operations here
-  //   }
-  // };
 
   const [filterEmployees, setfilterEmployees] = useState([])
 
@@ -517,8 +476,6 @@ const PayRoll = () => {
                           listofemployee.map((em, i) => {
                             if (em.isActive == true && em.payRoll.length > 0) {
                               return (
-
-                                // {
                                 em.payRoll.map((Roll, j) => {
                                   return (
                                     Roll.Month == thismonth ?
@@ -545,21 +502,14 @@ const PayRoll = () => {
                                           <td>{Roll.Tax}</td>
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
-                                          {Roll.isPaid == false ? (
-                                            <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}
-                                            > دفع</button></td>
-                                          ) : (
-                                            <td>تم الدفع</td>
-                                          )}
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}> دفع</button></td>
+
                                         </tr>
                                       )
                                       : ''
                                   )
                                 }
                                 )
-                                // }
-
-                                // </tr >
                               )
                             }
                           })

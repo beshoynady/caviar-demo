@@ -314,4 +314,4 @@ const validatePayroll = (data) => {
   
 
 
-module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };
+module.exports = { createEmployee, getoneEmployee, loginEmployee,updateOrAddPayrollForMonth,paidPayrollForMonth, getallEmployees, updateEmployee, deleteEmployee };

@@ -283,32 +283,30 @@ const validatePayroll = (data) => {
 
 
   const paidPayrollForMonth = async (req, res) => {
+    const { employeeId, month } = req.params;
+    const { isPaid, paidBy } = req.body;
+  
     try {
-      const id = req.params.employeeId;
-      const { isPaid, paidBy, month } = req.body;
+      const employee = await EmployeeModel.findById(employeeId);
   
-      const employee = await Employeemodel.findById(id);
       if (!employee) {
-        return res.status(404).send({ message: 'No employee found' });
+        return res.status(404).json({ message: 'Employee not found' });
       }
   
-      let updated = false;
-      employee.payRoll.forEach((payroll) => {
-        if (payroll.Month === month) {
-          payroll.isPaid = isPaid;
-          payroll.paidBy = paidBy;
-          updated = true;
-        }
-      });
+      const payrollItem = employee.payRoll.find(item => item.month === parseInt(month, 10));
   
-      if (!updated) {
-        return res.status(404).send({ message: 'No payroll for the specified month found' });
+      if (!payrollItem) {
+        return res.status(404).json({ message: 'Payroll item not found for this month' });
       }
+  
+      payrollItem.isPaid = isPaid || false;
+      payrollItem.paidBy = paidBy || null;
   
       await employee.save();
-      res.status(200).json({ message: 'Payroll information updated for the month', payroll: employee.payRoll });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  
+      return res.status(200).json({ message: 'Payroll updated successfully', employee });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
     }
   };
   

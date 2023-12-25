@@ -265,17 +265,21 @@ const PayRoll = () => {
   const paidSalary = async (id, name, em, amount, month) => {
     try {
       console.log({ id, em });
-      const updatePayRoll = await axios.post(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
+  
+      const payload = {
         isPaid: true,
-        paidBy: em,
-        month
-      });
+        paidBy: em // تفقد هل هذا الحقل موجود في الـ payload الجديد
+      };
+  
+      // تعديل عنوان الـ endpoint ليتناسب مع التغييرات في الـ API
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employees/${id}/payroll/${month}`, payload);
+  
       console.log(updatePayRoll);
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const [filterEmployees, setfilterEmployees] = useState([])
 
   const filterEmployeesByJob = (role) => {

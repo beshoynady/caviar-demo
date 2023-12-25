@@ -178,34 +178,35 @@ const PayRoll = () => {
   const handelPaid = async (salary, manager, employee, name, paidMonth) => {
     try {
       console.log(manager)
-  
+
       // Fetch all cash registers
       const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
       const allCashRegisters = await response.data;
-  
-      // Find the appropriate cash register
-      const cashRegister = allCashRegisters ? allCashRegisters.find(cash => cash.employee === manager) : {};
-      // Update selected cash register data
-      cashRegister(cashRegister._id);
-      setcashRegistername(cashRegister.name);
-      setbalance(cashRegister.balance);
-      // Set values and variables
-      setamount(salary);
-      setpaidBy(manager);
-      setemployeeId(employee);
-      setmonth(paidMonth);
-      setemployeeName(name);
-      // Update expense description
-      setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
-      // Update notes
-      setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
+      console.log(response)
+      console.log(allCashRegisters)
+      // // Find the appropriate cash register
+      // const cashRegister = allCashRegisters ? allCashRegisters.find(cash => cash.employee === manager) : {};
+      // // Update selected cash register data
+      // cashRegister(cashRegister._id);
+      // setcashRegistername(cashRegister.name);
+      // setbalance(cashRegister.balance);
+      // // Set values and variables
+      // setamount(salary);
+      // setpaidBy(manager);
+      // setemployeeId(employee);
+      // setmonth(paidMonth);
+      // setemployeeName(name);
+      // // Update expense description
+      // setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
+      // // Update notes
+      // setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
     } catch (error) {
       // Handle errors and display an appropriate error message to the user
       console.error(error);
       toast.error('An issue occurred while processing salaries. Please try again.');
     }
   };
-  
+
 
 
   // // Fetch all cash registers from the API
@@ -269,20 +270,20 @@ const PayRoll = () => {
     try {
       // Create daily expense
       createDailyExpense();
-  
+
       // Prepare payload for updating payroll status
       const payload = {
         isPaid: true,
         paidBy: paidBy,
         month: month,
       };
-  
+
       // Update payroll status via API call
       const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${employeeId}`, payload);
-  
+
       // Log the update result
       console.log(updatePayRoll);
-  
+
       // Display a success toast notification upon successful payment
       toast.success('Salary payment processed successfully');
     } catch (error) {
@@ -291,7 +292,7 @@ const PayRoll = () => {
       toast.error('Failed to process salary payment');
     }
   };
-  
+
 
 
   const [filterEmployees, setfilterEmployees] = useState([])
@@ -460,13 +461,17 @@ const PayRoll = () => {
                                         <td>{Roll.Tax}</td>
                                         <td>{Roll.NetSalary}</td>
                                         <td>{usertitle(Roll.paidBy)}</td>
-                                        {Roll.isPaid == false ? (
+                                        {Roll.isPaid === false ? (
                                           <td>
-                                            <a href="#paidModal" type='button' className="btn btn-success" onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}>دفع</a>
-
-                                            {/* <button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
-                                            > دفع</button> */}
-                                            </td>
+                                            <a
+                                              href="#paidModal"
+                                              type='button'
+                                              className="btn btn-success"
+                                              onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                            >
+                                              دفع
+                                            </a>
+                                          </td>
                                         ) : (
                                           <td>تم الدفع</td>
                                         )}
@@ -512,13 +517,20 @@ const PayRoll = () => {
                                           <td>{Roll.Tax}</td>
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
-                                          {Roll.isPaid == false ? (
-                                            <td><button type='button' className="btn btn-success" onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
-                                            > دفع</button></td>
+                                          {Roll.isPaid === false ? (
+                                            <td>
+                                              <a
+                                                href="#paidModal"
+                                                type='button'
+                                                className="btn btn-success"
+                                                onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                              >
+                                                دفع
+                                              </a>
+                                            </td>
                                           ) : (
                                             <td>تم الدفع</td>
                                           )}
-
                                         </tr>
                                       )
                                       : ''

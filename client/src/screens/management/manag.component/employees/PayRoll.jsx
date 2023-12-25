@@ -108,6 +108,8 @@ const PayRoll = () => {
       // Handle the selected cash register
       const findcashRegister  = allCashRegisters.find((cash) => cash.employee === em);
       const cashRegister = findcashRegister._id
+      console.log({cashRegister, cashRegister})
+      console.log(cashRegister)
       // Check if a cash register is selected
       if (cashRegister) {
         // Create a daily expense entry

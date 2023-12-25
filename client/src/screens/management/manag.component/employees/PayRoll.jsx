@@ -106,8 +106,8 @@ const PayRoll = () => {
       const note = `تم دفع راتب ${name} لشهر ${month}`;
 
       // Handle the selected cash register
-      const cashRegister = handleCashRegister(em);
-
+      const findcashRegister  = allCashRegisters.find((cash) => cash.employee === id);
+      const cashRegister = findcashRegister._id
       // Check if a cash register is selected
       if (cashRegister) {
         // Create a daily expense entry

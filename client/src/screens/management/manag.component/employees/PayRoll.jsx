@@ -272,7 +272,7 @@ const PayRoll = () => {
         month
       };
   
-      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, payload);
   
       console.log(updatePayRoll);
     } catch (error) {
@@ -506,7 +506,7 @@ const PayRoll = () => {
                                           <td>{Roll.Tax}</td>
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}> دفع</button></td>
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,employeeLoginInfo.employeeinfo.id,Roll.Month)}> دفع</button></td>
 
                                         </tr>
                                       )

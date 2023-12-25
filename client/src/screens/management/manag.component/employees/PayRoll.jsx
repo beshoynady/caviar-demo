@@ -468,6 +468,7 @@ const PayRoll = () => {
                                             <a
                                               href="#paidModal"
                                               type='button'
+                                              data-toggle="modal"
                                               className="btn btn-success"
                                               onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
                                             >
@@ -524,6 +525,7 @@ const PayRoll = () => {
                                               <a
                                                 href="#paidModal"
                                                 type='button'
+                                                data-toggle="modal"
                                                 className="btn btn-success"
                                                 onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
                                               >

@@ -185,9 +185,11 @@ const PayRoll = () => {
       console.log(response)
       console.log(allCashRegisters)
       // // Find the appropriate cash register
-      // const cashRegister = allCashRegisters ? allCashRegisters.find(cash => cash.employee === manager) : {};
+      const cashRegister = allCashRegisters ? allCashRegisters.filter(cash => cash.employee === manager) : [];
+      console.log(cashRegister)
       // // Update selected cash register data
       // cashRegister(cashRegister._id);
+      console.log(cashRegister[0]._id)
       // setcashRegistername(cashRegister.name);
       // setbalance(cashRegister.balance);
       // // Set values and variables

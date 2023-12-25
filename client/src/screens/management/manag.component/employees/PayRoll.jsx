@@ -85,7 +85,7 @@ const PayRoll = () => {
     // setpaidBy(id);
   };
 
-  const createDailyExpense = async (paidBy,amount, expenseDescription) => {
+  const createDailyExpense = async (paidBy, amount, expenseDescription) => {
     const updatedbalance = balance - amount; // Calculate the updated balance
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
@@ -249,37 +249,49 @@ const PayRoll = () => {
     }
   }
 
-  // const paidSalary = async (id,name,em, amount, month) => {
-  //   console.log({ id, em })
-    // const expenseDescription = `دفع مرتب ${name} ${amount}`
-    // // const month = new Date().getMonth() + 1;
-    // const note = `دفع مرتب ${name} لشهر ${month}`
-    // handlecashRegister(em)
-    // createDailyExpense(em, amount,expenseDescription,note)
-  //   const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, {
-  //     isPaid: true, paidBy: em ,month
-  //   })
-  //   console.log(updatePayRoll)
-  // }
-
-  const paidSalary = async (id, em, month) => {
+  const paidSalary = async (id, name, em, amount, month) => {
     try {
-      console.log({ id, em ,month});
-  
+      console.log({ id, em })
+      const expenseDescription = `دفع مرتب ${name} ${amount}`
+      // const month = new Date().getMonth() + 1;
+      const note = `دفع مرتب ${name} لشهر ${month}`
+      handlecashRegister(em)
+
+      createDailyExpense(em, amount, expenseDescription, note)
+
       const payload = {
         isPaid: true,
-        paidBy: em ,
+        paidBy: em,
         month
       };
-  
+
       const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
-  
+
       console.log(updatePayRoll);
     } catch (error) {
       console.error(error);
     }
   };
-  
+
+
+  // const paidSalary = async (id, em, month) => {
+  //   try {
+  //     console.log({ id, em ,month});
+
+  //     const payload = {
+  //       isPaid: true,
+  //       paidBy: em ,
+  //       month
+  //     };
+
+  //     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
+
+  //     console.log(updatePayRoll);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const [filterEmployees, setfilterEmployees] = useState([])
 
   const filterEmployeesByJob = (role) => {
@@ -328,7 +340,7 @@ const PayRoll = () => {
         ({ usertitle, EditPagination, employeeLoginInfo, endpagination, setstartpagination, setendpagination }) => {
           return (
             <div className="container-xl mlr-auto">
-              <ToastContainer/>
+              <ToastContainer />
               <div className="table-responsive">
                 <div className="table-wrapper">
                   <div className="table-title">
@@ -373,7 +385,7 @@ const PayRoll = () => {
                             <option value="Chef">شيف</option>
                             <option value="deliveryman">ديليفري</option>
                           </select>
-                        </div>  
+                        </div>
                         <div class="filter-group">
                           <label>الحالة</label>
                           <select class="form-control" onChange={(e) => filterEmpByStatus(e.target.value)}>
@@ -459,7 +471,7 @@ const PayRoll = () => {
                                         <td>{Roll.NetSalary}</td>
                                         <td>{usertitle(Roll.paidBy)}</td>
                                         {Roll.isPaid == false ? (
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,usertitle(em._id) ,employeeLoginInfo.employeeinfo.id,Roll.NetSalary,Roll.Month)}
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
                                           > دفع</button></td>
                                         ) : (
                                           <td>تم الدفع</td>
@@ -506,7 +518,12 @@ const PayRoll = () => {
                                           <td>{Roll.Tax}</td>
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id,employeeLoginInfo.employeeinfo.id,Roll.Month)}> دفع</button></td>
+                                          {Roll.isPaid == false ? (
+                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
+                                          > دفع</button></td>
+                                        ) : (
+                                          <td>تم الدفع</td>
+                                        )}
 
                                         </tr>
                                       )

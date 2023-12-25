@@ -5,88 +5,65 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const PayRoll = () => {
-
+  // Array of months in Arabic
   const months = [
     'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
   ];
-  const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  const [thismonth, setthismonth] = useState(new Date().getMonth() + 1)
 
-  const [listofemployee, setlistofemployee] = useState([])
-  const getemployees = async () => {
+  // State variables
+  const [listOfEmployee, setListOfEmployee] = useState([]);
+  const [listOfSalaryMovement, setListOfSalaryMovement] = useState([]);
+  const [expenseID, setExpenseID] = useState('658845918881bd1fa6a00407');
+  const [cashRegister, setCashRegister] = useState('');
+  const [cashRegisterName, setCashRegisterName] = useState('');
+  const [balance, setBalance] = useState();
+  const [notes, setNotes] = useState('');
+  const [allCashRegisters, setAllCashRegisters] = useState([]);
+
+  // Fetch employees data from the API
+  const getEmployees = async () => {
     try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/employee')
-      const data = await response.data
-      setlistofemployee(data)
+      const response = await axios.get('https://caviar-api.vercel.app/api/employee');
+      setListOfEmployee(response.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const [employeeid, setemployeeid] = useState("")
-  // const [employeeId, setEmployeeId] = useState('');
-  // const [month, setMonth] = useState(0);
-  // const [salary, setSalary] = useState(0);
-  // const [additional, setAdditional] = useState(0);
-  // const [bonus, setBonus] = useState(0);
-  // const [totalDue, setTotalDue] = useState(0);
-  // const [absence, setAbsence] = useState(0);
-  // const [deduction, setDeduction] = useState(0);
-  // const [predecessor, setPredecessor] = useState(0);
-  // const [insurance, setInsurance] = useState(0);
-  // const [tax, setTax] = useState(0);
-  // const [totalDeductible, setTotalDeductible] = useState(0);
-  // const [netSalary, setNetSalary] = useState(0);
-  // const [isPaid, setIsPaid] = useState(false);
-
-  const [listofsalarymovement, setlistofsalarymovement] = useState([])
+  // Fetch salary movement data from the API
   const getSalaryMovement = async () => {
-    const getmovement = await axios.get('https://caviar-api.vercel.app/api/salarymovement')
-    const movement = getmovement.data
-    const date = new Date().getMonth()
-    const filterByMonth = movement.filter((m) => {
-      if (new Date(m.createdAt).getMonth() == date) {
-        return m
-      }
-    })
-    setlistofsalarymovement(filterByMonth)
-  }
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/salarymovement');
+      const currentDate = new Date().getMonth();
+      const filterByMonth = response.data.filter((m) => new Date(m.createdAt).getMonth() === currentDate);
+      setListOfSalaryMovement(filterByMonth);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-  const [expenseID, setexpenseID] = useState('658845918881bd1fa6a00407');
-  const [cashMovementId, setcashMovementId] = useState('');
-  const [dailyexpenseID, setdailyexpenseID] = useState('');
-  // const [expenseDescription, setexpenseDescription] = useState('');
-  // const [amount, setamount] = useState();
-  const [balance, setbalance] = useState();
-  const [cashRegister, setcashRegister] = useState('');
-  const [cashRegistername, setcashRegistername] = useState('');
-  // const [paidBy, setpaidBy] = useState('');
-  const [notes, setnotes] = useState('');
-  // const [allExpenses, setallExpenses] = useState([]);
-  const [AllcashRegisters, setAllcashRegisters] = useState([]);
-
-
-  const getAllcashRegisters = async () => {
+  // Fetch all cash registers from the API
+  const getAllCashRegisters = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
-      setAllcashRegisters(response.data.reverse());
-    } catch (err) {
-      toast.error('Error fetching cash registers');
+      setAllCashRegisters(response.data.reverse());
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handlecashRegister = (id) => {
-    const cashRegister = AllcashRegisters ? AllcashRegisters.find((cash) => cash.employee === id) : {};
-    setcashRegister(cashRegister._id);
-    setcashRegistername(cashRegister.name);
-    setbalance(cashRegister.balance);
-    // setpaidBy(id);
+  // Handle cash register selection
+  const handleCashRegister = (id) => {
+    const cashRegister = allCashRegisters.find((cash) => cash.employee === id);
+    setCashRegister(cashRegister._id);
+    setCashRegisterName(cashRegister.name);
+    setBalance(cashRegister.balance);
   };
 
+  // Create daily expense based on selected cash register
   const createDailyExpense = async (paidBy, amount, expenseDescription) => {
-    const updatedbalance = balance - amount; // Calculate the updated balance
+    const updatedBalance = balance - amount;
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
         registerId: cashRegister,
@@ -95,12 +72,10 @@ const PayRoll = () => {
         type: 'Withdraw',
         description: expenseDescription,
       });
-      console.log(cashMovement)
-      console.log(cashMovement.data.cashMovement._id)
 
-      const cashMovementId = await cashMovement.data.cashMovement._id; // Retrieve the cashMovementId from the response data
+      const cashMovementId = cashMovement.data.cashMovement._id;
 
-      const dailyexpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
+      const dailyExpense = await axios.post('https://caviar-api.vercel.app/api/dailyexpense/', {
         expenseID,
         expenseDescription,
         cashRegister,
@@ -110,154 +85,31 @@ const PayRoll = () => {
         notes,
       });
 
-      const updatecashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashRegister/${cashRegister}`, {
-        balance: updatedbalance, // Use the updated balance
+      const updateCashRegister = await axios.put(`https://caviar-api.vercel.app/api/cashRegister/${cashRegister}`, {
+        balance: updatedBalance,
       });
 
-      // Update the state after successful updates
-      if (updatecashRegister) {
-        setbalance(updatedbalance);
-        // Toast notification for successful creation
-        toast.success('Expense created successfully');
-
-        getAllcashRegisters()
+      if (updateCashRegister) {
+        setBalance(updatedBalance);
+        console.log('Expense created successfully');
+        getAllCashRegisters();
       }
     } catch (error) {
       console.log(error);
-      // Toast notification for error
-      toast.error('Failed to create expense');
-
+      console.log('Failed to create expense');
     }
   };
 
-
-  const addPayRoll = async () => {
-    for (let i = 0; i < listofemployee.length; i++) {
-
-      let Predecessor = 0
-      let Deduction = 0
-      let Absence = 0
-      let Additional = 0
-      let Bonus = 0
-      let TotalDue = 0
-      let TotalDeductible = 0
-      let Insurance = 0
-      let Tax = 0
-      let NetSalary = 0
-      let isPaid = false
-      let salary = listofemployee[i].basicSalary
-      let month = new Date().getMonth() + 1
-      let id = listofemployee[i]._id
-      setemployeeid(id)
-      const employeemov = listofsalarymovement.length > 0 ? listofsalarymovement.filter((m) => m.EmployeeId == id) : '';
-      console.log({ employeemov: employeemov })
-
-      if (employeemov.length > 0) {
-
-        const filterPre = employeemov.filter((m) => m.movement == 'سلف')
-        if (filterPre.length > 0) {
-          Predecessor = filterPre[filterPre.length - 1].newAmount
-        } else {
-          Predecessor = 0
-        }
-
-        const filterDed = employeemov.filter((m) => m.movement == 'خصم')
-        console.log(filterDed)
-        if (filterDed.length > 0) {
-          Deduction = filterDed[filterDed.length - 1].newAmount
-        } else {
-          Deduction = 0
-        }
-
-        const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
-        if (filterAbs.length > 0) {
-          Absence = filterAbs[filterAbs.length - 1].newAmount
-          Absence = Absence
-        } else {
-          Absence = 0
-          Absence = Absence
-        }
-
-        const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
-        if (filterAdd.length > 0) {
-          Additional = filterAdd[filterAdd.length - 1].newAmount
-        } else {
-          Additional = 0
-        }
-
-        const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
-        if (filterBon.length > 0) {
-          Bonus = filterBon[filterBon.length - 1].newAmount
-        } else {
-          Bonus = 0
-
-        }
-        TotalDue = salary + Bonus + Additional
-        TotalDeductible = Absence + Deduction + Predecessor
-        Insurance = TotalDue * .10
-        Tax = TotalDue * 0.15
-        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
-
-        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
-          month,
-          salary,
-          additional: Additional,
-          bonus: Bonus,
-          totalDue: TotalDue,
-          absence: Absence,
-          deduction: Deduction,
-          predecessor: Predecessor,
-          insurance: Insurance,
-          tax: Tax,
-          totalDeductible: TotalDeductible,
-          netSalary: NetSalary,
-          isPaid,
-        })
-        console.log(result)
-        if (result) {
-          getemployees()
-        }
-      } else {
-        TotalDue = salary + Bonus + Additional
-        TotalDeductible = Absence + Deduction + Predecessor
-        Insurance = TotalDue * .10
-        Tax = TotalDue * 0.15
-
-        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
-
-        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
-          month,
-          salary,
-          additional: Additional,
-          bonus: Bonus,
-          totalDue: TotalDue,
-          absence: Absence,
-          deduction: Deduction,
-          predecessor: Predecessor,
-          insurance: Insurance,
-          tax: Tax,
-          totalDeductible: TotalDeductible,
-          netSalary: NetSalary,
-          isPaid,
-        })
-        console.log(result)
-        if (result) {
-          getemployees()
-        }
-      }
-
-    }
-  }
-
+  // Function to process and pay employee salary
   const paidSalary = async (id, name, em, amount, month) => {
     try {
-      console.log({ id, em })
-      const expenseDescription = `دفع مرتب ${name} ${amount}`
-      // const month = new Date().getMonth() + 1;
-      const note = `دفع مرتب ${name} لشهر ${month}`
-      handlecashRegister(em)
+      const expenseDescription = `دفع مرتب ${name} ${amount}`;
+      const note = `دفع مرتب ${name} لشهر ${month}`;
+      handleCashRegister(em);
 
-      createDailyExpense(em, amount, expenseDescription, note)
+      if (cashRegister) {
+        createDailyExpense(em, amount, expenseDescription, note);
+      }
 
       const payload = {
         isPaid: true,
@@ -266,7 +118,6 @@ const PayRoll = () => {
       };
 
       const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
-
       console.log(updatePayRoll);
     } catch (error) {
       console.error(error);
@@ -274,66 +125,36 @@ const PayRoll = () => {
   };
 
 
-  // const paidSalary = async (id, em, month) => {
-  //   try {
-  //     console.log({ id, em ,month});
-
-  //     const payload = {
-  //       isPaid: true,
-  //       paidBy: em ,
-  //       month
-  //     };
-
-  //     const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
-
-  //     console.log(updatePayRoll);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const [filterEmployees, setfilterEmployees] = useState([])
 
   const filterEmployeesByJob = (role) => {
     getemployees()
-    if (listofemployee.length > 0) {
-      const FilterEmployees = listofemployee.filter(employee => employee.role == role)
+    if (listOfEmployee.length > 0) {
+      const FilterEmployees = listOfEmployee.filter(employee => employee.role == role)
       setfilterEmployees(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
     console.log(status)
     getemployees()
-    const filteredEmployees = listofemployee.filter(employee => employee.isActive == status)
+    const filteredEmployees = listOfEmployee.filter(employee => employee.isActive == status)
     console.log(filteredEmployees)
     setfilterEmployees(filteredEmployees)
 
   }
 
   const searchByName = (Name) => {
-    const employee = listofemployee.filter((employee) => employee.fullname.startsWith(Name) == true)
+    const employee = listOfEmployee.filter((employee) => employee.fullname.startsWith(Name) == true)
     setfilterEmployees(employee)
   }
 
 
-  // const deleteEmployee = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     console.log(userid)
-  //     const deleted = await axios.delete(`https://caviar-api.vercel.app/api/user/${userid}`)
-  //     console.log(deleted)
-  //     getemployees()
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-
+  // Fetch data on component mount
   useEffect(() => {
-    getemployees()
-    getSalaryMovement()
-    getAllcashRegisters()
-  }, [])
+    getEmployees();
+    getSalaryMovement();
+    getAllCashRegisters();
+  }, []);
   return (
     <detacontext.Consumer>
       {
@@ -489,7 +310,7 @@ const PayRoll = () => {
                           }
                         })
                           :
-                          listofemployee.map((em, i) => {
+                          listOfEmployee.map((em, i) => {
                             if (em.isActive == true && em.payRoll.length > 0) {
                               return (
                                 em.payRoll.map((Roll, j) => {
@@ -538,7 +359,7 @@ const PayRoll = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{listofemployee.length > endpagination ? endpagination : listofemployee.length}</b> out of <b>{listofemployee.length}</b> entries</div>
+                    <div className="hint-text text-dark">عرض <b>{listOfEmployee.length > endpagination ? endpagination : listOfEmployee.length}</b> out of <b>{listOfEmployee.length}</b> entries</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

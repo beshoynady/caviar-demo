@@ -12,14 +12,21 @@ const PayRoll = () => {
   ];
 
   // State variables
-  const [listOfEmployee, setListOfEmployee] = useState([]);
-  const [listOfSalaryMovement, setListOfSalaryMovement] = useState([]);
-  const [expenseID, setExpenseID] = useState('658845918881bd1fa6a00407');
-  const [cashRegister, setCashRegister] = useState('');
-  const [cashRegisterName, setCashRegisterName] = useState('');
-  const [balance, setBalance] = useState();
-  const [notes, setNotes] = useState('');
-  const [allCashRegisters, setAllCashRegisters] = useState([]);
+  const [expenseID, setexpenseID] = useState('');
+  const [cashMovementId, setcashMovementId] = useState('');
+  const [dailyexpenseID, setdailyexpenseID] = useState('');
+  const [expenseDescription, setexpenseDescription] = useState('');
+  const [amount, setamount] = useState();
+  const [balance, setbalance] = useState();
+  const [cashRegister, setcashRegister] = useState('');
+  const [cashRegistername, setcashRegistername] = useState('');
+  const [paidBy, setpaidBy] = useState('');
+  const [employeeId, setemployeeId] = useState('');
+  const [employeeName, setemployeeName] = useState('');
+  const [month, setmonth] = useState('');
+  const [notes, setnotes] = useState('');
+  const [allExpenses, setallExpenses] = useState([]);
+  const [AllcashRegisters, setAllcashRegisters] = useState([]);
 
   // Fetch employees data from the API
   const getEmployees = async () => {
@@ -43,24 +50,59 @@ const PayRoll = () => {
     }
   };
 
-  // Fetch all cash registers from the API
-  const getAllCashRegisters = async () => {
+
+  const handelPaid = async (salary, manager, employee, name, paidMonth) => {
     try {
+      // Set values and variables
+      setamount(salary);
+      setpaidBy(manager);
+      setemployeeId(employee);
+      setmonth(paidMonth);
+      setemployeeName(name);
+      // Update expense description
+      setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
+      // Update notes
+      setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
+  
+      // Fetch all cash registers
       const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
-      setAllCashRegisters(response.data.reverse());
+      const allCashRegisters = await response.data;
+  
+      // Find the appropriate cash register
+      const cashRegister = allCashRegisters ? allCashRegisters.find((cash) => cash.employee === manager) : {};
+      // Update selected cash register data
+      cashRegister(cashRegister._id);
+      setcashRegistername(cashRegister.name);
+      setbalance(cashRegister.balance);
     } catch (error) {
-      console.log(error);
+      // Handle errors and display an appropriate error message to the user
+      console.error(error);
+      toast.error('An issue occurred while processing salaries. Please try again.');
     }
   };
+  
 
-  // Handle cash register selection
-  const handleCashRegister = (id) => {
-    const cashRegister = allCashRegisters.find((cash) => cash.employee === id);
-    return cashRegister._id
-  };
+
+  // // Fetch all cash registers from the API
+  // const getAllcashRegisters = async () => {
+  //   try {
+  //     const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
+  //     setAllcashRegisters(response.data);
+  //   } catch (err) {
+  //     toast.error('Error fetching cash registers');
+  //   }
+  // };
+
+  // const handlecashRegister = (id) => {
+  //   const cashRegister = AllcashRegisters ? AllcashRegisters.find((cash) => cash.employee === id) : {};
+  //   setcashRegister(cashRegister._id);
+  //   setcashRegistername(cashRegister.name);
+  //   setbalance(cashRegister.balance);
+  //   // setpaidBy(id);
+  // };
 
   // Create daily expense based on selected cash register
-  const createDailyExpense = async (paidBy, amount, expenseDescription,cashRegister) => {
+  const createDailyExpense = async () => {
     const updatedBalance = balance - amount;
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
@@ -88,9 +130,8 @@ const PayRoll = () => {
       });
 
       if (updateCashRegister) {
-        setBalance(updatedBalance);
+        setbalance(updatedBalance);
         console.log('Expense created successfully');
-        getAllCashRegisters();
       }
     } catch (error) {
       console.log(error);
@@ -99,47 +140,39 @@ const PayRoll = () => {
   };
 
   // Function to process and pay employee salary
-  const paidSalary = async (id, name, em, amount, month) => {
+  const paidSalary = async () => {
     try {
-      // Set the description for the expense
-      const expenseDescription = `تم دفع راتب ${name} بمبلغ ${amount}`;
-      const note = `تم دفع راتب ${name} لشهر ${month}`;
-
-      // Handle the selected cash register
-      const findcashRegister  = allCashRegisters.find((cash) => cash.employee == em);
-      const cashRegister = findcashRegister._id
-      console.log({findcashRegister, findcashRegister})
-      console.log(cashRegister)
-      // Check if a cash register is selected
-      if (cashRegister) {
-        // Create a daily expense entry
-        createDailyExpense(em, amount, expenseDescription, note, cashRegister);
-      }
-
+      // Create daily expense
+      createDailyExpense();
+  
       // Prepare payload for updating payroll status
       const payload = {
         isPaid: true,
-        paidBy: em,
-        month
+        paidBy: paidBy,
+        month: month,
       };
-
+  
       // Update payroll status via API call
-      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
-
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${employeeId}`, payload);
+  
       // Log the update result
       console.log(updatePayRoll);
+  
+      // Display a success toast notification upon successful payment
+      toast.success('Salary payment processed successfully');
     } catch (error) {
       // Handle errors by displaying a toast notification
       console.error(error);
       toast.error('Failed to process salary payment');
     }
   };
+  
 
 
   const [filterEmployees, setfilterEmployees] = useState([])
 
   const filterEmployeesByJob = (role) => {
-    getemployees()
+    getEmployees()
     if (listOfEmployee.length > 0) {
       const FilterEmployees = listOfEmployee.filter(employee => employee.role == role)
       setfilterEmployees(FilterEmployees)
@@ -147,7 +180,7 @@ const PayRoll = () => {
   }
   const filterEmpByStatus = (status) => {
     console.log(status)
-    getemployees()
+    getEmployees()
     const filteredEmployees = listOfEmployee.filter(employee => employee.isActive == status)
     console.log(filteredEmployees)
     setfilterEmployees(filteredEmployees)
@@ -303,8 +336,12 @@ const PayRoll = () => {
                                         <td>{Roll.NetSalary}</td>
                                         <td>{usertitle(Roll.paidBy)}</td>
                                         {Roll.isPaid == false ? (
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
-                                          > دفع</button></td>
+                                          <td>
+                                            <a href="#paidModal" type='button' className="btn btn-success" onClick={() => handelPaid = async (Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}>دفع</a>
+
+                                            {/* <button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
+                                            > دفع</button> */}
+                                            </td>
                                         ) : (
                                           <td>تم الدفع</td>
                                         )}
@@ -351,11 +388,11 @@ const PayRoll = () => {
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
                                           {Roll.isPaid == false ? (
-                                          <td><button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
-                                          > دفع</button></td>
-                                        ) : (
-                                          <td>تم الدفع</td>
-                                        )}
+                                            <td><button type='button' className="btn btn-success" onClick={() => handelPaid = async (Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                            > دفع</button></td>
+                                          ) : (
+                                            <td>تم الدفع</td>
+                                          )}
 
                                         </tr>
                                       )
@@ -380,6 +417,26 @@ const PayRoll = () => {
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">5</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">التالي</a></li>
                     </ul>
+                  </div>
+                </div>
+              </div>
+              <div id="paidModal" className="modal fade">
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <form onSubmit={paidSalary}>
+                      <div className="modal-header">
+                        <h4 className="modal-title">دفع راتب</h4>
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div className="modal-body">
+                        <p>`هل انت متاكد من دفع مرتب${mployeeName}  ؟ `</p>
+                        <p className="text-warning"><small>لا يمكن الرجوع في هذا الاجراء.</small></p>
+                      </div>
+                      <div className="modal-footer">
+                        <input type="button" className="btn btn-danger" data-dismiss="modal" value="الغاء" />
+                        <input type="submit" className="btn btn-danger" value="تاكيد الدفع" />
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -268,7 +268,8 @@ const PayRoll = () => {
   };
 
   // Function to process and pay employee salary
-  const paidSalary = async () => {
+  const paidSalary = async (e) => {
+    e.preventDefault();
     try {
       // Create daily expense
       createDailyExpense();

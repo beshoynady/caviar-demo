@@ -141,7 +141,7 @@ const PayRoll = () => {
         })
         console.log(result)
         if (result) {
-          getemployees()
+          getEmployees()
         }
       } else {
         TotalDue = salary + Bonus + Additional
@@ -168,7 +168,7 @@ const PayRoll = () => {
         })
         console.log(result)
         if (result) {
-          getemployees()
+          getEmployees()
         }
       }
 
@@ -461,7 +461,7 @@ const PayRoll = () => {
                                         <td>{usertitle(Roll.paidBy)}</td>
                                         {Roll.isPaid == false ? (
                                           <td>
-                                            <a href="#paidModal" type='button' className="btn btn-success" onClick={() => handelPaid = async (Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}>دفع</a>
+                                            <a href="#paidModal" type='button' className="btn btn-success" onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}>دفع</a>
 
                                             {/* <button type='button' className="btn btn-success" onClick={() => paidSalary(em._id, usertitle(em._id), employeeLoginInfo.employeeinfo.id, Roll.NetSalary, Roll.Month)}
                                             > دفع</button> */}
@@ -512,7 +512,7 @@ const PayRoll = () => {
                                           <td>{Roll.NetSalary}</td>
                                           <td>{usertitle(Roll.paidBy)}</td>
                                           {Roll.isPaid == false ? (
-                                            <td><button type='button' className="btn btn-success" onClick={() => handelPaid = async (Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                            <td><button type='button' className="btn btn-success" onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
                                             > دفع</button></td>
                                           ) : (
                                             <td>تم الدفع</td>

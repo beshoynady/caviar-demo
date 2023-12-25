@@ -571,7 +571,7 @@ const PayRoll = () => {
                       </div>
                       <div className="modal-body">
                         <p className="mb-0 text-center">هل أنت متأكد من دفع {amount} مرتب {employeeName} ؟</p>
-                        <p className="text-warning text-center">>لا يمكن الرجوع في هذا الإجراء.</p>
+                        <p className="text-warning text-center">لا يمكن الرجوع في هذا الإجراء.</p>
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="الغاء" />

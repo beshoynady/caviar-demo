@@ -268,11 +268,10 @@ const PayRoll = () => {
   
       const payload = {
         isPaid: true,
-        paidBy: em // تفقد هل هذا الحقل موجود في الـ payload الجديد
+        paidBy: em 
       };
   
-      // تعديل عنوان الـ endpoint ليتناسب مع التغييرات في الـ API
-      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employees/${id}/payroll/${month}`, payload);
+      const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/employees/${id}/payroll/${month}`, payload);
   
       console.log(updatePayRoll);
     } catch (error) {

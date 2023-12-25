@@ -284,8 +284,8 @@ const validatePayroll = (data) => {
 
 
   const paidPayrollForMonth = async (req, res) => {
-    const { employeeId, month } = req.params;
-    const { isPaid, paidBy } = req.body;
+    const { employeeId } = req.params;
+    const { isPaid, paidBy, month } = req.body;
   
     try {
       const employee = await Employeemodel.findById(employeeId);

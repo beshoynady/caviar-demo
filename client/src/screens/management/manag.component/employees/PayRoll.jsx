@@ -56,13 +56,11 @@ const PayRoll = () => {
   // Handle cash register selection
   const handleCashRegister = (id) => {
     const cashRegister = allCashRegisters.find((cash) => cash.employee === id);
-    setCashRegister(cashRegister._id);
-    setCashRegisterName(cashRegister.name);
-    setBalance(cashRegister.balance);
+    return cashRegister._id
   };
 
   // Create daily expense based on selected cash register
-  const createDailyExpense = async (paidBy, amount, expenseDescription) => {
+  const createDailyExpense = async (paidBy, amount, expenseDescription,cashRegister) => {
     const updatedBalance = balance - amount;
     try {
       const cashMovement = await axios.post('https://caviar-api.vercel.app/api/cashMovement/', {
@@ -108,12 +106,12 @@ const PayRoll = () => {
       const note = `تم دفع راتب ${name} لشهر ${month}`;
 
       // Handle the selected cash register
-      handleCashRegister(em);
+      const cashRegister = handleCashRegister(em);
 
       // Check if a cash register is selected
       if (cashRegister) {
         // Create a daily expense entry
-        createDailyExpense(em, amount, expenseDescription, note);
+        createDailyExpense(em, amount, expenseDescription, note, cashRegister);
       }
 
       // Prepare payload for updating payroll status

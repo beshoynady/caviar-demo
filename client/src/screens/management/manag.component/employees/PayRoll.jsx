@@ -11,6 +11,10 @@ const PayRoll = () => {
     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
   ];
 
+  const arryeofmonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const [thismonth, setthismonth] = useState(new Date().getMonth() + 1)
+
+
   // State variables
   const [expenseID, setexpenseID] = useState('');
   const [cashMovementId, setcashMovementId] = useState('');
@@ -29,6 +33,7 @@ const PayRoll = () => {
   const [AllcashRegisters, setAllcashRegisters] = useState([]);
 
   // Fetch employees data from the API
+  const [ListOfEmployee, setListOfEmployee] = useState([])
   const getEmployees = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/employee');
@@ -39,6 +44,7 @@ const PayRoll = () => {
   };
 
   // Fetch salary movement data from the API
+  const [ListOfSalaryMovement, setListOfSalaryMovement] = useState([])
   const getSalaryMovement = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/salarymovement');
@@ -50,6 +56,124 @@ const PayRoll = () => {
     }
   };
 
+
+  const addPayRoll = async () => {
+    for (let i = 0; i < ListOfEmployee.length; i++) {
+
+      let Predecessor = 0
+      let Deduction = 0
+      let Absence = 0
+      let Additional = 0
+      let Bonus = 0
+      let TotalDue = 0
+      let TotalDeductible = 0
+      let Insurance = 0
+      let Tax = 0
+      let NetSalary = 0
+      let isPaid = false
+      let salary = ListOfEmployee[i].basicSalary
+      let month = new Date().getMonth() + 1
+      let id = ListOfEmployee[i]._id
+      setemployeeId(id)
+      const employeemov = ListOfSalaryMovement.length > 0 ? ListOfSalaryMovement.filter((m) => m.EmployeeId == id) : '';
+      console.log({ employeemov: employeemov })
+
+      if (employeemov.length > 0) {
+
+        const filterPre = employeemov.filter((m) => m.movement == 'سلف')
+        if (filterPre.length > 0) {
+          Predecessor = filterPre[filterPre.length - 1].newAmount
+        } else {
+          Predecessor = 0
+        }
+
+        const filterDed = employeemov.filter((m) => m.movement == 'خصم')
+        console.log(filterDed)
+        if (filterDed.length > 0) {
+          Deduction = filterDed[filterDed.length - 1].newAmount
+        } else {
+          Deduction = 0
+        }
+
+        const filterAbs = employeemov.filter((m) => m.movement == 'غياب')
+        if (filterAbs.length > 0) {
+          Absence = filterAbs[filterAbs.length - 1].newAmount
+          Absence = Absence
+        } else {
+          Absence = 0
+          Absence = Absence
+        }
+
+        const filterAdd = employeemov.filter((m) => m.movement == 'اضافي')
+        if (filterAdd.length > 0) {
+          Additional = filterAdd[filterAdd.length - 1].newAmount
+        } else {
+          Additional = 0
+        }
+
+        const filterBon = employeemov.filter((m) => m.movement == 'مكافأة')
+        if (filterBon.length > 0) {
+          Bonus = filterBon[filterBon.length - 1].newAmount
+        } else {
+          Bonus = 0
+
+        }
+        TotalDue = salary + Bonus + Additional
+        TotalDeductible = Absence + Deduction + Predecessor
+        Insurance = TotalDue * .10
+        Tax = TotalDue * 0.15
+        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+
+        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
+          month,
+          salary,
+          additional: Additional,
+          bonus: Bonus,
+          totalDue: TotalDue,
+          absence: Absence,
+          deduction: Deduction,
+          predecessor: Predecessor,
+          insurance: Insurance,
+          tax: Tax,
+          totalDeductible: TotalDeductible,
+          netSalary: NetSalary,
+          isPaid,
+        })
+        console.log(result)
+        if (result) {
+          getemployees()
+        }
+      } else {
+        TotalDue = salary + Bonus + Additional
+        TotalDeductible = Absence + Deduction + Predecessor
+        Insurance = TotalDue * .10
+        Tax = TotalDue * 0.15
+
+        NetSalary = TotalDue - TotalDeductible - Insurance - Tax
+
+        const result = await axios.put(`https://caviar-api.vercel.app/api/employee/payroll/${id}`, {
+          month,
+          salary,
+          additional: Additional,
+          bonus: Bonus,
+          totalDue: TotalDue,
+          absence: Absence,
+          deduction: Deduction,
+          predecessor: Predecessor,
+          insurance: Insurance,
+          tax: Tax,
+          totalDeductible: TotalDeductible,
+          netSalary: NetSalary,
+          isPaid,
+        })
+        console.log(result)
+        if (result) {
+          getemployees()
+        }
+      }
+
+    }
+  }
 
   const handelPaid = async (salary, manager, employee, name, paidMonth) => {
     try {
@@ -173,22 +297,22 @@ const PayRoll = () => {
 
   const filterEmployeesByJob = (role) => {
     getEmployees()
-    if (listOfEmployee.length > 0) {
-      const FilterEmployees = listOfEmployee.filter(employee => employee.role == role)
+    if (ListOfEmployee.length > 0) {
+      const FilterEmployees = ListOfEmployee.filter(employee => employee.role == role)
       setfilterEmployees(FilterEmployees)
     }
   }
   const filterEmpByStatus = (status) => {
     console.log(status)
     getEmployees()
-    const filteredEmployees = listOfEmployee.filter(employee => employee.isActive == status)
+    const filteredEmployees = ListOfEmployee.filter(employee => employee.isActive == status)
     console.log(filteredEmployees)
     setfilterEmployees(filteredEmployees)
 
   }
 
   const searchByName = (Name) => {
-    const employee = listOfEmployee.filter((employee) => employee.fullname.startsWith(Name) == true)
+    const employee = ListOfEmployee.filter((employee) => employee.fullname.startsWith(Name) == true)
     setfilterEmployees(employee)
   }
 
@@ -197,7 +321,7 @@ const PayRoll = () => {
   useEffect(() => {
     getEmployees();
     getSalaryMovement();
-    getAllCashRegisters();
+    // getAllCashRegisters();
   }, []);
   return (
     <detacontext.Consumer>
@@ -358,7 +482,7 @@ const PayRoll = () => {
                           }
                         })
                           :
-                          listOfEmployee.map((em, i) => {
+                          ListOfEmployee.map((em, i) => {
                             if (em.isActive == true && em.payRoll.length > 0) {
                               return (
                                 em.payRoll.map((Roll, j) => {
@@ -407,7 +531,7 @@ const PayRoll = () => {
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{listOfEmployee.length > endpagination ? endpagination : listOfEmployee.length}</b> out of <b>{listOfEmployee.length}</b> entries</div>
+                    <div className="hint-text text-dark">عرض <b>{ListOfEmployee.length > endpagination ? endpagination : ListOfEmployee.length}</b> out of <b>{ListOfEmployee.length}</b> entries</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>
@@ -429,7 +553,7 @@ const PayRoll = () => {
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        <p>`هل انت متاكد من دفع مرتب${mployeeName}  ؟ `</p>
+                        <p>`هل انت متاكد من دفع ${amount} مرتب${employeeName}  ؟ `</p>
                         <p className="text-warning"><small>لا يمكن الرجوع في هذا الاجراء.</small></p>
                       </div>
                       <div className="modal-footer">

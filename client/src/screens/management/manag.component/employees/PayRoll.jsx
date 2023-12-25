@@ -178,16 +178,6 @@ const PayRoll = () => {
   const handelPaid = async (salary, manager, employee, name, paidMonth) => {
     try {
       console.log(manager)
-      // Set values and variables
-      setamount(salary);
-      setpaidBy(manager);
-      setemployeeId(employee);
-      setmonth(paidMonth);
-      setemployeeName(name);
-      // Update expense description
-      setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
-      // Update notes
-      setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
   
       // Fetch all cash registers
       const response = await axios.get('https://caviar-api.vercel.app/api/cashRegister');
@@ -199,6 +189,16 @@ const PayRoll = () => {
       cashRegister(cashRegister._id);
       setcashRegistername(cashRegister.name);
       setbalance(cashRegister.balance);
+      // Set values and variables
+      setamount(salary);
+      setpaidBy(manager);
+      setemployeeId(employee);
+      setmonth(paidMonth);
+      setemployeeName(name);
+      // Update expense description
+      setexpenseDescription(`دفع راتب ${name} بمبلغ ${salary}`);
+      // Update notes
+      setnotes(`دفع راتب ${name} لشهر ${paidMonth}`);
     } catch (error) {
       // Handle errors and display an appropriate error message to the user
       console.error(error);

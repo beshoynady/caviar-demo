@@ -286,7 +286,7 @@ const PayRoll = () => {
 
       // Log the update result
       console.log(updatePayRoll);
-
+      getEmployees()
       // Display a success toast notification upon successful payment
       toast.success('Salary payment processed successfully');
     } catch (error) {
@@ -471,7 +471,7 @@ const PayRoll = () => {
                                               type='button'
                                               data-toggle="modal"
                                               className="btn btn-success"
-                                              onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                              onClick={() => handelPaid(Roll.NetSalary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
                                             >
                                               دفع
                                             </a>
@@ -528,7 +528,7 @@ const PayRoll = () => {
                                                 type='button'
                                                 data-toggle="modal"
                                                 className="btn btn-success"
-                                                onClick={() => handelPaid(Roll.salary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
+                                                onClick={() => handelPaid(Roll.NetSalary, employeeLoginInfo.employeeinfo.id, em._id, usertitle(em._id), Roll.Month)}
                                               >
                                                 دفع
                                               </a>

@@ -103,24 +103,35 @@ const PayRoll = () => {
   // Function to process and pay employee salary
   const paidSalary = async (id, name, em, amount, month) => {
     try {
-      const expenseDescription = `دفع مرتب ${name} ${amount}`;
-      const note = `دفع مرتب ${name} لشهر ${month}`;
+      // Set the description for the expense
+      const expenseDescription = `تم دفع راتب ${name} بمبلغ ${amount}`;
+      const note = `تم دفع راتب ${name} لشهر ${month}`;
+
+      // Handle the selected cash register
       handleCashRegister(em);
 
+      // Check if a cash register is selected
       if (cashRegister) {
+        // Create a daily expense entry
         createDailyExpense(em, amount, expenseDescription, note);
       }
 
+      // Prepare payload for updating payroll status
       const payload = {
         isPaid: true,
         paidBy: em,
         month
       };
 
+      // Update payroll status via API call
       const updatePayRoll = await axios.put(`https://caviar-api.vercel.app/api/employee/paid/${id}`, payload);
+
+      // Log the update result
       console.log(updatePayRoll);
     } catch (error) {
+      // Handle errors by displaying a toast notification
       console.error(error);
+      toast.error('Failed to process salary payment');
     }
   };
 

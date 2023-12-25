@@ -272,7 +272,7 @@ const PayRoll = () => {
     e.preventDefault();
     try {
       // Create daily expense
-     await createDailyExpense();
+      await createDailyExpense();
 
       // Prepare payload for updating payroll status
       const payload = {
@@ -571,9 +571,9 @@ const PayRoll = () => {
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        <p className="mb-0 text-center fs-5 fw-bold">هل أنت متأكد من دفع {amount} مرتب {employeeName} ؟</p> <br/>
-                        <p className="text-warning text-center fs-3 fw-bold">لا يمكن الرجوع في هذا الإجراء.</p>
-                      </div>
+                        <p className="text-center mb-0 fs-5">هل أنت متأكد من دفع {amount} مرتب {employeeName} ؟</p>
+                        <p className="text-center text-warning mb-0 fs-6">لا يمكن الرجوع في هذا الإجراء.</p>
+                      </div>                      
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="الغاء" />
                         <input type="submit" className="btn btn-danger" value="تاكيد الدفع" />

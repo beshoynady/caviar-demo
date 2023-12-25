@@ -177,6 +177,7 @@ const PayRoll = () => {
 
   const handelPaid = async (salary, manager, employee, name, paidMonth) => {
     try {
+      console.log(manager)
       // Set values and variables
       setamount(salary);
       setpaidBy(manager);
@@ -193,7 +194,7 @@ const PayRoll = () => {
       const allCashRegisters = await response.data;
   
       // Find the appropriate cash register
-      const cashRegister = allCashRegisters ? allCashRegisters.find((cash) => cash.employee === manager) : {};
+      const cashRegister = allCashRegisters ? allCashRegisters.find(cash => cash.employee === manager) : {};
       // Update selected cash register data
       cashRegister(cashRegister._id);
       setcashRegistername(cashRegister.name);

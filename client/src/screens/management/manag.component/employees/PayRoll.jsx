@@ -106,9 +106,9 @@ const PayRoll = () => {
       const note = `تم دفع راتب ${name} لشهر ${month}`;
 
       // Handle the selected cash register
-      const findcashRegister  = allCashRegisters.find((cash) => cash.employee === em);
+      const findcashRegister  = allCashRegisters.find((cash) => cash.employee == em);
       const cashRegister = findcashRegister._id
-      console.log({cashRegister, cashRegister})
+      console.log({findcashRegister, findcashRegister})
       console.log(cashRegister)
       // Check if a cash register is selected
       if (cashRegister) {

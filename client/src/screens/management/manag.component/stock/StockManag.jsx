@@ -67,12 +67,13 @@ const StockManag = () => {
 
   const createStockAction = async (e, employeeId) => {
     e.preventDefault();
-    console.log({newBalance:newBalance})
-    console.log({newcost:newcost})
-    console.log({price:price})
+    console.log({ newBalance: newBalance })
+    console.log({ newcost: newcost })
+    console.log({ price: price })
     try {
       const actionBy = employeeId;
       const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
+      const unit = movement == 'Purchase' ? largeUnit : smallUnit
 
       // Update the stock item's movement
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, {
@@ -86,7 +87,6 @@ const StockManag = () => {
 
       if (changeItem.status === 200) {
         // Create a new stock action
-        const unit = movement == 'Purchase' ? largeUnit : smallUnit
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', {
           itemId,
           movement,
@@ -159,6 +159,7 @@ const StockManag = () => {
     e.preventDefault();
     try {
       const actionBy = employeeId;
+      const unit = movement == 'Purchase' ? largeUnit : smallUnit
 
       // Update the stock item's movement
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, { newBalance, newcost, price });
@@ -556,7 +557,11 @@ const StockManag = () => {
                         </div>
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="" id="" onChange={(e) => { setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].unit) }}>
+                          <select name="" id="" onChange={(e) => {
+                            setitemId(e.target.value);
+                            setlargeUnit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);
+                            setsmallUnit(StockItems.filter(i => i._id == e.target.value)[0].smallUnit);
+                          }}>
                             <option >اختر الصنف</option>
                             {StockItems.map((item, i) => {
                               return <option key={i} value={item._id}>{item.itemName}</option>
@@ -565,8 +570,15 @@ const StockManag = () => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); setcost(e.target.value * price) }} />
-                          <input type='text' className="form-control" defaultValue={unit} readOnly />
+                          {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
+                            <>
+                              <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); setcost(Number(e.target.value) * costOfPart) }} />
+                              <input type='text' className="form-control" defaultValue={smallUnit} readOnly />
+                            </>
+                            : movement == "Purchase" ? <>
+                              <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); }} />
+                              <input type='text' className="form-control" defaultValue={largeUnit} readOnly />
+                            </> : ''}
                         </div>
 
                         <div className="form-group">

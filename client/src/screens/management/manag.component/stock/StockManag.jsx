@@ -37,7 +37,8 @@ const StockManag = () => {
   const Stockmovement = ["Purchase", "Expense", "Return", "Wastage"];
   const [movement, setmovement] = useState('');
   const [itemId, setitemId] = useState("");
-  const [unit, setunit] = useState('')
+  const [largeUnit, setlargeUnit] = useState('')
+  const [smallUnit, setsmallUnit] = useState('')
   const [Quantity, setQuantity] = useState(0);
   const [price, setprice] = useState(0);
   const [cost, setcost] = useState(0)
@@ -70,7 +71,7 @@ const StockManag = () => {
     try {
       const actionBy = employeeId;
       const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage
-  
+
       // Update the stock item's movement
       const changeItem = await axios.put(`https://caviar-api.vercel.app/api/stockitem/movement/${itemId}`, {
         newBalance,
@@ -78,11 +79,12 @@ const StockManag = () => {
         price,
         costOfPart,
       });
-  
+
       console.log(changeItem);
-  
+
       if (changeItem.status === 200) {
         // Create a new stock action
+        const unit = movement == 'Purchase' ? largeUnit : smallUnit
         const response = await axios.post('https://caviar-api.vercel.app/api/stockmanag/', {
           itemId,
           movement,
@@ -96,23 +98,23 @@ const StockManag = () => {
           actionBy,
           actionAt,
         });
-  
+
         console.log(response.data);
-  
+
         if (movement === 'Purchase') {
           for (const product of listofProducts) {
             const arrayRecipe = product.Recipe;
             const productid = product._id;
-  
+
             for (const recipe of arrayRecipe) {
               if (recipe.itemId === itemId) {
                 recipe.costofitem = costOfPart;
                 recipe.totalcostofitem = recipe.amount * costOfPart;
-  
+
                 const totalcost = arrayRecipe.reduce((acc, curr) => {
                   return acc + (curr.totalcostofitem || 0);
                 }, 0);
-  
+
                 // Update the product with the modified recipe and total cost
                 const updateRecipeToProduct = await axios.put(
                   `https://caviar-api.vercel.app/api/product/addrecipe/${productid}`,
@@ -123,20 +125,20 @@ const StockManag = () => {
                     },
                   }
                 );
-  
+
                 console.log({ updateRecipeToProduct: updateRecipeToProduct.data });
-  
+
                 // Toast for successful update based on recipe change
                 toast.success(`Recipe updated for product ${productid}`);
               }
             }
           }
         }
-  
+
         // Update the stock actions list and stock items
         getallStockaction();
         getaStockItems();
-  
+
         // Toast notification for successful creation
         toast.success('Stock action created successfully');
       }
@@ -146,7 +148,7 @@ const StockManag = () => {
       toast.error('Error creating stock action');
     }
   };
-  
+
 
 
 
@@ -257,7 +259,7 @@ const StockManag = () => {
   }, [])
 
   useEffect(() => {
-    if (movement == "Expense" || movement == "Wastage") {
+    if (movement == "Expense" || movement == "Wastage" || movement == "Return") {
       setnewBalance(Number(oldBalance) - Number(Quantity))
       setnewcost(Number(oldCost) - Number(cost))
       setcostOfPart(Number(price) / Number(parts))
@@ -298,12 +300,15 @@ const StockManag = () => {
                         <div class="show-entries">
                           <span>عرض</span>
                           <select class="form-control" onChange={(e) => { setstartpagination(0); setendpagination(e.target.value) }}>
-                            <option value={5}>5</option>
-                            <option value={10}>10</option>
-                            <option value={15}>15</option>
-                            <option value={20}>20</option>
-                            <option value={25}>25</option>
-                            <option value={30}>30</option>
+                            {
+                              (() => {
+                                const options = [];
+                                for (let i = 5; i < 100; i += 5) {
+                                  options.push(<option key={i} value={i}>{i}</option>);
+                                }
+                                return options;
+                              })()
+                            }
                           </select>
                           <span>صفوف</span>
                         </div>
@@ -318,10 +323,10 @@ const StockManag = () => {
                           <label>نوع الاوردر</label>
                           <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="Purchase" >Purchase</option>
+                            <option value="Purchase">Purchase</option>
                             <option value="Return" >Return</option>
-                            <option value="Expense" >Expense</option>
-                            <option value="Wastage" >Wastage</option>
+                            <option value="Expense">Expense</option>
+                            <option value="Wastage">Wastage</option>
                           </select>
                         </div>
                         {/* <div class="filter-group">
@@ -469,7 +474,11 @@ const StockManag = () => {
                         <div className="form-group">
                           <label>الصنف</label>
                           <select name="" id="" onChange={(e) => {
-                            setitemId(e.target.value); setunit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);; setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
+                            setitemId(e.target.value);
+                            setlargeUnit(StockItems.filter(i => i._id == e.target.value)[0].largeUnit);
+                            setsmallUnit(StockItems.filter(i => i._id == e.target.value)[0].smallUnit);
+                            setcostOfPart(StockItems.filter(i => i._id == e.target.value)[0].costOfPart);
+                            setprice(StockItems.filter(i => i._id == e.target.value)[0].price)
                             setoldBalance(StockItems.filter(i => i._id == e.target.value)[0].Balance);
                             setoldCost(StockItems.filter(i => i._id == e.target.value)[0].totalCost);
                             setparts(StockItems.filter(i => i._id == e.target.value)[0].parts)
@@ -482,14 +491,21 @@ const StockManag = () => {
                         </div>
                         <div className="form-group">
                           <label>الكمية</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); }} />
-                          <input type='text' className="form-control" defaultValue={unit} readOnly />
+                          {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
+                            <>
+                              <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); setcost(Number(e.target.value) * costOfPart) }} />
+                              <input type='text' className="form-control" defaultValue={smallUnit} readOnly />
+                            </>
+                            : movement == "Purchase" ? <>
+                              <input type='Number' className="form-control" required onChange={(e) => { setQuantity(e.target.value); }} />
+                              <input type='text' className="form-control" defaultValue={largeUnit} readOnly />
+                            </> : ''}
                         </div>
 
                         <div className="form-group">
                           <label>السعر</label>
                           {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
-                            <input type='Number' className="form-control" readOnly required defaultValue={price} />
+                            <input type='Number' className="form-control" readOnly required defaultValue={costOfPart} />
                             : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(Number(e.target.value) * Quantity) }} />
                           }
                         </div>

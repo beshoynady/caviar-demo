@@ -263,7 +263,7 @@ const StockManag = () => {
 
   useEffect(() => {
     if (movement == "Expense" || movement == "Wastage" || movement == "Return") {
-      setnewBalance(Number(oldBalance) - Number(Quantity))
+      setnewBalance(Number(oldBalance) - Number(Quantity / parts))
       setnewcost(Number(oldCost) - Number(cost))
       setcostOfPart(Number(price) / Number(parts))
     } else {
@@ -508,7 +508,7 @@ const StockManag = () => {
                         <div className="form-group">
                           <label>السعر</label>
                           {movement == "Expense" || movement == "Wastage" || movement == "Return" ?
-                            <input type='Number' className="form-control" readOnly required defaultValue={costOfPart} />
+                            <input type='text' className="form-control" readOnly required defaultValue={costOfPart} />
                             : <input type='Number' className="form-control" required onChange={(e) => { setprice(Number(e.target.value)); setcost(Number(e.target.value) * Quantity) }} />
                           }
                         </div>

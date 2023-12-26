@@ -67,7 +67,9 @@ const StockManag = () => {
 
   const createStockAction = async (e, employeeId) => {
     e.preventDefault();
-
+    console.log({newBalance:newBalance})
+    console.log({newcost:newcost})
+    console.log({price:price})
     try {
       const actionBy = employeeId;
       const token = localStorage.getItem('token_e'); // Assuming the token is stored in localStorage

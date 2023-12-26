@@ -262,12 +262,17 @@ const StockManag = () => {
   }, [])
 
   useEffect(() => {
-    if (movement == "Expense" || movement == "Wastage" || movement == "Return") {
+    if (movement == "Expense" || movement == "Wastage") {
       setnewBalance(Number(oldBalance) - Number(Quantity / parts))
       setnewcost(Number(oldCost) - Number(cost))
       setcostOfPart(Number(price) / Number(parts))
-    } else {
+    } else if(movement == 'Purchase') {
       setnewBalance(Number(oldBalance) + Number(Quantity))
+      setnewcost(Number(oldCost) + Number(cost))
+      setcostOfPart(Number(price) / Number(parts))
+
+    } else if(movement == "Return"){
+      setnewBalance(Number(oldBalance) + Number(Quantity /parts))
       setnewcost(Number(oldCost) + Number(cost))
       setcostOfPart(Number(price) / Number(parts))
 

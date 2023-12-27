@@ -516,18 +516,20 @@ const StockManag = () => {
                               <input type='text' className="form-control" defaultValue={largeUnit} readOnly />
                             </> : ''}
                         </div>
-                        {movement == "Purchase" ?
+                        {movement === "Purchase" &&
                           <>
                             <div className="form-group">
                               <label>الحد الادني</label>
-                              <input type='Number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
+                              <input type='number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
                             </div>
                             <div className="form-group">
-                              <label> تاريخ الانتهاء </label>
-                              <input type="checkbox" checked={setExpirationDateEnabled(true)} onchange={setExpirationDateEnabled(!expirationDateEnabled)}></input>
-                              {expirationDateEnabled&&<input type='Date' className="form-control" required onChange={(e) => { setexpirationDate(e.target.value); }} />}
+                              <label>تاريخ الانتهاء</label>
+                              <input type="checkbox" checked={expirationDateEnabled} onChange={() => setExpirationDateEnabled(!expirationDateEnabled)} />
+                              {expirationDateEnabled &&
+                                <input type='date' className="form-control" required onChange={(e) => { setexpirationDate(e.target.value); }} />}
                             </div>
-                          </> : ''}
+                          </>
+                        }
 
                         <div className="form-group">
                           <label>السعر</label>

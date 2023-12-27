@@ -229,6 +229,7 @@ const StockItem = () => {
                         <th>اسم الصنف</th>
                         <th>المخزن</th>
                         <th>الرصيد الحالي</th>
+                        <th>الحد الادني</th>
                         <th>الوحدة كبيرة</th>
                         <th>السعر</th>
                         <th>اجمالي التكلفة</th>
@@ -255,6 +256,7 @@ const StockItem = () => {
                               <td>{item.itemName}</td>
                               <td>{AllCategoryStock.length > 0 ? AllCategoryStock.filter(c => c._id == item.categoryId)[0].name : ''}</td>
                               <td>{item.Balance}</td>
+                              <td>{item.minThreshold}</td>
                               <td>{item.largeUnit}</td>
                               <td>{item.price}</td>
                               <td>{item.totalCost}</td>
@@ -264,7 +266,7 @@ const StockItem = () => {
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                               <td>{item.createdAt}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) ;setminThreshold(item.minThreshold)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -391,6 +393,11 @@ const StockItem = () => {
                           <label>رصيد افتتاحي</label>
                           <input type='Number' className="form-control" defaultValue={Balance} required onChange={(e) => setBalance(e.target.value)} />
                         </div>
+                        <div className="form-group">
+                              <label>الحد الادني</label>
+                              <input type='number' className="form-control" required defaultValue={minThreshold} onChange={(e) => { setminThreshold(e.target.value); }} />
+                            </div>
+
                         <div className="form-group">
                           <label>السعر</label>
                           <input type='Number' className="form-control" defaultValue={price} required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />

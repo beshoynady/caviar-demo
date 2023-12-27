@@ -13,6 +13,7 @@ const createStockItem = async (req, res) => {
       totalCost,
       parts,
       costOfPart,
+      minThreshold,
       createBy,
       createdAt,
     } = req.body;
@@ -27,6 +28,7 @@ const createStockItem = async (req, res) => {
       totalCost,
       parts,
       costOfPart,
+      minThreshold,
       createBy,
       createdAt,
     });

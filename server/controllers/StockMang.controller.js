@@ -14,7 +14,6 @@ const createStockAction = async (req, res, next) => {
             actionBy,
             actionAt,
             expirationDate,
-            minThreshold 
         } = req.body;
 
         // Create a new stock action using the provided data
@@ -29,7 +28,7 @@ const createStockAction = async (req, res, next) => {
             cost,
             actionBy,
             actionAt,
-            ...(movement === 'Purchase' && { expirationDate, minThreshold }),
+            ...(movement === 'Purchase' && { expirationDate}),
  
         });
 
@@ -54,7 +53,6 @@ const updateStockAction = async (req, res, next) => {
             cost,
             actionBy,
             expirationDate,
-            minThreshold 
         } = req.body;
 
         const actionId = req.params.actionid;
@@ -71,7 +69,6 @@ const updateStockAction = async (req, res, next) => {
             cost,
             actionBy,
             expirationDate,
-            minThreshold 
         });
 
         if (!updatedAction) {

@@ -16,6 +16,8 @@ const StockItem = () => {
   const [totalCost, settotalCost] = useState('');
   const [parts, setparts] = useState('');
   const [costOfPart, setcostOfPart] = useState('');
+  const [minThreshold, setminThreshold] = useState();
+
 
   const createItem = async (e, userId) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const StockItem = () => {
         costOfPart,
         largeUnit,
         Balance,
+        minThreshold,
         price,
         createBy,
       });
@@ -60,6 +63,7 @@ const StockItem = () => {
         costOfPart,
         largeUnit,
         Balance,
+        minThreshold,
         price,
         createBy,
       });
@@ -318,6 +322,10 @@ const StockItem = () => {
                           <label>رصيد افتتاحي</label>
                           <input type='Number' className="form-control" required onChange={(e) => setBalance(e.target.value)} />
                         </div>
+                        <div className="form-group">
+                              <label>الحد الادني</label>
+                              <input type='number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
+                            </div>
                         <div className="form-group">
                           <label>السعر</label>
                           <input type='Number' className="form-control" required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />

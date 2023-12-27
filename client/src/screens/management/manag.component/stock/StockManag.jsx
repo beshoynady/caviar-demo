@@ -49,7 +49,6 @@ const StockManag = () => {
   const [costOfPart, setcostOfPart] = useState();
   const [parts, setparts] = useState();
   const [expirationDate, setexpirationDate] = useState();
-  const [minThreshold, setminThreshold] = useState();
   const [cashRegister, setcashRegister] = useState('');
   const [expirationDateEnabled, setExpirationDateEnabled] = useState(false);
 
@@ -100,7 +99,7 @@ const StockManag = () => {
           newBalance,
           oldBalance,
           price,
-          ...(movement === 'Purchase' && { expirationDate, minThreshold }),
+          ...(movement === 'Purchase' && { expirationDate }),
           actionBy,
           actionAt,
         })
@@ -172,7 +171,7 @@ const StockManag = () => {
         // Update the existing stock action
         const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, {
           itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, expirationDate,
-          minThreshold, actionBy
+          actionBy
         });
         console.log(response.data);
 
@@ -518,10 +517,6 @@ const StockManag = () => {
                         </div>
                         {movement === "Purchase" &&
                           <>
-                            <div className="form-group">
-                              <label>الحد الادني</label>
-                              <input type='number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
-                            </div>
                             <div className="form-group">
                               <label>تاريخ الانتهاء</label>
                               <input type="checkbox" checked={expirationDateEnabled} onChange={() => setExpirationDateEnabled(!expirationDateEnabled)} />

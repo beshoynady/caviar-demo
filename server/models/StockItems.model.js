@@ -44,6 +44,11 @@ const StockItemSchema = new mongoose.Schema(
       type : Number,
       require: true
     },
+    // Minimum threshold allowed for the quantity
+    minThreshold: {
+      type: Number,
+      default: 0,
+    },
     createBy: {
       type: ObjectId,
       ref: 'Employee',

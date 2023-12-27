@@ -26,11 +26,6 @@ const StockManagSchema = new mongoose.Schema(
       default: 0,
       required: true,
     },
-    // Minimum threshold allowed for the quantity
-    minThreshold: {
-      type: Number,
-      default: 0,
-    },
     // Old balance of stock
     oldBalance: {
       type: Number,

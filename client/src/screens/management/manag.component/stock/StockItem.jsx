@@ -266,7 +266,7 @@ const StockItem = () => {
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                               <td>{item.createdAt}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) ;setminThreshold(item.minThreshold)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) ;setminThreshold(item.minThreshold);settotalCost(item.totalCost)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -404,7 +404,7 @@ const StockItem = () => {
                         </div>
                         <div className="form-group">
                           <label>التكلفة</label>
-                          <input type='Number' className="form-control" required defaultValue={totalCost} readOnly />
+                          <input type='text' className="form-control" required defaultValue={totalCost} readOnly />
                         </div>
                         <div className="form-group">
                           <label>عدد الوحدات</label>

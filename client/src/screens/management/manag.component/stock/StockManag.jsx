@@ -523,7 +523,8 @@ const StockManag = () => {
                               <input type='Number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
                             </div>
                             <div className="form-group">
-                              <label><input type="checkbox" checked={setExpirationDateEnabled(true)} onchange={setExpirationDateEnabled(!expirationDateEnabled)}></input>تاريخ الانتهاء</label>
+                              <label> تاريخ الانتهاء </label>
+                              <input type="checkbox" checked={setExpirationDateEnabled(true)} onchange={setExpirationDateEnabled(!expirationDateEnabled)}></input>
                               {expirationDateEnabled&&<input type='Date' className="form-control" required onChange={(e) => { setexpirationDate(e.target.value); }} />}
                             </div>
                           </> : ''}

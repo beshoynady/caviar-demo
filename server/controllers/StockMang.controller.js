@@ -6,32 +6,37 @@ const createStockAction = async (req, res, next) => {
             itemId,
             unit,
             movement,
-            Quantity,
-            oldCost,
+            quantity,
             oldBalance,
-            newBalance,
+            balance,
             price,
             cost,
             actionBy,
-            actionAt
+            actionAt,
+            expirationDate,
+            minThreshold 
         } = req.body;
 
+        // Create a new stock action using the provided data
         const itemAdded = await StockManagModel.create({
             itemId,
-            movement,
-            Quantity,
-            cost,
-            oldCost,
             unit,
-            Balance: newBalance,
+            movement,
+            quantity,
             oldBalance,
+            balance,
             price,
+            cost,
             actionBy,
-            actionAt
+            actionAt,
+            ...(movement === 'Purchase' && { expirationDate, minThreshold }),
+ 
         });
 
+        // Respond with the created item
         res.status(201).json(itemAdded);
     } catch (error) {
+        // Handle any errors that occur during the process
         res.status(500).json({ message: error.message });
     }
 };
@@ -42,36 +47,42 @@ const updateStockAction = async (req, res, next) => {
             itemId,
             unit,
             movement,
-            Quantity,
-            oldCost,
-            cost,
+            quantity,
             oldBalance,
-            Balance,
+            balance,
             price,
-            actionBy
+            cost,
+            actionBy,
+            expirationDate,
+            minThreshold 
         } = req.body;
 
         const actionId = req.params.actionid;
 
+        // Find and update the existing stock action by ID
         const updatedAction = await StockManagModel.findByIdAndUpdate(actionId, {
             itemId,
-            movement,
-            Quantity,
-            cost,
-            oldCost,
             unit,
-            Balance,
+            movement,
+            quantity,
             oldBalance,
+            balance,
             price,
-            actionBy
+            cost,
+            actionBy,
+            expirationDate,
+            minThreshold 
         });
 
         if (!updatedAction) {
+            // Handle the case where the action is not found
             return res.status(404).json({ message: 'Action not found' });
         }
 
+        // Respond with the updated action
         res.status(200).json(updatedAction);
     } catch (error) {
+        // Handle any errors that occur during the process
         res.status(500).json({ message: error.message });
     }
 };

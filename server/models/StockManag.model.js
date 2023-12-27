@@ -1,65 +1,85 @@
-const mongoose = require('mongoose')
-const { ObjectId } = mongoose.Schema
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 const StockManagSchema = new mongoose.Schema(
   {
+    // Item reference ID
     itemId: {
       type: ObjectId,
       ref: 'StockItems',
-      require: true,
+      required: true,
     },
+    // Unit of measurement
     unit: {
       type: String,
-      require: true
+      required: true,
     },
+    // Type of movement: Purchase, Expense, Return, Wastage
     movement: {
       type: String,
-      enum: ['Purchase', 'Expense', 'Return','Wastage'],
-      require: true
+      enum: ['Purchase', 'Expense', 'Return', 'Wastage'],
+      required: true,
     },
-    Quantity: {
+    // Quantity of stock
+    quantity: {
       type: Number,
       default: 0,
-      require: true,
+      required: true,
     },
-    oldBalance:{
+    // Minimum threshold allowed for the quantity
+    minThreshold: {
       type: Number,
-      require: true,
+      default: 0,
     },
-    Balance:{
+    // Old balance of stock
+    oldBalance: {
       type: Number,
-      require: true,
-    }, 
+      required: true,
+    },
+    // Current balance of stock
+    balance: {
+      type: Number,
+      required: true,
+    },
+    // Price of the stock item
     price: {
       type: Number,
-      require: true,
+      required: true,
     },
+    // Old cost of the stock
     oldCost: {
       type: Number,
-      require: true,
+      required: true,
     },
+    // Current cost of the stock
     cost: {
       type: Number,
-      require: true,
+      required: true,
     },
+    // Expiration date of the stock item
+    expirationDate: {
+      type: Date,
+    },
+    // Action performed by the user
     actionBy: {
       type: ObjectId,
       ref: 'User',
-      require: true
+      required: true,
     },
+    // Timestamp of the action
     actionAt: {
       type: Date,
     },
+    // Timestamp of the last update
     updatedAt: {
       type: Date,
-      default: Date.now
-     }
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
   }
-)
+);
 
-
-const StockManagModel = mongoose.model('StockManag', StockManagSchema)
-module.exports = StockManagModel
+const StockManagModel = mongoose.model('StockManag', StockManagSchema);
+module.exports = StockManagModel;

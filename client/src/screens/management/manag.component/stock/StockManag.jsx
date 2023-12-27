@@ -48,7 +48,10 @@ const StockManag = () => {
   const [newBalance, setnewBalance] = useState(0)
   const [costOfPart, setcostOfPart] = useState();
   const [parts, setparts] = useState();
+  const [expirationDate, setexpirationDate] = useState();
+  const [minThreshold, setminThreshold] = useState();
   const [cashRegister, setcashRegister] = useState('');
+  const [expirationDateEnabled, setExpirationDateEnabled] = useState(false);
 
 
   const [AllCashRegisters, setAllCashRegisters] = useState([]);
@@ -97,9 +100,10 @@ const StockManag = () => {
           newBalance,
           oldBalance,
           price,
+          ...(movement === 'Purchase' && { expirationDate, minThreshold }),
           actionBy,
           actionAt,
-        });
+        })
 
         console.log(response.data);
 
@@ -166,7 +170,10 @@ const StockManag = () => {
 
       if (changeItem.status === 200) {
         // Update the existing stock action
-        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, { itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, actionBy });
+        const response = await axios.put(`https://caviar-api.vercel.app/api/stockmanag/${actionId}`, {
+          itemId, movement, Quantity, cost, unit, newBalance, oldBalance, price, expirationDate,
+          minThreshold, actionBy
+        });
         console.log(response.data);
 
         // Update the stock actions list and stock items
@@ -266,13 +273,13 @@ const StockManag = () => {
       setnewBalance(Number(oldBalance) - Number(Quantity / parts))
       setnewcost(Number(oldCost) - Number(cost))
       setcostOfPart(Number(price) / Number(parts))
-    } else if(movement == 'Purchase') {
+    } else if (movement == 'Purchase') {
       setnewBalance(Number(oldBalance) + Number(Quantity))
       setnewcost(Number(oldCost) + Number(cost))
       setcostOfPart(Number(price) / Number(parts))
 
-    } else if(movement == "Return"){
-      setnewBalance(Number(oldBalance) + Number(Quantity /parts))
+    } else if (movement == "Return") {
+      setnewBalance(Number(oldBalance) + Number(Quantity / parts))
       setnewcost(Number(oldCost) + Number(cost))
       setcostOfPart(Number(price) / Number(parts))
 
@@ -509,6 +516,17 @@ const StockManag = () => {
                               <input type='text' className="form-control" defaultValue={largeUnit} readOnly />
                             </> : ''}
                         </div>
+                        {movement == "Purchase" ?
+                          <>
+                            <div className="form-group">
+                              <label>الحد الادني</label>
+                              <input type='Number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
+                            </div>
+                            <div className="form-group">
+                              <label><input type="checkbox" checked={setExpirationDateEnabled(true)} onchange={setExpirationDateEnabled(!expirationDateEnabled)}></input>تاريخ الانتهاء</label>
+                              {expirationDateEnabled&&<input type='Date' className="form-control" required onChange={(e) => { setexpirationDate(e.target.value); }} />}
+                            </div>
+                          </> : ''}
 
                         <div className="form-group">
                           <label>السعر</label>

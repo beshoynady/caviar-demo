@@ -33,6 +33,7 @@ const addItem = async (e) => {
 
     // Check if the item was added successfully
     if (response.status === 201) {
+      getkitchenconsumption()
       // Show a success toast if the item is added
       toast.success('Item added successfully');
     } else {
@@ -103,6 +104,8 @@ const addItem = async (e) => {
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
       if (response.status === 200) {
         setkitchenconsumption(response.data);
+        console.log(response.data);
+        
       } else {
         console.log('Unexpected status code:', response.status);
         // Handle other statuses if needed
@@ -223,7 +226,7 @@ const addItem = async (e) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Allkitchenconsumption.length>0 && Allkitchenconsumption.map((item, i) => {
+                      {Allkitchenconsumption && Allkitchenconsumption.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -244,9 +247,9 @@ const addItem = async (e) => {
                               <td>{item.adjustment}</td>
                               <td>{item.unit}</td>
                               <td>
-                                {item.productsProduced.map((product, j) => (
+                                {item.productsProduced.length>0? productsProduced.map((product, j) => (
                                   <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
-                                ))}
+                                )):'لا يوجد'}
                               </td>
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                               <td>{item.createdAt}</td>

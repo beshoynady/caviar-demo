@@ -247,7 +247,7 @@ const addItem = async (e) => {
                               <td>{item.adjustment}</td>
                               <td>{item.unit}</td>
                               <td>
-                                {item.productsProduced.length>0? productsProduced.map((product, j) => (
+                                {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
                                   <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
                                 )):'لا يوجد'}
                               </td>

@@ -118,7 +118,7 @@ const KitchenConsumption = () => {
   const getStockItems = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      
+
       if (response.status === 200) {
         const stockItems = response.data.reverse();
         setAllStockItems(stockItems);
@@ -133,7 +133,7 @@ const KitchenConsumption = () => {
       toast.error('Failed to retrieve stock items');
     }
   };
-  
+
 
   // const [AllCategoryStock, setAllCategoryStock] = useState([])
   // // Function to retrieve all category stock
@@ -166,7 +166,7 @@ const KitchenConsumption = () => {
       // Handle error: Notify user, log error, etc.
     }
   };
-  
+
 
 
 
@@ -288,7 +288,7 @@ const KitchenConsumption = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{AllStockItems && AllStockItems.find(it => it._id == item.stockItemId).itemName}</td>
+                              <td>{AllStockItems && AllStockItems.filter(it => it._id == item.stockItemId)[0].itemName}</td>
                               <td>{item.quantityTransferredToKitchen}</td>
                               <td>{item.consumptionQuantity}</td>
                               <td>{item.unit}</td>
@@ -296,7 +296,7 @@ const KitchenConsumption = () => {
                               <td>{item.adjustment}</td>
                               <td>{item.unit}</td>
                               <td>
-                                {item.productsProduced.map((product, j) => (
+                                {productsProduced.map((product, j) => (
                                   <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
                                 ))}
                               </td>
@@ -307,7 +307,7 @@ const KitchenConsumption = () => {
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
-                          )
+                          );
                         }
                       })}
                     </tbody>

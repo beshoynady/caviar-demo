@@ -118,30 +118,36 @@ const KitchenConsumption = () => {
   const getStockItems = async () => {
     try {
       const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
-      const stockItems = await response.data.reverse();
-      console.log(response.data);
-      setAllStockItems(stockItems);
+      
+      if (response.status === 200) {
+        const stockItems = response.data.reverse();
+        setAllStockItems(stockItems);
+        console.log(response.data);
+      } else {
+        // Handle other statuses if needed
+        console.log(`Unexpected status code: ${response.status}`);
+        toast.error('Failed to retrieve stock items');
+      }
     } catch (error) {
       console.log(error);
-
-      // Notify on error
       toast.error('Failed to retrieve stock items');
     }
   };
+  
 
-  const [AllCategoryStock, setAllCategoryStock] = useState([])
-  // Function to retrieve all category stock
-  const getAllCategoryStock = async () => {
-    try {
-      const res = await axios.get('https://caviar-api.vercel.app/api/categoryStock/');
-      setAllCategoryStock(res.data);
-    } catch (error) {
-      console.log(error);
+  // const [AllCategoryStock, setAllCategoryStock] = useState([])
+  // // Function to retrieve all category stock
+  // const getAllCategoryStock = async () => {
+  //   try {
+  //     const res = await axios.get('https://caviar-api.vercel.app/api/categoryStock/');
+  //     setAllCategoryStock(res.data);
+  //   } catch (error) {
+  //     console.log(error);
 
-      // Notify on error
-      toast.error('Failed to retrieve category stock');
-    }
-  };
+  //     // Notify on error
+  //     toast.error('Failed to retrieve category stock');
+  //   }
+  // };
 
 
   const [Allkitchenconsumption, setkitchenconsumption] = useState([])
@@ -155,9 +161,10 @@ const KitchenConsumption = () => {
   useEffect(() => {
     getStockItems()
     getAllOrders()
-    getAllCategoryStock()
+    // getAllCategoryStock()
     getkitchenconsumption()
   }, [])
+
   return (
     <detacontext.Consumer>
       {

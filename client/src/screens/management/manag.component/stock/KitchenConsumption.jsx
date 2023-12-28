@@ -114,6 +114,9 @@ const updateKitchenItem = async (e) => {
                       }
                     }
                   });
+                }else{
+                  console.log('Allkitchenconsumption item.stockItemId === recipe')
+
                 }
               });
             });

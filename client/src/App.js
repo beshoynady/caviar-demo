@@ -177,7 +177,7 @@ function App() {
   const additemtocart = (id) => {
     console.log(id)
     const cartitem = allProducts.filter(item => item._id === id)
-    cartitem.productid = id
+    cartitem[0].productid = id
     console.log(cartitem)
 
     if (ItemsInCart.length > 0) {

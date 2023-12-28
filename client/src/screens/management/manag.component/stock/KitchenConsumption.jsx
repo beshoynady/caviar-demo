@@ -156,6 +156,7 @@ const KitchenConsumption = () => {
     getStockItems()
     getOrders()
     getAllCategoryStock()
+    getkitchenconsumption()
   }, [])
   return (
     <detacontext.Consumer>

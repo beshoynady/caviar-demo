@@ -53,13 +53,14 @@ const updateKitchenItem = async (e) => {
   try {
     listOfOrders.map((order) => {
       const listoforderproducts = order.products;
-      console.log({listoforderproducts:listoforderproducts})
+      // console.log({listoforderproducts:listoforderproducts})
 
       listoforderproducts.map((orderproduct) => {
         console.log({orderproduct:orderproduct})
         listofProducts.map((product) => {
-          console.log({listofProducts:product})
-          if (product._id === orderproduct.productid) {
+          console.log({listoforderproducts:orderproduct.productid})
+          console.log({listofProducts:product._id })
+          if (product._id == orderproduct.productid) {
             const listofrecipe = product.Recipe;
 
             listofrecipe.map((recipe) => {
@@ -90,7 +91,7 @@ const updateKitchenItem = async (e) => {
                       } catch (error) {
                         console.error('Update error:', error);
                         // Add toast for update error
-                        // toast.error('Failed to update kitchen consumption');
+                        toast.error('Failed to update kitchen consumption');
                       }
                     } else {
                       productsProduced.push({ productId: orderproduct.productid });

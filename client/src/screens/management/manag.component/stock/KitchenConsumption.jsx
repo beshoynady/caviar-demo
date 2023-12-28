@@ -49,60 +49,73 @@ const addKitchenItem = async (e) => {
 
 const updateKitchenItem = async (e) => {
   e.preventDefault()
-  // Loop through each order
-  listOfOrders.map((order) => {
-    const listoforderproducts = order.products;
+  try {
+    listOfOrders.map((order) => {
+      const listoforderproducts = order.products;
 
-    // Loop through each product in the order
-    listoforderproducts.map((orderproduct) => {
-      // Find the product in the list of products
-      listofProducts.map((product) => {
-        if (product._id === orderproduct.productid) {
-          const listofrecipe = product.Recipe;
+      listoforderproducts.map((orderproduct) => {
+        listofProducts.map((product) => {
+          if (product._id === orderproduct.productid) {
+            const listofrecipe = product.Recipe;
 
-          // Loop through each recipe of the product
-          listofrecipe.map((recipe) => {
-            // Find matching items in Allkitchenconsumption
-            Allkitchenconsumption.map(item => {
-              if (item.stockItemId === recipe.itemId) {
-                // Calculate consumption quantity and update balance
-                const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
-                const balance = item.quantityTransferredToKitchen - consumptionQuantity;
-                const productsProduced = item.productsProduced;
+            listofrecipe.map((recipe) => {
+              Allkitchenconsumption.map(async (item) => {
+                if (item.stockItemId === recipe.itemId) {
+                  const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
+                  const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+                  const productsProduced = item.productsProduced;
 
-                // Loop through productsProduced
-                productsProduced.map(p => {
-                  if (p.productId === orderproduct.productid) {
-                    // Update production count if product ID matches
-                    p.productionCount = p.productionCount + orderproduct.quantity;
+                  productsProduced.map(async (p) => {
+                    if (p.productId === orderproduct.productid) {
+                      p.productionCount = p.productionCount + orderproduct.quantity;
 
-                    // Make PUT request to update kitchen consumption
-                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-                      consumptionQuantity,
-                      balance,
-                      productsProduced
-                    });
-                  } else {
-                    // Add new product details if product ID doesn't match
-                    productsProduced.push({ productId: orderproduct.productid });
-                    productsProduced.push({ productName: orderproduct.name });
-                    productsProduced.push({ productionCount: orderproduct.quantity });
+                      try {
+                        const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+                          consumptionQuantity,
+                          balance,
+                          productsProduced,
+                        });
+                        console.log('Update successful:', update.data);
+                        // Add toast for successful update
+                        // toast.success('Updated kitchen consumption successfully');
+                      } catch (error) {
+                        console.error('Update error:', error);
+                        // Add toast for update error
+                        // toast.error('Failed to update kitchen consumption');
+                      }
+                    } else {
+                      productsProduced.push({ productId: orderproduct.productid });
+                      productsProduced.push({ productName: orderproduct.name });
+                      productsProduced.push({ productionCount: orderproduct.quantity });
 
-                    // Make PUT request to update kitchen consumption
-                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-                      consumptionQuantity,
-                      balance,
-                      productsProduced
-                    });
-                  }
-                });
-              }
+                      try {
+                        const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+                          consumptionQuantity,
+                          balance,
+                          productsProduced,
+                        });
+                        console.log('Update successful:', update.data);
+                        // Add toast for successful update
+                        // toast.success('Updated kitchen consumption successfully');
+                      } catch (error) {
+                        console.error('Update error:', error);
+                        // Add toast for update error
+                        // toast.error('Failed to update kitchen consumption');
+                      }
+                    }
+                  });
+                }
+              });
             });
-          });
-        }
+          }
+        });
       });
     });
-  });
+  } catch (error) {
+    console.error('Error occurred:', error);
+    // Add toast for error
+    toast.error('An error occurred');
+  }
 };
 
 

@@ -56,7 +56,9 @@ const updateKitchenItem = async (e) => {
       console.log({listoforderproducts:listoforderproducts})
 
       listoforderproducts.map((orderproduct) => {
+        console.log({orderproduct:orderproduct})
         listofProducts.map((product) => {
+          console.log({listofProducts:product})
           if (product._id === orderproduct.productid) {
             const listofrecipe = product.Recipe;
 

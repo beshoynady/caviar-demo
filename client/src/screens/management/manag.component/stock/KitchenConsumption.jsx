@@ -171,7 +171,7 @@ const KitchenConsumption = () => {
 
 
   useEffect(() => {
-    getStockItems()
+    // getStockItems()
     getAllOrders()
     // getAllCategoryStock()
     getkitchenconsumption()

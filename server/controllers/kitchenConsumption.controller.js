@@ -1,4 +1,4 @@
-const KitchenConsumptionModel = require('../models/KitchenConsumption');
+const KitchenConsumptionModel = require('../models/KitchenConsumption,model');
 
 // Get all kitchen consumptions
 const getAllKitchenConsumptions = async (req, res) => {

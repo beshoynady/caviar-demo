@@ -150,11 +150,23 @@ const KitchenConsumption = () => {
   // };
 
 
-  const [Allkitchenconsumption, setkitchenconsumption] = useState([])
+  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
+
   const getkitchenconsumption = async () => {
-    const kitchenconsumption = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption')
-    setkitchenconsumption(kitchenconsumption.data)
-  }
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
+      if (response.status === 200) {
+        setkitchenconsumption(response.data);
+      } else {
+        console.log('Unexpected status code:', response.status);
+        // Handle other statuses if needed
+      }
+    } catch (error) {
+      console.error('Error fetching kitchen consumption:', error);
+      // Handle error: Notify user, log error, etc.
+    }
+  };
+  
 
 
 

@@ -298,9 +298,9 @@ const KitchenConsumption = () => {
                               <td>{item.adjustment}</td>
                               <td>{item.unit}</td>
                               <td>
-                                {productsProduced.map((product, j) => (
+                                {/* {item.productsProduced.map((product, j) => (
                                   <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
-                                ))}
+                                ))} */}
                               </td>
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                               <td>{item.createdAt}</td>

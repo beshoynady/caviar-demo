@@ -94,7 +94,7 @@ const updateKitchenItem = async (e) => {
                           balance,
                           productsProduced,
                         });
-                        console.log('Update successful:', update.data);
+                        console.log('Update push successful:', update.data);
                         // Add toast for successful update
                         // toast.success('Updated kitchen consumption successfully');
                       } catch (error) {

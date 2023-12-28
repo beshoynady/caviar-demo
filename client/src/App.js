@@ -1175,7 +1175,7 @@ function App() {
             <Route path='categoryStock' element={<CategoryStock />} />
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
-            {/* <Route path='kitchenconsumption' element={<KitchenConsumption/>} /> */}
+            <Route path='kitchenconsumption' element={<KitchenConsumption/>} />
             <Route path='expense' element={<ExpenseItem />} />
             <Route path='dailyexpense' element={<DailyExpense />} />
             <Route path='cashregister' element={<CashRegister />} />

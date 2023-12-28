@@ -307,7 +307,7 @@ const KitchenConsumption = () => {
                   </div>
                 </div>
               </div>
-              <div id="addStockItemModal" className="modal fade">
+              {/* <div id="addStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={(e) => createItem(e, employeeLoginInfo.employeeinfo.id)}>
@@ -392,7 +392,7 @@ const KitchenConsumption = () => {
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
                             {/* <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
-                            {AllCategoryStock.map((category, i) => {
+                            {/* {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
                             }
@@ -465,7 +465,7 @@ const KitchenConsumption = () => {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div>  */}
             </div>
           )
         }

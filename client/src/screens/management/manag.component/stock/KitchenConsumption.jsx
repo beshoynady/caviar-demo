@@ -289,7 +289,7 @@ const KitchenConsumption = () => {
                               </td>
                               <td>{i + 1}</td>
                               <td>
-                              {/* {AllStockItems.length?0 && AllStockItems.filter(it => it._id == item.stockItemId)[0].itemName} */}
+                              {AllStockItems.length>0? AllStockItems.filter(it => it._id == item.stockItemId)[0].itemName:''}
                               </td>
                               <td>{item.quantityTransferredToKitchen}</td>
                               <td>{item.consumptionQuantity}</td>

@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const KitchenConsumption = () => {
   const [itemName, setitemName] = useState('');
   const [stockItemId, setstockItemId] = useState('');
-  const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState('');
+  const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
   const [createBy, setcreateBy] = useState('');
   const [unit, setunit] = useState('');
   
@@ -296,7 +296,7 @@ const addItem = async (e) => {
                         </div>
                         <div className="form-group">
                           <label>رصيد محول</label>
-                          <input type='Number' className="form-control" required onChange={(e) => setquantityTransferredToKitchen(e.target.value)} />
+                          <input type='Number' className="form-control" required onChange={(e) => setquantityTransferredToKitchen(Number(e.target.value))} />
                         </div>
                         <div className="form-group">
                           <label>الوحدة </label>

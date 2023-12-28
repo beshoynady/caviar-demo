@@ -103,7 +103,7 @@ const KitchenConsumption = () => {
   // };
   const [listOfOrders, setlistOfOrders] = useState([])
   // Fetch orders from API
-  const getOrders = async () => {
+  const getAllOrders = async () => {
     try {
       const res = await axios.get('https://caviar-api.vercel.app/api/order');
       setlistOfOrders(res.data.reverse());
@@ -142,10 +142,10 @@ const KitchenConsumption = () => {
       toast.error('Failed to retrieve category stock');
     }
   };
-  
-  
+
+
   const [Allkitchenconsumption, setkitchenconsumption] = useState([])
-  const getkitchenconsumption = async ()=>{
+  const getkitchenconsumption = async () => {
     const kitchenconsumption = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption')
     setkitchenconsumption(kitchenconsumption.data)
   }
@@ -154,7 +154,7 @@ const KitchenConsumption = () => {
 
   useEffect(() => {
     getStockItems()
-    getOrders()
+    getAllOrders()
     getAllCategoryStock()
     getkitchenconsumption()
   }, [])
@@ -248,8 +248,8 @@ const KitchenConsumption = () => {
                         <th>م</th>
                         <th>اسم الصنف</th>
                         <th>الكمية المضافه</th>
-                        <th>الاستهلاك</th> 
-                        <th>الوحدة</th> 
+                        <th>الاستهلاك</th>
+                        <th>الوحدة</th>
                         <th>الرصيد</th>
                         <th>التسويه</th>
                         <th>المنتجات</th>
@@ -269,7 +269,7 @@ const KitchenConsumption = () => {
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{AllStockItems&&AllStockItems.find(it=>it._id == item.stockItemId).itemName}</td>
+                              <td>{AllStockItems && AllStockItems.find(it => it._id == item.stockItemId).itemName}</td>
                               <td>{item.quantityTransferredToKitchen}</td>
                               <td>{item.consumptionQuantity}</td>
                               <td>{item.unit}</td>
@@ -277,14 +277,14 @@ const KitchenConsumption = () => {
                               <td>{item.adjustment}</td>
                               <td>{item.unit}</td>
                               <td>
-                              {item.productsProduced.map((product, j) =>{
-                                `[${product.productName} / ${product.productionCount}]`
-                              })}
+                                {item.productsProduced.map((product, j) => (
+                                  <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
+                                ))}
                               </td>
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                               <td>{item.createdAt}</td>
                               <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart) ;setminThreshold(item.minThreshold);settotalCost(item.totalCost)}}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal" onClick={() => { setStockItemid(item._id); setitemName(item.itemName); setBalance(item.Balance); setlargeUnit(item.largeUnit); setprice(item.price); setparts(item.parts); setcostOfPart(item.costOfPart); setminThreshold(item.minThreshold); settotalCost(item.totalCost) }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteStockItemModal" className="delete" data-toggle="modal" onClick={() => setStockItemid(item._id)}><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                               </td>
                             </tr>
@@ -392,7 +392,7 @@ const KitchenConsumption = () => {
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
                             {/* <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
-                            {/* {AllCategoryStock.map((category, i) => {
+              {/* {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })
                             }

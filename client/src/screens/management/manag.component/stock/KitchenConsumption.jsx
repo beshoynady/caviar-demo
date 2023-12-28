@@ -20,7 +20,7 @@ const KitchenConsumption = () => {
   const [minThreshold, setminThreshold] = useState();
 
  // Function to add an item to kitchen consumption
-const addItem = async (e) => {
+const addKitchenItem = async (e) => {
   e. preventDefault() 
   try {
     // Make a POST request to add an item
@@ -47,6 +47,64 @@ const addItem = async (e) => {
   }
 };
 
+const updateKitchenItem = async () => {
+  // Loop through each order
+  listOfOrders.map((order) => {
+    const listoforderproducts = order.products;
+
+    // Loop through each product in the order
+    listoforderproducts.map((orderproduct) => {
+      // Find the product in the list of products
+      listofProducts.map((product) => {
+        if (product._id === orderproduct.productid) {
+          const listofrecipe = product.Recipe;
+
+          // Loop through each recipe of the product
+          listofrecipe.map((recipe) => {
+            // Find matching items in Allkitchenconsumption
+            Allkitchenconsumption.map(item => {
+              if (item.stockItemId === recipe.itemId) {
+                // Calculate consumption quantity and update balance
+                const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
+                const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+                const productsProduced = item.productsProduced;
+
+                // Loop through productsProduced
+                productsProduced.map(p => {
+                  if (p.productId === orderproduct.productid) {
+                    // Update production count if product ID matches
+                    p.productionCount = p.productionCount + orderproduct.quantity;
+
+                    // Make PUT request to update kitchen consumption
+                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+                      consumptionQuantity,
+                      balance,
+                      productsProduced
+                    });
+                  } else {
+                    // Add new product details if product ID doesn't match
+                    productsProduced.push({ productId: orderproduct.productid });
+                    productsProduced.push({ productName: orderproduct.name });
+                    productsProduced.push({ productionCount: orderproduct.quantity });
+
+                    // Make PUT request to update kitchen consumption
+                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+                      consumptionQuantity,
+                      balance,
+                      productsProduced
+                    });
+                  }
+                });
+              }
+            });
+          });
+        }
+      });
+    });
+  });
+};
+
+
 
   const [listOfOrders, setlistOfOrders] = useState([])
   // Fetch orders from API
@@ -59,6 +117,7 @@ const addItem = async (e) => {
       // Display toast or handle error
     }
   };
+
 
   const [AllStockItems, setAllStockItems] = useState([])
   // Function to retrieve all stock items
@@ -96,7 +155,21 @@ const addItem = async (e) => {
   //   }
   // };
 
+const [listofProducts, setlistofProducts] = useState([]);
 
+  const getallproducts = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/product/');
+      const products = await response.data;
+      // console.log(response.data)
+      setlistofProducts(products)
+      // console.log(listofProducts)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
 
   const getkitchenconsumption = async () => {
@@ -122,7 +195,8 @@ const addItem = async (e) => {
   useEffect(() => {
     getStockItems()
     getAllOrders()
-    // getAllCategoryStock()
+    getallproducts()
+    
     getkitchenconsumption()
   }, [])
 
@@ -143,7 +217,7 @@ const addItem = async (e) => {
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addItemModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
-                        <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal"><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal" onClick={updateKitchenItem}><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -221,6 +295,7 @@ const addItem = async (e) => {
                         <th>الرصيد</th>
                         <th>التسويه</th>
                         <th>المنتجات</th>
+                        <th>بواسطه</th>
                         <th>تاريخ الاضافه</th>
                         <th>اجراءات</th>
                       </tr>
@@ -281,7 +356,7 @@ const addItem = async (e) => {
               <div id="addItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => addItem(e)}>
+                    <form onSubmit={(e) => addKitchenItem(e)}>
                       <div className="modal-header">
                         <h4 className="modal-title">اضافه صنف </h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>

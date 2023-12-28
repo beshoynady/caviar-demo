@@ -127,6 +127,7 @@ const Kitchen = () => {
       const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
 
       await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order
     } catch (error) {

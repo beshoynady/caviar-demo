@@ -286,7 +286,7 @@ const addItem = async (e) => {
                         
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo._id)}}>
+                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo.employeeinfo.id)}}>
                             <option>اختر الصنف</option>
                             {AllStockItems.map((StockItems, i) => {
                               return <option value={StockItems._id} key={i} >{StockItems.itemName}</option>

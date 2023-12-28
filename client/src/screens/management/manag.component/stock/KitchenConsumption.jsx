@@ -226,7 +226,8 @@ const addItem = async (e) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Allkitchenconsumption && Allkitchenconsumption.map((item, i) => {
+                      {
+                      Allkitchenconsumption.length>0? Allkitchenconsumption.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -260,7 +261,7 @@ const addItem = async (e) => {
                             </tr>
                           );
                         }
-                      })}
+                      }):""}
                     </tbody>
                   </table>
                   <div className="clearfix">

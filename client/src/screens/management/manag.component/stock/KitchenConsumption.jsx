@@ -47,7 +47,8 @@ const addKitchenItem = async (e) => {
   }
 };
 
-const updateKitchenItem = async () => {
+const updateKitchenItem = async (e) => {
+  e.preventDefault()
   // Loop through each order
   listOfOrders.map((order) => {
     const listoforderproducts = order.products;
@@ -217,7 +218,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                       <div className="col-sm-6 d-flex justify-content-end">
                         <a href="#addItemModal" className="btn btn-success" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>اضافه منتج جديد</span></a>
 
-                        <a href="#deleteStockItemModal" className="btn btn-danger" data-toggle="modal" onClick={updateKitchenItem}><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
+                        <a href="#updateItemModal" className="btn btn-danger" data-toggle="modal" ><i className="material-icons">&#xE15C;</i> <span>حذف</span></a>
                       </div>
                     </div>
                   </div>
@@ -465,11 +466,12 @@ const [listofProducts, setlistofProducts] = useState([]);
                   </div>
                 </div>
               </div>
+                        */}
 
-              <div id="deleteStockItemModal" className="modal fade">
+              <div id="updateItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={deleteStockItem}>
+                    <form onSubmit={updateKitchenItem}>
                       <div className="modal-header">
                         <h4 className="modal-title">حذف منتج</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -485,7 +487,8 @@ const [listofProducts, setlistofProducts] = useState([]);
                     </form>
                   </div>
                 </div>
-              </div>  */}
+              </div>  
+              
             </div>
           )
         }

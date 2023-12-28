@@ -7,10 +7,11 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const KitchenConsumption = () => {
   const [itemName, setitemName] = useState('');
-  const [stockItemId, setStockItemid] = useState('');
-  const [categoryId, setcategoryId] = useState('');
-  const [largeUnit, setlargeUnit] = useState('');
-  const [smallUnit, setsmallUnit] = useState('');
+  const [stockItemId, setstockItemId] = useState('');
+  const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState('');
+  const [createBy, setcreateBy] = useState('');
+  const [unit, setunit] = useState('');
+  
   const [Balance, setBalance] = useState('');
   const [price, setprice] = useState('');
   const [totalCost, settotalCost] = useState('');
@@ -18,89 +19,33 @@ const KitchenConsumption = () => {
   const [costOfPart, setcostOfPart] = useState('');
   const [minThreshold, setminThreshold] = useState();
 
+ // Function to add an item to kitchen consumption
+const addItem = async () => {
+  try {
+    // Make a POST request to add an item
+    const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
+      stockItemId,
+      quantityTransferredToKitchen,
+      unit,
+      createBy
+    });
 
-  // const createItem = async (e, userId) => {
-  //   e.preventDefault();
-  //   const createBy = userId;
-  //   try {
-  //     const response = await axios.post('https://caviar-api.vercel.app/api/stockitem/', {
-  //       itemName,
-  //       categoryId,
-  //       smallUnit,
-  //       parts,
-  //       totalCost,
-  //       costOfPart,
-  //       largeUnit,
-  //       Balance,
-  //       minThreshold,
-  //       price,
-  //       createBy,
-  //     });
-  //     console.log(response.data);
-  //     getStockItems(); // Update the list of stock items after creating a new one
+    // Check if the item was added successfully
+    if (response.status === 201) {
+      // Show a success toast if the item is added
+      toast.success('Item added successfully');
+    } else {
+      // Show an error toast if adding the item failed
+      toast.error('Failed to add item');
+    }
+  } catch (error) {
+    // Show an error toast if an error occurs during the request
+    toast.error('Failed to add item');
+    console.error(error);
+  }
+};
 
-  //     // Notify on success
-  //     toast.success('Stock item created successfully');
-  //   } catch (error) {
-  //     console.log(error);
 
-  //     // Notify on error
-  //     toast.error('Failed to create stock item');
-  //   }
-  // };
-
-  // Function to edit a stock item
-  // const editStockItem = async (e, userId) => {
-  //   e.preventDefault();
-  //   const createBy = userId;
-  //   try {
-  //     const response = await axios.put(`https://caviar-api.vercel.app/api/stockitem/${stockItemId}`, {
-  //       itemName,
-  //       categoryId,
-  //       smallUnit,
-  //       parts,
-  //       totalCost,
-  //       costOfPart,
-  //       largeUnit,
-  //       Balance,
-  //       minThreshold,
-  //       price,
-  //       createBy,
-  //     });
-  //     console.log(response.data);
-  //     if (response) {
-  //       getStockItems(); // Update the list of stock items after editing
-  //     }
-
-  //     // Notify on success
-  //     toast.success('Stock item updated successfully');
-  //   } catch (error) {
-  //     console.log(error);
-
-  //     // Notify on error
-  //     toast.error('Failed to update stock item');
-  //   }
-  // };
-
-  // // Function to delete a stock item
-  // const deleteStockItem = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.delete(`https://caviar-api.vercel.app/api/stockitem/${stockItemId}`);
-  //     if (response.status === 200) {
-  //       console.log(response);
-  //       getStockItems(); // Update the list of stock items after deletion
-
-  //       // Notify on success
-  //       toast.success('Stock item deleted successfully');
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-
-  //     // Notify on error
-  //     toast.error('Failed to delete stock item');
-  //   }
-  // };
   const [listOfOrders, setlistOfOrders] = useState([])
   // Fetch orders from API
   const getAllOrders = async () => {
@@ -328,60 +273,33 @@ const KitchenConsumption = () => {
                   </div>
                 </div>
               </div>
-              {/* <div id="addStockItemModal" className="modal fade">
+              <div id="addStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => createItem(e, employeeLoginInfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => addItem(e)}>
                       <div className="modal-header">
-                        <h4 className="modal-title">اضافه صنف بالمخزن</h4>
+                        <h4 className="modal-title">اضافه صنف </h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
+                        
                         <div className="form-group">
-                          <label>اسم الصنف</label>
-                          <input type="text" className="form-control" required onChange={(e) => setitemName(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                          <label>نوع المخزن</label>
-                          <select name="category" id="category" form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                            <option>اختر نوع المخزن</option>
-                            {AllCategoryStock.map((category, i) => {
-                              return <option value={category._id} key={i} >{category.name}</option>
+                          <label>الصنف</label>
+                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo._id)}}>
+                            <option>اختر الصنف</option>
+                            {AllStockItems.map((StockItems, i) => {
+                              return <option value={StockItems._id} key={i} >{StockItems.itemName}</option>
                             })
                             }
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>الوحدة الكبيرة</label>
-                          <input type='text' className="form-control" required onChange={(e) => setlargeUnit(e.target.value)}></input>
+                          <label>رصيد محول</label>
+                          <input type='Number' className="form-control" required onChange={(e) => setquantityTransferredToKitchen(e.target.value)} />
                         </div>
                         <div className="form-group">
-                          <label>الوحدة الصغيره</label>
-                          <input type='text' className="form-control" required onChange={(e) => setsmallUnit(e.target.value)}></input>
-                        </div>
-                        <div className="form-group">
-                          <label>رصيد افتتاحي</label>
-                          <input type='Number' className="form-control" required onChange={(e) => setBalance(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                              <label>الحد الادني</label>
-                              <input type='number' className="form-control" required onChange={(e) => { setminThreshold(e.target.value); }} />
-                            </div>
-                        <div className="form-group">
-                          <label>السعر</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة</label>
-                          <input type='Number' className="form-control" required defaultValue={totalCost} readOnly />
-                        </div>
-                        <div className="form-group">
-                          <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" required onChange={(e) => { setparts(e.target.value); setcostOfPart(price / e.target.value) }} />
-                        </div>
-                        <div className="form-group">
-                          <label>تكلفة الوحده</label>
-                          <input type='Number' className="form-control" required defaultValue={costOfPart} readOnly />
+                          <label>الوحدة </label>
+                          <input type='text' className="form-control" required defaultValue={unit}></input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -396,6 +314,7 @@ const KitchenConsumption = () => {
                   </div>
                 </div>
               </div>
+                            {/* 
               <div id="editStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
@@ -412,7 +331,7 @@ const KitchenConsumption = () => {
                         <div className="form-group">
                           <label>نوع المخزن</label>
                           <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                            {/* <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
+                            <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
               {/* {AllCategoryStock.map((category, i) => {
                               return <option value={category._id} key={i} >{category.name}</option>
                             })

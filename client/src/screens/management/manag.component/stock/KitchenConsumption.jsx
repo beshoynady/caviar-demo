@@ -113,26 +113,26 @@ const KitchenConsumption = () => {
     }
   };
 
-  const [AllStockItems, setAllStockItems] = useState([])
-  // Function to retrieve all stock items
-  const getStockItems = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
+  // const [AllStockItems, setAllStockItems] = useState([])
+  // // Function to retrieve all stock items
+  // const getStockItems = async () => {
+  //   try {
+  //     const response = await axios.get('https://caviar-api.vercel.app/api/stockitem/');
       
-      if (response.status === 200) {
-        const stockItems = response.data.reverse();
-        setAllStockItems(stockItems);
-        console.log(response.data);
-      } else {
-        // Handle other statuses if needed
-        console.log(`Unexpected status code: ${response.status}`);
-        toast.error('Failed to retrieve stock items');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Failed to retrieve stock items');
-    }
-  };
+  //     if (response.status === 200) {
+  //       const stockItems = response.data.reverse();
+  //       setAllStockItems(stockItems);
+  //       console.log(response.data);
+  //     } else {
+  //       // Handle other statuses if needed
+  //       console.log(`Unexpected status code: ${response.status}`);
+  //       toast.error('Failed to retrieve stock items');
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error('Failed to retrieve stock items');
+  //   }
+  // };
   
 
   // const [AllCategoryStock, setAllCategoryStock] = useState([])
@@ -277,7 +277,7 @@ const KitchenConsumption = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Allkitchenconsumption && Allkitchenconsumption.map((item, i) => {
+                      {/* {Allkitchenconsumption && Allkitchenconsumption.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -309,11 +309,11 @@ const KitchenConsumption = () => {
                             </tr>
                           )
                         }
-                      })}
+                      })} */}
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{AllStockItems.length > endpagination ? endpagination : AllStockItems.length}</b> من <b>{AllStockItems.length}</b> عنصر</div>
+                    <div className="hint-text text-dark">عرض <b>{Allkitchenconsumption.length > endpagination ? endpagination : Allkitchenconsumption.length}</b> من <b>{Allkitchenconsumption.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

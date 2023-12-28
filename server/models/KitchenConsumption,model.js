@@ -15,6 +15,7 @@ const KitchenConsumptionSchema = new mongoose.Schema(
     consumptionQuantity: {
       type: Number,
       required: true,
+      default: 0
     },
     unit: {
       type: String,
@@ -26,8 +27,9 @@ const KitchenConsumptionSchema = new mongoose.Schema(
       default: 0,
     },
     adjustment: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      required: true,
+      default: 0,
     },
     productsProduced: [{
       productId: {
@@ -42,6 +44,7 @@ const KitchenConsumptionSchema = new mongoose.Schema(
       productionCount: {
         type: Number,
         required: true,
+        default: 0
       },
     }],
     createBy:{

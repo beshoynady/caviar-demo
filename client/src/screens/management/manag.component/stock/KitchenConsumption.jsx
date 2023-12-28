@@ -49,6 +49,7 @@ const addKitchenItem = async (e) => {
 
 const updateKitchenItem = async (e) => {
   e.preventDefault()
+  console.log('updateKitchenItem')
   try {
     listOfOrders.map((order) => {
       const listoforderproducts = order.products;
@@ -59,6 +60,8 @@ const updateKitchenItem = async (e) => {
             const listofrecipe = product.Recipe;
 
             listofrecipe.map((recipe) => {
+              console.log({recipe:recipe})
+
               Allkitchenconsumption.map(async (item) => {
                 if (item.stockItemId === recipe.itemId) {
                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
@@ -66,6 +69,8 @@ const updateKitchenItem = async (e) => {
                   const productsProduced = item.productsProduced;
 
                   productsProduced.map(async (p) => {
+                    console.log({productsProduced:p})
+
                     if (p.productId === orderproduct.productid) {
                       p.productionCount = p.productionCount + orderproduct.quantity;
 
@@ -77,7 +82,7 @@ const updateKitchenItem = async (e) => {
                         });
                         console.log('Update successful:', update.data);
                         // Add toast for successful update
-                        // toast.success('Updated kitchen consumption successfully');
+                        toast.success('Updated kitchen consumption successfully');
                       } catch (error) {
                         console.error('Update error:', error);
                         // Add toast for update error
@@ -96,11 +101,11 @@ const updateKitchenItem = async (e) => {
                         });
                         console.log('Update push successful:', update.data);
                         // Add toast for successful update
-                        // toast.success('Updated kitchen consumption successfully');
+                        toast.success('Updated kitchen consumption successfully');
                       } catch (error) {
                         console.error('Update error:', error);
                         // Add toast for update error
-                        // toast.error('Failed to update kitchen consumption');
+                        toast.error('Failed to update kitchen consumption');
                       }
                     }
                   });
@@ -495,7 +500,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                       </div>
                       <div className="modal-footer">
                         <input type="button" className="btn btn-danger" data-dismiss="modal" value="إغلاق" />
-                        <input type="submit" className="btn btn-danger" value="حذف" />
+                        <input type="submit" className="btn btn-danger" value="تحديث" />
                       </div>
                     </form>
                   </div>

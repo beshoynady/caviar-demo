@@ -3,7 +3,7 @@ const KitchenConsumptionModel = require('../models/KitchenConsumption,model');
 // Get all kitchen consumptions
 const getAllKitchenConsumptions = async (req, res) => {
   try {
-    const kitchenConsumptions = await KitchenConsumptionModel.find();
+    const kitchenConsumptions = await KitchenConsumptionModel.find({});
     res.status(200).json({ success: true, data: kitchenConsumptions });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

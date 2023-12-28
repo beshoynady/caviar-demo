@@ -101,11 +101,11 @@ const addItem = async (e) => {
 
   const getkitchenconsumption = async () => {
     try {
+      console.log('getkitchenconsumption');
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
-      if (response.status === 200) {
+      if (response) {
         setkitchenconsumption(response.data);
         console.log(response.data);
-        
       } else {
         console.log('Unexpected status code:', response.status);
         // Handle other statuses if needed
@@ -227,7 +227,7 @@ const addItem = async (e) => {
                     </thead>
                     <tbody>
                       {
-                      Allkitchenconsumption.length>0? Allkitchenconsumption.map((item, i) => {
+                      Allkitchenconsumption.length >0? Allkitchenconsumption.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>

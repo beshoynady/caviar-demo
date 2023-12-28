@@ -20,7 +20,8 @@ const KitchenConsumption = () => {
   const [minThreshold, setminThreshold] = useState();
 
  // Function to add an item to kitchen consumption
-const addItem = async () => {
+const addItem = async (e) => {
+  e. preventDefault() 
   try {
     // Make a POST request to add an item
     const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {

@@ -53,6 +53,7 @@ const updateKitchenItem = async (e) => {
   try {
     listOfOrders.map((order) => {
       const listoforderproducts = order.products;
+      console.log({listoforderproducts:listoforderproducts})
 
       listoforderproducts.map((orderproduct) => {
         listofProducts.map((product) => {
@@ -112,6 +113,8 @@ const updateKitchenItem = async (e) => {
                 }
               });
             });
+          }else {
+            console.log('product._id === orderproduct.productid')
           }
         });
       });

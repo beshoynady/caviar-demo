@@ -64,8 +64,9 @@ const updateKitchenItem = async (e) => {
 
             listofrecipe.map((recipe) => {
               console.log({recipe:recipe})
-
+              
               Allkitchenconsumption.map(async (item) => {
+                console.log({Allkitchenconsumption:item})
                 if (item.stockItemId === recipe.itemId) {
                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
                   const balance = item.quantityTransferredToKitchen - consumptionQuantity;

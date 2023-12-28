@@ -169,6 +169,7 @@ const SideBar = () => {
                       <li><Link to="categoryStock">تصنيفات</Link></li>
                       <li><Link to="stockitem">الاصناف</Link></li>
                       <li><Link to="stockmang">حركه المخزن</Link></li>
+                      <li><Link to="kitchenconsumption">استهلاك المطبخ</Link></li>
                     </ul>
                   </li>
 

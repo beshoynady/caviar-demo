@@ -29,6 +29,7 @@ import DailyExpense from './screens/management/manag.component/expenses/dailyExp
 import CashRegister from './screens/management/manag.component/cash/CashRegister';
 import CashMovement from './screens/management/manag.component/cash/CashMovement';
 import Users from './screens/management/manag.component/users/Users';
+import KitchenConsumption from './screens/management/manag.component/stock/KitchenConsumption';
 
 export const detacontext = createContext({});
 
@@ -1174,6 +1175,7 @@ function App() {
             <Route path='categoryStock' element={<CategoryStock />} />
             <Route path='stockitem' element={<StockItem />} />
             <Route path='stockmang' element={<StockManag />} />
+            <Route path='kitchenconsumption' element={<KitchenConsumption/>} />
             <Route path='expense' element={<ExpenseItem />} />
             <Route path='dailyexpense' element={<DailyExpense />} />
             <Route path='cashregister' element={<CashRegister />} />

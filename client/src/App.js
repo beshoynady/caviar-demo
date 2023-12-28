@@ -174,52 +174,26 @@ function App() {
   // add items to cart
   const [ItemsInCart, setItemsInCart] = useState([])
 
-//   const additemtocart = (id) => {
-//     console.log(id)
-//     const cartitem = allProducts.filter(item => item._id === id)
-//     console.log(cartitem)
+  const additemtocart = (id) => {
+    console.log(id)
+    const cartitem = allProducts.filter(item => item._id === id)
+    cartitem.productid = id
+    console.log(cartitem)
 
-//     if (ItemsInCart.length > 0) {
-//       const repeateditem = ItemsInCart.filter(item => item._id === id)
-//       if (repeateditem.length == 0) {
-//         setItemsInCart([...ItemsInCart, ...cartitem])
-//         setitemid([...itemid, id])
-//       }
-//     } else {
-//       setItemsInCart([...cartitem])
-//       setitemid([id])
+    if (ItemsInCart.length > 0) {
+      const repeateditem = ItemsInCart.filter(item => item._id === id)
+      if (repeateditem.length == 0) {
+        setItemsInCart([...ItemsInCart, ...cartitem])
+        setitemid([...itemid, id])
+      }
+    } else {
+      setItemsInCart([...cartitem])
+      setitemid([id])
 
-//     }
-//   }
-
-//   const [itemid, setitemid] = useState([]);
-// const [ItemsInCart, setItemsInCart] = useState([]);
-
-const additemtocart = (id) => {
-  console.log(id);
-  const cartitem = allProducts.filter((item) => item._id === id);
-  console.log(cartitem);
-
-  if (ItemsInCart.length > 0) {
-    const repeateditem = ItemsInCart.filter((item) => item._id === id);
-    if (repeateditem.length === 0) {
-      const updatedCartItem = {
-        ...cartitem[0],
-        productId: id, // Add product ID to the cart item
-      };
-      setItemsInCart([...ItemsInCart, updatedCartItem]);
-      setitemid([...itemid, id]);
     }
-  } else {
-    const updatedCartItem = {
-      ...cartitem[0],
-      productId: id, // Add product ID to the cart item
-    };
-    setItemsInCart([updatedCartItem]);
-    setitemid([id]);
   }
-};
 
+  
 
   // delete item from cart by id
   const quantityzero = (id) => {

@@ -165,7 +165,7 @@ const Kitchen = () => {
       products.forEach((product) => {
         if (product.isDone == false) {
 
-          const { quantity, productId, name } = product;
+          const { quantity, productid: productId, name } = product;
           // console.log({ productquantity: quantity });
           // console.log({ productid: productId });
 

@@ -167,7 +167,7 @@ const Kitchen = () => {
 
           const { quantity, productid: productId, name } = product;
           // console.log({ productquantity: quantity });
-          // console.log({ productid: productId });
+          console.log({ productid: productId });
 
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];

@@ -160,70 +160,76 @@ const Kitchen = () => {
       // const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
       // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
       console.log({ Allkitchenconsumption: Allkitchenconsumption })
-      const products = orderData.data.products
-      console.log({ products });
-      products.map((product) => {
-        console.log({ productquantity: product.quantity })
-        console.log({ productid: product.productid })
-        
-        const recipe = listofProducts.length > 0 ? listofProducts.filter(p => p._id == product.productid)[0].Recipe : ''
-        console.log({ recipe: recipe })
+      const products = orderData.data.products;
 
-        recipe.map(rec => {
-          console.log({ recitemId: rec.itemId })
-          const kitconsumption = Allkitchenconsumption.length > 0 ? Allkitchenconsumption.filter(kitItem => kitItem.stockItemId == rec.itemId)[0] : ''
-          console.log({ kitconsumption: kitconsumption })
-          // if(kitconsumption != undefined){
-          //   console.log({ stockItemId: kitconsumption.stockItemId })
-          //   console.log({ kitItemid: kitconsumption._id })
-          //   console.log({ consumptionQuantity: kitconsumption.consumptionQuantity })
-          //   console.log({ recamount: rec.amount })
-          //   console.log({ productquantity: product.quantity })
-          //   const consumptionQuantity = kitconsumption.consumptionQuantity + (rec.amount * product.quantity);
-          //   const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-          //   console.log({ consumptionQuantity: consumptionQuantity })
-          //   console.log({ balance: balance })
-          // }
-          // try {
-          //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-          //     consumptionQuantity,
-          //     balance,
-          //   });
-          //   console.log({ update: update })
+      products.forEach((product) => {
+        const { quantity, productid: productId } = product;
+        console.log({ productquantity: quantity });
+        console.log({ productid: productId });
 
-          // } catch (error) {
+        const foundProduct = listofProducts.find((p) => p._id === productId);
+        const recipe = foundProduct ? foundProduct.Recipe : [];
 
-          //   console.log({ error: error })
-          // }
+        console.log({ recipe });
 
+        recipe.forEach((rec) => {
+          const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
+
+          if (kitconsumption) {
+            console.log({ recitemId: rec.itemId });
+            console.log({ stockItemId: kitconsumption.stockItemId });
+            console.log({ kitItemid: kitconsumption._id });
+            console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
+            console.log({ recamount: rec.amount });
+            console.log({ productquantity: quantity });
+
+            const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
+            const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+
+            console.log({ consumptionQuantity });
+            console.log({ balance });
+            // try {
+            //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+            //     consumptionQuantity,
+            //     balance,
+            //   });
+            //   console.log({ update: update })
+
+            // } catch (error) {
+
+            //   console.log({ error: error })
+            // }
+
+
+
+            // Allkitchenconsumption.map((kitItem, i) => {
+            //   console.log({ kitItem: kitItem })
+            //   recipe.map((rec) => {
+            //     console.log({ rec: rec })
+            //     if (rec.itemId == kitItem.stockItemId) {
+            //       console.log({ stockItemId: kitItem.stockItemId })
+            //       console.log({ recitemId: rec.itemId })
+            //       console.log({ kitItemid: kitItem._id })
+            //       const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
+            //       const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
+            //       console.log({ consumptionQuantity: consumptionQuantity })
+            //       console.log({ balance: balance })
+            //       try {
+            //         const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem._id}`, {
+            //           consumptionQuantity,
+            //           balance,
+            //         });
+
+            //       } catch (error) {
+
+            //         console.log({error:error})
+            //       }
+
+            //     }
+            //   })
+            // })
+          }
         })
-
-        // Allkitchenconsumption.map((kitItem, i) => {
-        //   console.log({ kitItem: kitItem })
-        //   recipe.map((rec) => {
-        //     console.log({ rec: rec })
-        //     if (rec.itemId == kitItem.stockItemId) {
-        //       console.log({ stockItemId: kitItem.stockItemId })
-        //       console.log({ recitemId: rec.itemId })
-        //       console.log({ kitItemid: kitItem._id })
-        //       const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
-        //       const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
-        //       console.log({ consumptionQuantity: consumptionQuantity })
-        //       console.log({ balance: balance })
-        //       try {
-        //         const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem._id}`, {
-        //           consumptionQuantity,
-        //           balance,
-        //         });
-
-        //       } catch (error) {
-
-        //         console.log({error:error})
-        //       }
-
-        //     }
-        //   })
-        // })
       });
 
       getOrdersFromAPI();

@@ -141,7 +141,7 @@ const Kitchen = () => {
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
       if (response) {
         setkitchenconsumption(response.data.data);
-        console.log(response.data);
+        // console.log(response.data);
       } else {
         console.log('Unexpected status code:', response.status);
         // Handle other statuses if needed
@@ -175,7 +175,7 @@ const Kitchen = () => {
           console.log({ recipe });
 
           recipe.forEach((rec) => {
-            const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
+            const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId == rec.itemId);
 
             if (kitconsumption) {
               // console.log({ recitemId: rec.itemId });
@@ -210,7 +210,7 @@ const Kitchen = () => {
                     }
                   } else {
                     const productsProduced = kitconsumption.productsProduced
-                    productsProduced.push({ productId: product.productId, productionCount: product.quantity, productName: product.name })
+                    productsProduced.push({ productId:productId, productionCount: quantity, productName: name })
                     console.log({ productsProduced: productsProduced })
                     console.log({ updatedProductsProduced })
 
@@ -218,7 +218,7 @@ const Kitchen = () => {
                       const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
                         consumptionQuantity,
                         balance,
-                        productsProduced: updatedProductsProduced
+                        productsProduced
                       });
                       console.log({ update: update.data })
                     } catch (error) {
@@ -229,7 +229,7 @@ const Kitchen = () => {
                 });
 
               } else {
-                const productsProduced = []
+                const productsProduced = kitconsumption.productsProduced
                 productsProduced.push({ productId: product.productId, productionCount: product.quantity, productName: product.name })
                 console.log({ productsProduced: productsProduced })
                 try {

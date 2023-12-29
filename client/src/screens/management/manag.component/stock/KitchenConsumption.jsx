@@ -160,7 +160,7 @@ const updateKitchenItem = async (e) => {
                 if (item.stockItemId == recipe.itemId) {
                   let consumptionQuantity = 0; // Initialize consumption quantity here
                   const productsProduced = item.productsProduced;
-
+                  
                   for (const p of productsProduced) {
                     console.log({ productsProduced: p });
 

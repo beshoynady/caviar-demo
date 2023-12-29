@@ -117,7 +117,40 @@ const Kitchen = () => {
     }
   };
 
+  const [listofProducts, setlistofProducts] = useState([]);
 
+  const getallproducts = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/product/');
+      const products = await response.data;
+      // console.log(response.data)
+      setlistofProducts(products)
+      // console.log(listofProducts)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
+
+  const getkitchenconsumption = async () => {
+    try {
+      console.log('getkitchenconsumption');
+      const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
+      if (response) {
+        setkitchenconsumption(response.data.data);
+        console.log(response.data);
+      } else {
+        console.log('Unexpected status code:', response.status);
+        // Handle other statuses if needed
+      }
+    } catch (error) {
+      console.error('Error fetching kitchen consumption:', error);
+      // Handle error: Notify user, log error, etc.
+    }
+  };
   // Updates an order status to 'Prepared'
   const orderDone = async (id) => {
     const status = 'Prepared';
@@ -125,9 +158,29 @@ const Kitchen = () => {
     try {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
-
       await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
-      
+
+      listofProducts.map((product) => {
+        console.log({start:product})
+        const recipe = product.Recipe
+        Allkitchenconsumption.map((kitItem, i) => {
+          recipe.map((rec) => {
+            if (rec.itemId == kitItem.stockItemId) {
+              const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
+              const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
+              console.log({consumptionQuantity:consumptionQuantity})
+              console.log({balance:balance})
+              const update =  axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem.itemid}`, {
+                consumptionQuantity,
+                balance,
+              });
+              console.log(update)
+
+            }
+          })
+        })
+      });
+
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order
     } catch (error) {
@@ -154,6 +207,8 @@ const Kitchen = () => {
   useEffect(() => {
     getOrdersFromAPI();
     getAllWaiters();
+    getallproducts()
+    getkitchenconsumption()
   }, []);
 
   return (

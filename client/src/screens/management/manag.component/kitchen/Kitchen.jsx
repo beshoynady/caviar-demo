@@ -204,7 +204,7 @@ const Kitchen = () => {
                         balance,
                         productsProduced
                       });
-                      console.log({ update: update.data })
+                      console.log({ update: update})
 
                     } catch (error) {
 
@@ -220,7 +220,7 @@ const Kitchen = () => {
                       balance,
                       productsProduced
                     });
-                    console.log({ update: update.data })
+                    console.log({ update: update})
 
                   } catch (error) {
 
@@ -238,7 +238,7 @@ const Kitchen = () => {
                       balance,
                       productsProduced
                     });
-                    console.log({ update: update.data })
+                    console.log({ update: update})
 
                   } catch (error) {
 

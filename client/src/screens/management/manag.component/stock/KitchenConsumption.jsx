@@ -428,7 +428,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                               <td>{item.adjustment}</td>
                               <td>
                                 {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
-                                  <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>
+                                  <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
                                 )):'لا يوجد'}
                               </td>
                               <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>

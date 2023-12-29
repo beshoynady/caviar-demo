@@ -234,47 +234,6 @@ const Kitchen = () => {
                 }
 
               }
-              // try {
-              //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-              //     consumptionQuantity,
-              //     balance,
-              //     productsProduced
-              //   });
-              //   console.log({ update: update.data })
-
-              // } catch (error) {
-
-              //   console.log({ error: error })
-              // }
-
-
-
-              // Allkitchenconsumption.map((kitItem, i) => {
-              //   console.log({ kitItem: kitItem })
-              //   recipe.map((rec) => {
-              //     console.log({ rec: rec })
-              //     if (rec.itemId == kitItem.stockItemId) {
-              //       console.log({ stockItemId: kitItem.stockItemId })
-              //       console.log({ recitemId: rec.itemId })
-              //       console.log({ kitItemid: kitItem._id })
-              //       const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
-              //       const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
-              //       console.log({ consumptionQuantity: consumptionQuantity })
-              //       console.log({ balance: balance })
-              //       try {
-              //         const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem._id}`, {
-              //           consumptionQuantity,
-              //           balance,
-              //         });
-
-              //       } catch (error) {
-
-              //         console.log({error:error})
-              //       }
-
-              //     }
-              //   })
-              // })
             }
           )
         }
@@ -293,15 +252,18 @@ const Kitchen = () => {
   const waitingTime = (t) => {
     const t1 = new Date(t).getTime();
     const t2 = new Date().getTime();
-    const waitingTime = t2 - t1;
-
-    const m = new Date(waitingTime).getMinutes();
-    setWaitTime(m);
-
-    setTimeout(() => waitingTime(t), 60000);
-    return m;
+    const elapsedTime = t2 - t1;
+  
+    const minutesPassed = Math.floor(elapsedTime / (1000 * 60));
+    setWaitTime(minutesPassed);
+  
+    if (t) {
+      setTimeout(() => waitingTime(t), 60000);
+    }
+    
+    return minutesPassed;
   };
-
+  
   // Fetches orders and active waiters on initial render
   useEffect(() => {
     getOrdersFromAPI();

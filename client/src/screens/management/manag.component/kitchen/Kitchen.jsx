@@ -164,20 +164,20 @@ const Kitchen = () => {
       console.log({ products: products });
 
       products.forEach((product) => {
-        if(product.isDone == false){
-          
+        if (product.isDone == false) {
+
           const { quantity, productid: productId, name } = product;
           console.log({ productquantity: quantity });
           console.log({ productid: productId });
-  
+
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-  
+
           console.log({ recipe });
-  
+
           recipe.forEach((rec) => {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
-  
+
             if (kitconsumption) {
               console.log({ recitemId: rec.itemId });
               console.log({ stockItemId: kitconsumption.stockItemId });
@@ -185,21 +185,44 @@ const Kitchen = () => {
               console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
               console.log({ recamount: rec.amount });
               console.log({ productquantity: quantity });
-  
+
               const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-  
+
               console.log({ consumptionQuantity });
               console.log({ balance });
-              if(kitconsumption.productsProduced.length>0){
-                
-                const productsProduced = kitconsumption.productsProduced
-                productsProduced.forEach((produced)=>{
-                  if(produced.productId == productId){
-                    produced.productionCount += quantity;
+              if (kitconsumption.productsProduced.length > 0) {
 
-                  }else {
-                    const productsProduced = [{productId: productId,productionCount: quantity,productName:name}]
+                const productsProduced = kitconsumption.productsProduced
+                productsProduced.forEach((produced) => {
+                  if (produced.productId == productId) {
+                    produced.productionCount += quantity;
+                    try {
+                      const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+                        consumptionQuantity,
+                        balance,
+                        productsProduced
+                      });
+                      console.log({ update: update.data })
+
+                    } catch (error) {
+
+                      console.log({ error: error })
+                    }
+                  } else {
+                    const productsProduced = [{ productId: productId, productionCount: quantity, productName: name }]
+                    try {
+                      const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+                        consumptionQuantity,
+                        balance,
+                        productsProduced
+                      });
+                      console.log({ update: update.data })
+
+                    } catch (error) {
+
+                      console.log({ error: error })
+                    }
                   }
 
                 })
@@ -212,14 +235,14 @@ const Kitchen = () => {
                   productsProduced
                 });
                 console.log({ update: update.data })
-  
+
               } catch (error) {
-  
+
                 console.log({ error: error })
               }
-  
-  
-  
+
+
+
               // Allkitchenconsumption.map((kitItem, i) => {
               //   console.log({ kitItem: kitItem })
               //   recipe.map((rec) => {
@@ -237,12 +260,12 @@ const Kitchen = () => {
               //           consumptionQuantity,
               //           balance,
               //         });
-  
+
               //       } catch (error) {
-  
+
               //         console.log({error:error})
               //       }
-  
+
               //     }
               //   })
               // })

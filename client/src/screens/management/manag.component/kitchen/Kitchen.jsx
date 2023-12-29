@@ -155,13 +155,9 @@ const Kitchen = () => {
 
 
   // Updates an order status to 'Prepared'
-  const orderDone = async (id) => {
-    const status = 'Prepared';
-
+  const updateOrderDone = async (id) => {
     try {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-      // const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
-      // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
       console.log({ Allkitchenconsumption: Allkitchenconsumption })
       const products = orderData.data.products;
       // console.log({ products: products });
@@ -256,6 +252,10 @@ const Kitchen = () => {
         }
       });
 
+      const status = 'Prepared';
+      const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
+
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order
     } catch (error) {
@@ -331,8 +331,8 @@ const Kitchen = () => {
                       <div className="card-footer text-center">
                         {order.status === 'Preparing' ?
                           <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => {
-                            orderDone(order._id);
-                            // updatecountofsales(order._id) 
+                            updateOrderDone(order._id);
+                            updatecountofsales(order._id) 
                           }}>تم التنفيذ</button>
                           : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
                         }

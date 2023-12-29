@@ -164,7 +164,9 @@ const Kitchen = () => {
         console.log({start:product})
         const recipe = product.Recipe
         Allkitchenconsumption.map((kitItem, i) => {
+          console.log({kitItem:kitItem})
           recipe.map((rec) => {
+            console.log({rec:rec})
             if (rec.itemId == kitItem.stockItemId) {
               const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
               const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;

@@ -173,15 +173,17 @@ const Kitchen = () => {
           console.log({ recitemId: rec.itemId })
           const kitconsumption = Allkitchenconsumption.length > 0 ? Allkitchenconsumption.filter(kitItem => kitItem.stockItemId == rec.itemId)[0] : ''
           console.log({ kitconsumption: kitconsumption })
-          console.log({ stockItemId: kitconsumption.stockItemId })
-          console.log({ kitItemid: kitconsumption._id })
-          console.log({ consumptionQuantity: kitconsumption.consumptionQuantity })
-          console.log({ recamount: rec.amount })
-          console.log({ productquantity: product.quantity })
-          const consumptionQuantity = kitconsumption.consumptionQuantity + (rec.amount * product.quantity);
-          const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-          console.log({ consumptionQuantity: consumptionQuantity })
-          console.log({ balance: balance })
+          // if(kitconsumption != undefined){
+          //   console.log({ stockItemId: kitconsumption.stockItemId })
+          //   console.log({ kitItemid: kitconsumption._id })
+          //   console.log({ consumptionQuantity: kitconsumption.consumptionQuantity })
+          //   console.log({ recamount: rec.amount })
+          //   console.log({ productquantity: product.quantity })
+          //   const consumptionQuantity = kitconsumption.consumptionQuantity + (rec.amount * product.quantity);
+          //   const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+          //   console.log({ consumptionQuantity: consumptionQuantity })
+          //   console.log({ balance: balance })
+          // }
           // try {
           //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
           //     consumptionQuantity,

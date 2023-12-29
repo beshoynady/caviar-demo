@@ -840,14 +840,14 @@ function App() {
       const findprduct = await axios.get('https://caviar-api.vercel.app/api/product/' + productid)
       const sales = await findprduct.data.sales + productquantity
 
-      console.log(productid)
-      console.log(findprduct)
-      console.log(sales)
-      console.log(productquantity)
+      // console.log(productid)
+      // console.log(findprduct)
+      // console.log(sales)
+      // console.log(productquantity)
       const updatprduct = await axios.put('https://caviar-api.vercel.app/api/product/withoutimage/' + productid, {
         sales
       })
-      console.log(updatprduct)
+      // console.log(updatprduct)
 
     }
   }

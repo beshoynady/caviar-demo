@@ -151,6 +151,9 @@ const Kitchen = () => {
       // Handle error: Notify user, log error, etc.
     }
   }; 
+
+
+
   // Updates an order status to 'Prepared'
   const orderDone = async (id) => {
     const status = 'Prepared';
@@ -161,14 +164,14 @@ const Kitchen = () => {
       // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
       console.log({ Allkitchenconsumption: Allkitchenconsumption })
       const products = orderData.data.products;
-      console.log({ products: products });
+      // console.log({ products: products });
 
       products.forEach((product) => {
         if (product.isDone == false) {
 
           const { quantity, productid: productId, name } = product;
-          console.log({ productquantity: quantity });
-          console.log({ productid: productId });
+          // console.log({ productquantity: quantity });
+          // console.log({ productid: productId });
 
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
@@ -179,18 +182,18 @@ const Kitchen = () => {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
 
             if (kitconsumption) {
-              console.log({ recitemId: rec.itemId });
-              console.log({ stockItemId: kitconsumption.stockItemId });
-              console.log({ kitItemid: kitconsumption._id });
-              console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
-              console.log({ recamount: rec.amount });
-              console.log({ productquantity: quantity });
+              // console.log({ recitemId: rec.itemId });
+              // console.log({ stockItemId: kitconsumption.stockItemId });
+              // console.log({ kitItemid: kitconsumption._id });
+              // console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
+              // console.log({ recamount: rec.amount });
+              // console.log({ productquantity: quantity });
 
               const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
 
-              console.log({ consumptionQuantity });
-              console.log({ balance });
+              // console.log({ consumptionQuantity });
+              // console.log({ balance });
               if (kitconsumption.productsProduced.length > 0) {
                 console.log({productsProduced:productsProduced})
                 const productsProduced = kitconsumption.productsProduced.map((produced) => {

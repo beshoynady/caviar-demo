@@ -63,7 +63,7 @@ const updateKitchenConsumptionById = async (req, res) => {
     if (!updatedKitchenConsumption) {
       return res.status(404).json({ success: false, error: 'Kitchen consumption not found' });
     }
-    res.status(200).json({ success: true, data: updatedKitchenConsumption });
+    res.status(200).json({updatedKitchenConsumption });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }

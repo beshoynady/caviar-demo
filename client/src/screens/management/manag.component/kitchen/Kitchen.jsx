@@ -204,7 +204,7 @@ const Kitchen = () => {
                         balance,
                         productsProduced: updatedProductsProduced
                       });
-                      console.log({ update: update.data })
+                      console.log({ update: update })
                     } catch (error) {
                       console.log({ error: error })
                     }
@@ -220,7 +220,7 @@ const Kitchen = () => {
                         balance,
                         productsProduced
                       });
-                      console.log({ update: update.data })
+                      console.log({ update: update })
                     } catch (error) {
                       console.log({ error: error })
                     }
@@ -230,7 +230,7 @@ const Kitchen = () => {
 
               } else {
                 const productsProduced = kitconsumption.productsProduced
-                productsProduced.push({ productId: product.productId, productionCount: product.quantity, productName: product.name })
+                productsProduced.push({ productId: productId, productionCount: quantity, productName: name })
                 console.log({ productsProduced: productsProduced })
                 try {
                   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
@@ -238,7 +238,7 @@ const Kitchen = () => {
                     balance,
                     productsProduced
                   });
-                  console.log({ update: update.data })
+                  console.log({ update: update })
                 } catch (error) {
                   console.log({ error: error })
                 }

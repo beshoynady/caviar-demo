@@ -228,18 +228,18 @@ const Kitchen = () => {
                 })
 
               }
-              try {
-                const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                  consumptionQuantity,
-                  balance,
-                  productsProduced
-                });
-                console.log({ update: update.data })
+              // try {
+              //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+              //     consumptionQuantity,
+              //     balance,
+              //     productsProduced
+              //   });
+              //   console.log({ update: update.data })
 
-              } catch (error) {
+              // } catch (error) {
 
-                console.log({ error: error })
-              }
+              //   console.log({ error: error })
+              // }
 
 
 

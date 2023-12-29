@@ -192,12 +192,11 @@ const Kitchen = () => {
               console.log({ consumptionQuantity });
               console.log({ balance });
               if (kitconsumption.productsProduced.length > 0) {
-
-                const productsProduced = kitconsumption.productsProduced
                 console.log({productsProduced:productsProduced})
-                productsProduced.map((produced) => {
+                const productsProduced = kitconsumption.productsProduced.map((produced) => {
                   if (produced.productId == productId) {
                     produced.productionCount += quantity;
+                    console.log({producedproductionCount:produced.productionCount})  
                     console.log({productsProduced:productsProduced})  
                     try {
                       const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {

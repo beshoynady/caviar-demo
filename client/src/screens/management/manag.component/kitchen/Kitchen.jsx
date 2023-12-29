@@ -150,7 +150,7 @@ const Kitchen = () => {
       console.error('Error fetching kitchen consumption:', error);
       // Handle error: Notify user, log error, etc.
     }
-  };
+  }; 
   // Updates an order status to 'Prepared'
   const orderDone = async (id) => {
     const status = 'Prepared';

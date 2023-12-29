@@ -157,10 +157,10 @@ const Kitchen = () => {
 
     try {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-      const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
+      // const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
+      // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      const products = orderData.data.products
       console.log({ products });
-      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
-
       products.map((product) => {
         console.log({ productquantity: product.quantity })  
         console.log({ productid: product.productid })  

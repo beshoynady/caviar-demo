@@ -160,7 +160,7 @@ const updateKitchenItem = async (e) => {
                 if (item.stockItemId == recipe.itemId) {
                   let consumptionQuantity = 0; // Initialize consumption quantity here
                   const productsProduced = item.productsProduced;
-                  
+
                   for (const p of productsProduced) {
                     console.log({ productsProduced: p });
 
@@ -426,7 +426,6 @@ const [listofProducts, setlistofProducts] = useState([]);
                               <td>{item.unit}</td>
                               <td>{item.balance}</td>
                               <td>{item.adjustment}</td>
-                              <td>{item.unit}</td>
                               <td>
                                 {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
                                   <span key={j}>{`[${product.productName} / ${product.productionCount}]`}</span>

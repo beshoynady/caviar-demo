@@ -161,35 +161,63 @@ const Kitchen = () => {
       console.log({ products });
       await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
 
-      // listofProducts.map((product) => {
-      //   const recipe = product.Recipe
-      //   Allkitchenconsumption.map((kitItem, i) => {
-      //     console.log({ kitItem: kitItem })
-      //     recipe.map((rec) => {
-      //       console.log({ rec: rec })
-      //       if (rec.itemId == kitItem.stockItemId) {
-      //         console.log({ stockItemId: kitItem.stockItemId })
-      //         console.log({ recitemId: rec.itemId })
-      //         console.log({ kitItemid: kitItem._id })
-      //         const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
-      //         const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
-      //         console.log({ consumptionQuantity: consumptionQuantity })
-      //         console.log({ balance: balance })
-      //         try {
-      //           const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem._id}`, {
-      //             consumptionQuantity,
-      //             balance,
-      //           });
-                
-      //         } catch (error) {
-                
-      //           console.log({error:error})
-      //         }
+      products.map((product) => {
+        console.log({ productquantity: product.quantity })  
+        console.log({ productid: product.productid })  
 
-      //       }
-      //     })
-      //   })
-      // });
+        const recipe = listofProducts.length>0? listofProducts.filter(p => p._id == product.productid)[0].Recipe : ''
+
+        recipe.map(rec => {
+          const kitconsumption =Allkitchenconsumption.length>0? Allkitchenconsumption.filter(kitItem => kitItem.stockItemId == rec.itemId)[0]:''
+          console.log({ kitconsumption: kitconsumption })
+          console.log({ stockItemId: kitconsumption.stockItemId })
+          console.log({ recitemId: rec.itemId })
+          console.log({ kitItemid: kitconsumption._id })
+          const consumptionQuantity = kitconsumption.consumptionQuantity + (rec.amount * product.quantity);
+          const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+          console.log({ consumptionQuantity: consumptionQuantity })
+          console.log({ balance: balance })
+          try {
+            const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+              consumptionQuantity,
+              balance,
+            });
+            console.log({ update: update })
+
+          } catch (error) {
+
+            console.log({ error: error })
+          }
+
+        })
+
+        // Allkitchenconsumption.map((kitItem, i) => {
+        //   console.log({ kitItem: kitItem })
+        //   recipe.map((rec) => {
+        //     console.log({ rec: rec })
+        //     if (rec.itemId == kitItem.stockItemId) {
+        //       console.log({ stockItemId: kitItem.stockItemId })
+        //       console.log({ recitemId: rec.itemId })
+        //       console.log({ kitItemid: kitItem._id })
+        //       const consumptionQuantity = kitItem.consumptionQuantity + (rec.amount * product.quantity);
+        //       const balance = kitItem.quantityTransferredToKitchen - consumptionQuantity;
+        //       console.log({ consumptionQuantity: consumptionQuantity })
+        //       console.log({ balance: balance })
+        //       try {
+        //         const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitItem._id}`, {
+        //           consumptionQuantity,
+        //           balance,
+        //         });
+
+        //       } catch (error) {
+
+        //         console.log({error:error})
+        //       }
+
+        //     }
+        //   })
+        // })
+      });
 
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order

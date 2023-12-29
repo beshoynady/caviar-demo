@@ -159,35 +159,40 @@ const Kitchen = () => {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       // const products = orderData.data.products.map((prod) => ({ ...prod, isDone: true }));
       // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products, status });
+      console.log({ Allkitchenconsumption: Allkitchenconsumption })
       const products = orderData.data.products
       console.log({ products });
       products.map((product) => {
-        console.log({ productquantity: product.quantity })  
-        console.log({ productid: product.productid })  
-
-        const recipe = listofProducts.length>0? listofProducts.filter(p => p._id == product.productid)[0].Recipe : ''
+        console.log({ productquantity: product.quantity })
+        console.log({ productid: product.productid })
+        
+        const recipe = listofProducts.length > 0 ? listofProducts.filter(p => p._id == product.productid)[0].Recipe : ''
+        console.log({ recipe: recipe })
 
         recipe.map(rec => {
-          const kitconsumption =Allkitchenconsumption.length>0? Allkitchenconsumption.filter(kitItem => kitItem.stockItemId == rec.itemId)[0]:''
+          console.log({ recitemId: rec.itemId })
+          const kitconsumption = Allkitchenconsumption.length > 0 ? Allkitchenconsumption.filter(kitItem => kitItem.stockItemId == rec.itemId)[0] : ''
           console.log({ kitconsumption: kitconsumption })
           console.log({ stockItemId: kitconsumption.stockItemId })
-          console.log({ recitemId: rec.itemId })
           console.log({ kitItemid: kitconsumption._id })
+          console.log({ consumptionQuantity: kitconsumption.consumptionQuantity })
+          console.log({ recamount: rec.amount })
+          console.log({ productquantity: product.quantity })
           const consumptionQuantity = kitconsumption.consumptionQuantity + (rec.amount * product.quantity);
           const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
           console.log({ consumptionQuantity: consumptionQuantity })
           console.log({ balance: balance })
-          try {
-            const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-              consumptionQuantity,
-              balance,
-            });
-            console.log({ update: update })
+          // try {
+          //   const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+          //     consumptionQuantity,
+          //     balance,
+          //   });
+          //   console.log({ update: update })
 
-          } catch (error) {
+          // } catch (error) {
 
-            console.log({ error: error })
-          }
+          //   console.log({ error: error })
+          // }
 
         })
 
@@ -290,7 +295,10 @@ const Kitchen = () => {
                       </ul>
                       <div className="card-footer text-center">
                         {order.status === 'Preparing' ?
-                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => { orderDone(order._id); updatecountofsales(order._id) }}>تم التنفيذ</button>
+                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => {
+                            orderDone(order._id);
+                            // updatecountofsales(order._id) 
+                          }}>تم التنفيذ</button>
                           : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
                         }
                       </div>

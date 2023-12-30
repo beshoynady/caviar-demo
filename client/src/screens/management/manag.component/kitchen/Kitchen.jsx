@@ -150,119 +150,190 @@ const Kitchen = () => {
       console.error('Error fetching kitchen consumption:', error);
       // Handle error: Notify user, log error, etc.
     }
-  }; 
+  };
 
-
-
-  // Updates an order status to 'Prepared'
   const updateOrderDone = async (id) => {
     try {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-      console.log({ Allkitchenconsumption: Allkitchenconsumption })
       const products = orderData.data.products;
-      // console.log({ products: products });
-
-      products.forEach((product) => {
-        if (product.isDone == false) {
-
-          const { quantity, productid: productId, name } = product;
-          console.log({ productquantity: quantity });
-          console.log({ productid: productId });
-
+  
+      for (const product of products) {
+        if (!product.isDone) {
+          const quantity = product.quantity;
+          const productId = product.productId;
+          const name = product.name;
+  
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-
-          console.log({ recipe });
-
-          recipe.forEach((rec) => {
+  
+          for (const rec of recipe) {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
-
+  
             if (kitconsumption) {
-              // console.log({ recitemId: rec.itemId });
-              // console.log({ stockItemId: kitconsumption.stockItemId });
-              // console.log({ kitItemid: kitconsumption._id });
-              // console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
-              // console.log({ recamount: rec.amount });
-              // console.log({ productquantity: quantity });
-
               const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-
-              // console.log({ consumptionQuantity });
-              // console.log({ balance });
+  
               if (kitconsumption.productsProduced.length > 0) {
-                console.log({productsProduced:kitconsumption.productsProduced})
-                const productsProduced = kitconsumption.productsProduced
-                productsProduced.map((produced) => {
-                  if (produced.productId == productId) {
-                    produced.productionCount += quantity;
-                    console.log({producedproductionCount:produced.productionCount})  
-                    console.log({productsProduced:productsProduced})  
-                    try {
-                      const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                        consumptionQuantity,
-                        balance,
-                        productsProduced
-                      });
-                      console.log({ update: update})
-
-                    } catch (error) {
-
-                      console.log({ error: error })
-                    }
-                  }else{
-                    const getproductsProduced = kitconsumption.productsProduced
-                    const productsProduced = [...getproductsProduced,{ productId: productId, productionCount: quantity, productName: name }]
-                  console.log({productsProduced:productsProduced})  
-                  try {
-                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                      consumptionQuantity,
-                      balance,
-                      productsProduced
-                    });
-                    console.log({ update: update})
-
-                  } catch (error) {
-
-                    console.log({ error: error })
-                  }
-                  } 
-
-                })
-                }else {
-                  const productsProduced = [{ productId: productId, productionCount: quantity, productName: name }]
-                  console.log({productsProduced:productsProduced})  
-                  try {
-                    const update = axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                      consumptionQuantity,
-                      balance,
-                      productsProduced
-                    });
-                    console.log({ update: update})
-
-                  } catch (error) {
-
-                    console.log({ error: error })
-                  }
+                const foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId == productId);
+                if (foundProducedProduct) {
+                  foundProducedProduct.productionCount += quantity;
+                } else {
+                  kitconsumption.productsProduced.push({ productId: productId, productionCount: quantity, productName: name });
                 }
-
+  
+                try {
+                  const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+                    consumptionQuantity,
+                    balance,
+                    productsProduced: kitconsumption.productsProduced
+                  });
+                  console.log({ update: update });
+                } catch (error) {
+                  console.log({ error: error });
+                }
+              } else {
+                try {
+                  const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+                    consumptionQuantity,
+                    balance,
+                    productsProduced: [{ productId: productId, productionCount: quantity, productName: name }]
+                  });
+                  console.log({ update: update });
+                } catch (error) {
+                  console.log({ error: error });
+                }
               }
             }
-          )
+          }
         }
-      });
-
-      // const status = 'Prepared';
-      // const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
-      // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
-
+      }
+  
+      // تحديث حالة الطلب وإشعار المستخدم
       getOrdersFromAPI();
-      toast.success('Order is prepared!'); // Notifies success in completing order
+      toast.success('Order is prepared!');
     } catch (error) {
+      // عرض رسالة الخطأ إذا حدثت مشكلة
       console.log(error);
-      toast.error('Failed to complete order!'); // Notifies failure in completing order
+      toast.error('Failed to complete order!');
     }
   };
+  
+
+  // Updates an order status to 'Prepared'
+  // const updateOrderDone = async (id) => {
+  //   try {
+  //     const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
+  //     console.log({ Allkitchenconsumption: Allkitchenconsumption })
+  //     const products = orderData.data.products;
+  //     // console.log({ products: products });
+
+  //     products.forEach((product) => {
+  //       if (product.isDone == false) {
+  //         const quantity = product.quantity
+  //         const productid = product.productId
+  //         const name = product.name
+  //         console.log({ productquantity: quantity });
+  //         console.log({ productid: productid });
+
+  //         const foundProduct = listofProducts.find((p) => p._id === productid);
+  //         const recipe = foundProduct ? foundProduct.Recipe : [];
+
+  //         console.log({ recipe });
+
+  //         recipe.forEach((rec) => {
+  //           const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
+
+  //           if (kitconsumption) {
+  //             // console.log({ recitemId: rec.itemId });
+  //             // console.log({ stockItemId: kitconsumption.stockItemId });
+  //             // console.log({ kitItemid: kitconsumption._id });
+  //             // console.log({ consumptionQuantity: kitconsumption.consumptionQuantity });
+  //             // console.log({ recamount: rec.amount });
+  //             // console.log({ productquantity: quantity });
+
+  //             const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
+  //             const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+
+  //             // console.log({ consumptionQuantity });
+  //             // console.log({ balance });
+  //             if (kitconsumption.productsProduced.length > 0) {
+  //               const productsProduced = kitconsumption.productsProduced
+  //               console.log({maaa:'kitconsumption.productsProduced.length > 0', productsProduced })
+  //               productsProduced.map(async(produced) => {
+  //                 if (produced.productId == productid) {
+  //                   try {
+  //                     console.log({ productionCount1: produced.productionCount })
+  //                     produced.productionCount += quantity;
+  //                     console.log({ productionCount2: produced.productionCount })
+  //                     console.log({ productsProduced: productsProduced })
+  //                     const update =await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+  //                       consumptionQuantity,
+  //                       balance,
+  //                       productsProduced
+  //                     });
+  //                     console.log({ update: update })
+
+  //                   } catch (error) {
+
+  //                     console.log({ error: error })
+  //                   }
+  //                 } 
+  //                 else {
+  //                   const getproductsProduced = kitconsumption.productsProduced
+  //                   const productsProduced = [...getproductsProduced, { productId: productid, productionCount: quantity, productName: name }]
+  //                   console.log({maaa:'kitconsumption.productsProduced.length > 0', productsProduced: productsProduced })
+
+  //                   // console.log({ productsProduced: productsProduced })
+
+  //                   try {
+  //                     const update =await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+  //                       consumptionQuantity,
+  //                       balance,
+  //                       productsProduced
+  //                     });
+  //                     console.log({ update: update })
+
+  //                   } catch (error) {
+
+  //                     console.log({ error: error })
+  //                   }
+  //                 }
+
+  //               })
+  //             } else {
+  //               const productsProduced = [{ productId: productid, productionCount: quantity, productName: name }]
+  //               console.log({ productsProduced: productsProduced })
+  //               try {
+  //                 const update =await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+  //                   consumptionQuantity,
+  //                   balance,
+  //                   productsProduced
+  //                 });
+  //                 console.log({ update: update })
+
+  //               } catch (error) {
+
+  //                 console.log({ error: error })
+  //               }
+  //             }
+
+  //           }
+  //         }
+  //         )
+  //       }
+  //     });
+
+  //     // const status = 'Prepared';
+  //     // const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
+  //     // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
+
+  //     getOrdersFromAPI();
+  //     toast.success('Order is prepared!'); // Notifies success in completing order
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error('Failed to complete order!'); // Notifies failure in completing order
+  //   }
+  // };
 
 
   // Calculates the waiting time for an order
@@ -270,17 +341,17 @@ const Kitchen = () => {
     const t1 = new Date(t).getTime();
     const t2 = new Date().getTime();
     const elapsedTime = t2 - t1;
-  
+
     const minutesPassed = Math.floor(elapsedTime / (1000 * 60));
     setWaitTime(minutesPassed);
-  
+
     if (t) {
       setTimeout(() => waitingTime(t), 60000);
     }
-    
+
     return minutesPassed;
   };
-  
+
   // Fetches orders and active waiters on initial render
   useEffect(() => {
     getOrdersFromAPI();
@@ -332,7 +403,7 @@ const Kitchen = () => {
                         {order.status === 'Preparing' ?
                           <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => {
                             updateOrderDone(order._id);
-                            updatecountofsales(order._id) 
+                            updatecountofsales(order._id)
                           }}>تم التنفيذ</button>
                           : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
                         }

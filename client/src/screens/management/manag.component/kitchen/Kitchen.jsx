@@ -160,7 +160,7 @@ const Kitchen = () => {
       for (const product of products) {
         if (!product.isDone) {
           const quantity = product.quantity;
-          const productId = product.productId;
+          const productId = product.productid;
           const name = product.name;
   
           const foundProduct = listofProducts.find((p) => p._id === productId);

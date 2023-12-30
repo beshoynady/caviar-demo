@@ -157,7 +157,7 @@ const Kitchen = () => {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = orderData.data.products;
   
-      for (const product of products) {
+      products.map(async(product)=>{
         if (!product.isDone) {
           const quantity = product.quantity;
           const productId = product.productid;
@@ -211,11 +211,11 @@ const Kitchen = () => {
             }
           }
         }
-      }
+      })
   
       // تحديث حالة الطلب وإشعار المستخدم
-      getOrdersFromAPI();
-      toast.success('Order is prepared!');
+      // getOrdersFromAPI();
+      // toast.success('Order is prepared!');
     } catch (error) {
       // عرض رسالة الخطأ إذا حدثت مشكلة
       console.log(error);

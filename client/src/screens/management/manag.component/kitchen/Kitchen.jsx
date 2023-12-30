@@ -170,8 +170,8 @@ const Kitchen = () => {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
   
             if (kitconsumption) {
-              const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
-              const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+              const consumptionQuantity = await kitconsumption.consumptionQuantity + rec.amount * quantity;
+              const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
   
               let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
   

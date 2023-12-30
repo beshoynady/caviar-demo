@@ -163,7 +163,7 @@ const Kitchen = () => {
           const productId = await product.productid;
           const name = await product.name;
           console.log({productId, quantity, name});
-          
+
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
 
@@ -177,7 +177,7 @@ const Kitchen = () => {
               console.log({consumptionQuantity:consumptionQuantity})
               const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
               
-              let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId == productId);
+              let foundProducedProduct =await kitconsumption.productsProduced.find((produced) => produced.productId == productId);
               
               if (!foundProducedProduct) {
                 foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
@@ -185,7 +185,7 @@ const Kitchen = () => {
                 await kitconsumption.productsProduced.push(foundProducedProduct);
               }else{
                 foundProducedProduct.productionCount += quantity;
-                console.log({foundProducedProductproductionCount:foundProducedProduct.productionCount += quantity})
+                console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
               }
 
 

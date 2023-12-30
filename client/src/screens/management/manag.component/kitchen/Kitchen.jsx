@@ -157,15 +157,15 @@ const Kitchen = () => {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = orderData.data.products;
   
-      products.map(async(product)=>{
+      for (const product of products) {
         if (!product.isDone) {
           const quantity = product.quantity;
-          const productId = product.productid;
+          const productId = product.productId;
           const name = product.name;
-          console.log({productId, name, quantity})
+  
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-          
+  
           for (const rec of recipe) {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
   
@@ -173,55 +173,40 @@ const Kitchen = () => {
               const consumptionQuantity = kitconsumption.consumptionQuantity + rec.amount * quantity;
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
   
-              if (kitconsumption.productsProduced.length > 0) {
-                const foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId == productId);
-                console.log({foundProducedProduct:foundProducedProduct})
-                if (foundProducedProduct) {
-                  foundProducedProduct.productionCount += quantity;
-                  console.log({foundProducedProduct:foundProducedProduct})
-                } else {
-                  kitconsumption.productsProduced.push({ productId: productId, productionCount: quantity, productName: name });
-                  console.log({kitconsumption_productsProduced:kitconsumption.productsProduced})
-                }
-                
-                try {
-                  console.log({productsProducedkitconsumption_productsProduced:kitconsumption.productsProduced})
-                  const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                    consumptionQuantity,
-                    balance,
-                    productsProduced: kitconsumption.productsProduced
-                  });
-                  console.log({ update: update });
-                } catch (error) {
-                  console.log({ error: error });
-                }
-              } else {
-                try {
-                console.log('جديد');
-                  const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-                    consumptionQuantity,
-                    balance,
-                    productsProduced: [{ productId: productId, productionCount: quantity, productName: name }]
-                  });
-                  console.log({ update: update });
-                } catch (error) {
-                  console.log({ error: error });
-                }
+              let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
+  
+              if (!foundProducedProduct) {
+                foundProducedProduct = { productId: productId, productionCount: 0, productName: name };
+                kitconsumption.productsProduced.push(foundProducedProduct);
+              }
+  
+              foundProducedProduct.productionCount += quantity;
+  
+              try {
+                const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+                  consumptionQuantity,
+                  balance,
+                  productsProduced: kitconsumption.productsProduced
+                });
+                console.log({ update: update });
+              } catch (error) {
+                console.log({ error: error });
               }
             }
           }
         }
-      })
+      }
   
       // تحديث حالة الطلب وإشعار المستخدم
-      // getOrdersFromAPI();
-      // toast.success('Order is prepared!');
+      getOrdersFromAPI();
+      toast.success('Order is prepared!');
     } catch (error) {
       // عرض رسالة الخطأ إذا حدثت مشكلة
       console.log(error);
       toast.error('Failed to complete order!');
     }
   };
+  
   
 
   // Updates an order status to 'Prepared'

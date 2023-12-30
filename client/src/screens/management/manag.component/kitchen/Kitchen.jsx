@@ -176,7 +176,7 @@ const Kitchen = () => {
               let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
 
               if (!foundProducedProduct) {
-                foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
+                foundProducedProduct = { productId: productId, productionCount: 0, productName: name };
                 kitconsumption.productsProduced.push(foundProducedProduct);
               }
 

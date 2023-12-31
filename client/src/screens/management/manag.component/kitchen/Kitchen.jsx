@@ -134,23 +134,23 @@ const Kitchen = () => {
 
   }
 
-  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
+  // const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
 
-  const getKitchenConsumption = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
-      if (response) {
-        setkitchenconsumption(response.data.data);
-        console.log({getKitchenConsumption:response.data.data});
-      } else {
-        console.log('Unexpected status code:', response.status);
-        // Handle other statuses if needed
-      }
-    } catch (error) {
-      console.error('Error fetching kitchen consumption:', error);
-      // Handle error: Notify user, log error, etc.
-    }
-  };
+  // const getKitchenConsumption = async () => {
+  //   try {
+  //     const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
+  //     if (response) {
+  //       setkitchenconsumption(response.data.data);
+  //       console.log({getKitchenConsumption:response.data.data});
+  //     } else {
+  //       console.log('Unexpected status code:', response.status);
+  //       // Handle other statuses if needed
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching kitchen consumption:', error);
+  //     // Handle error: Notify user, log error, etc.
+  //   }
+  // };
 
   const updateOrderDone = async (id) => {
     try {
@@ -162,8 +162,9 @@ const Kitchen = () => {
       for (const product of products) {
         if (!product.isDone) {
           // Fetch kitchen consumption data
-          await getKitchenConsumption();
-  
+          // await getKitchenConsumption();
+          const getKitchenConsumption = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
+          const Allkitchenconsumption = await getKitchenConsumption.data.data
           const quantity = product.quantity;
           const productId = product.productid;
           const name = product.name;

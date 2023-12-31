@@ -157,7 +157,7 @@ const Kitchen = () => {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = await orderData.data.products;
 
-      for (const product of products) {
+      products.map(async(product)=>{
         if (!product.isDone) {
           const quantity = await product.quantity;
           const productId = await product.productid;
@@ -168,24 +168,26 @@ const Kitchen = () => {
           const recipe = foundProduct ? foundProduct.Recipe : [];
 
           for (const rec of recipe) {
-            // console.log({rec:rec})
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
             // console.log({kitconsumption:kitconsumption})
             
             if (kitconsumption) {
-              const consumptionQuantity = await kitconsumption.consumptionQuantity +( rec.amount * quantity);
-              console.log({consumptionQuantity:consumptionQuantity})
+            console.log({befor:kitconsumption.consumptionQuantity})
+            const consumptionQuantity = await kitconsumption.consumptionQuantity +( rec.amount * quantity);
+            console.log({after:kitconsumption.consumptionQuantity})
+            console.log({consumptionQuantity:consumptionQuantity})
+            // console.log({rec:rec})
               const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
               
               let foundProducedProduct =await kitconsumption.productsProduced.find((produced) => produced.productId == productId);
               
               if (!foundProducedProduct) {
                 foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
-                console.log({foundProducedProduct:foundProducedProduct})
+                // console.log({foundProducedProduct:foundProducedProduct})
                 await kitconsumption.productsProduced.push(foundProducedProduct);
               }else{
                 foundProducedProduct.productionCount += quantity;
-                console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
+                // console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
               }
 
 
@@ -195,14 +197,14 @@ const Kitchen = () => {
                   balance,
                   productsProduced: kitconsumption.productsProduced
                 });
-                console.log({ update: update });
+                // console.log({ update: update });
               } catch (error) {
                 console.log({ error: error });
               }
             }
           }
         }
-      }
+      })
     //   const status = 'Prepared';
     //   const updateproducts = await products.map((prod) => ({ ...prod, isDone: true }));
     //  const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products: updateproducts, status });

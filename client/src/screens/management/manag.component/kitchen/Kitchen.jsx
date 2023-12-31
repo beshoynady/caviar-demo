@@ -164,19 +164,20 @@ const Kitchen = () => {
           const productId = product.productid;
           const name = product.name;
           console.log({ productId, quantity, name });
-  
+          
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-  
+          // getkitchenconsumption()
           for (const rec of recipe) {
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
+            const consumptionQuantity=0
             
             if (kitconsumption) {
               const productamont = rec.amount * quantity
               console.log({productamont:rec.amount * quantity})
               const getconsumptionQuantity = kitconsumption.consumptionQuantity;
               console.log({ getconsumptionQuantity });
-              const consumptionQuantity = getconsumptionQuantity + productamont;
+              consumptionQuantity += getconsumptionQuantity + productamont;
               console.log({ consumptionQuantity });
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
   
@@ -195,7 +196,6 @@ const Kitchen = () => {
                   balance,
                   productsProduced: kitconsumption.productsProduced
                 });
-                getkitchenconsumption()
                 console.log({ update: update });
               } catch (error) {
                 console.log({ error: error });

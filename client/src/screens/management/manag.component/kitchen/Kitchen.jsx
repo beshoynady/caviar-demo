@@ -163,7 +163,7 @@ const Kitchen = () => {
           const quantity = await product.quantity;
           const productId = await product.productid;
           const name = await product.name;
-          console.log({productId1, quantity, name});
+          console.log({productId, quantity, name});
 
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
@@ -206,7 +206,7 @@ const Kitchen = () => {
           }
         }
       })
-      
+
     //   const status = 'Prepared';
     //   const updateproducts = await products.map((prod) => ({ ...prod, isDone: true }));
     //  const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products: updateproducts, status });

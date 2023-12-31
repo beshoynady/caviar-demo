@@ -206,6 +206,7 @@ const Kitchen = () => {
           }
         }
       })
+      
     //   const status = 'Prepared';
     //   const updateproducts = await products.map((prod) => ({ ...prod, isDone: true }));
     //  const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products: updateproducts, status });

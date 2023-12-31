@@ -167,20 +167,18 @@ const Kitchen = () => {
           
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-          // getkitchenconsumption()
           for (const rec of recipe) {
+            await getkitchenconsumption()
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
-            const consumptionQuantity=0
             
             if (kitconsumption) {
               const productamont = rec.amount * quantity
               console.log({productamont:rec.amount * quantity})
-              const getconsumptionQuantity = kitconsumption.consumptionQuantity;
+              const getconsumptionQuantity = await kitconsumption.consumptionQuantity;
               console.log({ getconsumptionQuantity });
-              consumptionQuantity += getconsumptionQuantity + productamont;
+              const consumptionQuantity = getconsumptionQuantity + productamont;
               console.log({ consumptionQuantity });
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-  
               let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
               
               if (!foundProducedProduct) {

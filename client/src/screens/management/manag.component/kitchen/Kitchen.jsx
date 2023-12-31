@@ -195,6 +195,7 @@ const Kitchen = () => {
                   balance,
                   productsProduced: kitconsumption.productsProduced
                 });
+                getkitchenconsumption()
                 console.log({ update: update });
               } catch (error) {
                 console.log({ error: error });

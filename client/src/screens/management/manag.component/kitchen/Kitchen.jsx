@@ -173,8 +173,9 @@ const Kitchen = () => {
             
             if (kitconsumption) {
               console.log({recamountquantity:rec.amount * quantity})
+              const productamont = rec.amount * quantity
               const getconsumptionQuantity = await kitconsumption.consumptionQuantity;
-              const consumptionQuantity = getconsumptionQuantity + (rec.amount * quantity);
+              const consumptionQuantity = getconsumptionQuantity + productamont;
               console.log({ consumptionQuantity });
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
   

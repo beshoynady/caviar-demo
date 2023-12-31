@@ -364,7 +364,7 @@ const Kitchen = () => {
     getOrdersFromAPI();
     getAllWaiters();
     getallproducts()
-    getKitchenConsumption()
+    // getKitchenConsumption()
   }, []);
 
   return (

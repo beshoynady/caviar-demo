@@ -156,61 +156,55 @@ const Kitchen = () => {
   const updateOrderDone = async (id) => {
     try {
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
-      const products = await orderData.data.products;
-
-      products.map(async(product)=>{
+      const products = orderData.data.products;
+  
+      for (const product of products) {
         if (!product.isDone) {
-          const quantity = await product.quantity;
-          const productId = await product.productid;
-          const name = await product.name;
-          console.log({productId, quantity, name});
-
+          const quantity = product.quantity;
+          const productId = product.productid;
+          const name = product.name;
+          console.log({ productId, quantity, name });
+  
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-
+  
           for (const rec of recipe) {
-            const kitconsumption = Allkitchenconsumption.filter((kitItem) => kitItem.stockItemId === rec.itemId)[0];
-            console.log({kitconsumption2:kitconsumption})
+            const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
             
             if (kitconsumption) {
-            console.log({befor3:kitconsumption.consumptionQuantity})
-            const consumptionQuantity = await kitconsumption.consumptionQuantity +( rec.amount * quantity);
-            console.log({after4:kitconsumption.consumptionQuantity})
-            console.log({consumptionQuantity5:consumptionQuantity})
-            // console.log({rec:rec})
-              const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+              console.log({recamountquantity:rec.amount * quantity})
+              const getconsumptionQuantity = await kitconsumption.consumptionQuantity;
+              const consumptionQuantity = getconsumptionQuantity + (rec.amount * quantity);
+              console.log({ consumptionQuantity });
+              const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+  
+              let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
               
-              // let foundProducedProduct =await kitconsumption.productsProduced.find((produced) => produced.productId == productId);
-              
-              // if (!foundProducedProduct) {
-              //   foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
-              //   // console.log({foundProducedProduct:foundProducedProduct})
-              //   await kitconsumption.productsProduced.push(foundProducedProduct);
-              // }else{
-              //   foundProducedProduct.productionCount += quantity;
-              //   // console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
-              // }
-
-
+              if (!foundProducedProduct) {
+                foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
+                kitconsumption.productsProduced.push(foundProducedProduct);
+              } else {
+                foundProducedProduct.productionCount += quantity;
+              }
+  
               try {
                 const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
                   consumptionQuantity,
                   balance,
-                  // productsProduced: kitconsumption.productsProduced
+                  productsProduced: kitconsumption.productsProduced
                 });
-                // console.log({ update: update });
+                console.log({ update: update });
               } catch (error) {
                 console.log({ error: error });
               }
             }
           }
         }
-      })
-
-    //   const status = 'Prepared';
-    //   const updateproducts = await products.map((prod) => ({ ...prod, isDone: true }));
-    //  const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products: updateproducts, status });
-
+      }
+  
+      // Perform other operations if needed after the loop completes
+      // Update order status or perform other tasks
+  
       // getOrdersFromAPI();
       toast.success('Order is prepared!');
     } catch (error) {
@@ -218,6 +212,7 @@ const Kitchen = () => {
       toast.error('Failed to complete order!');
     }
   };
+  
 
 
 

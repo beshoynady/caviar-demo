@@ -163,40 +163,40 @@ const Kitchen = () => {
           const quantity = await product.quantity;
           const productId = await product.productid;
           const name = await product.name;
-          console.log({productId, quantity, name});
+          console.log({productId1, quantity, name});
 
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
 
           for (const rec of recipe) {
             const kitconsumption = Allkitchenconsumption.filter((kitItem) => kitItem.stockItemId === rec.itemId)[0];
-            // console.log({kitconsumption:kitconsumption})
+            console.log({kitconsumption2:kitconsumption})
             
             if (kitconsumption) {
-            console.log({befor:kitconsumption.consumptionQuantity})
+            console.log({befor3:kitconsumption.consumptionQuantity})
             const consumptionQuantity = await kitconsumption.consumptionQuantity +( rec.amount * quantity);
-            console.log({after:kitconsumption.consumptionQuantity})
-            console.log({consumptionQuantity:consumptionQuantity})
+            console.log({after4:kitconsumption.consumptionQuantity})
+            console.log({consumptionQuantity5:consumptionQuantity})
             // console.log({rec:rec})
               const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
               
-              let foundProducedProduct =await kitconsumption.productsProduced.find((produced) => produced.productId == productId);
+              // let foundProducedProduct =await kitconsumption.productsProduced.find((produced) => produced.productId == productId);
               
-              if (!foundProducedProduct) {
-                foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
-                // console.log({foundProducedProduct:foundProducedProduct})
-                await kitconsumption.productsProduced.push(foundProducedProduct);
-              }else{
-                foundProducedProduct.productionCount += quantity;
-                // console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
-              }
+              // if (!foundProducedProduct) {
+              //   foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
+              //   // console.log({foundProducedProduct:foundProducedProduct})
+              //   await kitconsumption.productsProduced.push(foundProducedProduct);
+              // }else{
+              //   foundProducedProduct.productionCount += quantity;
+              //   // console.log({foundProducedProductproductionCount: foundProducedProduct.productionCount + quantity})
+              // }
 
 
               try {
                 const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
                   consumptionQuantity,
                   balance,
-                  productsProduced: kitconsumption.productsProduced
+                  // productsProduced: kitconsumption.productsProduced
                 });
                 // console.log({ update: update });
               } catch (error) {
@@ -210,7 +210,7 @@ const Kitchen = () => {
     //   const updateproducts = await products.map((prod) => ({ ...prod, isDone: true }));
     //  const updateOrder = await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products: updateproducts, status });
 
-      getOrdersFromAPI();
+      // getOrdersFromAPI();
       toast.success('Order is prepared!');
     } catch (error) {
       console.log(error);

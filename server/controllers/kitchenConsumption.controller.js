@@ -34,7 +34,7 @@ const createKitchenConsumption = async (req, res) => {
       unit,
       createBy
     });
-    res.status(201).json({ success: true, data: newKitchenConsumption });
+    res.status(201).json({newKitchenConsumption });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }

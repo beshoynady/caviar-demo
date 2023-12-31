@@ -168,12 +168,12 @@ const Kitchen = () => {
           const recipe = foundProduct ? foundProduct.Recipe : [];
 
           for (const rec of recipe) {
-            console.log({rec:rec})
+            // console.log({rec:rec})
             const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
-            console.log({kitconsumption:kitconsumption})
+            // console.log({kitconsumption:kitconsumption})
             
             if (kitconsumption) {
-              const consumptionQuantity = await kitconsumption.consumptionQuantity + rec.amount * quantity;
+              const consumptionQuantity = await kitconsumption.consumptionQuantity +( rec.amount * quantity);
               console.log({consumptionQuantity:consumptionQuantity})
               const balance = await kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
               

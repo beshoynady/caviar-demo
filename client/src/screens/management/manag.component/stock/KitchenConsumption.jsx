@@ -424,7 +424,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>{i.stockItemName}</td>
+                              <td>{item.stockItemName}</td>
                               <td>{item.quantityTransferredToKitchen}</td>
                               <td>{item.consumptionQuantity}</td>
                               <td>{item.unit}</td>

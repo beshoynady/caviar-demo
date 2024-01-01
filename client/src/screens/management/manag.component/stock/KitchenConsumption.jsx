@@ -299,8 +299,8 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
   const searchByKitchenConsumption = (name) => {
-    const filteredKitchenConsumption = KitchenConsumption.filter((item) => item.stockItemName.startsWith(name) == true);
-    setkitchenconsumption(filteredKitchenConsumption);
+    const filteredKitchenConsumption = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
+    setAllkitchenconsumption(filteredKitchenConsumption);
   };
   
 

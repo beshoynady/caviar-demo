@@ -299,8 +299,12 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
   const searchByKitchenConsumption = (name) => {
+    if(name!=''){
     const filteredKitchenConsumption = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
     setkitchenconsumption(filteredKitchenConsumption);
+  }else{
+    getkitchenconsumption
+  }
   };
   
 

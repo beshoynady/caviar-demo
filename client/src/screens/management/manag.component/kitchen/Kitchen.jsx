@@ -227,6 +227,9 @@ const Kitchen = () => {
     return minutesPassed;
   };
 
+
+  
+
   // Fetches orders and active waiters on initial render
   useEffect(() => {
     getOrdersFromAPI();

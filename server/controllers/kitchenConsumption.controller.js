@@ -27,9 +27,10 @@ const getKitchenConsumptionById = async (req, res) => {
 // Create a new kitchen consumption
 const createKitchenConsumption = async (req, res) => {
   try {
-    const { stockItemId, quantityTransferredToKitchen,unit,createBy } = req.body;
+    const { stockItemId,stockItemName, quantityTransferredToKitchen,unit,createBy } = req.body;
     const newKitchenConsumption = await KitchenConsumptionModel.create({
       stockItemId,
+      stockItemName,
       quantityTransferredToKitchen,
       unit,
       createBy
@@ -50,6 +51,7 @@ const updateKitchenConsumptionById = async (req, res) => {
       id,
       {
         stockItemId,
+        stockItemName,
         quantityTransferredToKitchen,
         consumptionQuantity,
         unit,

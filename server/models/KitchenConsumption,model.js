@@ -8,6 +8,10 @@ const KitchenConsumptionSchema = new mongoose.Schema(
       ref: 'StockItem',
       required: true,
     },
+    stockItemName:{
+      type: String,
+      required: true,
+    },
     quantityTransferredToKitchen: {
       type: Number,
       required: true,

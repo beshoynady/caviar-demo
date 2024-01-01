@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const KitchenConsumption = () => {
   const [itemName, setitemName] = useState('');
   const [stockItemId, setstockItemId] = useState('');
+  const [stockItemName, setstockItemName] = useState('');
   const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
   const [createBy, setcreateBy] = useState('');
   const [unit, setunit] = useState('');
@@ -26,6 +27,7 @@ const addKitchenItem = async (e) => {
     // Make a POST request to add an item
     const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
       stockItemId,
+      stockItemName,
       quantityTransferredToKitchen,
       unit,
       createBy
@@ -133,82 +135,82 @@ const addKitchenItem = async (e) => {
 //   }
 // };
 
-const updateKitchenItem = async (e) => {
-  e.preventDefault();
-  console.log('updateKitchenItem');
+// const updateKitchenItem = async (e) => {
+//   e.preventDefault();
+//   console.log('updateKitchenItem');
 
-  try {
-    for (const order of listOfOrders) {
-      const listoforderproducts = order.products;
+//   try {
+//     for (const order of listOfOrders) {
+//       const listoforderproducts = order.products;
 
-      for (const orderproduct of listoforderproducts) {
-        console.log({ orderproduct: orderproduct });
+//       for (const orderproduct of listoforderproducts) {
+//         console.log({ orderproduct: orderproduct });
 
-        for (const product of listofProducts) {
-          console.log({ listoforderproducts: orderproduct.productid });
-          console.log({ listofProducts: product._id });
+//         for (const product of listofProducts) {
+//           console.log({ listoforderproducts: orderproduct.productid });
+//           console.log({ listofProducts: product._id });
 
-          if (product._id == orderproduct.productid) {
-            const listofrecipe = product.Recipe;
+//           if (product._id == orderproduct.productid) {
+//             const listofrecipe = product.Recipe;
 
-            for (const recipe of listofrecipe) {
-              console.log({ recipe: recipe });
+//             for (const recipe of listofrecipe) {
+//               console.log({ recipe: recipe });
 
-              for (const item of Allkitchenconsumption) {
-                console.log({ Allkitchenconsumption: item });
+//               for (const item of Allkitchenconsumption) {
+//                 console.log({ Allkitchenconsumption: item });
 
-                if (item.stockItemId == recipe.itemId) {
-                  let consumptionQuantity = 0; // Initialize consumption quantity here
-                  const productsProduced = item.productsProduced;
+//                 if (item.stockItemId == recipe.itemId) {
+//                   let consumptionQuantity = 0; // Initialize consumption quantity here
+//                   const productsProduced = item.productsProduced;
 
-                  for (const p of productsProduced) {
-                    console.log({ productsProduced: p });
+//                   for (const p of productsProduced) {
+//                     console.log({ productsProduced: p });
 
-                    if (p.productId === orderproduct.productid) {
-                      p.productionCount += orderproduct.quantity;
-                    } else {
-                      productsProduced.push({
-                        productId: orderproduct.productid,
-                        productName: orderproduct.name,
-                        productionCount: orderproduct.quantity,
-                      });
-                    }
+//                     if (p.productId === orderproduct.productid) {
+//                       p.productionCount += orderproduct.quantity;
+//                     } else {
+//                       productsProduced.push({
+//                         productId: orderproduct.productid,
+//                         productName: orderproduct.name,
+//                         productionCount: orderproduct.quantity,
+//                       });
+//                     }
 
-                    consumptionQuantity += recipe.amount * orderproduct.quantity;
-                    const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+//                     consumptionQuantity += recipe.amount * orderproduct.quantity;
+//                     const balance = item.quantityTransferredToKitchen - consumptionQuantity;
 
-                    try {
-                      const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-                        consumptionQuantity,
-                        balance,
-                        productsProduced,
-                      });
-                      console.log('Update successful:', update.data);
-                      // Add toast for successful update
-                      toast.success('Updated kitchen consumption successfully');
-                    } catch (error) {
-                      console.error('Update error:', error);
-                      // Add toast for update error
-                      toast.error('Failed to update kitchen consumption');
-                    }
-                  }
-                } else {
-                  console.log('Allkitchenconsumption item.stockItemId === recipe');
-                }
-              }
-            }
-          } else {
-            console.log('product._id === orderproduct.productid');
-          }
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Error occurred:', error);
-    // Add toast for error
-    toast.error('An error occurred');
-  }
-};
+//                     try {
+//                       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+//                         consumptionQuantity,
+//                         balance,
+//                         productsProduced,
+//                       });
+//                       console.log('Update successful:', update.data);
+//                       // Add toast for successful update
+//                       toast.success('Updated kitchen consumption successfully');
+//                     } catch (error) {
+//                       console.error('Update error:', error);
+//                       // Add toast for update error
+//                       toast.error('Failed to update kitchen consumption');
+//                     }
+//                   }
+//                 } else {
+//                   console.log('Allkitchenconsumption item.stockItemId === recipe');
+//                 }
+//               }
+//             }
+//           } else {
+//             console.log('product._id === orderproduct.productid');
+//           }
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error occurred:', error);
+//     // Add toast for error
+//     toast.error('An error occurred');
+//   }
+// };
 
 
   const [listOfOrders, setlistOfOrders] = useState([])
@@ -296,6 +298,11 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
 
+  const searchBykitchenconsumption = (name) => {
+    const kitchenconsumptionFilter = KitchenConsumption.filter((item) => item.stockItemName.toString().startsWith(name));
+    setkitchenconsumption(kitchenconsumptionFilter);
+  };
+
 
   useEffect(() => {
     getStockItems()
@@ -343,21 +350,20 @@ const [listofProducts, setlistofProducts] = useState([]);
                         </div>
                       </div>
                       <div class="col-sm-9">
-                        {/* <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
                           <label>اسم الصنف</label>
-                          <input type="text" class="form-control" onChange={(e) => searchByitem(e.target.value)} />
-                        </div> */}
-                        {/* <div class="filter-group">
-                          <label>نوع الاوردر</label>
-                          <select class="form-control" onChange={(e) => searchByaction(e.target.value)} >
+                          <input type="text" class="form-control" onChange={(e) => searchBykitchenconsumption(e.target.value)} />
+                        </div>
+                        <div class="filter-group">
+                          <label>اختر الصنف</label>
+                          <select class="form-control" onChange={(e) => searchBykitchenconsumption(e.target.value)} >
                             <option value={""}>الكل</option>
-                            <option value="Purchase" >Purchase</option>
-                            <option value="Return" >Return</option>
-                            <option value="Expense" >Expense</option>
-                            <option value="Wastage" >Wastage</option>
+                            {Allkitchenconsumption.map((consumption) =>{
+                              return (<option value={consumption.stockItemName}>{consumption.stockItemName}</option>)
+                            })}
                           </select>
-                        </div> */}
+                        </div>
                         {/* <div class="filter-group">
                           <label>Location</label>
                           <select class="form-control">
@@ -418,9 +424,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                                 </span>
                               </td>
                               <td>{i + 1}</td>
-                              <td>
-                              {AllStockItems.length>0? AllStockItems.filter(it => it._id == item.stockItemId)[0].itemName:''}
-                              </td>
+                              <td>{i.stockItemName}</td>
                               <td>{item.quantityTransferredToKitchen}</td>
                               <td>{item.consumptionQuantity}</td>
                               <td>{item.unit}</td>
@@ -469,7 +473,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                         
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo.employeeinfo.id)}}>
+                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo.employeeinfo.id); setstockItemName(AllStockItems.filter(it => it._id == e.target.value)[0].itemName)}}>
                             <option>اختر الصنف</option>
                             {AllStockItems.map((StockItems, i) => {
                               return <option value={StockItems._id} key={i} >{StockItems.itemName}</option>
@@ -571,7 +575,7 @@ const [listofProducts, setlistofProducts] = useState([]);
               </div>
                         */}
 
-              <div id="updateItemModal" className="modal fade">
+              {/* <div id="updateItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <form onSubmit={updateKitchenItem}>
@@ -590,7 +594,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                     </form>
                   </div>
                 </div>
-              </div>  
+              </div>   */}
               
             </div>
           )

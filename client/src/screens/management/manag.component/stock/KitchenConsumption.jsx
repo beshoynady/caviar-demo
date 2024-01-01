@@ -298,10 +298,11 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
 
-  const searchBykitchenconsumption = (name) => {
-    const kitchenconsumptionFilter = KitchenConsumption.filter((item) => item.stockItemName.toString().startsWith(name));
-    setkitchenconsumption(kitchenconsumptionFilter);
+  const searchByKitchenConsumption = (name) => {
+    const filteredKitchenConsumption = KitchenConsumption.filter((item) => item.stockItemName.startsWith(name) == true);
+    setkitchenconsumption(filteredKitchenConsumption);
   };
+  
 
 
   useEffect(() => {
@@ -353,11 +354,11 @@ const [listofProducts, setlistofProducts] = useState([]);
                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         <div class="filter-group">
                           <label>اسم الصنف</label>
-                          <input type="text" class="form-control" onChange={(e) => searchBykitchenconsumption(e.target.value)} />
+                          <input type="text" class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} />
                         </div>
                         <div class="filter-group">
                           <label>اختر الصنف</label>
-                          <select class="form-control" onChange={(e) => searchBykitchenconsumption(e.target.value)} >
+                          <select class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} >
                             <option value={""}>الكل</option>
                             {Allkitchenconsumption.map((consumption) =>{
                               return (<option value={consumption.stockItemName}>{consumption.stockItemName}</option>)

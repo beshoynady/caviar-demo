@@ -302,7 +302,7 @@ const [listofProducts, setlistofProducts] = useState([]);
     if(name!=''){
     const filteredKitchenConsumption = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
     setkitchenconsumption(filteredKitchenConsumption);
-  }else{
+  }else if(name == ''){
     getkitchenconsumption()
   }
   };

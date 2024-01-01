@@ -278,7 +278,7 @@ const [listofProducts, setlistofProducts] = useState([]);
 
   }
   const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
-
+  
   const getkitchenconsumption = async () => {
     try {
       console.log('getkitchenconsumption');
@@ -297,14 +297,11 @@ const [listofProducts, setlistofProducts] = useState([]);
   };
 
 
+  const [filteredKitchenConsumption, setfilteredKitchenConsumption] = useState([])
 
   const searchByKitchenConsumption = (name) => {
-    if(name!=''){
-    const filteredKitchenConsumption = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
-    setkitchenconsumption(filteredKitchenConsumption);
-  }else if(name == ''){
-    getkitchenconsumption()
-  }
+    const filter = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
+    setfilteredKitchenConsumption(filter);
   };
   
 
@@ -418,7 +415,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                     </thead>
                     <tbody>
                       {
-                      Allkitchenconsumption.length >0? Allkitchenconsumption.map((item, i) => {
+                      filteredKitchenConsumption.length >0? filteredKitchenConsumption.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -449,7 +446,40 @@ const [listofProducts, setlistofProducts] = useState([]);
                             </tr>
                           );
                         }
-                      }):""}
+                      })
+                      :Allkitchenconsumption.length >0? Allkitchenconsumption.map((item, i) => {
+                        if (i >= startpagination & i < endpagination) {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                <span className="custom-checkbox">
+                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                  <label htmlFor="checkbox1"></label>
+                                </span>
+                              </td>
+                              <td>{i + 1}</td>
+                              <td>{item.stockItemName}</td>
+                              <td>{item.quantityTransferredToKitchen}</td>
+                              <td>{item.consumptionQuantity}</td>
+                              <td>{item.unit}</td>
+                              <td>{item.balance}</td>
+                              <td>{item.adjustment}</td>
+                              <td>
+                                {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
+                                  <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
+                                )):'لا يوجد'}
+                              </td>
+                              <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                              <td>{item.createdAt}</td>
+                              <td>
+                                <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                              </td>
+                            </tr>
+                          );
+                        }
+                      }):''
+                    }
                     </tbody>
                   </table>
                   <div className="clearfix">

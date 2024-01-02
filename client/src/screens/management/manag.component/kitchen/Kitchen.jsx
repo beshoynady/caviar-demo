@@ -158,8 +158,16 @@ const Kitchen = () => {
   
           // Calculate consumption for each ingredient in the recipe
           for (const rec of recipe) {
-            const kitconsumption = Allkitchenconsumption.find((kitItem) => kitItem.stockItemId === rec.itemId);
-  
+            const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
+            const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
+              const itemDate = new Date(kitItem.creationDate).toISOString().split('T')[0];
+              return itemDate === today;
+            });
+            
+            let kitconsumption = null;
+            if (kitconsumptionToday.length > 0) {
+              kitconsumption = kitconsumptionToday.find((kitItem) => kitItem.stockItemId === rec.itemId);
+            }  
             if (kitconsumption) {
               const productAmount = rec.amount * quantity;
               console.log({ productAmount });

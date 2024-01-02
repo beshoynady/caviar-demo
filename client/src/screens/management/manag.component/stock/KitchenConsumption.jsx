@@ -353,11 +353,12 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
 
 // Function to filter kitchen consumption based on creation date
 const filterByKitConsumCreatedAt = () => {
-  const filtered = Allkitchenconsumption.filter((kitItem) => {
-    return new Date(kitItem.createdAt).toISOString().split('T')[0] === date;
-    // Use '===' for comparison and 'return' to ensure the filtered value is returned
+  console.log({Allkitchenconsumption})
+  const filtered = Allkitchenconsumption.map((kitItem) => {
+    console.log({dateee:new Date(kitItem.createdAt).toISOString().split('T')[0]})
+    //  === date;
   });
-  setFilteredKitchenConsumptionToday(filtered);
+  // setFilteredKitchenConsumptionToday(filtered);
 };
   
   

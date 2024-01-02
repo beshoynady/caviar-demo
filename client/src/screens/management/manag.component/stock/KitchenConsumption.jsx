@@ -355,10 +355,8 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
 const filterByKitConsumCreatedAt = () => {
   console.log({datett:date})
   const filtered = Allkitchenconsumption.filter((kitItem) => {
-    const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+    new Date(kitItem.createdAt).toISOString().split('T')[0] == date;
     console.log({createdAt:kitItem.createdAt})
-    console.log({itemDate})
-    return itemDate === date;
   });
   console.log({filtered})
   setFilteredKitchenConsumptionToday(filtered);

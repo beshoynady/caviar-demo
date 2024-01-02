@@ -44,7 +44,7 @@ const createKitchenConsumption = async (req, res) => {
 // Update kitchen consumption by ID
 const updateKitchenConsumptionById = async (req, res) => {
   const { id } = req.params;
-  const { stockItemId, quantityTransferredToKitchen, consumptionQuantity,unit, balance, adjustment, productsProduced, createBy} = req.body;
+  const { stockItemId,stockItemName, quantityTransferredToKitchen, consumptionQuantity,unit, balance, adjustment, productsProduced, createBy} = req.body;
 
   try {
     const updatedKitchenConsumption = await KitchenConsumptionModel.findByIdAndUpdate(

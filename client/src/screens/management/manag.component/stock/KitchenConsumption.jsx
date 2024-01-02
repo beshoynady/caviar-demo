@@ -24,7 +24,7 @@ const KitchenConsumption = () => {
   const addKitchenItem = async (e) => {
     e.preventDefault()
     const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
-    const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
+    const kitconsumptionToday = allKitchenConsumption.filter((kitItem) => {
       const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
       return itemDate === today;
     });
@@ -110,8 +110,8 @@ const KitchenConsumption = () => {
   //             listofrecipe.map((recipe) => {
   //               console.log({recipe:recipe})
 
-  //               Allkitchenconsumption.map(async (item) => {
-  //                 console.log({Allkitchenconsumption:item})
+  //               allKitchenConsumption.map(async (item) => {
+  //                 console.log({allKitchenConsumption:item})
   //                 if (item.stockItemId == recipe.itemId) {
   //                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
   //                   const balance = item.quantityTransferredToKitchen - consumptionQuantity;
@@ -159,7 +159,7 @@ const KitchenConsumption = () => {
   //                     }
   //                   });
   //                 }else{
-  //                   console.log('Allkitchenconsumption item.stockItemId === recipe')
+  //                   console.log('allKitchenConsumption item.stockItemId === recipe')
 
   //                 }
   //               });
@@ -198,8 +198,8 @@ const KitchenConsumption = () => {
   //             for (const recipe of listofrecipe) {
   //               console.log({ recipe: recipe });
 
-  //               for (const item of Allkitchenconsumption) {
-  //                 console.log({ Allkitchenconsumption: item });
+  //               for (const item of allKitchenConsumption) {
+  //                 console.log({ allKitchenConsumption: item });
 
   //                 if (item.stockItemId == recipe.itemId) {
   //                   let consumptionQuantity = 0; // Initialize consumption quantity here
@@ -237,7 +237,7 @@ const KitchenConsumption = () => {
   //                     }
   //                   }
   //                 } else {
-  //                   console.log('Allkitchenconsumption item.stockItemId === recipe');
+  //                   console.log('allKitchenConsumption item.stockItemId === recipe');
   //                 }
   //               }
   //             }
@@ -321,43 +321,38 @@ const KitchenConsumption = () => {
   }
 
 
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  // Function to handle date change and filter data
-  const handleDateChange = (e) => {
-    const selectedDate = new Date(e.target.value).toISOString().split('T')[0];
-    console.log({ selectedDate })
-    setDate(selectedDate); // Update the date state based on user selection
-    getkitchenconsumption(); // Filter data based on the selected date
-  };
-
-
-  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
+  const today = new Date().toISOString().split('T')[0];
+  const [date, setDate] = useState(today);
+  const [allKitchenConsumption, setAllKitchenConsumption] = useState([]);
   const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
-  const getkitchenconsumption = async () => {
+  const getKitchenConsumption = async () => {
     try {
-      console.log({date});
+      console.log('Fetching kitchen consumption...');
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
-      if (response) {
-        // console.log(response.data);
-        const kitchenconsumptions = response.data.data
-        setkitchenconsumption({kitchenconsumptions});
+      if (response && response.data) {
+        const kitchenConsumptions = response.data.data || [];
+        setAllKitchenConsumption(kitchenConsumptions);
 
-        const filtered = kitchenconsumptions.filter((kitItem) => {
+        const filtered = kitchenConsumptions.filter((kitItem) => {
           const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
           return itemDate === date;
         });
-        console.log({ filtered })
+        console.log('Filtered kitchen consumption for the selected date:', filtered);
         setFilteredKitchenConsumptionToday(filtered);
-
       } else {
-        console.log('Unexpected status code:', response.status);
-        // Handle other statuses if needed
+        console.log('Unexpected response or empty data');
       }
     } catch (error) {
       console.error('Error fetching kitchen consumption:', error);
       // Handle error: Notify user, log error, etc.
     }
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    console.log('Selected Date:', selectedDate);
+    setDate(selectedDate);
   };
 
 
@@ -376,7 +371,7 @@ const KitchenConsumption = () => {
   // // Function to filter kitchen consumption based on creation date
   // const filterByKitConsumCreatedAt = () => {
   //   console.log({datett:date})
-  //   const filtered = Allkitchenconsumption.filter((kitItem) => {
+  //   const filtered = allKitchenConsumption.filter((kitItem) => {
   //     new Date(kitItem.createdAt).toISOString().split('T')[0] == date;
   //     console.log({createdAt:kitItem.createdAt})
   //     return itemDate === date;
@@ -392,9 +387,9 @@ const KitchenConsumption = () => {
     getStockItems()
     getAllOrders()
     getallproducts()
-    getkitchenconsumption()
+    getKitchenConsumption()
     // filterByKitConsumCreatedAt()
-  }, [])
+  }, [date])
 
   return (
     <detacontext.Consumer>

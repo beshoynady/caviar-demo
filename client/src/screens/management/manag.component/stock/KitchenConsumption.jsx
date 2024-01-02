@@ -345,6 +345,18 @@ const [listofProducts, setlistofProducts] = useState([]);
     const filter = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
     setfilteredKitchenConsumption(filter);
   };
+
+
+  const [date, setdate] = useState(new Date().toISOString().split('T')[0])
+
+  const filterByKitConsumCreateAt = (date) => {
+    const filtered = Allkitchenconsumption.filter((kitItem) => {
+      const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+      return itemDate === date;
+    });
+    setfilteredKitchenConsumption(filtered);
+  };
+  
   
 
 

@@ -35,13 +35,14 @@ const addKitchenItem = async (e) => {
   if (kitconsumption){
     try {
       // Make a POST request to add an item
+      const newquantityTransferredToKitchen = kitconsumption.quantityTransferredToKitchen + quantityTransferredToKitchen
       const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption${kitconsumption._id}`, {
-        quantityTransferredToKitchen,
+        quantityTransferredToKitchen:newquantityTransferredToKitchen,
         createBy
       });
   
       // Check if the item was added successfully
-      if (response.status === 201) {
+      if (response.status === 200) {
         getkitchenconsumption()
         // Show a success toast if the item is added
         toast.success('quantity added successfully');

@@ -43,6 +43,9 @@ const addKitchenItem = async (e) => {
   
       // Check if the item was added successfully
       if (response.status === 200) {
+        setstockItemId('')
+        setstockItemName('')
+        setquantityTransferredToKitchen(0)
         getkitchenconsumption()
         // Show a success toast if the item is added
         toast.success('quantity added successfully');
@@ -69,6 +72,9 @@ const addKitchenItem = async (e) => {
   
       // Check if the item was added successfully
       if (response.status === 201) {
+        setstockItemId('')
+        setstockItemName('')
+        setquantityTransferredToKitchen(0)
         getkitchenconsumption()
         // Show a success toast if the item is added
         toast.success('Item added successfully');

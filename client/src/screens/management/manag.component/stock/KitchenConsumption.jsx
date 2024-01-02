@@ -357,6 +357,7 @@ const filterByKitConsumCreatedAt = () => {
     const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
     return itemDate === date;
   });
+  console.log({filtered})
   setFilteredKitchenConsumptionToday(filtered);
 };
   

@@ -342,7 +342,7 @@ const [listofProducts, setlistofProducts] = useState([]);
   const [filteredKitchenConsumption, setfilteredKitchenConsumption] = useState([])
   
   const searchByKitchenConsumption = (name) => {
-    const filter = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
+    const filter = filteredKitchenConsumptionToday.filter((item) => item.stockItemName.startsWith(name) == true);
     setfilteredKitchenConsumption(filter);
   };
 
@@ -353,8 +353,11 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
 
 // Function to filter kitchen consumption based on creation date
 const filterByKitConsumCreatedAt = () => {
+  console.log({datett:date})
   const filtered = Allkitchenconsumption.filter((kitItem) => {
     const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+    console.log({createdAt:kitItem.createdAt})
+    console.log({itemDate})
     return itemDate === date;
   });
   console.log({filtered})

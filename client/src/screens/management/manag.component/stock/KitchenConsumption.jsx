@@ -319,8 +319,16 @@ const [listofProducts, setlistofProducts] = useState([]);
     }
 
   }
-  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
+
+
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  // Function to handle date change and filter data
+const handleDateChange = (e) => {
+  const selectedDate = new Date(e.target.value).toISOString().split('T')[0];
+  setDate(selectedDate); // Update the date state based on user selection
+  getkitchenconsumption(); // Filter data based on the selected date
+};
+  const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
 const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
   const getkitchenconsumption = async () => {
@@ -422,15 +430,16 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                         </div>
                       </div>
                       <div class="col-sm-9">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                      <div class="filter-group">
+                          <label>التاريخ</label>
+                          <input type="date" class="form-control" onChange={handleDateChange} />
+                        </div>
+                        
                         <div class="filter-group">
                           <label>اسم الصنف</label>
                           <input type="text" class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} />
                         </div>
-                        <div class="filter-group">
-                          <label>التاريخ</label>
-                          <input type="date" class="form-control" onChange={(e) => setDate(new Date(e.target.value).toISOString().split('T')[0])} />
-                        </div>
+                       
                         <div class="filter-group">
                           <label>اختر الصنف</label>
                           <select class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} >

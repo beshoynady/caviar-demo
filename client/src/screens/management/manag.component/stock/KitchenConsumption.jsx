@@ -435,7 +435,7 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                           <label>اختر الصنف</label>
                           <select class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} >
                             <option value={""}>الكل</option>
-                            {Allkitchenconsumption.map((consumption) =>{
+                            {filteredKitchenConsumptionToday.map((consumption) =>{
                               return (<option value={consumption.stockItemName}>{consumption.stockItemName}</option>)
                             })}
                           </select>

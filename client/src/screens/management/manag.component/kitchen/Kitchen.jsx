@@ -197,6 +197,8 @@ const Kitchen = () => {
               } catch (error) {
                 console.log({ error: error });
               }
+            }else{
+              toast.success('هذه الخامات غير موجوه رجاء اضف الخامه للمخزن!'); 
             }
           }
         }

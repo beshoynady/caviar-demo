@@ -320,14 +320,24 @@ const [listofProducts, setlistofProducts] = useState([]);
 
   }
   const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
-  
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
+
   const getkitchenconsumption = async () => {
     try {
       console.log('getkitchenconsumption');
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
       if (response) {
-        setkitchenconsumption(response.data.data);
         console.log(response.data);
+        const kitchenconsumptions = response.data.data
+        setkitchenconsumption(kitchenconsumptions);
+
+        const filtered = kitchenconsumptions.filter((kitItem) => {
+          const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+          return itemDate === date;        });
+        console.log({filtered})
+        setFilteredKitchenConsumptionToday(filtered);
+      
       } else {
         console.log('Unexpected status code:', response.status);
         // Handle other statuses if needed
@@ -348,18 +358,20 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
 // Initialize state variables for date and filtered kitchen consumption
-const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
+// const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+// const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
-// Function to filter kitchen consumption based on creation date
-const filterByKitConsumCreatedAt = () => {
-  console.log({Allkitchenconsumption})
-  const filtered = Allkitchenconsumption.map((kitItem) => {
-    console.log({dateee:new Date(kitItem.createdAt).toISOString().split('T')[0]})
-    //  === date;
-  });
-  // setFilteredKitchenConsumptionToday(filtered);
-};
+// // Function to filter kitchen consumption based on creation date
+// const filterByKitConsumCreatedAt = () => {
+//   console.log({datett:date})
+//   const filtered = Allkitchenconsumption.filter((kitItem) => {
+//     new Date(kitItem.createdAt).toISOString().split('T')[0] == date;
+//     console.log({createdAt:kitItem.createdAt})
+//     return itemDate === date;
+//   });
+//   console.log({filtered})
+//   setFilteredKitchenConsumptionToday(filtered);
+// };
   
   
 
@@ -369,7 +381,7 @@ const filterByKitConsumCreatedAt = () => {
     getAllOrders()
     getallproducts()
     getkitchenconsumption()
-    filterByKitConsumCreatedAt()
+    // filterByKitConsumCreatedAt()
   }, [])
 
   return (

@@ -160,7 +160,7 @@ const Kitchen = () => {
           for (const rec of recipe) {
             const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
             const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
-              const itemDate = new Date(kitItem.creationDate).toISOString().split('T')[0];
+              const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
               return itemDate === today;
             });
             
@@ -204,9 +204,9 @@ const Kitchen = () => {
   
       // Perform other operations if needed after the loop completes
       // Update order status or perform other tasks
-      const status = 'Prepared';
-      const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
-      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
+      // const status = 'Prepared';
+      // const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
+      // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
 
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order

@@ -12,7 +12,7 @@ const KitchenConsumption = () => {
   const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
   const [createBy, setcreateBy] = useState('');
   const [unit, setunit] = useState('');
-  
+
   const [Balance, setBalance] = useState('');
   const [price, setprice] = useState('');
   const [totalCost, settotalCost] = useState('');
@@ -20,239 +20,239 @@ const KitchenConsumption = () => {
   const [costOfPart, setcostOfPart] = useState('');
   const [minThreshold, setminThreshold] = useState();
 
- // Function to add an item to kitchen consumption
-const addKitchenItem = async (e) => {
-  e. preventDefault() 
-  const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
-  const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
-    const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
-    return itemDate === today;
-  });
-  let kitconsumption = null;
-  if (kitconsumptionToday.length > 0) {
-    kitconsumption = kitconsumptionToday.find((item)=>item.stockItemId == stockItemId);
-  }  
-  if (kitconsumption){
-    try {
-      // Make a POST request to add an item
-      const newquantityTransferredToKitchen = kitconsumption.quantityTransferredToKitchen + quantityTransferredToKitchen
-      const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
-        quantityTransferredToKitchen:newquantityTransferredToKitchen,
-        createBy
-      });
-  
-      // Check if the item was added successfully
-      if (response.status === 200) {
-        setstockItemId('')
-        setstockItemName('')
-        setquantityTransferredToKitchen(0)
-        getkitchenconsumption()
-        // Show a success toast if the item is added
-        toast.success('quantity added successfully');
-      } else {
-        // Show an error toast if adding the item failed
-        toast.error('Failed to add item');
-      }
-    } catch (error) {
-      // Show an error toast if an error occurs during the request
-      toast.error('Failed to add item');
-      console.error(error);
+  // Function to add an item to kitchen consumption
+  const addKitchenItem = async (e) => {
+    e.preventDefault()
+    const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
+    const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
+      const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+      return itemDate === today;
+    });
+    let kitconsumption = null;
+    if (kitconsumptionToday.length > 0) {
+      kitconsumption = kitconsumptionToday.find((item) => item.stockItemId == stockItemId);
     }
+    if (kitconsumption) {
+      try {
+        // Make a POST request to add an item
+        const newquantityTransferredToKitchen = kitconsumption.quantityTransferredToKitchen + quantityTransferredToKitchen
+        const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
+          quantityTransferredToKitchen: newquantityTransferredToKitchen,
+          createBy
+        });
 
-  }else{
-    try {
-      // Make a POST request to add an item
-      const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
-        stockItemId,
-        stockItemName,
-        quantityTransferredToKitchen,
-        unit,
-        createBy
-      });
-  
-      // Check if the item was added successfully
-      if (response.status === 201) {
-        setstockItemId('')
-        setstockItemName('')
-        setquantityTransferredToKitchen(0)
-        getkitchenconsumption()
-        // Show a success toast if the item is added
-        toast.success('Item added successfully');
-      } else {
-        // Show an error toast if adding the item failed
+        // Check if the item was added successfully
+        if (response.status === 200) {
+          setstockItemId('')
+          setstockItemName('')
+          setquantityTransferredToKitchen(0)
+          getkitchenconsumption()
+          // Show a success toast if the item is added
+          toast.success('quantity added successfully');
+        } else {
+          // Show an error toast if adding the item failed
+          toast.error('Failed to add item');
+        }
+      } catch (error) {
+        // Show an error toast if an error occurs during the request
         toast.error('Failed to add item');
+        console.error(error);
       }
-    } catch (error) {
-      // Show an error toast if an error occurs during the request
-      toast.error('Failed to add item');
-      console.error(error);
+
+    } else {
+      try {
+        // Make a POST request to add an item
+        const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
+          stockItemId,
+          stockItemName,
+          quantityTransferredToKitchen,
+          unit,
+          createBy
+        });
+
+        // Check if the item was added successfully
+        if (response.status === 201) {
+          setstockItemId('')
+          setstockItemName('')
+          setquantityTransferredToKitchen(0)
+          getkitchenconsumption()
+          // Show a success toast if the item is added
+          toast.success('Item added successfully');
+        } else {
+          // Show an error toast if adding the item failed
+          toast.error('Failed to add item');
+        }
+      } catch (error) {
+        // Show an error toast if an error occurs during the request
+        toast.error('Failed to add item');
+        console.error(error);
+      }
+
     }
+  };
 
-  }
-};
+  // const updateKitchenItem = async (e) => {
+  //   e.preventDefault()
+  //   console.log('updateKitchenItem')
+  //   try {
+  //     listOfOrders.map((order) => {
+  //       const listoforderproducts = order.products;
+  //       // console.log({listoforderproducts:listoforderproducts})
 
-// const updateKitchenItem = async (e) => {
-//   e.preventDefault()
-//   console.log('updateKitchenItem')
-//   try {
-//     listOfOrders.map((order) => {
-//       const listoforderproducts = order.products;
-//       // console.log({listoforderproducts:listoforderproducts})
+  //       listoforderproducts.map((orderproduct) => {
+  //         console.log({orderproduct:orderproduct})
+  //         listofProducts.map((product) => {
+  //           console.log({listoforderproducts:orderproduct.productid})
+  //           console.log({listofProducts:product._id })
+  //           if (product._id == orderproduct.productid) {
+  //             const listofrecipe = product.Recipe;
 
-//       listoforderproducts.map((orderproduct) => {
-//         console.log({orderproduct:orderproduct})
-//         listofProducts.map((product) => {
-//           console.log({listoforderproducts:orderproduct.productid})
-//           console.log({listofProducts:product._id })
-//           if (product._id == orderproduct.productid) {
-//             const listofrecipe = product.Recipe;
+  //             listofrecipe.map((recipe) => {
+  //               console.log({recipe:recipe})
 
-//             listofrecipe.map((recipe) => {
-//               console.log({recipe:recipe})
-              
-//               Allkitchenconsumption.map(async (item) => {
-//                 console.log({Allkitchenconsumption:item})
-//                 if (item.stockItemId == recipe.itemId) {
-//                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
-//                   const balance = item.quantityTransferredToKitchen - consumptionQuantity;
-//                   const productsProduced = item.productsProduced;
+  //               Allkitchenconsumption.map(async (item) => {
+  //                 console.log({Allkitchenconsumption:item})
+  //                 if (item.stockItemId == recipe.itemId) {
+  //                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
+  //                   const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+  //                   const productsProduced = item.productsProduced;
 
-//                   productsProduced.map(async (p) => {
-//                     console.log({productsProduced:p})
+  //                   productsProduced.map(async (p) => {
+  //                     console.log({productsProduced:p})
 
-//                     if (p.productId === orderproduct.productid) {
-//                       p.productionCount = p.productionCount + orderproduct.quantity;
+  //                     if (p.productId === orderproduct.productid) {
+  //                       p.productionCount = p.productionCount + orderproduct.quantity;
 
-//                       try {
-//                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-//                           consumptionQuantity,
-//                           balance,
-//                           productsProduced,
-//                         });
-//                         console.log('Update successful:', update.data);
-//                         // Add toast for successful update
-//                         toast.success('Updated kitchen consumption successfully');
-//                       } catch (error) {
-//                         console.error('Update error:', error);
-//                         // Add toast for update error
-//                         toast.error('Failed to update kitchen consumption');
-//                       }
-//                     } else {
-//                       productsProduced.push({ productId: orderproduct.productid });
-//                       productsProduced.push({ productName: orderproduct.name });
-//                       productsProduced.push({ productionCount: orderproduct.quantity });
+  //                       try {
+  //                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+  //                           consumptionQuantity,
+  //                           balance,
+  //                           productsProduced,
+  //                         });
+  //                         console.log('Update successful:', update.data);
+  //                         // Add toast for successful update
+  //                         toast.success('Updated kitchen consumption successfully');
+  //                       } catch (error) {
+  //                         console.error('Update error:', error);
+  //                         // Add toast for update error
+  //                         toast.error('Failed to update kitchen consumption');
+  //                       }
+  //                     } else {
+  //                       productsProduced.push({ productId: orderproduct.productid });
+  //                       productsProduced.push({ productName: orderproduct.name });
+  //                       productsProduced.push({ productionCount: orderproduct.quantity });
 
-//                       try {
-//                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-//                           consumptionQuantity,
-//                           balance,
-//                           productsProduced,
-//                         });
-//                         console.log('Update push successful:', update.data);
-//                         // Add toast for successful update
-//                         toast.success('Updated kitchen consumption successfully');
-//                       } catch (error) {
-//                         console.error('Update error:', error);
-//                         // Add toast for update error
-//                         toast.error('Failed to update kitchen consumption');
-//                       }
-//                     }
-//                   });
-//                 }else{
-//                   console.log('Allkitchenconsumption item.stockItemId === recipe')
+  //                       try {
+  //                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+  //                           consumptionQuantity,
+  //                           balance,
+  //                           productsProduced,
+  //                         });
+  //                         console.log('Update push successful:', update.data);
+  //                         // Add toast for successful update
+  //                         toast.success('Updated kitchen consumption successfully');
+  //                       } catch (error) {
+  //                         console.error('Update error:', error);
+  //                         // Add toast for update error
+  //                         toast.error('Failed to update kitchen consumption');
+  //                       }
+  //                     }
+  //                   });
+  //                 }else{
+  //                   console.log('Allkitchenconsumption item.stockItemId === recipe')
 
-//                 }
-//               });
-//             });
-//           }else {
-//             console.log('product._id === orderproduct.productid')
-//           }
-//         });
-//       });
-//     });
-//   } catch (error) {
-//     console.error('Error occurred:', error);
-//     // Add toast for error
-//     toast.error('An error occurred');
-//   }
-// };
+  //                 }
+  //               });
+  //             });
+  //           }else {
+  //             console.log('product._id === orderproduct.productid')
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (error) {
+  //     console.error('Error occurred:', error);
+  //     // Add toast for error
+  //     toast.error('An error occurred');
+  //   }
+  // };
 
-// const updateKitchenItem = async (e) => {
-//   e.preventDefault();
-//   console.log('updateKitchenItem');
+  // const updateKitchenItem = async (e) => {
+  //   e.preventDefault();
+  //   console.log('updateKitchenItem');
 
-//   try {
-//     for (const order of listOfOrders) {
-//       const listoforderproducts = order.products;
+  //   try {
+  //     for (const order of listOfOrders) {
+  //       const listoforderproducts = order.products;
 
-//       for (const orderproduct of listoforderproducts) {
-//         console.log({ orderproduct: orderproduct });
+  //       for (const orderproduct of listoforderproducts) {
+  //         console.log({ orderproduct: orderproduct });
 
-//         for (const product of listofProducts) {
-//           console.log({ listoforderproducts: orderproduct.productid });
-//           console.log({ listofProducts: product._id });
+  //         for (const product of listofProducts) {
+  //           console.log({ listoforderproducts: orderproduct.productid });
+  //           console.log({ listofProducts: product._id });
 
-//           if (product._id == orderproduct.productid) {
-//             const listofrecipe = product.Recipe;
+  //           if (product._id == orderproduct.productid) {
+  //             const listofrecipe = product.Recipe;
 
-//             for (const recipe of listofrecipe) {
-//               console.log({ recipe: recipe });
+  //             for (const recipe of listofrecipe) {
+  //               console.log({ recipe: recipe });
 
-//               for (const item of Allkitchenconsumption) {
-//                 console.log({ Allkitchenconsumption: item });
+  //               for (const item of Allkitchenconsumption) {
+  //                 console.log({ Allkitchenconsumption: item });
 
-//                 if (item.stockItemId == recipe.itemId) {
-//                   let consumptionQuantity = 0; // Initialize consumption quantity here
-//                   const productsProduced = item.productsProduced;
+  //                 if (item.stockItemId == recipe.itemId) {
+  //                   let consumptionQuantity = 0; // Initialize consumption quantity here
+  //                   const productsProduced = item.productsProduced;
 
-//                   for (const p of productsProduced) {
-//                     console.log({ productsProduced: p });
+  //                   for (const p of productsProduced) {
+  //                     console.log({ productsProduced: p });
 
-//                     if (p.productId === orderproduct.productid) {
-//                       p.productionCount += orderproduct.quantity;
-//                     } else {
-//                       productsProduced.push({
-//                         productId: orderproduct.productid,
-//                         productName: orderproduct.name,
-//                         productionCount: orderproduct.quantity,
-//                       });
-//                     }
+  //                     if (p.productId === orderproduct.productid) {
+  //                       p.productionCount += orderproduct.quantity;
+  //                     } else {
+  //                       productsProduced.push({
+  //                         productId: orderproduct.productid,
+  //                         productName: orderproduct.name,
+  //                         productionCount: orderproduct.quantity,
+  //                       });
+  //                     }
 
-//                     consumptionQuantity += recipe.amount * orderproduct.quantity;
-//                     const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+  //                     consumptionQuantity += recipe.amount * orderproduct.quantity;
+  //                     const balance = item.quantityTransferredToKitchen - consumptionQuantity;
 
-//                     try {
-//                       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-//                         consumptionQuantity,
-//                         balance,
-//                         productsProduced,
-//                       });
-//                       console.log('Update successful:', update.data);
-//                       // Add toast for successful update
-//                       toast.success('Updated kitchen consumption successfully');
-//                     } catch (error) {
-//                       console.error('Update error:', error);
-//                       // Add toast for update error
-//                       toast.error('Failed to update kitchen consumption');
-//                     }
-//                   }
-//                 } else {
-//                   console.log('Allkitchenconsumption item.stockItemId === recipe');
-//                 }
-//               }
-//             }
-//           } else {
-//             console.log('product._id === orderproduct.productid');
-//           }
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Error occurred:', error);
-//     // Add toast for error
-//     toast.error('An error occurred');
-//   }
-// };
+  //                     try {
+  //                       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
+  //                         consumptionQuantity,
+  //                         balance,
+  //                         productsProduced,
+  //                       });
+  //                       console.log('Update successful:', update.data);
+  //                       // Add toast for successful update
+  //                       toast.success('Updated kitchen consumption successfully');
+  //                     } catch (error) {
+  //                       console.error('Update error:', error);
+  //                       // Add toast for update error
+  //                       toast.error('Failed to update kitchen consumption');
+  //                     }
+  //                   }
+  //                 } else {
+  //                   console.log('Allkitchenconsumption item.stockItemId === recipe');
+  //                 }
+  //               }
+  //             }
+  //           } else {
+  //             console.log('product._id === orderproduct.productid');
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error occurred:', error);
+  //     // Add toast for error
+  //     toast.error('An error occurred');
+  //   }
+  // };
 
 
   const [listOfOrders, setlistOfOrders] = useState([])
@@ -304,7 +304,7 @@ const addKitchenItem = async (e) => {
   //   }
   // };
 
-const [listofProducts, setlistofProducts] = useState([]);
+  const [listofProducts, setlistofProducts] = useState([]);
 
   const getallproducts = async () => {
     try {
@@ -323,13 +323,14 @@ const [listofProducts, setlistofProducts] = useState([]);
 
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   // Function to handle date change and filter data
-const handleDateChange = (e) => {
-  const selectedDate = new Date(e.target.value).toISOString().split('T')[0];
-  setDate(selectedDate); // Update the date state based on user selection
-  getkitchenconsumption(); // Filter data based on the selected date
-};
+  const handleDateChange = (e) => {
+    const selectedDate = new Date(e.target.value).toISOString().split('T')[0];
+    console.log({selectedDate})
+    setDate(selectedDate); // Update the date state based on user selection
+    getkitchenconsumption(); // Filter data based on the selected date
+  };
   const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
-const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
+  const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
   const getkitchenconsumption = async () => {
     try {
@@ -342,10 +343,11 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
 
         const filtered = kitchenconsumptions.filter((kitItem) => {
           const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
-          return itemDate === date;        });
-        console.log({filtered})
+          return itemDate === date;
+        });
+        console.log({ filtered })
         setFilteredKitchenConsumptionToday(filtered);
-      
+
       } else {
         console.log('Unexpected status code:', response.status);
         // Handle other statuses if needed
@@ -358,30 +360,30 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
 
 
   const [filteredKitchenConsumption, setfilteredKitchenConsumption] = useState([])
-  
+
   const searchByKitchenConsumption = (name) => {
     const filter = filteredKitchenConsumptionToday.filter((item) => item.stockItemName.startsWith(name) == true);
     setfilteredKitchenConsumption(filter);
   };
 
 
-// Initialize state variables for date and filtered kitchen consumption
-// const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-// const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
+  // Initialize state variables for date and filtered kitchen consumption
+  // const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  // const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
-// // Function to filter kitchen consumption based on creation date
-// const filterByKitConsumCreatedAt = () => {
-//   console.log({datett:date})
-//   const filtered = Allkitchenconsumption.filter((kitItem) => {
-//     new Date(kitItem.createdAt).toISOString().split('T')[0] == date;
-//     console.log({createdAt:kitItem.createdAt})
-//     return itemDate === date;
-//   });
-//   console.log({filtered})
-//   setFilteredKitchenConsumptionToday(filtered);
-// };
-  
-  
+  // // Function to filter kitchen consumption based on creation date
+  // const filterByKitConsumCreatedAt = () => {
+  //   console.log({datett:date})
+  //   const filtered = Allkitchenconsumption.filter((kitItem) => {
+  //     new Date(kitItem.createdAt).toISOString().split('T')[0] == date;
+  //     console.log({createdAt:kitItem.createdAt})
+  //     return itemDate === date;
+  //   });
+  //   console.log({filtered})
+  //   setFilteredKitchenConsumptionToday(filtered);
+  // };
+
+
 
 
   useEffect(() => {
@@ -430,21 +432,21 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                         </div>
                       </div>
                       <div class="col-sm-9">
-                      <div class="filter-group">
+                        <div class="filter-group">
                           <label>التاريخ</label>
                           <input type="date" class="form-control" onChange={handleDateChange} />
                         </div>
-                        
+
                         <div class="filter-group">
                           <label>اسم الصنف</label>
                           <input type="text" class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} />
                         </div>
-                       
+
                         <div class="filter-group">
                           <label>اختر الصنف</label>
                           <select class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} >
                             <option value={""}>الكل</option>
-                            {filteredKitchenConsumptionToday.map((consumption) =>{
+                            {filteredKitchenConsumptionToday.map((consumption) => {
                               return (<option value={consumption.stockItemName}>{consumption.stockItemName}</option>)
                             })}
                           </select>
@@ -498,71 +500,71 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                     </thead>
                     <tbody>
                       {
-                      filteredKitchenConsumption.length >0? filteredKitchenConsumption.map((item, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{item.stockItemName}</td>
-                              <td>{item.quantityTransferredToKitchen}</td>
-                              <td>{item.consumptionQuantity}</td>
-                              <td>{item.unit}</td>
-                              <td>{item.balance}</td>
-                              <td>{item.adjustment}</td>
-                              <td>
-                                {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
-                                  <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
-                                )):'لا يوجد'}
-                              </td>
-                              <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
-                              <td>{item.createdAt}</td>
-                              <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      })
-                      :filteredKitchenConsumptionToday.length >0? filteredKitchenConsumptionToday.map((item, i) => {
-                        if (i >= startpagination & i < endpagination) {
-                          return (
-                            <tr key={i}>
-                              <td>
-                                <span className="custom-checkbox">
-                                  <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                  <label htmlFor="checkbox1"></label>
-                                </span>
-                              </td>
-                              <td>{i + 1}</td>
-                              <td>{item.stockItemName}</td>
-                              <td>{item.quantityTransferredToKitchen}</td>
-                              <td>{item.consumptionQuantity}</td>
-                              <td>{item.unit}</td>
-                              <td>{item.balance}</td>
-                              <td>{item.adjustment}</td>
-                              <td>
-                                {item.productsProduced.length>0? item.productsProduced.map((product, j) => (
-                                  <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
-                                )):'لا يوجد'}
-                              </td>
-                              <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
-                              <td>{item.createdAt}</td>
-                              <td>
-                                <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      }):''
-                    }
+                        filteredKitchenConsumption.length > 0 ? filteredKitchenConsumption.map((item, i) => {
+                          if (i >= startpagination & i < endpagination) {
+                            return (
+                              <tr key={i}>
+                                <td>
+                                  <span className="custom-checkbox">
+                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                    <label htmlFor="checkbox1"></label>
+                                  </span>
+                                </td>
+                                <td>{i + 1}</td>
+                                <td>{item.stockItemName}</td>
+                                <td>{item.quantityTransferredToKitchen}</td>
+                                <td>{item.consumptionQuantity}</td>
+                                <td>{item.unit}</td>
+                                <td>{item.balance}</td>
+                                <td>{item.adjustment}</td>
+                                <td>
+                                  {item.productsProduced.length > 0 ? item.productsProduced.map((product, j) => (
+                                    <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
+                                  )) : 'لا يوجد'}
+                                </td>
+                                <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                                <td>{item.createdAt}</td>
+                                <td>
+                                  <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        })
+                          : filteredKitchenConsumptionToday.length > 0 ? filteredKitchenConsumptionToday.map((item, i) => {
+                            if (i >= startpagination & i < endpagination) {
+                              return (
+                                <tr key={i}>
+                                  <td>
+                                    <span className="custom-checkbox">
+                                      <input type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                      <label htmlFor="checkbox1"></label>
+                                    </span>
+                                  </td>
+                                  <td>{i + 1}</td>
+                                  <td>{item.stockItemName}</td>
+                                  <td>{item.quantityTransferredToKitchen}</td>
+                                  <td>{item.consumptionQuantity}</td>
+                                  <td>{item.unit}</td>
+                                  <td>{item.balance}</td>
+                                  <td>{item.adjustment}</td>
+                                  <td>
+                                    {item.productsProduced.length > 0 ? item.productsProduced.map((product, j) => (
+                                      <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
+                                    )) : 'لا يوجد'}
+                                  </td>
+                                  <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                                  <td>{item.createdAt}</td>
+                                  <td>
+                                    <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          }) : ''
+                      }
                     </tbody>
                   </table>
                   <div className="clearfix">
@@ -588,10 +590,10 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
-                        
+
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="category" id="category" form="carform" onChange={(e) => {setstockItemId(e.target.value);setunit(AllStockItems.filter(stock=>stock._id == e.target.value)[0].smallUnit);setcreateBy(employeeLoginInfo.employeeinfo.id); setstockItemName(AllStockItems.filter(it => it._id == e.target.value)[0].itemName)}}>
+                          <select name="category" id="category" form="carform" onChange={(e) => { setstockItemId(e.target.value); setunit(AllStockItems.filter(stock => stock._id == e.target.value)[0].smallUnit); setcreateBy(employeeLoginInfo.employeeinfo.id); setstockItemName(AllStockItems.filter(it => it._id == e.target.value)[0].itemName) }}>
                             <option>اختر الصنف</option>
                             {AllStockItems.map((StockItems, i) => {
                               return <option value={StockItems._id} key={i} >{StockItems.itemName}</option>
@@ -620,7 +622,7 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                   </div>
                 </div>
               </div>
-                            {/* 
+              {/* 
               <div id="editStockItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
@@ -713,7 +715,7 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                   </div>
                 </div>
               </div>   */}
-              
+
             </div>
           )
         }

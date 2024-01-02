@@ -23,29 +23,64 @@ const KitchenConsumption = () => {
  // Function to add an item to kitchen consumption
 const addKitchenItem = async (e) => {
   e. preventDefault() 
-  try {
-    // Make a POST request to add an item
-    const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
-      stockItemId,
-      stockItemName,
-      quantityTransferredToKitchen,
-      unit,
-      createBy
-    });
-
-    // Check if the item was added successfully
-    if (response.status === 201) {
-      getkitchenconsumption()
-      // Show a success toast if the item is added
-      toast.success('Item added successfully');
-    } else {
-      // Show an error toast if adding the item failed
+  const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
+  const kitconsumptionToday = Allkitchenconsumption.filter((kitItem) => {
+    const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+    return itemDate === today;
+  });
+  let kitconsumption = null;
+  if (kitconsumptionToday.length > 0) {
+    kitconsumption = kitconsumptionToday.find((item)=>item.stockItemId == stockItemId);
+  }  
+  if (kitconsumption){
+    try {
+      // Make a POST request to add an item
+      const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption${kitconsumption._id}`, {
+        quantityTransferredToKitchen,
+        createBy
+      });
+  
+      // Check if the item was added successfully
+      if (response.status === 201) {
+        getkitchenconsumption()
+        // Show a success toast if the item is added
+        toast.success('quantity added successfully');
+      } else {
+        // Show an error toast if adding the item failed
+        toast.error('Failed to add item');
+      }
+    } catch (error) {
+      // Show an error toast if an error occurs during the request
       toast.error('Failed to add item');
+      console.error(error);
     }
-  } catch (error) {
-    // Show an error toast if an error occurs during the request
-    toast.error('Failed to add item');
-    console.error(error);
+
+  }else{
+    try {
+      // Make a POST request to add an item
+      const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
+        stockItemId,
+        stockItemName,
+        quantityTransferredToKitchen,
+        unit,
+        createBy
+      });
+  
+      // Check if the item was added successfully
+      if (response.status === 201) {
+        getkitchenconsumption()
+        // Show a success toast if the item is added
+        toast.success('Item added successfully');
+      } else {
+        // Show an error toast if adding the item failed
+        toast.error('Failed to add item');
+      }
+    } catch (error) {
+      // Show an error toast if an error occurs during the request
+      toast.error('Failed to add item');
+      console.error(error);
+    }
+
   }
 };
 

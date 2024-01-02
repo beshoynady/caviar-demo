@@ -325,10 +325,12 @@ const KitchenConsumption = () => {
   // Function to handle date change and filter data
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value).toISOString().split('T')[0];
-    console.log({selectedDate})
+    console.log({ selectedDate })
     setDate(selectedDate); // Update the date state based on user selection
     getkitchenconsumption(); // Filter data based on the selected date
   };
+
+
   const [Allkitchenconsumption, setkitchenconsumption] = useState([]);
   const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
@@ -434,7 +436,9 @@ const KitchenConsumption = () => {
                       <div class="col-sm-9">
                         <div class="filter-group">
                           <label>التاريخ</label>
-                          <input type="date" class="form-control" onChange={handleDateChange} />
+                          <input id="dateInput"
+                            type="date"
+                            value={date} class="form-control" onChange={handleDateChange} />
                         </div>
 
                         <div class="filter-group">

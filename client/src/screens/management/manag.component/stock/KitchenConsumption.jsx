@@ -46,7 +46,7 @@ const KitchenConsumption = () => {
           setstockItemId('')
           setstockItemName('')
           setquantityTransferredToKitchen(0)
-          getkitchenconsumption()
+          getKitchenConsumption()
           // Show a success toast if the item is added
           toast.success('quantity added successfully');
         } else {
@@ -75,7 +75,7 @@ const KitchenConsumption = () => {
           setstockItemId('')
           setstockItemName('')
           setquantityTransferredToKitchen(0)
-          getkitchenconsumption()
+          getKitchenConsumption()
           // Show a success toast if the item is added
           toast.success('Item added successfully');
         } else {

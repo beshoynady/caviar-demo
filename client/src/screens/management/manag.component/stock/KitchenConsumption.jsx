@@ -428,6 +428,10 @@ const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = us
                           <input type="text" class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} />
                         </div>
                         <div class="filter-group">
+                          <label>التاريخ</label>
+                          <input type="date" class="form-control" onChange={(e) => setDate(new Date(e.target.value).toISOString().split('T')[0])} />
+                        </div>
+                        <div class="filter-group">
                           <label>اختر الصنف</label>
                           <select class="form-control" onChange={(e) => searchByKitchenConsumption(e.target.value)} >
                             <option value={""}>الكل</option>

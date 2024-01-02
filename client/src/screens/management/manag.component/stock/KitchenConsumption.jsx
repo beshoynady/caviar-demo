@@ -340,7 +340,7 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
   const [filteredKitchenConsumption, setfilteredKitchenConsumption] = useState([])
-
+  
   const searchByKitchenConsumption = (name) => {
     const filter = Allkitchenconsumption.filter((item) => item.stockItemName.startsWith(name) == true);
     setfilteredKitchenConsumption(filter);
@@ -348,13 +348,14 @@ const [listofProducts, setlistofProducts] = useState([]);
 
 
   const [date, setdate] = useState(new Date().toISOString().split('T')[0])
+  const [filteredKitchenConsumptionToday, setfilteredKitchenConsumptionToday] = useState([])
 
-  const filterByKitConsumCreateAt = (date) => {
+  const filterByKitConsumCreateAt = () => {
     const filtered = Allkitchenconsumption.filter((kitItem) => {
       const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
       return itemDate === date;
     });
-    setfilteredKitchenConsumption(filtered);
+    setfilteredKitchenConsumptionToday(filtered);
   };
   
   
@@ -364,8 +365,8 @@ const [listofProducts, setlistofProducts] = useState([]);
     getStockItems()
     getAllOrders()
     getallproducts()
-    
     getkitchenconsumption()
+    filterByKitConsumCreateAt()
   }, [])
 
   return (
@@ -501,7 +502,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                           );
                         }
                       })
-                      :Allkitchenconsumption.length >0? Allkitchenconsumption.map((item, i) => {
+                      :filteredKitchenConsumptionToday.length >0? filteredKitchenConsumptionToday.map((item, i) => {
                         if (i >= startpagination & i < endpagination) {
                           return (
                             <tr key={i}>
@@ -537,7 +538,7 @@ const [listofProducts, setlistofProducts] = useState([]);
                     </tbody>
                   </table>
                   <div className="clearfix">
-                    <div className="hint-text text-dark">عرض <b>{Allkitchenconsumption.length > endpagination ? endpagination : Allkitchenconsumption.length}</b> من <b>{Allkitchenconsumption.length}</b> عنصر</div>
+                    <div className="hint-text text-dark">عرض <b>{filteredKitchenConsumptionToday.length > endpagination ? endpagination : filteredKitchenConsumptionToday.length}</b> من <b>{filteredKitchenConsumptionToday.length}</b> عنصر</div>
                     <ul className="pagination">
                       <li onClick={EditPagination} className="page-item disabled"><a href="#">السابق</a></li>
                       <li onClick={EditPagination} className="page-item"><a href="#" className="page-link">1</a></li>

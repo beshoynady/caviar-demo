@@ -339,7 +339,7 @@ const KitchenConsumption = () => {
       console.log({date});
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
       if (response) {
-        console.log(response.data);
+        // console.log(response.data);
         const kitchenconsumptions = response.data.data
         setkitchenconsumption({kitchenconsumptions});
 

@@ -336,12 +336,12 @@ const KitchenConsumption = () => {
 
   const getkitchenconsumption = async () => {
     try {
-      console.log('getkitchenconsumption');
+      console.log({date});
       const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
       if (response) {
         console.log(response.data);
         const kitchenconsumptions = response.data.data
-        setkitchenconsumption(kitchenconsumptions);
+        setkitchenconsumption({kitchenconsumptions});
 
         const filtered = kitchenconsumptions.filter((kitItem) => {
           const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];

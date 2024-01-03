@@ -13,6 +13,7 @@ const Kitchen = () => {
 
   const [orderactive, setOrderActive] = useState([]); // State for active orders
   const [productsOrderActive, setproductsOrderActive] = useState([]); // State for active orders
+  const [consumptionOrderActive, setconsumptionOrderActive] = useState([]); // State for active orders
   const [allOrders, setAllOrders] = useState([]); // State for all orders
   // Fetches orders from the API
   const getOrdersFromAPI = async () => {
@@ -44,8 +45,25 @@ const Kitchen = () => {
           }
         });
       });
+      const updatedconsumptionOrderActive = [...consumptionOrderActive];
+
+      updatedProductsOrderActive.map(product=>{
+        product.recipe.map((rec)=>{
+          const existingItem = updatedconsumptionOrderActive.find((con)=>con.itemId == rec.itemId)
+          if (existingItem) {
+            const Amount = rec.amount * product.quantity
+            existingItem.amount += Amount;
+          } else {
+            updatedconsumptionOrderActive.push({ itemId: rec.itemId , name:rec.name, amount: rec.amount });
+          }
+        })
+      })
+      
+      
       console.log({updatedProductsOrderActive})
       setproductsOrderActive(updatedProductsOrderActive);
+      console.log({updatedconsumptionOrderActive})
+      setconsumptionOrderActive(updatedconsumptionOrderActive)
 
 
 

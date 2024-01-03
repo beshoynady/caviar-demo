@@ -12,7 +12,7 @@ const Kitchen = () => {
   const [waittime, setWaitTime] = useState(''); // State for waiting time
 
   const [orderactive, setOrderActive] = useState([]); // State for active orders
-  const [productsOrderActive, setproductsOrderActive] = useState([{}]); // State for active orders
+  const [productsOrderActive, setproductsOrderActive] = useState([]); // State for active orders
   const [allOrders, setAllOrders] = useState([]); // State for all orders
   // Fetches orders from the API
   const getOrdersFromAPI = async () => {
@@ -30,11 +30,13 @@ const Kitchen = () => {
 
       activeOrders.forEach((order) => {
         order.products.forEach((product) => {
-          const existingProduct = updatedProductsOrderActive.find((p) => p.productid === product.productid);
-          if (existingProduct) {
-            existingProduct.quantity += product.quantity;
-          } else {
-            updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity });
+          if (product.isDone === false){
+            const existingProduct = updatedProductsOrderActive.find((p) => p.productid === product.productid);
+            if (existingProduct) {
+              existingProduct.quantity += product.quantity;
+            } else {
+              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity });
+            }
           }
         });
       });

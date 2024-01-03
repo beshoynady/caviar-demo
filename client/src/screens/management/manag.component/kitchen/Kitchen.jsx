@@ -333,13 +333,11 @@ const Kitchen = () => {
                 <div className="container-fluid py-4" style={{ backgroundColor: 'rgba(0, 0, 255, 0.1)' }}>
                   <div className="row justify-content-center">
                     {consumptionOrderActive.map((item, index) => (
-                      <div className="col-md-4 mb-3" key={index}>
-                        <div className="card bg-primary text-dark" style={{ height: '150px', width: '150px' }}>
-                          <div className="card-body d-flex flex-column justify-content-center">
-                            <h5 className="card-title">{item.name}</h5>
-                            <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
-                            <p className="card-text">المطلوب: {item.amount}</p>
-                          </div>
+                      <div className="card bg-primary text-dark" style={{ height: '150px', width: '150px' }} key={index}>
+                        <div className="card-body d-flex flex-column justify-content-center">
+                          <h5 className="card-title">{item.name}</h5>
+                          <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
+                          <p className="card-text">المطلوب: {item.amount}</p>
                         </div>
                       </div>
                     ))}

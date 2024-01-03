@@ -33,37 +33,37 @@ const Kitchen = () => {
 
       activeOrders.forEach((order) => {
         order.products.forEach((product) => {
-          if (product.isDone === false){
+          if (product.isDone === false) {
             const existingProduct = updatedProductsOrderActive.find((p) => p.productid === product.productid);
             if (existingProduct) {
               existingProduct.quantity += product.quantity;
             } else {
-              console.log({listAllProducts})
-              const recipe = listAllProducts.find((pro)=>pro._id == product.productid).Recipe
-              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe});
+              console.log({ listAllProducts })
+              const recipe = listAllProducts.find((pro) => pro._id == product.productid).Recipe
+              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity, recipe });
             }
           }
         });
       });
       const updatedconsumptionOrderActive = [...consumptionOrderActive];
 
-      updatedProductsOrderActive.map(product=>{
-        product.recipe.map((rec)=>{
-          const existingItem = updatedconsumptionOrderActive.find((con)=>con.itemId == rec.itemId)
+      updatedProductsOrderActive.map(product => {
+        product.recipe.map((rec) => {
+          const existingItem = updatedconsumptionOrderActive.find((con) => con.itemId == rec.itemId)
           if (existingItem) {
             const Amount = rec.amount * product.quantity
             existingItem.amount += Amount;
           } else {
             const Amount = rec.amount * product.quantity
-            updatedconsumptionOrderActive.push({ itemId: rec.itemId , name:rec.name, amount: Amount });
+            updatedconsumptionOrderActive.push({ itemId: rec.itemId, name: rec.name, amount: Amount });
           }
         })
       })
-      
-      
-      console.log({updatedProductsOrderActive})
+
+
+      console.log({ updatedProductsOrderActive })
       setproductsOrderActive(updatedProductsOrderActive);
-      console.log({updatedconsumptionOrderActive})
+      console.log({ updatedconsumptionOrderActive })
       setconsumptionOrderActive(updatedconsumptionOrderActive)
 
     } catch (error) {
@@ -330,18 +330,20 @@ const Kitchen = () => {
             <>
               <ToastContainer />
               <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
-                <div className="row w-100">
-                   {consumptionOrderActive.map((item, index) => (
-                    <div className="col-md-4 mb-3" key={index}>
-                      <div className="card text-white bg-success" style={{ width: "100%" }}>
-                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">
-                          <p className="card-text">{item.name}</p>
-                          <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId)?filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId).balance:'0'}</p>
-                          <p className="card-text">المطلوب: {item.amount}</p>
+                <div className="container-fluid bg-primary py-4">
+                  <div className="row justify-content-center">
+                    {consumptionOrderActive.map((item, index) => (
+                      <div className="col-md-4 mb-3" key={index}>
+                        <div className="card bg-light text-dark">
+                          <div className="card-body">
+                            <h5 className="card-title">{item.name}</h5>
+                            <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
+                            <p className="card-text">المطلوب: {item.amount}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))} 
+                    ))}
+                  </div>
                 </div>
                 {orderactive && orderactive.map((order, i) => {
                   if (order.products.filter((pr) => pr.isDone === false).length > 0) {

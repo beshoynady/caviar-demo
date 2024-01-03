@@ -10,8 +10,9 @@ const Kitchen = () => {
   const ready = useRef();
 
   const [waittime, setWaitTime] = useState(''); // State for waiting time
-  
+
   const [orderactive, setOrderActive] = useState([]); // State for active orders
+  const [productsOrderActive, setproductsOrderActive] = useState([{}]); // State for active orders
   const [allOrders, setAllOrders] = useState([]); // State for all orders
   // Fetches orders from the API
   const getOrdersFromAPI = async () => {
@@ -22,13 +23,44 @@ const Kitchen = () => {
       const activeOrders = orders.data.filter(
         (order) => order.isActive && (order.status === 'Approved' || order.status === 'Preparing')
       );
-      console.log({activeOrders})
+      console.log({ activeOrders })
       setOrderActive(activeOrders);
+
+      const updatedProductsOrderActive = [...productsOrderActive];
+
+      activeOrders.forEach((order) => {
+        order.products.forEach((product) => {
+          const existingProduct = updatedProductsOrderActive.find((p) => p.productid === product.productid);
+          if (existingProduct) {
+            existingProduct.quantity += product.quantity;
+          } else {
+            updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity });
+          }
+        });
+      });
+      console.log({updatedProductsOrderActive})
+      setproductsOrderActive(updatedProductsOrderActive);
+
+      // activeOrders.map((order)=>{
+      //   const products = order.products
+      //   products.map((product)=>{
+      //     productsOrderActive.map((active)=>{
+      //       if(active.productid == product.productid){
+      //         active.quantity += product.quantity
+      //       }else{
+      //         setproductsOrderActive([...productsOrderActive, {productid: product.productid, quantity: product.quantity}])
+      //         // productsOrderActive.push({productid: product.productid, quantity: product.quantity})
+      //       }
+      //     })
+      //   })
+      // })
 
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
 
   const [listofProducts, setlistofProducts] = useState([]);
@@ -40,7 +72,7 @@ const Kitchen = () => {
       // console.log(response.data)
       setlistofProducts(products)
       // console.log(listofProducts)
-      
+
     } catch (error) {
       console.log(error)
     }

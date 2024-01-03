@@ -35,6 +35,7 @@ const Kitchen = () => {
             if (existingProduct) {
               existingProduct.quantity += product.quantity;
             } else {
+              console.log({listofProducts})
               const recipe = listofProducts.length>0?listofProducts.find((pro)=>pro._id == product.productid).Recipe:[]
               updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe});
             }

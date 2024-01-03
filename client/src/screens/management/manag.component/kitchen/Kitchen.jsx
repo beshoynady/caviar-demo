@@ -66,29 +66,39 @@ const Kitchen = () => {
       console.log({updatedconsumptionOrderActive})
       setconsumptionOrderActive(updatedconsumptionOrderActive)
 
-
-
-      // activeOrders.map((order)=>{
-      //   const products = order.products
-      //   products.map((product)=>{
-      //     productsOrderActive.map((active)=>{
-      //       if(active.productid == product.productid){
-      //         active.quantity += product.quantity
-      //       }else{
-      //         setproductsOrderActive([...productsOrderActive, {productid: product.productid, quantity: product.quantity}])
-      //         // productsOrderActive.push({productid: product.productid, quantity: product.quantity})
-      //       }
-      //     })
-      //   })
-      // })
-
     } catch (error) {
       console.log(error);
     }
   };
 
 
+  const today = new Date().toISOString().split('T')[0];
+  const [date, setDate] = useState(today);
+  const [allKitchenConsumption, setAllKitchenConsumption] = useState([]);
+  const [filteredKitchenConsumptionToday, setFilteredKitchenConsumptionToday] = useState([]);
 
+  const getKitchenConsumption = async () => {
+    try {
+      console.log('Fetching kitchen consumption...');
+      const response = await axios.get('https://caviar-api.vercel.app/api/kitchenconsumption');
+      if (response && response.data) {
+        const kitchenConsumptions = response.data.data || [];
+        setAllKitchenConsumption(kitchenConsumptions);
+
+        const filtered = kitchenConsumptions.filter((kitItem) => {
+          const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
+          return itemDate === date;
+        });
+        console.log('Filtered kitchen consumption for the selected date:', filtered);
+        setFilteredKitchenConsumptionToday(filtered);
+      } else {
+        console.log('Unexpected response or empty data');
+      }
+    } catch (error) {
+      console.error('Error fetching kitchen consumption:', error);
+      // Handle error: Notify user, log error, etc.
+    }
+  };
 
   const [listofProducts, setlistofProducts] = useState([]);
 
@@ -306,6 +316,7 @@ const Kitchen = () => {
 
   // Fetches orders and active waiters on initial render
   useEffect(() => {
+    getKitchenConsumption()
     getallproducts()
     getAllWaiters();
     getOrdersFromAPI();
@@ -325,7 +336,7 @@ const Kitchen = () => {
                       <div className="card text-white bg-success" style={{ width: "100%" }}>
                         <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                           <p className="card-text">{item.name}</p>
-                          <p className="card-text">الرصيد: 200</p>
+                          <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.length>0?filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId).balance:'0'}</p>
                           <p className="card-text">المطلوب: {item.amount}</p>
                         </div>
                       </div>

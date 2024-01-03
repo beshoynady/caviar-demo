@@ -280,9 +280,9 @@ const Kitchen = () => {
 
       // Perform other operations if needed after the loop completes
       // Update order status or perform other tasks
-      // const status = 'Prepared';
-      // const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
-      // await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
+      const status = 'Prepared';
+      const updateproducts = products.map((prod) => ({ ...prod, isDone: true }));
+      await axios.put(`https://caviar-api.vercel.app/api/order/${id}`, { products:updateproducts, status });
 
       getOrdersFromAPI();
       toast.success('Order is prepared!'); // Notifies success in completing order

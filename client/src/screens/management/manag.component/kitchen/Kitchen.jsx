@@ -25,6 +25,8 @@ const Kitchen = () => {
       );
       console.log({ activeOrders })
       setOrderActive(activeOrders);
+      const getAllProducts = await axios.get('https://caviar-api.vercel.app/api/product/');
+      const listAllProducts = await getAllProducts.data;
 
       const updatedProductsOrderActive = [...productsOrderActive];
 
@@ -35,8 +37,8 @@ const Kitchen = () => {
             if (existingProduct) {
               existingProduct.quantity += product.quantity;
             } else {
-              console.log({listofProducts})
-              const recipe = listofProducts.find((pro)=>pro._id == product.productid).Recipe
+              console.log({listAllProducts})
+              const recipe = listAllProducts.find((pro)=>pro._id == product.productid).Recipe
               updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe});
             }
           }

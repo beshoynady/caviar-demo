@@ -54,7 +54,8 @@ const Kitchen = () => {
             const Amount = rec.amount * product.quantity
             existingItem.amount += Amount;
           } else {
-            updatedconsumptionOrderActive.push({ itemId: rec.itemId , name:rec.name, amount: rec.amount });
+            const Amount = rec.amount * product.quantity
+            updatedconsumptionOrderActive.push({ itemId: rec.itemId , name:rec.name, amount: Amount });
           }
         })
       })
@@ -319,17 +320,17 @@ const Kitchen = () => {
               <ToastContainer />
               <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
                 <div className="row w-100">
-                  {/* {yourNewData.map((item, index) => (
+                   {consumptionOrderActive.map((item, index) => (
                     <div className="col-md-4 mb-3" key={index}>
                       <div className="card text-white bg-success" style={{ width: "100%" }}>
                         <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                           <p className="card-text">{item.name}</p>
-                          <p className="card-text">الرصيد: {item.balance}</p>
-                          <p className="card-text">المطلوب: {item.required}</p>
+                          <p className="card-text">الرصيد: 200</p>
+                          <p className="card-text">المطلوب: {item.amount}</p>
                         </div>
                       </div>
                     </div>
-                  ))}  */}
+                  ))} 
                 </div>
                 {orderactive && orderactive.map((order, i) => {
                   if (order.products.filter((pr) => pr.isDone === false).length > 0) {

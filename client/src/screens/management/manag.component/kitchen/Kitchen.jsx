@@ -330,11 +330,11 @@ const Kitchen = () => {
             <>
               <ToastContainer />
               <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
-                <div className="container-fluid bg-primary py-4">
+                <div className="container-fluid py-4" style={{ backgroundColor: 'rgba(0, 0, 255, 0.1)' }}>
                   <div className="row justify-content-center">
                     {consumptionOrderActive.map((item, index) => (
                       <div className="col-md-4 mb-3" key={index}>
-                        <div className="card bg-light text-dark">
+                        <div className="card bg-primary text-dark">
                           <div className="card-body">
                             <h5 className="card-title">{item.name}</h5>
                             <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>

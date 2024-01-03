@@ -35,13 +35,16 @@ const Kitchen = () => {
             if (existingProduct) {
               existingProduct.quantity += product.quantity;
             } else {
-              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe: product.Recipe});
+              const recipe = listofProducts.find((pro)=>pro._id == product.productid).Recipe
+              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe});
             }
           }
         });
       });
       console.log({updatedProductsOrderActive})
       setproductsOrderActive(updatedProductsOrderActive);
+
+
 
       // activeOrders.map((order)=>{
       //   const products = order.products

@@ -9,12 +9,10 @@ const Kitchen = () => {
   const start = useRef();
   const ready = useRef();
 
+  const [waittime, setWaitTime] = useState(''); // State for waiting time
+  
   const [orderactive, setOrderActive] = useState([]); // State for active orders
   const [allOrders, setAllOrders] = useState([]); // State for all orders
-  const [AllWaiters, setAllWaiters] = useState([]); // State for active waiters
-  const [waiters, setWaiters] = useState([]); // State for active waiters ID
-  const [waittime, setWaitTime] = useState(''); // State for waiting time
-
   // Fetches orders from the API
   const getOrdersFromAPI = async () => {
     try {
@@ -24,13 +22,34 @@ const Kitchen = () => {
       const activeOrders = orders.data.filter(
         (order) => order.isActive && (order.status === 'Approved' || order.status === 'Preparing')
       );
+      console.log({activeOrders})
       setOrderActive(activeOrders);
+
     } catch (error) {
       console.log(error);
     }
   };
 
+
+  const [listofProducts, setlistofProducts] = useState([]);
+
+  const getallproducts = async () => {
+    try {
+      const response = await axios.get('https://caviar-api.vercel.app/api/product/');
+      const products = await response.data;
+      // console.log(response.data)
+      setlistofProducts(products)
+      // console.log(listofProducts)
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   // Fetches all active waiters from the API
+  const [AllWaiters, setAllWaiters] = useState([]); // State for active waiters
+  const [waiters, setWaiters] = useState([]); // State for active waiters ID
+
   const getAllWaiters = async () => {
     try {
       const allEmployees = await axios.get('https://caviar-api.vercel.app/api/employee');
@@ -117,21 +136,7 @@ const Kitchen = () => {
     }
   };
 
-  const [listofProducts, setlistofProducts] = useState([]);
 
-  const getallproducts = async () => {
-    try {
-      const response = await axios.get('https://caviar-api.vercel.app/api/product/');
-      const products = await response.data;
-      // console.log(response.data)
-      setlistofProducts(products)
-      // console.log(listofProducts)
-
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
 
 
   const updateOrderDone = async (id) => {
@@ -139,7 +144,7 @@ const Kitchen = () => {
       // Fetch order data by ID
       const orderData = await axios.get(`https://caviar-api.vercel.app/api/order/${id}`);
       const products = orderData.data.products;
-  
+
       // Loop through each product in the order
       for (const product of products) {
         if (!product.isDone) {
@@ -151,11 +156,11 @@ const Kitchen = () => {
           const productId = product.productid;
           const name = product.name;
           console.log({ productId, quantity, name });
-  
+
           // Find product details
           const foundProduct = listofProducts.find((p) => p._id === productId);
           const recipe = foundProduct ? foundProduct.Recipe : [];
-  
+
           // Calculate consumption for each ingredient in the recipe
           for (const rec of recipe) {
             const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بتنسيق YYYY-MM-DD
@@ -163,29 +168,29 @@ const Kitchen = () => {
               const itemDate = new Date(kitItem.createdAt).toISOString().split('T')[0];
               return itemDate === today;
             });
-            
+
             let kitconsumption = null;
             if (kitconsumptionToday.length > 0) {
               kitconsumption = kitconsumptionToday.find((kitItem) => kitItem.stockItemId === rec.itemId);
-            }  
+            }
             if (kitconsumption) {
               const productAmount = rec.amount * quantity;
               console.log({ productAmount });
-  
+
               const consumptionQuantity = kitconsumption.consumptionQuantity + productAmount;
               console.log({ consumptionQuantity });
-  
+
               const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
-  
+
               let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
-  
+
               if (!foundProducedProduct) {
                 foundProducedProduct = { productId: productId, productionCount: quantity, productName: name };
                 kitconsumption.productsProduced.push(foundProducedProduct);
               } else {
                 foundProducedProduct.productionCount += quantity;
               }
-  
+
               try {
                 // Update kitchen consumption data
                 const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
@@ -197,13 +202,13 @@ const Kitchen = () => {
               } catch (error) {
                 console.log({ error: error });
               }
-            }else{
-              
+            } else {
+
             }
           }
         }
       }
-  
+
       // Perform other operations if needed after the loop completes
       // Update order status or perform other tasks
       // const status = 'Prepared';
@@ -218,7 +223,7 @@ const Kitchen = () => {
       toast.error('Failed to complete order!');
     }
   };
-  
+
 
 
   // Calculates the waiting time for an order
@@ -238,7 +243,7 @@ const Kitchen = () => {
   };
 
 
-  
+
 
   // Fetches orders and active waiters on initial render
   useEffect(() => {
@@ -252,54 +257,69 @@ const Kitchen = () => {
       {
         ({ usertitle, updatecountofsales }) => {
           return (
-            <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
+            <>
               <ToastContainer />
-              {orderactive && orderactive.map((order, i) => {
-                if (order.products.filter((pr) => pr.isDone === false).length > 0) {
-                  return (
-                    <div className="card text-white bg-success" style={{ width: "265px" }}>
-                      <div className="card-body text-right d-flex justify-content-between p-0 m-1">
-                        <div style={{ maxWidth: "50%" }}>
-                          <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
-                          <p className="card-text">رقم الطلب: {order.ordernum ? order.ordernum : ''}</p>
-                          <p className="card-text">الفاتورة: {order.serial}</p>
-                          <p className="card-text">نوع الطلب: {order.order_type}</p>
+              <div className="container-fluid d-flex flex-wrap align-content-start justify-content-around align-items-start h-100 overflow-auto bg-transparent py-5 px-3">
+                <div className="row w-100">
+                  {/* {yourNewData.map((item, index) => (
+                    <div className="col-md-4 mb-3" key={index}>
+                      <div className="card text-white bg-success" style={{ width: "100%" }}>
+                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">
+                          <p className="card-text">{item.name}</p>
+                          <p className="card-text">الرصيد: {item.balance}</p>
+                          <p className="card-text">المطلوب: {item.required}</p>
                         </div>
-
-                        <div style={{ maxWidth: "50%" }}>
-                          {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
-                          <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                          <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
-                        </div>
-                      </div>
-                      <ul className='list-group list-group-flush'>
-                        {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
-                          return (
-                            <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red', color: 'white' } : { color: 'black' }}>
-                              <div className="d-flex justify-content-between align-items-center w-100">
-                                <p style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{i + 1}- {product.name}</p>
-                                <span style={{ fontSize: '1.2em', fontWeight: 'bold' }}> × {product.quantity}</span>
-                              </div>
-                              <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{product.notes}</div>
-                            </li>
-
-                          )
-                        })}
-                      </ul>
-                      <div className="card-footer text-center">
-                        {order.status === 'Preparing' ?
-                          <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => {
-                            updateOrderDone(order._id);
-                            updatecountofsales(order._id)
-                          }}>تم التنفيذ</button>
-                          : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
-                        }
                       </div>
                     </div>
-                  )
-                }
-              })}
-            </div>
+                  ))}  */}
+                </div>
+                {orderactive && orderactive.map((order, i) => {
+                  if (order.products.filter((pr) => pr.isDone === false).length > 0) {
+                    return (
+                      <div className="card text-white bg-success" style={{ width: "265px" }}>
+                        <div className="card-body text-right d-flex justify-content-between p-0 m-1">
+                          <div style={{ maxWidth: "50%" }}>
+                            <p className="card-text"> {order.table != null ? `طاولة: ${usertitle(order.table)}` : (order.user ? `العميل: ${usertitle(order.user)}` : '')}</p>
+                            <p className="card-text">رقم الطلب: {order.ordernum ? order.ordernum : ''}</p>
+                            <p className="card-text">الفاتورة: {order.serial}</p>
+                            <p className="card-text">نوع الطلب: {order.order_type}</p>
+                          </div>
+
+                          <div style={{ maxWidth: "50%" }}>
+                            {order.waiter ? <p className="card-text">الويتر: {usertitle(order.waiter)}</p> : ""}
+                            <p className="card-text">الاستلام: {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                            <p className="card-text">الانتظار: {waitingTime(order.createdAt)} دقيقه</p>
+                          </div>
+                        </div>
+                        <ul className='list-group list-group-flush'>
+                          {order.products.filter((pr) => pr.isDone === false).map((product, i) => {
+                            return (
+                              <li className='list-group-item d-flex justify-content-between align-items-center' key={i} style={product.isAdd ? { backgroundColor: 'red', color: 'white' } : { color: 'black' }}>
+                                <div className="d-flex justify-content-between align-items-center w-100">
+                                  <p style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{i + 1}- {product.name}</p>
+                                  <span style={{ fontSize: '1.2em', fontWeight: 'bold' }}> × {product.quantity}</span>
+                                </div>
+                                <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{product.notes}</div>
+                              </li>
+
+                            )
+                          })}
+                        </ul>
+                        <div className="card-footer text-center">
+                          {order.status === 'Preparing' ?
+                            <button className="btn btn-warning btn-lg" style={{ width: "100%" }} onClick={() => {
+                              updateOrderDone(order._id);
+                              updatecountofsales(order._id)
+                            }}>تم التنفيذ</button>
+                            : <button className="btn btn-primary btn-lg" style={{ width: "100%" }} onClick={() => orderInProgress(order._id, order.order_type)}>بدء التنفيذ</button>
+                          }
+                        </div>
+                      </div>
+                    )
+                  }
+                })}
+              </div>
+            </>
           )
         }
       }

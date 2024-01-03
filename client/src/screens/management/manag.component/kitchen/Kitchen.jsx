@@ -333,10 +333,10 @@ const Kitchen = () => {
                 <div className="row justify-content-around align-items-start">
                   {consumptionOrderActive.map((item, index) => (
                     <div className="card bg-primary text-dark" style={{ height: '130px', width: '120px' }} key={index}>
-                      <div className="card-body d-flex flex-column justify-content-center">
-                        <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
-                        <p className="card-text">المطلوب: {item.amount}</p>
+                      <div className="card-body d-flex flex-column justify-content-center text-right">
+                        <h5 className="card-title text-right">{item.name}</h5>
+                        <p className="card-text text-right">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
+                        <p className="card-text text-right">المطلوب: {item.amount}</p>
                       </div>
                     </div>
                   ))}

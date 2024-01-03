@@ -336,7 +336,7 @@ const Kitchen = () => {
                       <div className="card text-white bg-success" style={{ width: "100%" }}>
                         <div className="card-body text-right d-flex justify-content-between p-0 m-1">
                           <p className="card-text">{item.name}</p>
-                          <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.length>0?filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId).balance:'0'}</p>
+                          <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId)?filteredKitchenConsumptionToday.find((cons)=>cons.stockItemId== item.itemId).balance:'0'}</p>
                           <p className="card-text">المطلوب: {item.amount}</p>
                         </div>
                       </div>

@@ -334,8 +334,8 @@ const Kitchen = () => {
                   <div className="row justify-content-center">
                     {consumptionOrderActive.map((item, index) => (
                       <div className="col-md-4 mb-3" key={index}>
-                        <div className="card bg-primary text-dark">
-                          <div className="card-body">
+                        <div className="card bg-primary text-dark" style={{ height: '150px', width: '150px' }}>
+                          <div className="card-body d-flex flex-column justify-content-center">
                             <h5 className="card-title">{item.name}</h5>
                             <p className="card-text">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
                             <p className="card-text">المطلوب: {item.amount}</p>
@@ -345,6 +345,7 @@ const Kitchen = () => {
                     ))}
                   </div>
                 </div>
+
                 {orderactive && orderactive.map((order, i) => {
                   if (order.products.filter((pr) => pr.isDone === false).length > 0) {
                     return (

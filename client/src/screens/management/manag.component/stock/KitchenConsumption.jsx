@@ -36,9 +36,11 @@ const KitchenConsumption = () => {
       try {
         // Make a POST request to add an item
         const newquantityTransferredToKitchen = kitconsumption.quantityTransferredToKitchen + quantityTransferredToKitchen
+        const newBalance = kitconsumption.balance + quantityTransferredToKitchen
         const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
           quantityTransferredToKitchen: newquantityTransferredToKitchen,
-          createBy
+          createBy,
+          balance:newBalance
         });
 
         // Check if the item was added successfully
@@ -66,6 +68,7 @@ const KitchenConsumption = () => {
           stockItemId,
           stockItemName,
           quantityTransferredToKitchen,
+          balance:quantityTransferredToKitchen,
           unit,
           createBy
         });

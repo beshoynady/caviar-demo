@@ -35,7 +35,7 @@ const Kitchen = () => {
             if (existingProduct) {
               existingProduct.quantity += product.quantity;
             } else {
-              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity });
+              updatedProductsOrderActive.push({ productid: product.productid, quantity: product.quantity , recipe: product.Recipe});
             }
           }
         });

@@ -614,7 +614,7 @@ const KitchenConsumption = () => {
                         <div className="form-group">
                           <label>الرصيد الفعلي</label>
                           <input type="Number" className="form-control"  required onChange={(e)=>{
-                            setadjustment(bookBalance - Number(e.target.value));setactualBalance(e.target.value)
+                            setadjustment(Number(e.target.value) - bookBalance);setactualBalance(e.target.value)
                           }} />
                         </div>
                         <div className="form-group">

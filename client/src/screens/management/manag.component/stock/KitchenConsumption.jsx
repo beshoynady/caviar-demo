@@ -13,7 +13,7 @@ const KitchenConsumption = () => {
   const [consumptionQuantity, setconsumptionQuantity] = useState('');
   const [unit, setunit] = useState('');
 
-  const [balance, setbalance] = useState();
+  const [bookBalance, setbookBalance] = useState();
   const [actualBalance, setactualBalance] = useState();
   const [KitchenItemId, setKitchenItemId] = useState();
   const [adjustment, setadjustment] = useState();
@@ -34,11 +34,11 @@ const KitchenConsumption = () => {
       try {
         // Make a POST request to add an item
         const newquantityTransferredToKitchen = kitconsumption.quantityTransferredToKitchen + quantityTransferredToKitchen
-        const newBalance = kitconsumption.balance + quantityTransferredToKitchen
+        const newBalance = kitconsumption.bookBalance + quantityTransferredToKitchen
         const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
           quantityTransferredToKitchen: newquantityTransferredToKitchen,
           createdBy,
-          balance:newBalance
+          bookBalance:newBalance
         });
 
         // Check if the item was added successfully
@@ -66,7 +66,7 @@ const KitchenConsumption = () => {
           stockItemId,
           stockItemName,
           quantityTransferredToKitchen,
-          balance:quantityTransferredToKitchen,
+          bookBalance:quantityTransferredToKitchen,
           unit,
           createdBy
         });
@@ -106,7 +106,7 @@ const KitchenConsumption = () => {
           stockItemId,
           stockItemName,
           quantityTransferredToKitchen:actualBalance,
-          balance:actualBalance,
+          bookBalance:actualBalance,
           unit,
           createdBy
         });
@@ -180,12 +180,12 @@ const KitchenConsumption = () => {
   //                     }
 
   //                     consumptionQuantity += recipe.amount * orderproduct.quantity;
-  //                     const balance = item.quantityTransferredToKitchen - consumptionQuantity;
+  //                     const bookBalance = item.quantityTransferredToKitchen - consumptionQuantity;
 
   //                     try {
   //                       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
   //                         consumptionQuantity,
-  //                         balance,
+  //                         bookBalance,
   //                         productsProduced,
   //                       });
   //                       console.log('Update successful:', update.data);
@@ -475,7 +475,7 @@ const KitchenConsumption = () => {
                                 <td>{item.quantityTransferredToKitchen}</td>
                                 <td>{item.consumptionQuantity}</td>
                                 <td>{item.unit}</td>
-                                <td>{item.balance}</td>
+                                <td>{item.bookBalance}</td>
                                 <td>{item.adjustment}</td>
                                 <td>
                                   {item.productsProduced.length > 0 ? item.productsProduced.map((product, j) => (
@@ -507,7 +507,7 @@ const KitchenConsumption = () => {
                                   <td>{item.quantityTransferredToKitchen}</td>
                                   <td>{item.consumptionQuantity}</td>
                                   <td>{item.unit}</td>
-                                  <td>{item.balance}</td>
+                                  <td>{item.bookBalance}</td>
                                   <td>{item.adjustment}</td>
                                   <td>
                                     {item.productsProduced.length > 0 ? item.productsProduced.map((product, j) => (
@@ -517,8 +517,8 @@ const KitchenConsumption = () => {
                                   <td>{item.createdBy ? usertitle(item.createdBy) : '--'}</td>
                                   <td>{item.createdAt}</td>
                                   <td>
-                                    <a href="#updateKitchenItemModal" className="edit" data-toggle="modal" onClick={()=>{
-                                      setstockItemId(item.stockItemId);setstockItemName(item.stockItemName);setquantityTransferredToKitchen(item.quantityTransferredToKitchen);setbalance(item.balance);setunit(item.unit);
+                                    <a href="#updateKitchenItemModal" className="edit" data-toggle="modal" onClick={()=>{setcreatedBy(employeeLoginInfo.employeeinfo.id);setKitchenItemId(item._id);
+                                      setstockItemId(item.stockItemId);setstockItemName(item.stockItemName);setquantityTransferredToKitchen(item.quantityTransferredToKitchen);setbookBalance(item.bookBalance);setunit(item.unit);
                                       setconsumptionQuantity(item.consumptionQuantity);
                                     }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -588,7 +588,7 @@ const KitchenConsumption = () => {
               <div id="updateKitchenItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => updateKitchenItem(e, employeeLoginInfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => updateKitchenItem(e)}>
                       <div className="modal-header">
                         <h4 className="modal-title">تسويه الرصيد</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -608,17 +608,17 @@ const KitchenConsumption = () => {
                         </div>
                         <div className="form-group">
                           <label>الرصيد الدفتري</label>
-                          <input type="text" className="form-control" defaultValue={balance} required />
+                          <input type="text" className="form-control" defaultValue={bookBalance} required readOnly/>
                         </div>
                         <div className="form-group">
                           <label>الرصيد الفعلي</label>
                           <input type="Number" className="form-control"  required onChange={(e)=>{
-                            setadjustment(balance - Number(e.target.value));setactualBalance(e.target.value)
+                            setadjustment(bookBalance - Number(e.target.value));setactualBalance(e.target.value)
                           }} />
                         </div>
                         <div className="form-group">
                           <label>التسويه</label>
-                          <input type="Number" className="form-control"  required />
+                          <input type="text" className="form-control" defaultValue={adjustment} required readOnly />
                         </div>
                         <div className="form-group">
                           <label>الوحدة </label>

@@ -25,7 +25,12 @@ const KitchenConsumptionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    balance: {
+    bookBalance: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    actualBalance: {
       type: Number,
       required: true,
       default: 0,
@@ -42,7 +47,7 @@ const KitchenConsumptionSchema = new mongoose.Schema(
         required: true,
       },
       productName: { 
-        type : 'string', 
+        type : String, 
         required: true
       },
       productionCount: {
@@ -51,7 +56,7 @@ const KitchenConsumptionSchema = new mongoose.Schema(
         default: 0
       },
     }],
-    createBy:{
+    createdBy:{
       type: ObjectId,
       ref: 'Employee',
       required: true,

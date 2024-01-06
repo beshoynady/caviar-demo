@@ -249,7 +249,7 @@ const Kitchen = () => {
               const consumptionQuantity = kitconsumption.consumptionQuantity + productAmount;
               console.log({ consumptionQuantity });
 
-              const balance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
+              const bookBalance = kitconsumption.quantityTransferredToKitchen - consumptionQuantity;
 
               let foundProducedProduct = kitconsumption.productsProduced.find((produced) => produced.productId === productId);
 
@@ -264,7 +264,7 @@ const Kitchen = () => {
                 // Update kitchen consumption data
                 const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
                   consumptionQuantity,
-                  balance,
+                  bookBalance,
                   productsProduced: kitconsumption.productsProduced
                 });
                 console.log({ update: update });
@@ -335,7 +335,7 @@ const Kitchen = () => {
                     <div className="card bg-primary text-white" style={{ height: '100px', width: '130px' }} key={index}>
                       <div className="card-body d-flex flex-column justify-content-center text-center" style={{ padding: '5px' }}>
                         <h5 className="card-title text-center">{item.name}</h5>
-                        <p className="card-text text-center">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).balance : '0'}</p>
+                        <p className="card-text text-center">الرصيد: {filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId) ? filteredKitchenConsumptionToday.find((cons) => cons.stockItemId === item.itemId).bookBalance : '0'}</p>
                         <p className="card-text text-center">المطلوب: {item.amount}</p>
                       </div>
                     </div>

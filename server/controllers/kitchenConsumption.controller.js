@@ -27,14 +27,14 @@ const getKitchenConsumptionById = async (req, res) => {
 // Create a new kitchen consumption
 const createKitchenConsumption = async (req, res) => {
   try {
-    const { stockItemId,stockItemName, quantityTransferredToKitchen,balance,unit,createBy } = req.body;
+    const { stockItemId,stockItemName, quantityTransferredToKitchen,bookBalance,unit,createdBy } = req.body;
     const newKitchenConsumption = await KitchenConsumptionModel.create({
       stockItemId,
       stockItemName,
       quantityTransferredToKitchen,
-      balance,
+      bookBalance,
       unit,
-      createBy
+      createdBy
     });
     res.status(201).json({newKitchenConsumption });
   } catch (err) {
@@ -45,7 +45,7 @@ const createKitchenConsumption = async (req, res) => {
 // Update kitchen consumption by ID
 const updateKitchenConsumptionById = async (req, res) => {
   const { id } = req.params;
-  const { stockItemId,stockItemName, quantityTransferredToKitchen, consumptionQuantity,unit, balance, adjustment, productsProduced, createBy} = req.body;
+  const { stockItemId,stockItemName, quantityTransferredToKitchen, consumptionQuantity,unit, bookBalance,actualBalance, adjustment, productsProduced, createdBy} = req.body;
 
   try {
     const updatedKitchenConsumption = await KitchenConsumptionModel.findByIdAndUpdate(
@@ -56,10 +56,11 @@ const updateKitchenConsumptionById = async (req, res) => {
         quantityTransferredToKitchen,
         consumptionQuantity,
         unit,
-        balance,
+        bookBalance,
+        actualBalance,
         adjustment,
         productsProduced,
-        createBy
+        createdBy
     },
       { new: true }
     );

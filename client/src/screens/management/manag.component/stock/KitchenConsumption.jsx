@@ -9,11 +9,12 @@ const KitchenConsumption = () => {
   const [stockItemId, setstockItemId] = useState('');
   const [stockItemName, setstockItemName] = useState('');
   const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
-  const [createBy, setcreateBy] = useState('');
+  const [createdBy, setcreatedBy] = useState('');
   const [consumptionQuantity, setconsumptionQuantity] = useState('');
   const [unit, setunit] = useState('');
 
   const [balance, setbalance] = useState();
+  const [actualBalance, setactualBalance] = useState();
   const [KitchenItemId, setKitchenItemId] = useState();
   const [adjustment, setadjustment] = useState();
 
@@ -36,7 +37,7 @@ const KitchenConsumption = () => {
         const newBalance = kitconsumption.balance + quantityTransferredToKitchen
         const response = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${kitconsumption._id}`, {
           quantityTransferredToKitchen: newquantityTransferredToKitchen,
-          createBy,
+          createdBy,
           balance:newBalance
         });
 
@@ -67,7 +68,7 @@ const KitchenConsumption = () => {
           quantityTransferredToKitchen,
           balance:quantityTransferredToKitchen,
           unit,
-          createBy
+          createdBy
         });
 
         // Check if the item was added successfully
@@ -95,10 +96,8 @@ const KitchenConsumption = () => {
     e.preventDefault()
     console.log('updateKitchenItem')
     try {
-      const newBalance = balance + adjustment
       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${KitchenItemId}`, {
         adjustment,
-        balance :newBalance,
       });
       if(update.status === 200){
         try {
@@ -106,10 +105,10 @@ const KitchenConsumption = () => {
         const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
           stockItemId,
           stockItemName,
-          quantityTransferredToKitchen,
-          balance:quantityTransferredToKitchen,
+          quantityTransferredToKitchen:actualBalance,
+          balance:actualBalance,
           unit,
-          createBy
+          createdBy
         });
 
         // Check if the item was added successfully
@@ -483,7 +482,7 @@ const KitchenConsumption = () => {
                                     <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
                                   )) : 'لا يوجد'}
                                 </td>
-                                <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                                <td>{item.createdBy ? usertitle(item.createdBy) : '--'}</td>
                                 <td>{item.createdAt}</td>
                                 <td>
                                   <a href="#updateKitchenItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -515,7 +514,7 @@ const KitchenConsumption = () => {
                                       <span key={j}>{`[${product.productionCount} * ${product.productName}]`}</span>
                                     )) : 'لا يوجد'}
                                   </td>
-                                  <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
+                                  <td>{item.createdBy ? usertitle(item.createdBy) : '--'}</td>
                                   <td>{item.createdAt}</td>
                                   <td>
                                     <a href="#updateKitchenItemModal" className="edit" data-toggle="modal" onClick={()=>{
@@ -557,7 +556,7 @@ const KitchenConsumption = () => {
 
                         <div className="form-group">
                           <label>الصنف</label>
-                          <select name="category" id="category" form="carform" onChange={(e) => { setstockItemId(e.target.value); setunit(AllStockItems.filter(stock => stock._id == e.target.value)[0].smallUnit); setcreateBy(employeeLoginInfo.employeeinfo.id); setstockItemName(AllStockItems.filter(it => it._id == e.target.value)[0].itemName) }}>
+                          <select name="category" id="category" form="carform" onChange={(e) => { setstockItemId(e.target.value); setunit(AllStockItems.filter(stock => stock._id == e.target.value)[0].smallUnit); setcreatedBy(employeeLoginInfo.employeeinfo.id); setstockItemName(AllStockItems.filter(it => it._id == e.target.value)[0].itemName) }}>
                             <option>اختر الصنف</option>
                             {AllStockItems.map((StockItems, i) => {
                               return <option value={StockItems._id} key={i} >{StockItems.itemName}</option>
@@ -613,13 +612,14 @@ const KitchenConsumption = () => {
                         </div>
                         <div className="form-group">
                           <label>الرصيد الفعلي</label>
-                          <input type="Number" className="form-control"  required />
+                          <input type="Number" className="form-control"  required onChange={(e)=>{
+                            setadjustment(balance - Number(e.target.value));setactualBalance(e.target.value)
+                          }} />
                         </div>
                         <div className="form-group">
                           <label>التسويه</label>
                           <input type="Number" className="form-control"  required />
                         </div>
-
                         <div className="form-group">
                           <label>الوحدة </label>
                           <input type='text' className="form-control" defaultValue={unit} required></input>

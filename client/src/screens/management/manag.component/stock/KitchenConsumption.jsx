@@ -6,19 +6,15 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 const KitchenConsumption = () => {
-  const [itemName, setitemName] = useState('');
   const [stockItemId, setstockItemId] = useState('');
   const [stockItemName, setstockItemName] = useState('');
   const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
   const [createBy, setcreateBy] = useState('');
   const [unit, setunit] = useState('');
 
-  const [Balance, setBalance] = useState('');
-  const [price, setprice] = useState('');
-  const [totalCost, settotalCost] = useState('');
-  const [parts, setparts] = useState('');
-  const [costOfPart, setcostOfPart] = useState('');
-  const [minThreshold, setminThreshold] = useState();
+  const [balance, setbalance] = useState();
+  const [KitchenItemId, setKitchenItemId] = useState();
+  const [adjustment, setadjustment] = useState();
 
   // Function to add an item to kitchen consumption
   const addKitchenItem = async (e) => {
@@ -94,91 +90,53 @@ const KitchenConsumption = () => {
     }
   };
 
-  // const updateKitchenItem = async (e) => {
-  //   e.preventDefault()
-  //   console.log('updateKitchenItem')
-  //   try {
-  //     listOfOrders.map((order) => {
-  //       const listoforderproducts = order.products;
-  //       // console.log({listoforderproducts:listoforderproducts})
+  const updateKitchenItem = async (e) => {
+    e.preventDefault()
+    console.log('updateKitchenItem')
+    try {
+      const newBalance = balance + adjustment
+      const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${KitchenItemId}`, {
+        adjustment,
+        balance :newBalance,
+      });
+      if(update.status === 200){
+        try {
+        // Make a POST request to add an item
+        const response = await axios.post('https://caviar-api.vercel.app/api/kitchenconsumption', {
+          stockItemId,
+          stockItemName,
+          quantityTransferredToKitchen,
+          balance:quantityTransferredToKitchen,
+          unit,
+          createBy
+        });
 
-  //       listoforderproducts.map((orderproduct) => {
-  //         console.log({orderproduct:orderproduct})
-  //         listofProducts.map((product) => {
-  //           console.log({listoforderproducts:orderproduct.productid})
-  //           console.log({listofProducts:product._id })
-  //           if (product._id == orderproduct.productid) {
-  //             const listofrecipe = product.Recipe;
+        // Check if the item was added successfully
+        if (response.status === 201) {
+          setstockItemId('')
+          setstockItemName('')
+          setquantityTransferredToKitchen(0)
+          getKitchenConsumption()
+          // Show a success toast if the item is added
+          toast.success('Item added successfully');
+        } else {
+          // Show an error toast if adding the item failed
+          toast.error('Failed to add item');
+        }
+      } catch (error) {
+        // Show an error toast if an error occurs during the request
+        toast.error('Failed to add item');
+        console.error(error);
+      }
+      }
 
-  //             listofrecipe.map((recipe) => {
-  //               console.log({recipe:recipe})
 
-  //               allKitchenConsumption.map(async (item) => {
-  //                 console.log({allKitchenConsumption:item})
-  //                 if (item.stockItemId == recipe.itemId) {
-  //                   const consumptionQuantity = consumptionQuantity + (recipe.amount * orderproduct.quantity);
-  //                   const balance = item.quantityTransferredToKitchen - consumptionQuantity;
-  //                   const productsProduced = item.productsProduced;
-
-  //                   productsProduced.map(async (p) => {
-  //                     console.log({productsProduced:p})
-
-  //                     if (p.productId === orderproduct.productid) {
-  //                       p.productionCount = p.productionCount + orderproduct.quantity;
-
-  //                       try {
-  //                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-  //                           consumptionQuantity,
-  //                           balance,
-  //                           productsProduced,
-  //                         });
-  //                         console.log('Update successful:', update.data);
-  //                         // Add toast for successful update
-  //                         toast.success('Updated kitchen consumption successfully');
-  //                       } catch (error) {
-  //                         console.error('Update error:', error);
-  //                         // Add toast for update error
-  //                         toast.error('Failed to update kitchen consumption');
-  //                       }
-  //                     } else {
-  //                       productsProduced.push({ productId: orderproduct.productid });
-  //                       productsProduced.push({ productName: orderproduct.name });
-  //                       productsProduced.push({ productionCount: orderproduct.quantity });
-
-  //                       try {
-  //                         const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${item.itemid}`, {
-  //                           consumptionQuantity,
-  //                           balance,
-  //                           productsProduced,
-  //                         });
-  //                         console.log('Update push successful:', update.data);
-  //                         // Add toast for successful update
-  //                         toast.success('Updated kitchen consumption successfully');
-  //                       } catch (error) {
-  //                         console.error('Update error:', error);
-  //                         // Add toast for update error
-  //                         toast.error('Failed to update kitchen consumption');
-  //                       }
-  //                     }
-  //                   });
-  //                 }else{
-  //                   console.log('allKitchenConsumption item.stockItemId === recipe')
-
-  //                 }
-  //               });
-  //             });
-  //           }else {
-  //             console.log('product._id === orderproduct.productid')
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.error('Error occurred:', error);
-  //     // Add toast for error
-  //     toast.error('An error occurred');
-  //   }
-  // };
+    } catch (error) {
+      console.error('Error occurred:', error);
+      // Add toast for error
+      toast.error('An error occurred');
+    }
+  };
 
   // const updateKitchenItem = async (e) => {
   //   e.preventDefault();
@@ -527,7 +485,7 @@ const KitchenConsumption = () => {
                                 <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                                 <td>{item.createdAt}</td>
                                 <td>
-                                  <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                  <a href="#updateKitchenItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                   <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                               </tr>
@@ -559,7 +517,10 @@ const KitchenConsumption = () => {
                                   <td>{item.createBy ? usertitle(item.createBy) : '--'}</td>
                                   <td>{item.createdAt}</td>
                                   <td>
-                                    <a href="#editStockItemModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="#updateKitchenItemModal" className="edit" data-toggle="modal" onClick={()=>{
+                                      setstockItemId(item.stockItemId);setstockItemName(item.stockItemName);setquantityTransferredToKitchen(item.quantityTransferredToKitchen);setbalance(item.balance);setunit(item.unit);
+                                      setconsumptionQuantity(item.consumptionQuantity);
+                                    }}><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="#deleteStockItemModal" className="delete" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                   </td>
                                 </tr>
@@ -624,63 +585,43 @@ const KitchenConsumption = () => {
                   </div>
                 </div>
               </div>
-              {/* 
-              <div id="editStockItemModal" className="modal fade">
+              <div id="updateKitchenItemModal" className="modal fade">
                 <div className="modal-dialog">
                   <div className="modal-content">
-                    <form onSubmit={(e) => editStockItem(e, employeeLoginInfo.employeeinfo.id)}>
+                    <form onSubmit={(e) => updateKitchenItem(e, employeeLoginInfo.employeeinfo.id)}>
                       <div className="modal-header">
-                        <h4 className="modal-title">تعديل صنف بالمخزن</h4>
+                        <h4 className="modal-title">تسويه الرصيد</h4>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       </div>
                       <div className="modal-body">
                         <div className="form-group">
                           <label>اسم الصنف</label>
-                          <input type="text" className="form-control" defaultValue={itemName} required onChange={(e) => setitemName(e.target.value)} />
+                          <input type="text" className="form-control" defaultValue={stockItemName} required />
                         </div>
                         <div className="form-group">
-                          <label>نوع المخزن</label>
-                          <select name="category" id="category" defaultValue={categoryId} form="carform" onChange={(e) => setcategoryId(e.target.value)}>
-                            <option>{AllCategoryStock.length>0?AllCategoryStock.filter(c=>c._id == categoryId)[0].name:''}</option> */}
-              {/* {AllCategoryStock.map((category, i) => {
-                              return <option value={category._id} key={i} >{category.name}</option>
-                            })
-                            }
-                          </select>
+                          <label>الكمية المستلمة</label>
+                          <input type="text" className="form-control" defaultValue={quantityTransferredToKitchen} required />
+                        </div>
+                        <div className="form-group">
+                          <label>الكمية المستهلكه</label>
+                          <input type="text" className="form-control" defaultValue={consumptionQuantity} required />
+                        </div>
+                        <div className="form-group">
+                          <label>الرصيد الدفتري</label>
+                          <input type="text" className="form-control" defaultValue={balance} required />
+                        </div>
+                        <div className="form-group">
+                          <label>الرصيد الفعلي</label>
+                          <input type="Number" className="form-control"  required />
+                        </div>
+                        <div className="form-group">
+                          <label>التسويه</label>
+                          <input type="Number" className="form-control"  required />
                         </div>
 
                         <div className="form-group">
-                          <label>الوحدة الكبيرة</label>
-                          <input type='text' className="form-control" defaultValue={largeUnit} required onChange={(e) => setlargeUnit(e.target.value)}></input>
-                        </div>
-                        <div className="form-group">
-                          <label>الوحدة الصغيره</label>
-                          <input type='text' className="form-control" defaultValue={smallUnit} required onChange={(e) => setsmallUnit(e.target.value)}></input>
-                        </div>
-                        <div className="form-group">
-                          <label>رصيد افتتاحي</label>
-                          <input type='Number' className="form-control" defaultValue={Balance} required onChange={(e) => setBalance(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                              <label>الحد الادني</label>
-                              <input type='number' className="form-control" required defaultValue={minThreshold} onChange={(e) => { setminThreshold(e.target.value); }} />
-                            </div>
-
-                        <div className="form-group">
-                          <label>السعر</label>
-                          <input type='Number' className="form-control" defaultValue={price} required onChange={(e) => { setprice(e.target.value); settotalCost(e.target.value * Balance) }} />
-                        </div>
-                        <div className="form-group">
-                          <label>التكلفة</label>
-                          <input type='text' className="form-control" required defaultValue={totalCost} readOnly />
-                        </div>
-                        <div className="form-group">
-                          <label>عدد الوحدات</label>
-                          <input type='Number' className="form-control" defaultValue required onChange={(e) => { setparts(e.target.value); setcostOfPart(price / e.target.value) }} />
-                        </div>
-                        <div className="form-group">
-                          <label>تكلفة الوحده</label>
-                          <input type='Number' className="form-control" required defaultValue={costOfPart} readOnly />
+                          <label>الوحدة </label>
+                          <input type='text' className="form-control" defaultValue={unit} required></input>
                         </div>
                         <div className="form-group">
                           <label>التاريخ</label>
@@ -695,7 +636,7 @@ const KitchenConsumption = () => {
                   </div>
                 </div>
               </div>
-                        */}
+                       
 
               {/* <div id="updateItemModal" className="modal fade">
                 <div className="modal-dialog">

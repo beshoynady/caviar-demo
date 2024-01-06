@@ -98,6 +98,7 @@ const KitchenConsumption = () => {
     try {
       const update = await axios.put(`https://caviar-api.vercel.app/api/kitchenconsumption/${KitchenItemId}`, {
         adjustment,
+        actualBalance
       });
       if(update.status === 200){
         try {

@@ -10,6 +10,7 @@ const KitchenConsumption = () => {
   const [stockItemName, setstockItemName] = useState('');
   const [quantityTransferredToKitchen, setquantityTransferredToKitchen] = useState();
   const [createBy, setcreateBy] = useState('');
+  const [consumptionQuantity, setconsumptionQuantity] = useState('');
   const [unit, setunit] = useState('');
 
   const [balance, setbalance] = useState();
